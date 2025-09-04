@@ -1,8 +1,5 @@
 #include "HealthPotion.h"
 
-HealthPotion::HealthPotion()
-{
-}
-HealthPotion::~HealthPotion()
+void HealthPotion::use(Character* chracter)
 {
 }
