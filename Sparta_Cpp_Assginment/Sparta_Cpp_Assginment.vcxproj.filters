@@ -31,6 +31,12 @@
     <Filter Include="Header Files\Item">
       <UniqueIdentifier>{53bd33aa-d067-4675-b244-184c19548ec0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Player">
+      <UniqueIdentifier>{e8002119-611c-42a1-8161-3140f1f91dc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Player">
+      <UniqueIdentifier>{eb3607c6-be4e-4c25-9783-746b759108ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sparta_Cpp_Assginment.cpp">
@@ -72,6 +78,9 @@
     <ClCompile Include="Battle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -109,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="Battle.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
