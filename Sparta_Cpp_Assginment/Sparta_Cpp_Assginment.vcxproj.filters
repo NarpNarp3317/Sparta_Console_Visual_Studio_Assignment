@@ -104,6 +104,8 @@
     </ClCompile>
     <ClCompile Include="MouseInputReader.cpp">
       <Filter>Source Files\ConsoleManager\MouseInput_reader</Filter>
+    <ClCompile Include="BattleStage.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +171,8 @@
     </ClInclude>
     <ClInclude Include="MouseInputReader.h">
       <Filter>Source Files\ConsoleManager\MouseInput_reader</Filter>
+    <ClInclude Include="BattleStage.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
