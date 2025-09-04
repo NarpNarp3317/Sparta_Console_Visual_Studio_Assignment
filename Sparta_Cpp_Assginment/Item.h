@@ -2,6 +2,8 @@
 #include <string>
 #include "Character.h"
 
+class Character;
+
 using namespace std;
 
 class Item
@@ -13,7 +15,7 @@ private:
 public:
 	Item(string name, int price, string description = "None")
 		: name(name), price(price) , description(description){};
-	~Item();
+	~Item() {};
 	string getName();
 	int getPrice();
 	string getDescription();
