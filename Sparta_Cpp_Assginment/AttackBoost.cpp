@@ -1,5 +1,8 @@
 #include "AttackBoost.h"
 
-void AttackBoost::use(Character* chracter)
+using namespace std;
+
+void AttackBoost::use(Character* character)
 {
+
 }
