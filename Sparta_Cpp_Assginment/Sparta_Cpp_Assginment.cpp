@@ -2,10 +2,15 @@
 //
 
 #include <iostream>
+#include "GameManager.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    GameManager gameManager;
+	gameManager.StartGame();
+
+
+	return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
