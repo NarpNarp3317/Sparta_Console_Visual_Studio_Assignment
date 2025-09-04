@@ -48,7 +48,7 @@
     </Filter>
     <Filter Include="Source Files\ConsoleManager\MouseInput_reader">
       <UniqueIdentifier>{b9586cda-cc6b-4555-a973-a648ceb4271e}</UniqueIdentifier>
-    </Filter>
+	</Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sparta_Cpp_Assginment.cpp">
