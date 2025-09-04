@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Character.h"
+#include "Player.h"
 #include "Battle.h"
 #include "Monster.h"
 #include "BossMonster.h"
@@ -25,6 +26,6 @@ private : // 함수
 	void displayInventory(Character* _player);
 
 private: // 변수
-	Character* player1;
+	Player* player1;
 };
 

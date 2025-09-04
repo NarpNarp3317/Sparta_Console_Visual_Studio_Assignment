@@ -2,7 +2,7 @@
 
 GameManager::GameManager()
 {
-	player1 = new Character();
+	player1 = new Player();
 }
 GameManager::~GameManager()
 {
