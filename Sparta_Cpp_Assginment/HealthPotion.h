@@ -10,6 +10,6 @@ public:
 	: Item(name, price), amount(amount) {
 			this->setDescription("Restores "+to_string(amount)+" HP.");
 	}
-	~HealthPotion();
+	~HealthPotion() {};
 	void use(Character* character) override;
 };

@@ -26,6 +26,6 @@ private : // 함수
 	void displayInventory(Character* _player);
 
 private: // 변수
-	Player* player1;
+	Character* player1;
 };
 

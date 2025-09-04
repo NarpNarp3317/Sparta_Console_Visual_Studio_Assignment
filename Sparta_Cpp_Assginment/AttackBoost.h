@@ -11,7 +11,7 @@ public:
 	: Item(name, price), amount(amount) {
 		this->setDescription(to_string(amount)+" Attack Boost.");
 	}
-	~AttackBoost();
+	~AttackBoost() {};
 	void use(Character* character) override;
 };
 
