@@ -1,6 +1,7 @@
 #include "Battle.h"
 #include "Character.h"
 #include "Monster.h"
+#include "BattleStage.h"
 
 Battle::Battle()
 {
@@ -18,8 +19,10 @@ Battle::~Battle()
 
 void Battle::startBattle(Character* _player, Monster* _monster)
 {
-	bool isWin = false;
+	BattleStage battleStage;
 
+
+	bool isWin = false;
 	cout << _player->getName() <<" vs " << _monster->getName() << endl;
 	cout << "Battle Start!" << endl;
 
@@ -48,7 +51,7 @@ void Battle::startBattle(Character* _player, Monster* _monster)
 			break;
 		case 3:
 			PlayerRecallBehavior();
-			break;
+			return;
 		default:
 			break;
 		}
@@ -83,7 +86,26 @@ void Battle::PlayerAttackBehavior(Character* _player, Monster* _monster)
 
 void Battle::PlayerUseItemBehavior(Character* _player)
 {
+	_player->PrintInventory();
 
+	while (true)
+	{
+		int selectNum = 0;
+
+		cout << "Select Item : ";
+		cin >> selectNum;
+
+		if (_player->checkingInventory(selectNum))
+		{
+			_player->useItem(selectNum - 1);
+			break;
+		}
+		else
+		{
+			cout << "Invalid number, Please re-enter" << endl;
+		}
+	}
+	
 }
 
 void Battle::PlayerRecallBehavior()

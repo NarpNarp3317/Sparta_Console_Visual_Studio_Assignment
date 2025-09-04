@@ -1,15 +1,14 @@
-//Player, Monster 부모 클래스
 #pragma once
 #include <iostream>
 #include <vector>
 
-
 using namespace std;
+class Item;
 
 class Character
 {
 public:
-	////Character();
+	Character();
 	Character(string name);
 
 public:
@@ -18,6 +17,8 @@ public:
 	void displayStatus();
 	void reward(int exp, int gainGold);
 	void takeDamage(int damage);
+	void PrintInventory();
+	bool checkingInventory(int index);
 
 	//Getter
 	int getHealth();
@@ -33,6 +34,6 @@ protected:
 	int level;
 	int experience;
 	int gold;
-	vector <class Item*> inventory;
+	vector <Item*> inventory;
 };
 

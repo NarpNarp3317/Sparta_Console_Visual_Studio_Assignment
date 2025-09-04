@@ -68,6 +68,23 @@ void Character::takeDamage(int damage)
 	}
 }
 
+void Character::PrintInventory()
+{
+	for (int i = 0; i < inventory.size(); i++)
+	{
+		cout << i + 1 << " . " << inventory[i]->getName();
+	}
+}
+
+bool Character::checkingInventory(int index)
+{
+	if (index <= 0 || index >= inventory.size())
+	{
+		return false;
+	}
+	return true;
+}
+
 int Character::getHealth()
 {
 	return health;
