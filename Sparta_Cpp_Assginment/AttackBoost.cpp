@@ -1,7 +1,5 @@
 #include "AttackBoost.h"
-AttackBoost::AttackBoost()
-{
-}
-AttackBoost::~AttackBoost()
+
+void AttackBoost::use(Character* chracter)
 {
 }

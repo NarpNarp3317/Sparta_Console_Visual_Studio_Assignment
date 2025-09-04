@@ -1,7 +1,5 @@
 #include "Item.h"
-Item::Item()
-{
-}
-Item::~Item()
-{
+
+string Item::getName() {
+	return this->name;
 }
