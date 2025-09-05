@@ -3,9 +3,8 @@
 
 class Goblin : public Monster
 {
-public:
+	public:
 	Goblin();
-	Goblin(int maxHealth, int attack);
 	~Goblin();
 };
 

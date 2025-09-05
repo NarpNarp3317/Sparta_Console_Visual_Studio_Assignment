@@ -1,9 +1,5 @@
 #include "HealthPotion.h"
 
-using namespace std;
-
-void HealthPotion::use(Character* character)
+void HealthPotion::use(Character* chracter)
 {
-	//character->hp += this->amount;
-
 }

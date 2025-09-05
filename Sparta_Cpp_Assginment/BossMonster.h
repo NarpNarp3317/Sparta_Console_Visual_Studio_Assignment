@@ -4,7 +4,7 @@
 class BossMonster : public Monster
 {
 public:
-	BossMonster(int maxHealth, int attack);
+	BossMonster();
 	~BossMonster();
 };
 

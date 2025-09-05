@@ -1,10 +1,7 @@
 #include "Troll.h"
-
-Troll::Troll(int maxHealth, int attack) : Monster(maxHealth, attack)
+Troll::Troll()
 {
-	this->name = "Troll";
 }
-
 Troll::~Troll()
 {
 }

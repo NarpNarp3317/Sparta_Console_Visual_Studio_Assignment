@@ -1,11 +1,7 @@
 #include "Orc.h"
-Orc::Orc(int maxHealth, int attack) : Monster(maxHealth, attack)
+Orc::Orc()
 {
-	this->name = "Orc";
 }
-
-
 Orc::~Orc()
 {
-
 }

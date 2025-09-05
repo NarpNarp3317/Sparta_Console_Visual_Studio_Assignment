@@ -4,7 +4,7 @@
 class Orc : public Monster
 {
 public:
-	Orc(int maxHealth, int attack);
+	Orc();
 	~Orc();
 };
 

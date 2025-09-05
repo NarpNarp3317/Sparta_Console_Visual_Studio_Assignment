@@ -1,11 +1,7 @@
 #include "BossMonster.h"
-BossMonster::BossMonster(int maxHealth, int attack) : Monster(maxHealth, attack)
+BossMonster::BossMonster()
 {
-	this->name = "BossMonster";
 }
-
-
 BossMonster::~BossMonster()
 {
-
 }
