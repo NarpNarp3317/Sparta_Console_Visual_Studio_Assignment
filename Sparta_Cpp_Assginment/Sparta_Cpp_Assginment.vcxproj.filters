@@ -31,24 +31,12 @@
     <Filter Include="Header Files\Item">
       <UniqueIdentifier>{53bd33aa-d067-4675-b244-184c19548ec0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ConsoleManager">
-      <UniqueIdentifier>{ee59f0cc-efeb-4146-87c8-a3196c4c6b34}</UniqueIdentifier>
+    <Filter Include="Header Files\Player">
+      <UniqueIdentifier>{e8002119-611c-42a1-8161-3140f1f91dc5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ConsoleManager\Input">
-      <UniqueIdentifier>{b4695d77-0308-407c-bfa3-f935ffd631f7}</UniqueIdentifier>
+    <Filter Include="Source Files\Player">
+      <UniqueIdentifier>{eb3607c6-be4e-4c25-9783-746b759108ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ConsoleManager\Output">
-      <UniqueIdentifier>{9fda4e0a-5f03-4f44-8c16-8c27e0ae6d48}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ConsoleManager\Button">
-      <UniqueIdentifier>{fda07d86-a960-45b4-9c77-d6dc9e18c739}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ConsoleManager\Frame">
-      <UniqueIdentifier>{70785d10-fbee-40c3-9cb4-7d0f17328d84}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ConsoleManager\MouseInput_reader">
-      <UniqueIdentifier>{b9586cda-cc6b-4555-a973-a648ceb4271e}</UniqueIdentifier>
-	</Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sparta_Cpp_Assginment.cpp">
@@ -90,20 +78,6 @@
     <ClCompile Include="Battle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleManager.cpp">
-      <Filter>Source Files\ConsoleManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Printer.cpp">
-      <Filter>Source Files\ConsoleManager\Output</Filter>
-    </ClCompile>
-    <ClCompile Include="StringUpdater.cpp">
-      <Filter>Source Files\ConsoleManager\Output</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseFrame.cpp">
-      <Filter>Source Files\ConsoleManager\Frame</Filter>
-    </ClCompile>
-    <ClCompile Include="MouseInputReader.cpp">
-      <Filter>Source Files\ConsoleManager\MouseInput_reader</Filter>
     <ClCompile Include="BattleStage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -151,32 +125,6 @@
     <ClInclude Include="Battle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleManager.h">
-      <Filter>Source Files\ConsoleManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Enum_MouseInput.h">
-      <Filter>Source Files\ConsoleManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Enum_ConsoleMode.h">
-      <Filter>Source Files\ConsoleManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Printer.h">
-      <Filter>Source Files\ConsoleManager\Output</Filter>
-    </ClInclude>
-    <ClInclude Include="StringUpdater.h">
-      <Filter>Source Files\ConsoleManager\Output</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseFrame.h">
-      <Filter>Source Files\ConsoleManager\Frame</Filter>
-    </ClInclude>
-    <ClInclude Include="TextPixel.h">
-      <Filter>Source Files\ConsoleManager\Frame</Filter>
-    </ClInclude>
-    <ClInclude Include="PivotPoint.h">
-      <Filter>Source Files\ConsoleManager\Frame</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseInputReader.h">
-      <Filter>Source Files\ConsoleManager\MouseInput_reader</Filter>
     <ClInclude Include="BattleStage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
