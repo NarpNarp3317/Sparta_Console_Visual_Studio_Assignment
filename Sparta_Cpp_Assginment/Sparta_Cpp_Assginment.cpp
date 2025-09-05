@@ -3,12 +3,12 @@
 
 #include <iostream>
 #include "GameManager.h"
-//#include "ConsoleManager.h"
+#include "ConsoleManager.h"
 
 int main()
 {
 
-	//ConsoleManager consolManager;
+	ConsoleManager consolManager;
 	return 0;
 }
 
