@@ -17,14 +17,15 @@ public:
 	void displayStatus();
 	void reward(int exp, int gainGold);
 	void takeDamage(int damage);
-	void PrintInventory();
+	void printInventory();
 	bool checkingInventory(int index);
 
 	//Getter
-	int getHealth();
-	int getAttack();
-	int getLevel(); // 09.05. 이무표_겟레벨이 없어서 추가
-	string getName();
+	int getHealth() const;
+	int getAttack() const;
+	int getInventorySize() const;
+	string getName() const;
+	int getLevel() const;
 
 protected: 
 	const int MAX_EXPERIENCE = 100;

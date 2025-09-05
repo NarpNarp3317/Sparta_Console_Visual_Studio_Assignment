@@ -3,6 +3,7 @@
 //이 생성자 임시로 사용
 Goblin::Goblin() : Monster()
 {
+	this->name = "Goblin";
 	this->maxHealth = 100;
 	this->attack = 10;
 	health = maxHealth;

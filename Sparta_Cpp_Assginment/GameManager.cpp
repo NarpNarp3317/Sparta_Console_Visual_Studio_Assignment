@@ -1,5 +1,6 @@
 #include "GameManager.h"
 
+
 GameManager::GameManager()
 {
 	// player1 = new Character(); // makePlayer로 이동
@@ -15,8 +16,8 @@ GameManager::~GameManager()
 // Log를 찍어보며 디버깅할 것이 있다면 이곳에 추가해서 확인하세요
 void GameManager::StartGame()
 {
+
 	this->startMenu();
-	battle(player1);
 
 }
 
@@ -128,8 +129,9 @@ void GameManager::loadPlayer()
 void GameManager::battle(Character* _player)
 {
 	Battle battle;
-	Monster* monster = generateMonster(_player->getLevel());	
-	battle.startBattle(_player, monster);
+	// Monster* monster = generateMonster(_player->getLevel());
+	Monster* monster = generateMonster(1); // getLevel() 함수가 없어서 임시로 1로 설정
+	battle.startBattle(_player);
 
 }
 
@@ -140,7 +142,7 @@ void GameManager::vistShop(Character* _player)
 
 void GameManager::displayInventory(Character* _player)
 {
-	_player->PrintInventory();
+	_player->printInventory();
 }
 
 Monster* GameManager::generateMonster(int _level)
