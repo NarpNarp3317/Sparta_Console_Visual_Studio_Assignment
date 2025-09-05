@@ -6,7 +6,7 @@ Character::Character()
 {
 	name = "test";
 	maxHealth = 100;
-	attack = 1;
+	attack = 50;
 	level = 1;
 	experience = 0;
 	gold = 0;
@@ -68,7 +68,7 @@ void Character::takeDamage(int damage)
 	}
 }
 
-void Character::PrintInventory()
+void Character::printInventory()
 {
 	for (int i = 0; i < inventory.size(); i++)
 	{
@@ -85,19 +85,29 @@ bool Character::checkingInventory(int index)
 	return true;
 }
 
-int Character::getHealth()
+int Character::getHealth() const
 {
 	return health;
 }
 
-int Character::getAttack()
+int Character::getAttack() const
 {
 	return attack;
 }
 
-string Character::getName()
+int Character::getInventorySize() const
+{
+	return inventory.size();
+}
+
+string Character::getName() const
 {
 	return name;
+}
+
+int Character::getLevel() const
+{
+	return level;
 }
 
 

@@ -1,5 +1,6 @@
 #include "GameManager.h"
 
+
 GameManager::GameManager()
 {
 	player1 = new Character();
@@ -14,9 +15,7 @@ GameManager::~GameManager()
 // Log를 찍어보며 디버깅할 것이 있다면 이곳에 추가해서 확인하세요
 void GameManager::StartGame()
 {
-
 	battle(player1);
-
 }
 
 void GameManager::battle(Character* _player)
@@ -24,7 +23,7 @@ void GameManager::battle(Character* _player)
 	Battle battle;
 	// Monster* monster = generateMonster(_player->getLevel());
 	Monster* monster = generateMonster(1); // getLevel() 함수가 없어서 임시로 1로 설정
-	battle.startBattle(_player, monster);
+	battle.startBattle(_player);
 
 }
 
