@@ -68,6 +68,10 @@ void GameManager::visitLounge(Character* _player)
 {
 	while (true)
 	{
+		// 라운지 진입시 일단 플레이어 최대체력 회복
+		_player->setHealth(_player->getMaxHealth());
+
+
 		cout << "==========================" << endl;
 		cout << "Welcome to the Lounge, " << _player->getName() << "!" << endl;
 		cout << "You can choose one of the following options:" << endl;
@@ -75,8 +79,9 @@ void GameManager::visitLounge(Character* _player)
 
 		cout << "1. Battle" << endl;
 		cout << "2. Visit Shop" << endl;
-		cout << "3. Display Inventory" << endl;
-		cout << "4. Exit Game" << endl;
+		cout << "3. Display Player Status" << endl;
+		cout << "4. Display Inventory" << endl;
+		cout << "5. Exit Game" << endl;
 		int selectNum = 0;
 		cout << "Select Num : ";
 		cin >> selectNum;
@@ -90,9 +95,13 @@ void GameManager::visitLounge(Character* _player)
 		}
 		else if (selectNum == 3)
 		{
-			this->displayInventory(_player);
+			_player->displayStatus();
 		}
 		else if (selectNum == 4)
+		{
+			_player->printInventory();
+		}
+		else if (selectNum == 5)
 		{
 			cout << "Exiting game. Goodbye!" << endl;
 			exit(0);
@@ -138,11 +147,6 @@ void GameManager::battle(Character* _player)
 void GameManager::vistShop(Character* _player)
 {
 
-}
-
-void GameManager::displayInventory(Character* _player)
-{
-	_player->printInventory();
 }
 
 Monster* GameManager::generateMonster(int _level)

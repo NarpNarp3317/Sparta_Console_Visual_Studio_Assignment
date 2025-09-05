@@ -32,7 +32,6 @@ private : // ÇÔ¼ö
 	BossMonster* generateBossMonster(int _level);
 	void battle(Character* _player);
 	void vistShop(Character* _player);
-	void displayInventory(Character* _player);
 	void visitLounge(Character* _player);
 
 	void startMenu();
