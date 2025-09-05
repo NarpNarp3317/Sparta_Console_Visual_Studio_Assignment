@@ -107,6 +107,12 @@
     <ClCompile Include="BattleStage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Dagger.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -173,6 +179,12 @@
       <Filter>Source Files\ConsoleManager\MouseInput_reader</Filter>
     <ClInclude Include="BattleStage.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Dagger.h">
+      <Filter>Header Files\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
