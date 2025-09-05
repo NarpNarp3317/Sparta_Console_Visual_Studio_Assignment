@@ -3,6 +3,7 @@
 #include "Character.h"
 #include "Monster.h"
 
+// This class is unlikely to be used.
 class Bomb : public Item
 {
 private:
@@ -15,9 +16,9 @@ public:
 		if (description == "None")
 			this->setDescription("An explosive that deals damage to enemies. Damage: " + to_string(damage));
 	}
-	~Bomb();
+	~Bomb() {};
 	int getDamage();
 	void setDamage(int dmg);
-	void use(Character* character, Monster* monster);
+	void use(Character* character, Monster* monster) override;
 };
 
