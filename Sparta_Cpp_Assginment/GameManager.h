@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Character.h"
+#include "Player.h"
 #include "Battle.h"
 #include "Monster.h"
 #include "BossMonster.h"

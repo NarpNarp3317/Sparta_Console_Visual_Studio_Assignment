@@ -10,6 +10,8 @@ GameManager::~GameManager()
 	delete player1;
 }
 
+// 25.09.04. 이무표
+// Log를 찍어보며 디버깅할 것이 있다면 이곳에 추가해서 확인하세요
 void GameManager::StartGame()
 {
 
