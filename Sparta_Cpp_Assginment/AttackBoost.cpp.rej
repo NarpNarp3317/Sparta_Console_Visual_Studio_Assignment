@@ -1,0 +1,12 @@
+diff a/Sparta_Cpp_Assginment/AttackBoost.cpp b/Sparta_Cpp_Assginment/AttackBoost.cpp	(rejected hunks)
+@@ -1,7 +1,5 @@
+ #include "AttackBoost.h"
+-AttackBoost::AttackBoost()
++
++void AttackBoost::use(Character* chracter)
+ {
+ }
+-AttackBoost::~AttackBoost()
+-{
+-}
+\ No newline at end of file
