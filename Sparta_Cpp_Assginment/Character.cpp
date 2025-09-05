@@ -142,3 +142,20 @@ int Character::getLevel() const
 {
 	return level;
 }
+
+int Character::getMaxHealth() const
+{
+	return maxHealth;
+}
+
+void Character::setHealth(int _health)
+{
+	this->health += health;
+
+	if (this->health > maxHealth)
+	{
+		this->health = maxHealth;
+	}
+}
+
+
