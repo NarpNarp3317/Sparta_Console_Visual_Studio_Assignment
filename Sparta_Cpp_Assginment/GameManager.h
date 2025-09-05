@@ -28,8 +28,6 @@ public:
 	void StartGame();
 
 private : // ÇÔ¼ö
-	Monster* generateMonster(int _level);
-	BossMonster* generateBossMonster(int _level);
 	void battle(Character* _player);
 	void vistShop(Character* _player);
 	void visitLounge(Character* _player);

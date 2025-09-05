@@ -138,8 +138,6 @@ void GameManager::loadPlayer()
 void GameManager::battle(Character* _player)
 {
 	Battle battle;
-	// Monster* monster = generateMonster(_player->getLevel());
-	Monster* monster = generateMonster(1); // getLevel() 함수가 없어서 임시로 1로 설정
 	battle.startBattle(_player);
 
 }
@@ -147,42 +145,4 @@ void GameManager::battle(Character* _player)
 void GameManager::vistShop(Character* _player)
 {
 
-}
-
-Monster* GameManager::generateMonster(int _level)
-{
-	random_device rd;
-	mt19937 gen(rd());
-	uniform_int_distribution<> distrib(0, static_cast<int>(MonsterType::SIZE) - 1);
-	MonsterType randomMonster = static_cast<MonsterType>(distrib(gen));
-
-	Monster* rtrMonster = nullptr;	
-	/// 레벨에 맞춰서 스펙이 높은 몬스터를 제네레이트 할 수 있도록 해야 함
-	switch (randomMonster)
-	{
-		case(MonsterType::en_Gobling):
-		{
-			rtrMonster = new Goblin();
-			break;
-		}
-		case(MonsterType::en_Orc):
-		{
-			rtrMonster = new Goblin();
-			break;
-		}
-		case(MonsterType::en_Troll):
-		{
-			rtrMonster = new Goblin();
-			break;
-		}
-	}
-
-
-	/// 아직 몬스터 클래스 미작성으로 임시 몬스터 리턴
-	return rtrMonster;
-}
-
-BossMonster* GameManager::generateBossMonster(int _level)
-{
-	return nullptr;
 }
