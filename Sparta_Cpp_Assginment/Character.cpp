@@ -11,6 +11,7 @@ Character::Character()
 	experience = 0;
 	gold = 0;
 	health = maxHealth;
+	inventory.push_back(new Item("Junk", 0, true, false, "is Junk"));	// 실험적으로 기본 아이템을 추가했습니다 [조기혁]
 }
 
 Character::Character(string name)
@@ -28,11 +29,36 @@ void Character::useItem(int index)
 {
 	Item* item = inventory[index];
 
-	//TODO : UseItem
+	item->use(this);
+	if (item->isConsumable()) {
+		removeItemIdx(index);
+		delete item;
+		item = nullptr;
+	}
+}
 
-	inventory.erase(inventory.begin() + index);
-	delete item;
-	item = nullptr;
+void Character::addItem(Item* item)	// 아이템을 인벤토리에 추가하는 함수
+{
+	inventory.push_back(item);
+}
+
+bool Character::removeItem(string name)	// 아이템 삭제 함수
+{
+	for (int i = 0; i < inventory.size(); i++)
+		if (inventory[i]->getName() == name) {
+			inventory.erase(inventory.begin() + i);
+			return true;
+		}
+	return false;
+}
+
+bool Character::removeItemIdx(int index)	// 아이템을 인덱스로 삭제하는 함수
+{
+	if (checkingInventory(index)) {
+		inventory.erase(inventory.begin() + index);
+		return true;
+	}
+	return false;
 }
 
 void Character::levelUp()

@@ -1,5 +1,7 @@
 #include "Bomb.h"
 
+// This class is unlikely to be used.
+
 void Bomb::use(Character* character, Monster* monster) {
 	Item::use(character);
 	int damage = this->getDamage();
