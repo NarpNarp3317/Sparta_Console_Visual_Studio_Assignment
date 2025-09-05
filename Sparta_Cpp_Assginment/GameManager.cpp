@@ -24,7 +24,7 @@ void GameManager::battle(Character* _player)
 	Battle battle;
 	// Monster* monster = generateMonster(_player->getLevel());
 	Monster* monster = generateMonster(1); // getLevel() 함수가 없어서 임시로 1로 설정
-	battle.startBattle(_player, monster);
+	battle.startBattle(_player);
 
 }
 

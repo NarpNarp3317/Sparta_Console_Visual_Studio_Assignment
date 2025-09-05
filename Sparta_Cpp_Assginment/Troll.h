@@ -3,7 +3,8 @@
 
 class Troll : public Monster
 {
-	public:
+public:
+	Troll();
 	Troll(int maxHealth, int attack);
 	~Troll();
 };
