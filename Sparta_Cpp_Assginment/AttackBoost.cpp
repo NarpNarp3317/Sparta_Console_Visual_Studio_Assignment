@@ -1,5 +1,5 @@
-#include "AttackBoost.h"
+//#include "AttackBoost.h"
 
-void AttackBoost::use(Character* chracter)
-{
-}
+//AttackBoost::~AttackBoost()
+//{
+//}

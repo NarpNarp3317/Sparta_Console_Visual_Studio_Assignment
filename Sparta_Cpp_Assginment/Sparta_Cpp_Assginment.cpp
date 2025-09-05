@@ -3,13 +3,12 @@
 
 #include <iostream>
 #include "GameManager.h"
+//#include "ConsoleManager.h"
 
 int main()
 {
-    GameManager gameManager;
-	gameManager.StartGame();
 
-
+	//ConsoleManager consolManager;
 	return 0;
 }
 
