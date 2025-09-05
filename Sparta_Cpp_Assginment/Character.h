@@ -26,7 +26,13 @@ public:
 	int getInventorySize() const;
 	string getName() const;
 	int getLevel() const;
+	int getMaxHealth() const;
 
+	//Setter
+	void setHealth(int _health);
+	// 라운지에서 회복 기능을 추가하기 위해 getMaxHealth() 및
+	// set Health 추가하였습니다
+	// 25.09.05. 이무표
 
 protected: 
 	const int MAX_EXPERIENCE = 100;

@@ -12,20 +12,26 @@ BattleStage::BattleStage()
 	rewardGold = 15;
 }
 
-unique_ptr<Monster> BattleStage::getMonster()
+Monster* BattleStage::getMonster(int index)
 {
-	if (monsterList.empty())
+	if (index >= monsterList.size())
 	{
 		return nullptr;
 	}
 
-	return move(monsterList.back());
+	return monsterList[index];
 }
 
-void BattleStage::removeMonster()
+void BattleStage::removeMonsterList()
 {
-	monsterList.erase(monsterList.end() - 1);
+	for (int i = 0; i < monsterList.size(); i++)
+	{
+		delete monsterList[i];
+		monsterList[i] = nullptr;
+	}
 }
+
+ 
 
 int BattleStage::getRewardGold() const
 {
@@ -54,7 +60,7 @@ void BattleStage::randomMonsterAdded(const int& playerLevel)
 	}
 }
 
-unique_ptr<Monster> BattleStage::randomMonster(const int& playerLevel)
+Monster* BattleStage::randomMonster(const int& playerLevel)
 {
 	//·£´ý 0~2
 	random_device rd;
@@ -66,11 +72,11 @@ unique_ptr<Monster> BattleStage::randomMonster(const int& playerLevel)
 	switch (value)
 	{
 	case 0:
-		return make_unique<Orc>();
+		return new Orc();
 	case 1:
-		return make_unique<Goblin>();
+		return new Goblin();
 	case 2:
-		return make_unique<Troll>();
+		return new Troll();
 	default:
 		return nullptr;
 	}

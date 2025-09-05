@@ -15,6 +15,7 @@ Character::Character()
 
 Character::Character(string name)
 {
+	this->name = name;
 	maxHealth = 100;
 	attack = 1;
 	level = 1;
@@ -45,7 +46,13 @@ void Character::levelUp()
 
 void Character::displayStatus()
 {
-
+	cout << "===========STATUS===========" << endl;
+	cout << "Name : " << name << endl;
+	cout << "HP : " << health << endl;
+	cout << "level : " << level << endl;
+	cout << "ATK : " << attack << endl;
+	cout << "EXP : " << experience << endl;
+	cout << "GOLD : " << gold << endl;
 }
 
 void Character::reward(int exp, int gainGold)
@@ -110,4 +117,16 @@ int Character::getLevel() const
 	return level;
 }
 
+int Character::getMaxHealth() const
+{
+	return maxHealth;
+}
 
+void Character::setHealth(int _health)
+{
+	health = _health;
+	if (health > maxHealth)
+	{
+		health = maxHealth;
+	}
+}

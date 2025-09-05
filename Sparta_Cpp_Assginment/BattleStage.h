@@ -10,8 +10,8 @@ class BattleStage
 {
 public:
 	BattleStage();
-	unique_ptr<Monster> getMonster();
-	void removeMonster();
+	Monster* getMonster(int index);
+	void removeMonsterList();
 	void randomMonsterAdded(const int& playerLevel);
 
 
@@ -21,10 +21,10 @@ public:
 
 
 private:
-	unique_ptr<Monster> randomMonster(const int& playerLevel);
+	Monster* randomMonster(const int& playerLevel);
 
 private:
-	vector<unique_ptr<Monster>> monsterList;
+	vector<Monster*> monsterList;
 	int rewardGold;
 	int rewardExp;
 };
