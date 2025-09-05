@@ -1,5 +1,6 @@
 #include "Character.h"
 #include "Item.h"
+#include "HealthPotion.h"
 
 //이 생성자 임시로 사용
 Character::Character()
@@ -22,6 +23,8 @@ Character::Character(string name)
 	experience = 0;
 	gold = 0;
 	health = maxHealth;
+
+	inventory.push_back(new HealthPotion("물약", 15, 15)); // 아이템 테스트를 위한 임시 코드
 }
 
 void Character::useItem(int index)
@@ -29,6 +32,8 @@ void Character::useItem(int index)
 	Item* item = inventory[index];
 
 	//TODO : UseItem
+
+	item->use(this);
 
 	inventory.erase(inventory.begin() + index);
 	delete item;
@@ -79,13 +84,13 @@ void Character::printInventory()
 {
 	for (int i = 0; i < inventory.size(); i++)
 	{
-		cout << i + 1 << " . " << inventory[i]->getName();
+		cout << i + 1 << " . " << inventory[i]->getName() << endl;
 	}
 }
 
 bool Character::checkingInventory(int index)
 {
-	if (index <= 0 || index >= inventory.size())
+	if (index >= inventory.size() || index < 0)
 	{
 		return false;
 	}
