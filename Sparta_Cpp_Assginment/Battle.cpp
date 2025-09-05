@@ -15,10 +15,10 @@ Battle::Battle()
 
 void Battle::startBattle(Character* _player)
 {
+	int monsterIndex = 0;
 	BattleStage battleStage;
 	battleStage.randomMonsterAdded(_player->getLevel());
-	_monster = battleStage.getMonster();
-	battleStage.removeMonster();
+	_monster = battleStage.getMonster(monsterIndex);
 
 	cout << "===========Battle===========" << endl;
 	cout << _player->getName() <<" vs " << _monster->getName() << endl;
@@ -58,7 +58,7 @@ void Battle::startBattle(Character* _player)
 		if (_monster->getHealth() <= 0)
 		{
 			printMonsterDie(_monster->getName());
-			_monster = battleStage.getMonster(); //다음 몬스터
+			_monster = battleStage.getMonster(++monsterIndex); //다음 몬스터
 
 			if (_monster == nullptr) // 다음 몬스터가 없으면 승리로 처리하고 break
 			{
@@ -67,7 +67,6 @@ void Battle::startBattle(Character* _player)
 			}
 			else //있다면 메시지를 띄우고 전투 재시작
 			{
-				battleStage.removeMonster();
 				cout << "===========Battle===========" << endl;
 				cout << _player->getName() << " vs " << _monster->getName() << endl;
 				cout << "Battle Start!" << endl;
@@ -81,6 +80,7 @@ void Battle::startBattle(Character* _player)
 		printAttackBehaviorResult(_player->getName(), _monster->getAttack(), _player->getHealth());
 	}
 
+	battleStage.removeMonsterList(); 	// 벡터 내부 요소 동적할당 해제
 	battleResult(_player, battleStage); //보상 지급 처리
 }
 
@@ -92,7 +92,7 @@ void Battle::printSelectList()
 	cout << "3. Recall" << endl;
 }
 
-void Battle::playerAttackBehavior(Character* _player, unique_ptr<Monster>& _monster)
+void Battle::playerAttackBehavior(Character* _player, Monster* _monster)
 {
 	_monster->takeDamage(_player->getAttack());
 }
@@ -163,7 +163,10 @@ int Battle::selecting(const Character& _player)
 void Battle::battleResult(Character* _player, const BattleStage& battleStage){
 	if (isWin)
 	{
+		cout << "===========RESULT===========" << endl;
+		cout << "Win!\nGold : +" << battleStage.getRewardGold() << " , EXP : +" << battleStage.getRewardExp() << endl;
 		_player->reward(battleStage.getRewardExp(), battleStage.getRewardGold());
+		_player->displayStatus();
 	}
 }
 

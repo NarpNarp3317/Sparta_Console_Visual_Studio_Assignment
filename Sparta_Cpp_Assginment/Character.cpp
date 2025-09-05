@@ -46,7 +46,13 @@ void Character::levelUp()
 
 void Character::displayStatus()
 {
-
+	cout << "===========STATUS===========" << endl;
+	cout << "Name : " << name << endl;
+	cout << "HP : " << health << endl;
+	cout << "level : " << level << endl;
+	cout << "ATK : " << attack << endl;
+	cout << "EXP : " << experience << endl;
+	cout << "GOLD : " << gold << endl;
 }
 
 void Character::reward(int exp, int gainGold)

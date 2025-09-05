@@ -14,7 +14,7 @@ public:
 	void printMonsterDie(const string& name);
 	void startBattle(Character* _player);
 	void printSelectList();
-	void playerAttackBehavior(Character* _player, unique_ptr<Monster>& _monster);
+	void playerAttackBehavior(Character* _player, Monster* _monster);
 	void playerUseItemBehavior(Character* _player);
 	void playerRecallBehavior();
 	void printAttackBehaviorResult(const string& name, const int& damage, const int& curHp);
@@ -23,6 +23,6 @@ public:
 	~Battle();
 private:
 	bool isWin;
-	unique_ptr<Monster> _monster;
+	Monster* _monster;
 };
 
