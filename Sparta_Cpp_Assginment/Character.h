@@ -23,6 +23,7 @@ public:
 	//Getter
 	int getHealth();
 	int getAttack();
+	int getLevel(); // 09.05. 이무표_겟레벨이 없어서 추가
 	string getName();
 
 protected: 

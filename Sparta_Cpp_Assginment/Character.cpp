@@ -15,6 +15,7 @@ Character::Character()
 
 Character::Character(string name)
 {
+	this->name = name;
 	maxHealth = 100;
 	attack = 1;
 	level = 1;
@@ -100,4 +101,7 @@ string Character::getName()
 	return name;
 }
 
-
+int Character::getLevel()
+{
+	return this->level;
+}
