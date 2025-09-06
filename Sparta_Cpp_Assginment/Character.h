@@ -23,6 +23,7 @@ public:
 	void printInventory();
 	bool checkingInventory(int index);
 
+
 	//Getter
 	int getHealth() const;
 	int getAttack() const;
@@ -36,6 +37,12 @@ public:
 	// 라운지에서 회복 기능을 추가하기 위해 getMaxHealth() 및
 	// set Health 추가하였습니다
 	// 25.09.05. 이무표
+
+	// For Shop (상점 연동용 함수)
+	bool SpendGold(int amount);      // 골드 차감
+	void AddGold(int amount);        // 골드 추가
+	Item* GetItem(int index);        // 인벤토리에서 아이템 가져오기
+	bool RemoveItem(int index);      // 인벤토리에서 아이템 제거
 
 protected: 
 	const int MAX_EXPERIENCE = 100;

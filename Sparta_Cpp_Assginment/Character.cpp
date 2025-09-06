@@ -158,4 +158,35 @@ void Character::setHealth(int _health)
 	}
 }
 
+// For Shop (상점 연동용 함수)
+bool Character::SpendGold(int amount)
+{
+	if (gold >= amount) {
+		gold -= amount;
+		return true;
+	}
+	return false;
+}
+
+void Character::AddGold(int amount)
+{
+	gold += amount;
+}
+
+Item* Character::GetItem(int index)
+{
+	if (index >= 0 && index < inventory.size()) {
+		return inventory[index];
+	}
+	return nullptr;
+}
+
+bool Character::RemoveItem(int index)
+{
+	if (index >= 0 && index < inventory.size()) {
+		inventory.erase(inventory.begin() + index);
+		return true;
+	}
+	return false;
+}
 

@@ -37,10 +37,10 @@ void Shop::BuyItem(Character& player) {
     if (player.SpendGold(selected->getPrice())) {
         // 아이템 복사본을 인벤토리에 추가
         if (selected->getName().find("Health") != std::string::npos) {
-            player.AddItem(new HealthPotion("Health Potion", 10, 50));
+            player.addItem(new HealthPotion("Health Potion", 10, 50));
         }
         else if (selected->getName().find("Attack") != std::string::npos) {
-            player.AddItem(new AttackBoost("Attack Boost", 15, 10));
+            player.addItem(new AttackBoost("Attack Boost", 15, 10));
         }
         std::cout << selected->getName() << " has been purchased!\n";
     }
@@ -55,7 +55,7 @@ void Shop::SellItem(Character& player) {
     int choice;
     std::cin >> choice;
 
-    if (choice <= 0 || choice > (int)player.GetInventorySize()) return;
+    if (choice <= 0 || choice > (int)player.getInventorySize()) return;
 
     Item* sellingItem = player.GetItem(choice - 1);
     int sellPrice = (sellingItem->getPrice() * 60) / 100;
