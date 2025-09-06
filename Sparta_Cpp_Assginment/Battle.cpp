@@ -49,6 +49,7 @@ void Battle::startBattle(Character* _player)
 			break;
 		case 3:
 			playerRecallBehavior();
+			battleStage.removeMonsterList(); 	// 벡터 내부 요소 동적할당 해제
 			return;
 		default:
 			break;
@@ -109,7 +110,7 @@ void Battle::playerUseItemBehavior(Character* _player)
 		cout << "Select Item : ";
 		cin >> selectNum;
 
-		if (_player->checkingInventory(selectNum)) //선택한 번호가 가방에 있는지 확인
+		if (_player->checkingInventory(selectNum - 1)) //선택한 번호가 가방에 있는지 확인
 		{
 			_player->useItem(selectNum - 1); //있다면 아이템 사용
 			break;
@@ -124,7 +125,7 @@ void Battle::playerUseItemBehavior(Character* _player)
 
 void Battle::playerRecallBehavior()
 {
-
+	cout << "Leave Dungeon, Return to Lounge." << endl;
 }
 
 void Battle::printAttackBehaviorResult(const string& name, const int& damage, const int& curHp)
