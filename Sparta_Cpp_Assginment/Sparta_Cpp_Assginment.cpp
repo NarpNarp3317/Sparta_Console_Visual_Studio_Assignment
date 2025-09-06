@@ -9,6 +9,13 @@ int main()
 {
 
 	ConsoleManager consolManager;
+
+
+
+	BaseFrame newFrame(0,center,{80,80},{0,0});
+
+	
+
 	return 0;
 }
 

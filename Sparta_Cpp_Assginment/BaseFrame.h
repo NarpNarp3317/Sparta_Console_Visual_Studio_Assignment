@@ -1,5 +1,5 @@
 #pragma once
-#include "TextPixel.h"
+#include "Scene.h"
 #include "PivotPoint.h"
 #include <vector>
 #include <Windows.h>
@@ -10,22 +10,53 @@ using namespace std;
 class BaseFrame
 {
 public:
-	BaseFrame(int priority, COORD anchor_location, PivotPoiontLocation anchor_type, COORD width, COORD offset);//offset을 주고 frame을 생성
-	BaseFrame(int priority, COORD anchor_location, PivotPoiontLocation anchor_type, COORD width);//주어진 타입에 맞춰 프레임 생성
+	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset);//offset을 주고 frame을 생성
+	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width);//주어진 타입에 맞춰 프레임 생성
+
+
+
+//protected: //--> nah, ill use getter function. seems right
 
 private:
+//protected://--> just use getter function
+	//bool isclampable;// if the frame is out of full size of console screen, it could be not generated or get clamped. this bool decides the obj's condition
+	// --> not done yet
+
 	int _layerPriority;//layer순서
+	short int _frame_color;// frame color
 	
 	COORD _width_XY;
 	PivotPoiontLocation _anchor_type;// top left, midle center, middle right....
 
-	vector<vector<TextPixel>> _frame;//
-	//vector<vector<bool>> _alpha;// 픽셀이 존재하는 곳을 right로 저장//클릭 가능한 곳을 저장//지금은 프레임이 있는 범위는 전부 되는걸로
+	Scene _frame;//
+	COORD _print_start;
+	//vector<vector<bool>> _alpha;// 픽셀이 존재하는 곳을 true로 저장//클릭 가능한 곳을 저장?//지금은 프레임이 있는 범위는 전부 되는걸로
+	//  ---> by only reading the _frame, this wont be necessary for now
+	//--------> yes this will be used but not in here, but in scene struct
 	
-	COORD _pivotPoint;//pivot point(anchor point)가 되는 곳의 좌표
+	//COORD _pivotPoint;//pivot point(anchor point)가 되는 곳의 좌표
+	//edited ----> coord is already decided by the enum PivotPoiontLocation. additional movement can be adjusted by offset
+
 	COORD _offset;// by adding the offset, reposition the frame
 
+	static COORD _screen_Limit;// all shared by same class
+	
+
+
 public:
+
+	void CalulatePrintStartCoord(PivotPoiontLocation anchor_type);// printring starts from the top left corner, this coord will be calculated based on the anchor type of frame
+
+	COORD GetPrintStartCoord();
+	COORD GetWidthXY();
+	const Scene& GetFramePtr();
+
+
 	void GenerateFrame();//변경된 정보로 프레임을 생성함
+
+	static void SetScreenLimits(COORD limit_area);
+	static COORD GetScreenLimits();
+
+	
 
 };

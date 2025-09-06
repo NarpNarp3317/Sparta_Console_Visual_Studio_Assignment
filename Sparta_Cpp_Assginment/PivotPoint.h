@@ -7,7 +7,7 @@ enum PivotPoiontLocation
 	top_left,
 	right_center,
 	center,
-	lift_center,
+	left_center,
 	bottom_right,
 	bottom_center,
 	bottom_left
