@@ -25,7 +25,7 @@ void Shop::ShowItems() {
     }
 }
 
-void Shop::BuyItem(Player& player) {
+void Shop::BuyItem(Character& player) {
     ShowItems();
     std::cout << "Select the item number to purchase (0: Cancel): ";
     int choice;
@@ -49,8 +49,8 @@ void Shop::BuyItem(Player& player) {
     }
 }
 
-void Shop::SellItem(Player& player) {
-    player.ShowInventory();
+void Shop::SellItem(Character& player) {
+    player.printInventory();
     std::cout << "Select the item number to sell (0: Cancel): ";
     int choice;
     std::cin >> choice;

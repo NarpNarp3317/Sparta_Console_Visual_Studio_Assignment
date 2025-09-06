@@ -14,7 +14,7 @@ public:
 	~Shop();
 
 	void ShowItems();                  //아이템 목록 출력
-	void BuyItem(Player& player);   //아이템 구매
-	void SellItem(Player& player);  //아이템 판매
+	void BuyItem(Character& player);   //아이템 구매
+	void SellItem(Character& player);  //아이템 판매
 };
 
