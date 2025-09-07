@@ -5,20 +5,24 @@ using namespace std;
 
 class Character;
 class Monster;
+class BattleStage;
 
 class Battle
 {
 public:
 	Battle();
-	void startBattle(Character* _player, Monster* _monster);
-	void PrintSelectList();
-	void PlayerAttackBehavior(Character* _player, Monster* _monster);
-	void PlayerUseItemBehavior(Character* _player);
-	void PlayerRecallBehavior();
-	void PrintAttackBehaviorResult(const string& name, const int& damage, const int& curHp);
-	bool BattleResult();
+	void printMonsterDie(const string& name);
+	void startBattle(Character* _player);
+	void printSelectList();
+	void playerAttackBehavior(Character* _player, Monster* _monster);
+	void playerUseItemBehavior(Character* _player);
+	void playerRecallBehavior();
+	void printAttackBehaviorResult(const string& name, const int& damage, const int& curHp);
+	int selecting(const Character& _player);
+	void battleResult(Character* _player, const BattleStage& battleStage);
 	~Battle();
 private:
 	bool isWin;
+	Monster* _monster;
 };
 
