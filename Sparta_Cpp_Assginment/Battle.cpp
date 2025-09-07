@@ -41,7 +41,7 @@ void Battle::startBattle(Character* _player)
 		switch (selectNum)
 		{
 		case 1:
-			playerAttackBehavior(_player, _monster);
+			playerAttackBehavior(_player);
 			printAttackBehaviorResult(_monster->getName(), _player->getAttack(), _monster->getHealth());
 			break;
 		case 2:
@@ -93,7 +93,7 @@ void Battle::printSelectList()
 	cout << "3. Recall" << endl;
 }
 
-void Battle::playerAttackBehavior(Character* _player, Monster* _monster)
+void Battle::playerAttackBehavior(Character* _player)
 {
 	_monster->takeDamage(_player->getAttack());
 }
@@ -112,7 +112,7 @@ void Battle::playerUseItemBehavior(Character* _player)
 
 		if (_player->checkingInventory(selectNum - 1)) //선택한 번호가 가방에 있는지 확인
 		{
-			_player->useItem(selectNum - 1); //있다면 아이템 사용
+			_player->useItem(selectNum - 1, _monster); //있다면 아이템 사용
 			break;
 		}
 		else

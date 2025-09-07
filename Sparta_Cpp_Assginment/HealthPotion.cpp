@@ -6,7 +6,7 @@ void HealthPotion::use(Character* character)
 {
 	Item::use(character);
 	int updatedValue = character->getHealth() + this->amount;
-	// character->setHealth(updatedValue);
+	character->setHealth(updatedValue);
 }
 
 int HealthPotion::getAmount(){ return this->amount; }

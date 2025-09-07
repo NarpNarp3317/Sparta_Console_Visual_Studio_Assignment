@@ -1,5 +1,8 @@
 #include "Character.h"
 #include "Item.h"
+#include "HealthPotion.h"
+#include "Bomb.h"
+#include "Monster.h"
 
 //이 생성자 임시로 사용
 Character::Character()
@@ -23,30 +26,61 @@ Character::Character(string name)
 	experience = 0;
 	gold = 0;
 	health = maxHealth;
+
+	addItem(new HealthPotion("Heal", 0, true, false, "is Junk")); // 임시 추가
 }
 
-void Character::useItem(int index)
+void Character::useItem(int index, Monster* monster)
 {
 	Item* item = inventory[index];
 
-	item->use(this);
-	if (item->isConsumable()) {
-		removeItemIdx(index);
-		delete item;
-		item = nullptr;
+	if (Bomb* bomb = dynamic_cast<Bomb*>(item)) // 폭탄 아이템 예외
+	{
+		bomb->use(this, monster);
+	}
+	else
+	{
+		item->use(this);
+	}
+
+
+	if (item->isConsumable()) 
+	{
+		itemCountMap[item->getName()]--;
+		int count = itemCountMap[item->getName()];
+		if (count <= 0)
+		{
+			RemoveItemCountMap(item->getName());
+			removeItemIdx(index);
+		}
 	}
 }
+
 
 void Character::addItem(Item* item)	// 아이템을 인벤토리에 추가하는 함수
 {
 	inventory.push_back(item);
+	
+	// 새로운 아이템 등록
+	if (itemCountMap.find(item->getName()) != itemCountMap.end())
+	{
+		itemCountMap.insert(make_pair(item->getName(), 1));
+	}
+	else
+	{
+		itemCountMap[item->getName()]++; // 있다면 아이템 수량 추가
+	}
 }
 
 bool Character::removeItem(string name)	// 아이템 삭제 함수
 {
 	for (int i = 0; i < inventory.size(); i++)
-		if (inventory[i]->getName() == name) {
+		if (inventory[i]->getName() == name)
+		{
+			delete inventory[i]; // 메모리 해제
+			inventory[i] = nullptr;
 			inventory.erase(inventory.begin() + i);
+			RemoveItemCountMap(name);
 			return true;
 		}
 	return false;
@@ -54,7 +88,11 @@ bool Character::removeItem(string name)	// 아이템 삭제 함수
 
 bool Character::removeItemIdx(int index)	// 아이템을 인덱스로 삭제하는 함수
 {
-	if (checkingInventory(index)) {
+	if (checkingInventory(index)) 
+	{
+		RemoveItemCountMap(inventory[index]->getName());
+		delete inventory[index]; // 메모리 해제
+		inventory[index] = nullptr;
 		inventory.erase(inventory.begin() + index);
 		return true;
 	}
@@ -112,15 +150,16 @@ void Character::printInventory()
 		cout << "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" << endl;
 	}
 
+	// 아이템 수량 코드 추가
 	for (int i = 0; i < inventory.size(); i++)
 	{
-		cout << i + 1 << " . " << inventory[i]->getName();
+		cout << i + 1 << " . " << inventory[i]->getName() << "/Count : " << itemCountMap[inventory[i]->getName()] << endl;
 	}
 }
 
 bool Character::checkingInventory(int index)
 {
-	if (index <= 0 || index >= inventory.size())
+	if (index < 0 || index >= inventory.size())
 	{
 		return false;
 	}
@@ -197,5 +236,19 @@ bool Character::RemoveItem(int index)
 		return true;
 	}
 	return false;
+}
+
+void Character::RemoveItemCountMap(const string& name)
+{
+	itemCountMap.erase(name);
+}
+
+Character::~Character()
+{
+	for (int i = 0; i < inventory.size(); i++)
+	{
+		delete inventory[i];
+		inventory[i] = nullptr;
+	}
 }
 

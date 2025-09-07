@@ -1,18 +1,21 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <map>
 
 using namespace std;
 class Item;
+class Monster;
+
 
 class Character
 {
 public:
 	Character();
 	Character(string name);
-
+	~Character();
 public:
-	void useItem(int index);
+	void useItem(int index, Monster* monster);
 	void addItem(Item* item);
 	bool removeItem(string name);
 	bool removeItemIdx(int index);
@@ -22,6 +25,7 @@ public:
 	void takeDamage(int damage);
 	void printInventory();
 	bool checkingInventory(int index);
+
 
 
 	//Getter
@@ -44,6 +48,9 @@ public:
 	Item* GetItem(int index);        // 인벤토리에서 아이템 가져오기
 	bool RemoveItem(int index);      // 인벤토리에서 아이템 제거
 
+private:
+	void RemoveItemCountMap(const string& name);
+
 protected: 
 	const int MAX_EXPERIENCE = 100;
 	string name;
@@ -54,5 +61,6 @@ protected:
 	int experience;
 	int gold;
 	vector <Item*> inventory;
+	map<string, int> itemCountMap; //아이템 수량을 위해 추가
 };
 

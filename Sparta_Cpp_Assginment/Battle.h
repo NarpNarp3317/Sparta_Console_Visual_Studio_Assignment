@@ -14,7 +14,7 @@ public:
 	void printMonsterDie(const string& name);
 	void startBattle(Character* _player);
 	void printSelectList();
-	void playerAttackBehavior(Character* _player, Monster* _monster);
+	void playerAttackBehavior(Character* _player);
 	void playerUseItemBehavior(Character* _player);
 	void playerRecallBehavior();
 	void printAttackBehaviorResult(const string& name, const int& damage, const int& curHp);
