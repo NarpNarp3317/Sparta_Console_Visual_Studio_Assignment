@@ -14,7 +14,7 @@ public:
 		if (description == "None")
 			this->setDescription(to_string(amount)+" Attack Boost.");
 	}
-	~AttackBoost() {};
+	~AttackBoost();
 	int getAmount();
 	void setAmount(int amt);
 	void use(Character* character) override;

@@ -128,7 +128,7 @@ int Character::getAttack() const
 	return attack;
 }
 
-int Character::getInventorySize() const
+size_t Character::getInventorySize() const
 {
 	return inventory.size();
 }

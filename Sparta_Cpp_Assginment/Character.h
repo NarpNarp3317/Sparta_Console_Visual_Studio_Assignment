@@ -27,7 +27,7 @@ public:
 	//Getter
 	int getHealth() const;
 	int getAttack() const;
-	int getInventorySize() const;
+	size_t getInventorySize() const;
 	string getName() const;
 	int getLevel() const;
 	int getMaxHealth() const;
