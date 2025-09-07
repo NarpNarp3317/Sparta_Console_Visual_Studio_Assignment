@@ -150,8 +150,3 @@ void ConsoleManager::FillConsoleWithDot()
 		WriteConsoleOutputCharacterA(_output_H, line.c_str(), line.size(), pos, &charsWritten);
 	}
 }
-
-void ConsoleManager::SetDisplacement()
-{
-
-}
