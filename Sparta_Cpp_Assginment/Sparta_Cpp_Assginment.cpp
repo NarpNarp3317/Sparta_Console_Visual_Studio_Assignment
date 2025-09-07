@@ -8,13 +8,13 @@
 int main()
 {
 	/// 그 외 조원 시작지점(기존)
-	GameManager startGame;
-	startGame.StartGame();
+	//GameManager startGame;
+	//startGame.StartGame();
 
 
 	/// 세민님 시작지점
-	//ConsoleManager consolManager;
-	//BaseFrame newFrame(0,center,{80,80},{0,0});
+	ConsoleManager consolManager;
+	BaseFrame newFrame(0,center,{80,80},{0,0});
 
 	
 
