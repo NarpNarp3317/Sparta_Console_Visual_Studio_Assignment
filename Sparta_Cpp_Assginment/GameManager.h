@@ -17,7 +17,7 @@ enum MonsterType
 	en_Gobling,
 	en_Orc,
 	en_Troll,
-	SIZE
+	LAST_SIZE
 };
 
 class GameManager
