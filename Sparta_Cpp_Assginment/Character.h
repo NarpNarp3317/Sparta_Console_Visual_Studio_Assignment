@@ -35,6 +35,7 @@ public:
 	string getName() const;
 	int getLevel() const;
 	int getMaxHealth() const;
+	int getGold() const { return gold; }
 
 	//Setter
 	void setHealth(int _health);
