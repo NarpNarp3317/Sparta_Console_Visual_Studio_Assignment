@@ -103,6 +103,15 @@ void Character::takeDamage(int damage)
 
 void Character::printInventory()
 {
+	/// 25.09.07. mpyi
+	/// 인벤토리에 아무것도 없을 시 메시지 추가
+	if (inventory.size() <= 0)
+	{
+		cout << "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" << endl;
+		cout << "Your inventory is empty!" << endl;
+		cout << "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" << endl;
+	}
+
 	for (int i = 0; i < inventory.size(); i++)
 	{
 		cout << i + 1 << " . " << inventory[i]->getName();
