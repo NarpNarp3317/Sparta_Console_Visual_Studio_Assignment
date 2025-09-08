@@ -59,10 +59,10 @@ void BattleStage::randomMonsterAdded(const int& playerLevel)
 	}
 
 
-	//·£´ý 2~3
+	//·£´ý 1~3
 	random_device rd;
 	mt19937 gen(rd());
-	uniform_int_distribution<int> dis(2, 3);
+	uniform_int_distribution<int> dis(1, 3);
 
 	int randomVal = dis(gen);
 
