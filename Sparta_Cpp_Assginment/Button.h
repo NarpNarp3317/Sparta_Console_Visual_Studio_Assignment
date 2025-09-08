@@ -54,7 +54,7 @@ public:
 	bool IsDetected(COORD mouse_coord) override;// 
 	// when the cursor is in range, detect the mouse cursor and check if the alpha mask is overlapping
 
-	void GenerateDefaultButton(Scene* newTexture);
+	//void GenerateDefaultButton(Scene* newTexture);
 	void GenerateDefaultButtonSet();// this will generate defualt buttons with event states
 
 	void SetButtonID(int newId);

@@ -89,11 +89,10 @@ void ConsoleManager::SetupMouseInput()
 
 					switch (input_type)
 					{
-					case Left_click:button->OnLeftPressed(); break;
-
-					case Right_click:button->OnRightPressed(); break;
-
-						//case Hovering:button->OnHovering(); break; no more
+					case Left_Pressed:button->OnLeftPressed(); break;
+					case Left_Released:button->OnLeftPressed(); break;
+					case Right_Pressed:button->OnLeftPressed(); break;
+					case Right_Released:button->OnLeftPressed(); break;
 
 					default:
 						{
@@ -110,6 +109,7 @@ void ConsoleManager::SetupMouseInput()
 			}
 		};
 }
+
 
 void ConsoleManager::ResizeConsoleWindow()// if the console window size is changed, reposition the scenes
 
@@ -136,7 +136,7 @@ void ConsoleManager::SwitchInputmode(Enum_ConsoleMode inputmode)//입력 모드를 주
 void ConsoleManager::ReadMouseInput()// do this after printing is done
 {
 	if(_mouse!=nullptr)
-	_mouse->Start_MouseInputReading();
+	_mouse->UpdateMouseInput();
 }
 
 void ConsoleManager::ConsoleWindowSizeSetting()// maximize the scale of console window
@@ -174,7 +174,7 @@ ConsoleManager::~ConsoleManager()
 	SwitchInputmode(KeyboardTypeInMode);// before dying, set to default console input
 }
 
-void ConsoleManager::Update()
+void ConsoleManager::Update_ConsoleManager()
 {
 	if (!_currentDisplay || !_printer) return;// nothing to print or cannot print
 
@@ -185,7 +185,7 @@ void ConsoleManager::Update()
 
 	if (_mouse != nullptr)
 	{
-		_mouse->Start_MouseInputReading();
+		_mouse->UpdateMouseInput();
 	}
 
 }
@@ -195,7 +195,7 @@ void ConsoleManager::Run_Update()
 	_isrunning = true;
 	while (_isrunning)
 	{
-		Update();
+		Update_ConsoleManager();
 		Sleep(30);//frame rate of the update
 	}
 }

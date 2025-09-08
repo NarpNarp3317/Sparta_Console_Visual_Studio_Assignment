@@ -40,7 +40,6 @@ Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COOR
 	GenerateDefaultButtonSet();
 }
 
-
 Button::Button(int buttonID, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// with offset and lable
 	:BaseFrame(priority, anchor_type, width, offset, frame_style, text_color, bg_color),
 
@@ -85,28 +84,14 @@ bool Button::IsDetected(COORD mouse_coord)// return bool by checking if the mous
 	COORD width = GetWidthXY();
 	COORD start = GetPrintStartCoord();
 
-	// const Scene& frame = GetFramePtr();// get for read only
-
-	//const Scene* frame = GetTexturePtr();// get for read only //-->_collision_mask will be used for detection
-
-
-	//---> find relative coord of mouse position
-
 	COORD relative_coord = { mouse_coord.X - start.X, mouse_coord.Y - start.Y };
 
 	if (relative_coord.X < 0 || relative_coord.Y < 0 || relative_coord.X >= width.X || relative_coord.Y >= width.Y)
 		return false;
 
-
 	return _collision_mask[relative_coord.Y][relative_coord.X];//return relative coord of mouse cursor and it will be used
-
-
 }
 
-void Button::GenerateDefaultButton(Scene* newTexture)
-{
-	
-}
 
 void Button::GenerateDefaultButtonSet()
 {

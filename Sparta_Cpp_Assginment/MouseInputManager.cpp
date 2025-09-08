@@ -14,10 +14,49 @@ MouseInputManager::MouseInputManager(HANDLE input_Handle):
 	_OnMouseEvent{nullptr}
 {
 	this->_input_H = input_Handle;
-	Start_MouseInputReading();
+	ActivateMouseInput();
+	ActivateMouseClick();
+}
+
+void MouseInputManager::UpdateMouseInput()// version 3
+{
+	if (!_isActive || !_OnMouseEvent) return;
+
+	if (!ReadConsoleInput(_input_H, &_input_Record, 1, &_events)) return;
+	if (_input_Record.EventType != MOUSE_EVENT) return;
+
+	_mouse_event_Record = _input_Record.Event.MouseEvent;
+	_cursor_coord_on_event = _mouse_event_Record.dwMousePosition;
+
+	bool L_pressed_Now = (_mouse_event_Record.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED);
+	bool R_pressed_Now = (_mouse_event_Record.dwButtonState & RIGHTMOST_BUTTON_PRESSED);
+
+	// Detect transitions: Pressed ¡æ Released
+	if (L_pressed_Now && !_is_Left_Pressed)
+		_input_type = Left_Pressed;
+	else if (!L_pressed_Now && _is_Left_Pressed)
+		_input_type = Left_Released;
+
+	if (R_pressed_Now && !_is_Right_Pressed)
+		_input_type = Right_Pressed;
+	else if (!R_pressed_Now && _is_Right_Pressed)
+		_input_type = Right_Released;
+
+	// Hover detection
+	if (_mouse_event_Record.dwEventFlags == MOUSE_MOVED)
+		_input_type = Hovering;
+
+	// Update state
+	_is_Left_Pressed = L_pressed_Now;
+	_is_Right_Pressed = R_pressed_Now;
+
+	// Fire the callback
+	if (_input_type != None && _OnMouseEvent)
+		_OnMouseEvent(_cursor_coord_on_event, _input_type);
 }
 
 
+/*
 void MouseInputManager::UpdateMouseInput()// version 2, using Centralized TimeManagement
 {
 	//======= No No Conditions =====//
@@ -108,10 +147,32 @@ void MouseInputManager::UpdateMouseInput()// version 2, using Centralized TimeMa
 		_OnMouseEvent(_cursor_coord_on_event, _input_type);
 	}
 }
+*/
+/*
+void MouseInputManager::UpdateMouseInput()
+{
+	if (!_isActive || !_OnMouseEvent) return;
+	if (!ReadConsoleInput(_input_H, &_input_Record, 1, &_events)) return;
+	if (_input_Record.EventType != MOUSE_EVENT) return;
 
+	_cursor_coord_on_event = _input_Record.Event.MouseEvent.dwMousePosition;
+	_input_type = None;
 
+	if (_input_Record.Event.MouseEvent.dwEventFlags == 0)
+	{
+		if (_input_Record.Event.MouseEvent.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED)
+			_input_type = Left_click;
+		else if (_input_Record.Event.MouseEvent.dwButtonState & RIGHTMOST_BUTTON_PRESSED)
+			_input_type = Right_click;
+	}
+	else if (_input_Record.Event.MouseEvent.dwEventFlags == MOUSE_MOVED)
+	{
+		_input_type = Hovering;
+	}
 
-
+	if (_input_type != None)
+		_OnMouseEvent(_cursor_coord_on_event, _input_type);
+}
 
 void MouseInputManager::Start_MouseInputReading()// version 2, no looping( looping for console)// this checks for each frame of the update
 {
@@ -160,7 +221,7 @@ void MouseInputManager::Pause_MouseInputReading()
 
 	if (!_isActive) return;// if _isactive turns false, stop the loop
 }
-
+*/
 
 
 void MouseInputManager::ActivateMouseInput()

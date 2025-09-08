@@ -35,8 +35,11 @@ public:
 
 	void UpdateMouseInput(); // call for each frame 
 
+	/*
 	void Start_MouseInputReading();
 	void Pause_MouseInputReading();
+	*/
+
 	void ActivateMouseInput();
 	void DeactivateMouseInput();
 

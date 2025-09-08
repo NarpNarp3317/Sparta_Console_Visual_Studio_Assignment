@@ -89,7 +89,7 @@ public:
 	void SetupMouseInput();
 
 	//====== Actually updating the Console ====//
-	void Update();// input and output
+	void Update_ConsoleManager();// input and output
 	void Run_Update();
 	void Pause_Update();
 
