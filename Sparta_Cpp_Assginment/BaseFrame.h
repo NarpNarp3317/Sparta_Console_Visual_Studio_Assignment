@@ -56,6 +56,7 @@ public:
 	// const Scene& GetFramePtr();
 
 	Scene* GetTexturePtr();// get what's inside the frame
+	void SwitchTexturePtr(Scene* switched_texturePtr);// switch the address of the texture
 
 	void SetPicture(Scene* new_picture);// set whats in side the frame
 	

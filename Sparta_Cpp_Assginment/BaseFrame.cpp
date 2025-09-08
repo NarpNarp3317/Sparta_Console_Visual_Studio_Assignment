@@ -160,6 +160,11 @@ Scene* BaseFrame::GetTexturePtr()
 	return _texturePtr;
 }
 
+void BaseFrame::SwitchTexturePtr(Scene* switched_texturePtr)
+{
+	_texturePtr = switched_texturePtr;
+}
+
 
 void BaseFrame::SetPicture(Scene* new_picture)// trim out where frames are( if its no visible frame, just as size of frame)
 {
