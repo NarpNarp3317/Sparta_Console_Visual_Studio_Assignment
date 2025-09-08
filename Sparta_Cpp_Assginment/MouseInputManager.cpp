@@ -4,15 +4,19 @@ MouseInputManager::MouseInputManager(HANDLE input_Handle):
 	_isActive{false},
 	_isClickable{false},
 	_Interaction_targetPtr{nullptr},
-	_cursor_coord_on_event{0,0}// default for now
-
+	_cursor_coord_on_event{0,0},// default for now
+	_input_type{None},
+	_mouse_event_Record{},
+	_input_Record{},
+	_events{},
+	_OnMouseEvent{nullptr}
 {
 	this->_input_H = input_Handle;
 	Start_MouseInputReading();
 }
 
 //--------------------------------------------------------- ** Mouse Event 
-
+/*
 void MouseInputManager::Start_MouseInputReading()
 {
 	this->_isActive = true;
@@ -50,9 +54,64 @@ void MouseInputManager::Start_MouseInputReading()
 		}
 	}
 }
+*/
+void MouseInputManager::Start_MouseInputReading()// version 2, no looping( looping for console)// this checks for each frame of the update
+{
+	//==== no no conditions ====//
+	if (!_isActive) return;
+	if (_OnMouseEvent == nullptr) return;
+	//if (!PeekConsoleInput(_input_H, &_input_Record, 1, &_events)) return;// not so sure
+	if (!ReadConsoleInput(_input_H, &_input_Record, 1, &_events)) return;
+	if (_input_Record.EventType != MOUSE_EVENT) return;
+	//--------------------------//
+	_input_type = None;//reset the input type
+	_mouse_event_Record = _input_Record.Event.MouseEvent;// record mouse events from Event(which is from input record by dread console input)
+	_cursor_coord_on_event = _mouse_event_Record.dwMousePosition;//dworld mouse cursor position
+	//=== mouse input/event checking ===//
+	if (_mouse_event_Record.dwEventFlags == 0 && _isClickable)
+	{
+		if (_mouse_event_Record.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED) _input_type = Left_click;//DWORD Button state--> tells which button was pressed// using bit operator
+		else if (_mouse_event_Record.dwButtonState & RIGHTMOST_BUTTON_PRESSED) _input_type = Right_click;
+	}
+	else if (_mouse_event_Record.dwEventFlags == MOUSE_MOVED)_input_type = Hovering;
+	//== trigger call ==//
+	if (_input_type != None) _OnMouseEvent(_cursor_coord_on_event, _input_type);// if mouse input is valid input type
+	if (!_isActive) return;// if _isactive turns false, stop the loop
+}
 
 //---------------------------------------------------------- Able/Disable
 void MouseInputManager::Pause_MouseInputReading()
+{
+	_input_type = None;//reset the input type
+
+	_mouse_event_Record = _input_Record.Event.MouseEvent;// record mouse events from Event(which is from input record by dread console input)
+	_cursor_coord_on_event = _mouse_event_Record.dwMousePosition;//dworld mouse cursor position
+
+	//=== mouse input/event checking ===//
+	if (_mouse_event_Record.dwEventFlags == 0 && _isClickable)
+	{
+		if (_mouse_event_Record.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED) _input_type = Left_click;//DWORD Button state--> tells which button was pressed// using bit operator
+
+		else if (_mouse_event_Record.dwButtonState & RIGHTMOST_BUTTON_PRESSED) _input_type = Right_click;
+
+	}
+	else if (_mouse_event_Record.dwEventFlags == MOUSE_MOVED)_input_type = Hovering;
+
+	//== trigger call ==//
+	if (_input_type != None) _OnMouseEvent(_cursor_coord_on_event, _input_type);// if mouse input is valid input type	
+
+	if (!_isActive) return;// if _isactive turns false, stop the loop
+}
+
+
+void MouseInputManager::ActivateMouseInput()
+{
+	_isActive = true;
+}
+
+//---------------------------------------------------------- Able/Disable
+void MouseInputManager::DeactivateMouseInput()//every mouse input
+
 {
 	this->_isActive = false;
 }
@@ -66,6 +125,7 @@ void MouseInputManager::DisableMouseClick()
 {
 	this->_isClickable = false;
 }
+
 //----------------------------------------------------- mouse events
 void MouseInputManager::OnRightClick()
 {
@@ -77,11 +137,21 @@ void MouseInputManager::OnLeftClick()
 	this->_Interaction_targetPtr->OnLeftClick();
 }
 
-void MouseInputManager::Hovering()
+void MouseInputManager::OnHovering_started()
 {
-	// condition for button coord matching with mouse cursor coord--> this triggers button to change color
-	this->_Interaction_targetPtr->OnHovering();
+	this->_Interaction_targetPtr->OnHovering_started();
 }
+
+void MouseInputManager::OnHovering_ended()
+{
+	this->_Interaction_targetPtr->OnHovering_ended();
+}
+
+//void MouseInputManager::Hovering()
+//{
+//	// condition for button coord matching with mouse cursor coord--> this triggers button to change color
+//	this->_Interaction_targetPtr->OnHovering();
+//}
 
 //------------------------------------------------------------------------------------** Interaction
 void MouseInputManager::SetInteractionTarget(Interactable* newTarget)

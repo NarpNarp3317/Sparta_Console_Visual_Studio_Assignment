@@ -1,6 +1,9 @@
 #pragma once
 #include <Windows.h>
-#include "interaction_Component.h"// to get interaction target
+#include <functional>
+#include "Interaction_Component.h"// to get interaction target
+#include "Enum_MouseInput.h"
+
 
 class MouseInputManager
 {
@@ -19,19 +22,23 @@ private:
 
 	//==== Interaction ====//
 	Interactable* _Interaction_targetPtr;
+	Enum_MouseInput _input_type;
+	
 public:
-
-
 	void Start_MouseInputReading();
 	void Pause_MouseInputReading();
-
+	void ActivateMouseInput();
+	void DeactivateMouseInput();
+	std::function<void(COORD, Enum_MouseInput)> _OnMouseEvent;
 
 	void ActivateMouseClick();// 마우스 클릭 가능하게 함
 	void DisableMouseClick();// 마우스 클릭 읽기를 중단함
 
 	void OnRightClick();
 	void OnLeftClick();
-	void Hovering();
+	// void Hovering();
+	void OnHovering_started();
+	void OnHovering_ended();
 
 	void SetInteractionTarget(Interactable* newTarget);
 

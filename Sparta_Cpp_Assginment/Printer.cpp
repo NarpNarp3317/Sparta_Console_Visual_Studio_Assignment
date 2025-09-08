@@ -12,7 +12,6 @@ bool Printer::CompareLayerPriority(Scene* A, Scene* B)
 
 Scene Printer::MergeLayers(const vector<Scene*>& scenes)
 {
-
 	COORD Max_screensize = BaseFrame::GetScreenLimits();
 
 	Scene merged;//empty
@@ -45,6 +44,73 @@ Scene Printer::MergeLayers(const vector<Scene*>& scenes)
 		}
 	}
 
+	return merged;
+}
+/*
+Scene Printer::MergeDisplay(Display* display)
+{
+	if (!display) return Scene();// return empty scene
+
+	vector<Scene*> display_layers;//empty storage
+
+	display_layers.push_back(display->GetFramePtr());// frame of display
+
+	for (Button* button : display->GetInteractables())// add all buttons
+	{
+		display_layers.push_back(button->GetFramePtr());
+	}
+
+	return MergeLayers(display_layers);// send it to the merge function and return scene
+}
+*/ //-----> this was only out frames at 00, print start was not considered in this code
+
+Scene Printer::MergeDisplay(Layout* display)
+{
+	Scene merged;
+
+	if (!display) return merged;
+
+	Scene* base = display->GetTexturePtr(); // start with display frame
+	if(base==nullptr) return merged;// if display base frame is invalid// the cunstructor generate it at the beginning but just in case
+
+	merged = *base;
+	COORD display_range = display->GetWidthXY();
+	bool isFrameVisible=display->IsOuterFrameVisible();
+
+	for (Button* button : display->GetInteractables())
+	{
+		Scene* button_scene = button->GetTexturePtr();
+		// Scene* button_scene = button->GetTexturePtr();
+		if (button_scene == nullptr) continue;// if button scene is empty, skip
+
+		COORD start = button->GetPrintStartCoord();// this was essentiall!!!
+		COORD button_width = button->GetWidthXY();// get range
+
+
+		for (int y = 0; y < button_width.Y; y++)
+		{
+			for (int x = 0; x < button_width.X; x++)
+			{
+				int mergedY = start.Y + y;
+				int mergedX = start.X + x;
+
+				if (button_scene->_alpha[y][x] != true) continue;
+
+				if (isFrameVisible)// i know it can be improved but it just works. improve it later// basically, deciding the range 
+				{
+					if (mergedX <1 || mergedX > display_range.X-2) continue;
+					if (mergedY <1 || mergedY > display_range.Y-2) continue;
+				}
+				else
+				{
+					if (mergedX <0 || mergedX >= display_range.X) continue;
+					if (mergedY <0 || mergedY >= display_range.Y) continue;
+				}
+				merged._T_Pixel_frame[mergedY][mergedX] = button_scene->_T_Pixel_frame[y][x];
+				merged._alpha[mergedY][mergedX] = true;
+			}
+		}
+	}
 	return merged;
 }
 

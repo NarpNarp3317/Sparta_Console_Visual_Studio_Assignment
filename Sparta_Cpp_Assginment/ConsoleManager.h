@@ -3,8 +3,9 @@
 #include "Enum_MouseInput.h"
 #include "Enum_ConsoleMode.h"
 #include "MouseInputManager.h"// for mouse input/and keyboard input(default)
-#include "Display.h"// for a scene on screen
+#include "Layout.h"// for a scene on screen
 #include "Printer.h"// renerer
+#include "Interaction_Component.h"
 
 class ConsoleManager
 	/*
@@ -25,6 +26,8 @@ public:
 
 private:
 
+	bool _isrunning;//to start and pause the live update
+
 	MouseInputManager* _mouse;//마우스 입력
 	Printer* _printer;
 
@@ -43,36 +46,51 @@ private:
 	SMALL_RECT _windows_RECT_Corners; //{ 0, 0, x길이, y길이-- > 직사각형 윈도우 화면의 코너 좌표 }
 
 	//======= UI Display =======//
-	Display* _currentDisplay;
-	vector<Display*> _Displays;
+	Layout* _currentDisplay;
+	vector<Layout*> _Displays;
 
 	//short int _window_X_length;//화면 x
 	//short int _window_Y_Length;//화면 y
 
 	//vector<vector<int>> _button_id_storage --> 클릭 가능한 버튼들의 id들을 저장함
 
+	Scene _final_Scene;
+
 public:
 
 	void SetupScene();//화면 설정 시작
 
-	void ResizeConsoleWindow();//화면 최대 크기로 콘솔창 확대
-	void SetConsoleFonstsize(short int width, short int height);
+	void ResizeConsoleWindow();//load the saved display scene when the console window size get changed
 
 	void SwitchInputmode(Enum_ConsoleMode inputmode);
 
-	void ConsoleWindowResizing();// maximize the console window
+	void ReadMouseInput();
+
+
+	void ConsoleWindowSizeSetting();// maximize the console window
 
 	//void PlaceButtons();//클릭 가능한 버튼들의 좌표와 anchor pivot point와 맞게 배치함// edited--> set placement infos in Display obj(ex. menue, ingame, battle, shop)
 
-	void SetDisplacement();
-
-	void MouseinputReader(COORD mouse_coord);// read what mouse input manager is getting
-
-
-	void FillConsoleWithDot();
+	// 안씀
+	//void SetDisplacement();
+	//void MouseinputReader(COORD mouse_coord);// read what mouse input manager is getting
 
 
 
+	void SetCurrentDisplay(Layout* _disp);
+
+
+	void C_ActivateMouseInput();
+	void C_DeactivateMouseInput();
+	void C_ActivateMouseClicks();// ActivateMouseClick is already in use of mouse input manager
+	void C_DeactivateMouseClicks();
+
+	void SetupMouseInput();
+
+	//====== Actually updating the Console ====//
+	void Update();// input and output
+	void Run_Update();
+	void Pause_Update();
 
 	~ConsoleManager();
 

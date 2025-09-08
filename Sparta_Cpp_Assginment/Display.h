@@ -8,8 +8,7 @@
 class Display :public BaseFrame
 {
 public:
-	Display(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset);
-
+	Display();
 
 
 private:
@@ -18,5 +17,5 @@ private:
 public:
 	void AddButton(Button* new_button);
 
-	vector<Button*> GetButtons();
+	vector<Button*> GetInteractables();
 };
