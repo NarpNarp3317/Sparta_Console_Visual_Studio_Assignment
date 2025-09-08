@@ -39,7 +39,7 @@ public:
 
 	void ChangeWholeColor(Text_Color text_color, Text_Color background_color);
 
-	void InvertWholeColor();
+	void Switch_Text_BG_Colors();
 
 	short int FindColorCode(Text_Color text_color, Text_Color background_color);
 

@@ -197,7 +197,7 @@ void SceneMaker::ChangeWholeColor(Text_Color text_color, Text_Color background_c
 	}
 }
 
-void SceneMaker::InvertWholeColor()
+void SceneMaker::Switch_Text_BG_Colors()
 {
 	if (_scene == nullptr) return;
 
@@ -221,7 +221,7 @@ void SceneMaker::InvertWholeColor()
 	}
 }
 
-short int FindColorCode(Text_Color text_color, Text_Color background_color)
+short int SceneMaker::FindColorCode(Text_Color text_color, Text_Color background_color)
 {
-	return ((background_color*16) + text_color);// use color chart (X--> 0~15(16)colors, same for Y)--> overflow--> set color
+	 return ((background_color * 16) + text_color);// use color chart (X--> 0~15(16)colors, same for Y)--> overflow--> set color
 }
