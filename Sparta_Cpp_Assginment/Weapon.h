@@ -12,7 +12,7 @@ public:
 			this->damage = 1;
 		if (description == "None")
 			this->setDescription("is Weapon.");
-	} // Weapon("iron sword", 30, 15, true, false, "A balanced weapon.")
+	} // Weapon("iron sword", 30, 15, true, true, "A balanced weapon.")
 	~Weapon() {};
 	int getDamage();
 	void setDamage(int dmg);

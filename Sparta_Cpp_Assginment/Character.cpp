@@ -1,6 +1,7 @@
 #include "Character.h"
 #include "Item.h"
 #include "HealthPotion.h"
+#include "Weapon.h"
 #include "Bomb.h"
 #include "Monster.h"
 
@@ -9,11 +10,13 @@ Character::Character()
 {
 	name = "test";
 	maxHealth = 100;
-	attack = 50;
+	baseAttack = 50;
+	attack = baseAttack;
 	level = 1;
 	experience = 0;
 	gold = 0;
 	health = maxHealth;
+	equippedWeapon = nullptr;
 	inventory.push_back(new Item("Junk", 0, true, false, "is Junk"));	// 실험적으로 기본 아이템을 추가했습니다 [조기혁]
 }
 
@@ -21,12 +24,13 @@ Character::Character(string name)
 {
 	this->name = name;
 	maxHealth = 100;
-	attack = 1;
+	baseAttack = 1;
+	attack = baseAttack;
 	level = 1;
 	experience = 0;
 	gold = 0;
 	health = maxHealth;
-
+	equippedWeapon = nullptr;
 	addItem(new HealthPotion("Heal", 0, true, false, "is Junk")); // 임시 추가
 }
 
@@ -103,7 +107,8 @@ void Character::levelUp()
 {
 	level++;
 	maxHealth += (level * 20);
-	attack += (level * 5);
+	baseAttack += (level * 5);
+	refreshATK();
 	health = maxHealth;
 	experience = 0;
 }
@@ -114,7 +119,9 @@ void Character::displayStatus()
 	cout << "Name : " << name << endl;
 	cout << "HP : " << health << endl;
 	cout << "level : " << level << endl;
-	cout << "ATK : " << attack << endl;
+	cout << "ATK : " << baseAttack;
+	if (equippedWeapon != nullptr) cout << " (+" << equippedWeapon->getDamage() << ")";		// format "ATK: basedamage (+Weapondamage)"
+	cout << "" << endl;
 	cout << "EXP : " << experience << endl;
 	cout << "GOLD : " << gold << endl;
 }
@@ -165,6 +172,36 @@ bool Character::checkingInventory(int index)
 	}
 	return true;
 }
+
+// 09.08 무기관련 새로추가된 함수 ---------
+void Character::refreshATK()
+{
+	if (equippedWeapon == nullptr) {	// 장착한 무기가 없음
+		attack = baseAttack;
+		return;
+	}
+	attack = baseAttack + equippedWeapon->getDamage();
+}
+
+Weapon* Character::getEquippedWeapon() const
+{
+	return this->equippedWeapon;
+}
+
+void Character::setEquippedWeapon(Weapon* weapon)
+{
+	if (equippedWeapon != nullptr) {
+		delete equippedWeapon;
+		equippedWeapon = nullptr;
+	}
+	equippedWeapon = weapon;
+}
+
+int Character::getBaseAttack() const
+{
+	return this->baseAttack;
+}
+// ---------------------
 
 int Character::getHealth() const
 {
@@ -245,6 +282,7 @@ void Character::RemoveItemCountMap(const string& name)
 
 Character::~Character()
 {
+	delete equippedWeapon;
 	for (int i = 0; i < inventory.size(); i++)
 	{
 		delete inventory[i];
