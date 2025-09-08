@@ -105,6 +105,9 @@ bool Character::removeItemIdx(int index)	// 아이템을 인덱스로 삭제하는 함수
 
 void Character::levelUp()
 {
+	cout << "===========MESSAGE===========" << endl;
+	cout << "LEVEL UP!! " << level << ">> " << level + 1 << endl;
+
 	level++;
 	maxHealth += (level * 20);
 	baseAttack += (level * 5);
@@ -133,7 +136,9 @@ void Character::reward(int exp, int gainGold)
 
 	if (experience >= MAX_EXPERIENCE)
 	{
+		int remainExp = experience - MAX_EXPERIENCE;
 		levelUp();
+		experience += remainExp;
 	}
 }
 
