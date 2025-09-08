@@ -20,7 +20,6 @@ int main()
     // generate required displays in here, first and then start the console manager
 
     Display GameMenu;
-
     Display Character_Maker;
 
     // generate required buttons for game menu

@@ -46,8 +46,6 @@ Scene Printer::MergeLayers(const vector<Scene*>& scenes)
 
 	return merged;
 }
-<<<<<<< Updated upstream
-=======
 /*
 Scene Printer::MergeDisplay(Display* display)
 {
@@ -119,7 +117,6 @@ Scene Printer::MergeDisplay(Display* display)
 	}
 	return merged;
 }
->>>>>>> Stashed changes
 
 void Printer::PrintFrame(const Scene& scene)
 {

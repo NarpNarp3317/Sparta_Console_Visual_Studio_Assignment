@@ -52,7 +52,6 @@ protected:
 
 
 public:
-
 	void CalulatePrintStartCoord(PivotPoiontLocation anchor_type);// printring starts from the top left corner, this coord will be calculated based on the anchor type of frame
 
 	COORD GetPrintStartCoord();

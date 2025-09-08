@@ -11,14 +11,11 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_width_XY{ width },
 	_anchor_type{ anchor_type },
 	_offset{ offset },
-
 	_frame{},// blank frame at begining
-	_frame_color{7}//default white
-
+	_frame_color{7},//default white
 	print_start_coord{0,0},
 	_frame_style{ frame_style },
 	_visual{},// blank frame at begining
-	_frame_color{7},//default white
 	_texture{}//empty
 
 {
@@ -117,7 +114,6 @@ COORD BaseFrame::GetWidthXY()
 const Scene& BaseFrame::GetFramePtr()
 {
 	return _frame;
-	return &_visual;
 }
 
 Scene* BaseFrame::GetTexturePtr()
