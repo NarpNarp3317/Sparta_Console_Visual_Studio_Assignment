@@ -63,9 +63,9 @@ bool Button::IsDetected(COORD mouse_coord)// return bool by checking if the mous
 	COORD width = GetWidthXY();
 	COORD start = GetPrintStartCoord();
 
-	const Scene& frame = GetFramePtr();// get for read only
+	// const Scene& frame = GetFramePtr();// get for read only
 
-	//const Scene* frame = GetFramePtr();// get for read only //-->_collision_mask will be used for detection
+	const Scene* frame = GetFramePtr();// get for read only //-->_collision_mask will be used for detection
 
 	
 	//---> find relative coord of mouse position
