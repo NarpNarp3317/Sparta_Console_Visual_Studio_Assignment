@@ -8,7 +8,7 @@
 class Popout :public BaseFrame
 {
 public:
-	Popout(int priority, bool isClampable, PivotPoiontLocation anchor_type, COORD witdh, FrameStyle frame_style);
+	Popout(int priority, PivotPoiontLocation anchor_type, COORD witdh, FrameStyle frame_style);
 
 private:
 	std::vector<Button*> _buttons;

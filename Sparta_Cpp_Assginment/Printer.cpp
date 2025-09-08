@@ -80,6 +80,7 @@ Scene Printer::MergeDisplay(Display* display)
 	for (Button* button : display->GetInteractables())
 	{
 		Scene* button_scene = button->GetFramePtr();
+		// Scene* button_scene = button->GetTexturePtr();
 		if (button_scene == nullptr) continue;// if button scene is empty, skip
 
 		COORD start = button->GetPrintStartCoord();// this was essentiall!!!

@@ -5,6 +5,38 @@
 COORD BaseFrame::_screen_Limit = { 0,0 };// for default
 //without this, unresolved external symbol "private: static struct _COORD BaseFrame::_screen_Limit" (?_screen_Limit@BaseFrame@@0U_COORD@@A)
 
+BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle _frameStyle)
+	:
+	_layerPriority{ priority },
+	_width_XY{ width },
+	_anchor_type{ anchor_type },
+	_offset{ offset },
+	_frame{},// blank frame at begining
+	_frame_color{ 7 },//default white
+	print_start_coord{ 0,0 },
+	_frame_style{ def_frame_style },
+	_visual{},// blank frame at begining
+	_texture{}//empty
+
+{
+	GenerateFrame();
+}
+BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle _frameStyle)
+	:
+	_layerPriority{ priority },
+	_width_XY{ width },
+	_anchor_type{ anchor_type },
+	_offset{ 0, 0 },
+	_frame{},// blank frame at begining
+	_frame_color{ 7 },//default white
+	print_start_coord{ 0,0 },
+	_frame_style{ def_frame_style },
+	_visual{},// blank frame at begining
+	_texture{}//empty
+
+{
+	GenerateFrame();
+}
 BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset)// offset 과 함께 생성
 	:
 	_layerPriority{ priority },
@@ -111,9 +143,14 @@ COORD BaseFrame::GetWidthXY()
 	return _width_XY;
 }
 
-const Scene& BaseFrame::GetFramePtr()
+//const Scene& BaseFrame::GetFramePtr()
+//{
+//	return _frame;
+//}
+
+Scene* BaseFrame::GetFramePtr()
 {
-	return _frame;
+	return &_frame;
 }
 
 Scene* BaseFrame::GetTexturePtr()

@@ -29,6 +29,7 @@ public:
 	void Pause_MouseInputReading();
 	void ActivateMouseInput();
 	void DeactivateMouseInput();
+	std::function<void(COORD, Enum_MouseInput)> _OnMouseEvent;
 
 	void ActivateMouseClick();// 마우스 클릭 가능하게 함
 	void DisableMouseClick();// 마우스 클릭 읽기를 중단함

@@ -186,25 +186,25 @@ void ConsoleManager::ConsoleWindowResizing()// maximize the scale of console win
 	BaseFrame::SetScreenLimits(_windows_Scale);// informs base frames the max limit of the projectable area (screen limit)	
 }
 
-// ¾È¾¸
-void ConsoleManager::SetDisplacement()
-{
-	
-}
-
-// ¾È¾¸
-void ConsoleManager::MouseinputReader(COORD mouse_coord)
-{
-	if (_currentDisplay == nullptr) return;
-
-	for (Button* button : _currentDisplay->GetButtons())
-	{
-		if (button->IsDetected(mouse_coord))
-		{
-
-		}
-	}
-}
+//// ¾È¾¸
+//void ConsoleManager::SetDisplacement()
+//{
+//	
+//}
+//
+//// ¾È¾¸
+//void ConsoleManager::MouseinputReader(COORD mouse_coord)
+//{
+//	if (_currentDisplay == nullptr) return;
+//
+//	for (Button* button : _currentDisplay->GetButtons())
+//	{
+//		if (button->IsDetected(mouse_coord))
+//		{
+//
+//		}
+//	}
+//}
 
 
 ConsoleManager::~ConsoleManager()
@@ -267,3 +267,7 @@ void ConsoleManager::Pause_Update()
 	_isrunning = false;
 }
 
+void ConsoleManager::SetCurrentDisplay(Display* _disp)
+{
+	_currentDisplay = _disp;
+}

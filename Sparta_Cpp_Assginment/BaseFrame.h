@@ -12,13 +12,15 @@ using namespace std;
 class BaseFrame
 {
 public:
+	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle _frameStyle);
+	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle _frameStyle);
 	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset);//offset을 주고 frame을 생성
 	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width);//주어진 타입에 맞춰 프레임 생성
 
 protected:
 //private:
 
-	//bool isclampable;// if the frame is out of full size of console screen, it could be not generated or get clamped. this bool decides the obj's condition
+	// bool isclampable;// if the frame is out of full size of console screen, it could be not generated or get clamped. this bool decides the obj's condition
 	// --> not done yet
 	int _layerPriority;//layer순서
 	short int _frame_color;// frame color
@@ -50,8 +52,8 @@ public:
 
 	COORD GetPrintStartCoord();
 	COORD GetWidthXY();
-	const Scene& GetFramePtr();
-	// Scene* GetFramePtr();
+	// const Scene& GetFramePtr();
+	Scene* GetFramePtr();
 	Scene* GetTexturePtr();// get what's inside the frame
 
 	void SetPicture(const Scene& new_picture);// set whats in side the frame

@@ -18,5 +18,5 @@ private:
 public:
 	void AddButton(Button* new_button);
 
-	vector<Button*> GetButtons();
+	vector<Button*> GetInteractables();
 };

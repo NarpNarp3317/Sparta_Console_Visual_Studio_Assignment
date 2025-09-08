@@ -10,7 +10,7 @@ void Display::AddButton(Button* new_button)
 	_buttons.push_back(new_button);
 }
 
-vector<Button*> Display::GetButtons()
+vector<Button*> Display::GetInteractables()
 {
 	return _buttons;
 }

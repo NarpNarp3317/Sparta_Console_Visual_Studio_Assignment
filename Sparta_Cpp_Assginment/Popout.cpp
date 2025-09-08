@@ -1,7 +1,7 @@
 #include "Popout.h"
 
 
-Popout::Popout(int priority, bool isClampable, PivotPoiontLocation anchor_type, COORD witdh, FrameStyle frame_style):BaseFrame (0,false, anchor_type, witdh, frame_style)
+Popout::Popout(int priority, PivotPoiontLocation anchor_type, COORD witdh, FrameStyle frame_style):BaseFrame (0, anchor_type, witdh, frame_style)
 {
 }
 

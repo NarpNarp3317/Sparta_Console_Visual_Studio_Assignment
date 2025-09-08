@@ -65,7 +65,7 @@ int main()
 
 	/// ¼¼¹Î´Ô ½ÃÀÛÁöÁ¡
 	ConsoleManager consolManager;
-	BaseFrame newFrame(0,center,{80,80},{0,0});
+	BaseFrame newFrame(0, center_center,{80,80},{0,0});
 
 
 	
