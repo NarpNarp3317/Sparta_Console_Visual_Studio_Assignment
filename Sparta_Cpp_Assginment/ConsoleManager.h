@@ -61,7 +61,6 @@ public:
 	void SetupScene();//화면 설정 시작
 
 	void ResizeConsoleWindow();//화면 최대 크기로 콘솔창 확대
-	void SetConsoleFonstsize(short int width, short int height);
 
 	void SwitchInputmode(Enum_ConsoleMode inputmode);
 
@@ -77,7 +76,6 @@ public:
 	//void MouseinputReader(COORD mouse_coord);// read what mouse input manager is getting
 
 
-	void FillConsoleWithDot();
 
 	void SetCurrentDisplay(Display* _disp);
 

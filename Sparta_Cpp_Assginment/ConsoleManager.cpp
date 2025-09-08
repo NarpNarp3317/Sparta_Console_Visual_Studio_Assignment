@@ -10,7 +10,6 @@ ConsoleManager::ConsoleManager()
 
 	SetConsoleOutputCP(437);// to print extended ascii
 
-	//SetConsoleFonstsize(16, 11);
 
 	// 시작 세팅
 	/*
@@ -120,23 +119,7 @@ void ConsoleManager::ResizeConsoleWindow()// if the console window size is chang
 
 }
 
-void ConsoleManager::SetConsoleFonstsize(short int width, short int height)
-{
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	CONSOLE_FONT_INFOEX fontInfo = { 0 };
-	fontInfo.cbSize = sizeof(CONSOLE_FONT_INFOEX);
-
-	// Get current font info
-	GetCurrentConsoleFontEx(hConsole, FALSE, &fontInfo);
-
-	// Set desired font
-	fontInfo.dwFontSize.X = width;   // font width
-	fontInfo.dwFontSize.Y = height;  // font height
-	wcscpy_s(fontInfo.FaceName, L"Consolas"); // optional: choose a monospaced font
-
-	SetCurrentConsoleFontEx(hConsole, FALSE, &fontInfo);
-}
 
 void ConsoleManager::SwitchInputmode(Enum_ConsoleMode inputmode)//입력 모드를 주어진 enum으로 변경함
 {
