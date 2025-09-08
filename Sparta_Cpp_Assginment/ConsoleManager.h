@@ -3,7 +3,7 @@
 #include "Enum_MouseInput.h"
 #include "Enum_ConsoleMode.h"
 #include "MouseInputManager.h"// for mouse input/and keyboard input(default)
-#include "Display.h"// for a scene on screen
+#include "Layout.h"// for a scene on screen
 #include "Printer.h"// renerer
 #include "Interaction_Component.h"
 
@@ -46,8 +46,8 @@ private:
 	SMALL_RECT _windows_RECT_Corners; //{ 0, 0, x길이, y길이-- > 직사각형 윈도우 화면의 코너 좌표 }
 
 	//======= UI Display =======//
-	Display* _currentDisplay;
-	vector<Display*> _Displays;
+	Layout* _currentDisplay;
+	vector<Layout*> _Displays;
 
 	//short int _window_X_length;//화면 x
 	//short int _window_Y_Length;//화면 y
@@ -77,7 +77,7 @@ public:
 
 
 
-	void SetCurrentDisplay(Display* _disp);
+	void SetCurrentDisplay(Layout* _disp);
 
 
 	void C_ActivateMouseInput();

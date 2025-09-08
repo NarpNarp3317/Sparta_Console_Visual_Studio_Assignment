@@ -205,7 +205,7 @@ void ConsoleManager::Pause_Update()
 	_isrunning = false;
 }
 
-void ConsoleManager::SetCurrentDisplay(Display* _disp)
+void ConsoleManager::SetCurrentDisplay(Layout* _disp)
 {
 	_currentDisplay = _disp;
 }

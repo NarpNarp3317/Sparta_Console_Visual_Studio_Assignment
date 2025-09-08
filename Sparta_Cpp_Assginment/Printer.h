@@ -4,7 +4,7 @@
 #include "TextPixel.h"
 #include "Scene.h"
 #include "Button.h"
-#include "Display.h"
+#include "Layout.h"
 
 
 
@@ -25,6 +25,6 @@ public:
 	Scene MergeLayers(const vector<Scene*>& scenes);
 
 	void PrintFrame(const Scene& scene);// read the scene and print out on display
-	Scene MergeDisplay(Display* display);
+	Scene MergeDisplay(Layout* display);
 
 };

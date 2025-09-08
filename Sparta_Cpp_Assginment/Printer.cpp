@@ -64,7 +64,7 @@ Scene Printer::MergeDisplay(Display* display)
 }
 */ //-----> this was only out frames at 00, print start was not considered in this code
 
-Scene Printer::MergeDisplay(Display* display)
+Scene Printer::MergeDisplay(Layout* display)
 {
 	Scene merged;
 

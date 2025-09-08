@@ -1,7 +1,7 @@
 // Sparta_Cpp_Assginment.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include "Display.h"
+#include "Layout.h"
 #include "GameManager.h"
 #include "ConsoleManager.h"
 #include "StringUpdater.h"
@@ -18,8 +18,8 @@ int main()
 
     // generate required displays in here, first and then start the console manager
 
-    Display GameMenu;
-    Display Character_Maker;
+    Layout GameMenu;
+    Layout Character_Maker;
 
     // generate required buttons for game menu
     Button gamestart(0, 2, center_center, { 20,5 }, { 0,-2 }, double_line);
@@ -42,7 +42,7 @@ int main()
 
     //--------------------------------------------------------
  
-    Button character(0, 2, bottom_center, { 20,40 }, { 0,5 }, double_line);
+    Button character(0, 2, left_center, { 30,40 }, { 5,0 }, double_line);
     character.SetOnLeftClick([]() {});
 
     Button list1 (0, 2, left_center, { 20,5 }, { 40,-10 }, double_line);
