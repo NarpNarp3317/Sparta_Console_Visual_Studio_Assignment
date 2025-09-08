@@ -94,7 +94,9 @@ public:
 
 	~ConsoleManager();
 
+	//////
 
+	void gameExit();
 
 
 

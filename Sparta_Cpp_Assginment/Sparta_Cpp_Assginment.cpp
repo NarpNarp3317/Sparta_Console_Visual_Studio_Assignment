@@ -13,7 +13,7 @@ int main()
 	GameManager startGame;
 	startGame.StartGame();
 
-    return 0;
+     return 0;
     StringUpdater string_updater({10,2});
     ConsoleManager C_manager;// for the getting max sceen size first so that base frames can know the screen limit
 
@@ -37,9 +37,13 @@ int main()
     Button next(0, 2, center_center, { 20,5 }, { 0,12 }, double_line);
     next.SetOnLeftClick([&C_manager, &Character_Maker]() { C_manager.SetCurrentDisplay(&Character_Maker); });
 
+	Button gameExit(0, 2, center_center, { 20,5 }, { 0,18 }, double_line);
+    gameExit.SetOnLeftClick([&C_manager]() {C_manager.gameExit(); });
+
     GameMenu.AddButton(&gamestart);
     GameMenu.AddButton(&load);
     GameMenu.AddButton(&next);
+    GameMenu.AddButton(&gameExit);
 
     //--------------------------------------------------------
  

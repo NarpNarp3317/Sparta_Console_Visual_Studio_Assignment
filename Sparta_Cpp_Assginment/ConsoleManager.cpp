@@ -209,3 +209,9 @@ void ConsoleManager::SetCurrentDisplay(Layout* _disp)
 {
 	_currentDisplay = _disp;
 }
+
+void ConsoleManager::gameExit()
+{
+	if (_mouse != nullptr)
+		exit(0);
+}
