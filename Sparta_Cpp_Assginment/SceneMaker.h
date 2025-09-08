@@ -26,17 +26,18 @@ public:
 private:
 	Scene* _scene;
 	COORD _width_XY;
+	short int _color;
 
 public:
 	void ImportScene(Scene* scene, COORD width_XY, COORD offset);
 
-	void AddTexts(std::vector<std::string> Texts, PivotPoiontLocation anchor_type, COORD offset, int color);
+	void AddTexts(std::vector<std::string> Texts, PivotPoiontLocation anchor_type, COORD offset, short int color);
 
-	void AddFrame(FrameStyle style,int color);
+	void AddFrame(FrameStyle style, short int color);
 
 	//Scene ExportScene();
 
-	void ChangeColor(int color);
+	void ChangeColor(short int color);
 
 
 };
