@@ -24,8 +24,8 @@ int main()
 
     // generate required buttons for game menu
     Button gamestart(0, 2, center_center, { 20,5 }, { 0,-2 }, double_line,White,Gray);
-    gamestart.SetOnLeftClick([&string_updater]() {string_updater.StringUpdate("left clicked"); });
-    gamestart.SetOnRightClick([&string_updater]() {string_updater.StringUpdate("right clicked"); });
+    gamestart.SetOnLeftPressed([&string_updater]() {string_updater.StringUpdate("left clicked"); });
+    gamestart.SetOnRightPressed([&string_updater]() {string_updater.StringUpdate("right clicked"); });
     gamestart.SetOnHovering_started([&string_updater]() {string_updater.StringUpdate("Hoverring"); });
 
    // gamestart.SetOnHovering_ended([&string_updater]() {string_updater.StringUpdate("not hovering"); });
@@ -35,10 +35,10 @@ int main()
    // load.SetOnHovering_started([]() { printf("load hovering\n"); });
 
     Button next(0, 2, center_center, { 20,5 }, { 0,12 }, double_line, White, Gray);
-    next.SetOnLeftClick([&C_manager, &Character_Maker]() { C_manager.SetCurrentDisplay(&Character_Maker); });
+    next.SetOnLeftPressed([&C_manager, &Character_Maker]() { C_manager.SetCurrentDisplay(&Character_Maker); });
 
 	Button gameExit(0, 2, center_center, { 20,5 }, { 0,18 }, double_line, White, Gray);
-    gameExit.SetOnLeftClick([&C_manager]() {C_manager.gameExit(); });
+    gameExit.SetOnLeftPressed([&C_manager]() {C_manager.gameExit(); });
 
     GameMenu.AddButton(&gamestart);
     GameMenu.AddButton(&load);
@@ -48,7 +48,7 @@ int main()
     //--------------------------------------------------------
  
     Button character(0, 2, left_center, { 30,40 }, { 5,0 }, double_line, White, Gray);
-    character.SetOnLeftClick([]() {});
+    character.SetOnLeftPressed([]() {});
 
     Button list1 (0, 2, left_center, { 20,5 }, { 40,-10 }, double_line, White, Gray);
     list1.SetOnHovering_started([]() {});

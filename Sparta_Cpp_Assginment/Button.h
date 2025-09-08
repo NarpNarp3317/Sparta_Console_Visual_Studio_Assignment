@@ -5,8 +5,8 @@
 #include <functional>// for call function
 #include <string>
 #include <Windows.h>
-#include <map>
 #include "Enum_Live_Interactable_state.h"// to use timer function!!!!
+#include "ClockTower.h"
 
 using namespace std;
 
@@ -24,10 +24,9 @@ public:
 private:
 
 	int _buttonID;
+	bool _isClickable;// to disalbe and able the press 
 	bool _isOverlapping;// to toggle the hovering state
-
-	int _start_Timer;// to recall the trigger when the time is up
-	int _pressDuration;
+	string _lable;
 
 	vector<vector<bool>> _collision_mask;// alpha mask for mouse detection
 
@@ -38,18 +37,22 @@ private:
 	Scene _hovering_texture;
 	Scene _activate_failed_texture;
 
+	//=== fucntions ===//
+	function<void()> _onLeftPressed;// using functions as variable using <functional>
+	function<void()> _onLeftReleased;
 
-	function<void()> _onLeftClick;// using functions as variable using <functional>
-	function<void()> _onRightClick;
+	function<void()> _onRightPressed;
+	function<void()> _onRightReleased;
+
 	function<void()> _onHovering_Started;
 	function<void()> _onHovering_Ended;
-	string _lable;
+	
 
 
 public:
 
-	void SetupTimer(int );
-	bool IsDetected(COORD mouse_coord);// when the cursor is in range, detect the mouse cursor and check if the alpha mask is overlapping
+	bool IsDetected(COORD mouse_coord) override;// 
+	// when the cursor is in range, detect the mouse cursor and check if the alpha mask is overlapping
 
 	void GenerateDefaultButton(Scene* newTexture);
 	void GenerateDefaultButtonSet();// this will generate defualt buttons with event states
@@ -57,11 +60,27 @@ public:
 	void SetButtonID(int newId);
 	int GetButtonID();
 
-	void SetOnLeftClick(function<void()> function);
+	void FillAlpha();
+	std::vector < std::vector<bool>> GetCollisionMask();
+
+	void SetLable(string new_lable);
+
+
+	//===== Left button ======//
+	void SetOnLeftPressed(function<void()> function);
 	void OnLeftPressed() override;
 
-	void SetOnRightClick(function<void()> function);
+	void SetOnLeftReleased(function<void()> function);
+	void OnLeftReleased() override;
+
+	//===== Right Button ======//
+	void SetOnRightPressed(function<void()> function);
 	void OnRightPressed() override;
+
+	void SetOnRightReleased(function<void()> function);
+	void OnRightReleased() override;
+
+	//===== Hovering =====//
 
 	void SetOnHovering_started(function<void()> function);
 	void OnHovering_started() override;
@@ -69,12 +88,11 @@ public:
 	void SetOnHovering_ended(function<void()> function);
 	void OnHovering_ended() override;
 
+	//===== Invalid Input ======//
 	void OnInvalidInput();
+	//--------------------------//
 
-	void FillAlpha();
-	std::vector < std::vector<bool>> GetCollisionMask();
-
-	void SetLable(string new_lable);
+	void I_Live_Update() override;// from interacction component
 
 	~Button();
 

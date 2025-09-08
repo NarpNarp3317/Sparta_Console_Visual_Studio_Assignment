@@ -2,12 +2,15 @@
 #include "SceneMaker.h"
 
 //===================  Constructor ================//
-Button::Button(int button_id, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// with offset, no label
+Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// with offset, no label
 	:BaseFrame(priority, anchor_type, width, offset, frame_style, text_color, bg_color),
 
-	_buttonID{ button_id },
-	_onLeftClick{nullptr},
-	_onRightClick{nullptr},
+	_isClickable{true},
+	_buttonID{ buttonID },
+	_onLeftPressed{nullptr},
+	_onLeftReleased{nullptr},
+	_onRightPressed{nullptr},
+	_onRightReleased{nullptr},
 	_onHovering_Started{nullptr},
 	_onHovering_Ended{nullptr},
 	_isOverlapping{false},// buttons never overlaps
@@ -21,9 +24,12 @@ Button::Button(int button_id, int priority, PivotPoiontLocation anchor_type, COO
 Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// without offset, no label
 	:BaseFrame(priority, anchor_type, width, {0,0}, frame_style, text_color, bg_color),
 
+	_isClickable{ true },
 	_buttonID{ buttonID },
-	_onLeftClick{ nullptr },
-	_onRightClick{ nullptr },
+	_onLeftPressed{ nullptr },
+	_onLeftReleased{ nullptr },
+	_onRightPressed{ nullptr },
+	_onRightReleased{ nullptr },
 	_onHovering_Started{ nullptr },
 	_onHovering_Ended{ nullptr },
 	_isOverlapping{ false },
@@ -35,11 +41,15 @@ Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COOR
 }
 
 
-Button::Button(int button_id, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// with offset and lable
+Button::Button(int buttonID, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// with offset and lable
 	:BaseFrame(priority, anchor_type, width, offset, frame_style, text_color, bg_color),
-	_buttonID{ button_id },
-	_onLeftClick{ nullptr },
-	_onRightClick{ nullptr },
+
+	_isClickable{ true },
+	_buttonID{ buttonID },
+	_onLeftPressed{ nullptr },
+	_onLeftReleased{ nullptr },
+	_onRightPressed{ nullptr },
+	_onRightReleased{ nullptr },
 	_onHovering_Started{ nullptr },
 	_onHovering_Ended{ nullptr },
 	_isOverlapping{ false },
@@ -53,9 +63,12 @@ Button::Button(int button_id, int priority, string lable, PivotPoiontLocation an
 Button::Button(int buttonID, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// without offset, with lable
 	:BaseFrame(priority, anchor_type, width, { 0,0 }, frame_style, text_color, bg_color),
 
+	_isClickable{ true },
 	_buttonID{ buttonID },
-	_onLeftClick{ nullptr },
-	_onRightClick{ nullptr },
+	_onLeftPressed{ nullptr },
+	_onLeftReleased{ nullptr },
+	_onRightPressed{ nullptr },
+	_onRightReleased{ nullptr },
 	_onHovering_Started{ nullptr },
 	_onHovering_Ended{ nullptr },
 	_isOverlapping{ false },
@@ -131,84 +144,6 @@ int Button::GetButtonID()
 	return _buttonID;
 }
 
-
-//===== Left Click ======//
-void Button::SetOnLeftClick(function<void()> function)
-{
-	_onLeftClick = function;
-}
-
-void Button::OnLeftPressed()
-{
-	if (_onLeftClick != nullptr)// if the function is valid call function
-	{
-		SwitchTexturePtr(&_pressed_texture);
-		_onLeftClick();// show indication texture when button event is triggered
-	}
-
-	else OnInvalidInput();// if not, do this
-}
-//===== Left Click ======//
-void Button::SetOnRightClick(function<void()> function)
-{
-	_onRightClick = function;// missed here, now recovered!
-}
-
-void Button::OnRightPressed()
-{
-	if (_onRightClick != nullptr)// if the function is valid call function
-	{
-		SwitchTexturePtr(&_pressed_texture);
-		_onRightClick();
-	}
-	else OnInvalidInput();// if not, do this
-}
-//===== Left Click ======//
-void Button::SetOnHovering_started(function<void()> function)
-{
-	_onHovering_Started = function;
-}
-
-void Button::OnHovering_started()
-{
-	//if (_onHovering != nullptr)_onHovering();// if the function is valid call function
-	////else OnInvalidInput();//maybe not for hovering //-----> edited, this was triggering on each frame. only start once for detection
-
-	if (!_isOverlapping)// if it did not overlapped before
-	{
-		_isOverlapping = true;
-		if (_onHovering_Started != nullptr)
-		{
-			SwitchTexturePtr(&_hovering_texture);
-			//change the texture of the button for indication
-			_onHovering_Started();
-		}
-	}
-}
-
-void Button::SetOnHovering_ended(function<void()> function)
-{
-	_onHovering_Ended = function;
-}
-
-void Button::OnHovering_ended()
-{
-	if (_isOverlapping)
-	{
-		_isOverlapping = false;
-		if (_onHovering_Ended != nullptr)
-		{
-			SwitchTexturePtr(&_idle_texture);
-			_onHovering_Ended();
-		}
-	}
-}
-
-void Button::OnInvalidInput()// event fucntion when click failed (if containing function isnt valid)
-{
-	SwitchTexturePtr(&_activate_failed_texture);
-}
-
 void Button::FillAlpha()
 {
 	short int x = _width_XY.X;
@@ -225,6 +160,121 @@ std::vector<std::vector<bool>> Button::GetCollisionMask()
 void Button::SetLable(string new_lable)
 {
 	_lable = new_lable;
+}
+
+
+
+//============= Mouse Trigger Events ============//
+
+//===== Left Click ======//
+void Button::SetOnLeftPressed(function<void()> function)
+{
+	_onLeftPressed = function;
+}
+void Button::OnLeftPressed()
+{
+	if (_onLeftPressed != nullptr)// if the function is valid call function
+	{
+		SwitchTexturePtr(&_pressed_texture);
+		_onLeftPressed();// show indication texture when button event is triggered
+	}
+	else OnInvalidInput();// if not, do this
+}
+
+void Button::SetOnLeftReleased(function<void()> function)
+{
+	_onLeftReleased = function;
+}
+void Button::OnLeftReleased()
+{
+	SwitchTexturePtr(&_idle_texture);
+
+	if (_onLeftReleased != nullptr)
+	{
+		_onLeftPressed();
+	}
+}
+
+//===== Right Click ======//
+void Button::SetOnRightPressed(function<void()> function)
+{
+	_onRightPressed = function;// missed here, now recovered!
+}
+void Button::OnRightPressed()
+{
+	if (_onRightPressed != nullptr)// if the function is valid call function
+	{
+		SwitchTexturePtr(&_pressed_texture);
+		_onRightPressed();
+	}
+	else OnInvalidInput();// if not, do this
+}
+
+void Button::SetOnRightReleased(function<void()> function)
+{
+	_onRightReleased = function;
+}
+void Button::OnRightReleased()
+{	
+	SwitchTexturePtr(&_idle_texture);
+
+	if (_onRightReleased != nullptr)
+	{
+		_onRightReleased();
+	}
+}
+
+
+//===== Hovering ======//
+void Button::SetOnHovering_started(function<void()> function)
+{
+	_onHovering_Started = function;
+}
+
+void Button::OnHovering_started()
+{
+	if (!_isOverlapping)// if it did not overlapped before
+	{
+		_isOverlapping = true;
+		if (_onHovering_Started != nullptr)
+		{
+			SwitchTexturePtr(&_hovering_texture);
+			//change the texture of the button for indication
+			_onHovering_Started();
+		}
+	}
+}
+
+void Button::SetOnHovering_ended(function<void()> function)
+{
+	_onHovering_Ended = function;
+}
+void Button::OnHovering_ended()
+{
+	if (_isOverlapping)
+	{
+		_isOverlapping = false;
+		if (_onHovering_Ended != nullptr)
+		{
+			SwitchTexturePtr(&_idle_texture);
+			_onHovering_Ended();
+		}
+	}
+}
+
+//==== Invalid Error ====//
+void Button::OnInvalidInput()// event fucntion when click failed (if containing function isnt valid)
+{
+	SwitchTexturePtr(&_activate_failed_texture);
+	_isClickable = false;
+
+	TriggerState(rejective_state, 500);// disable input for 500 frames
+}
+
+
+void Button::I_Live_Update()
+{
+
 }
 
 Button::~Button()

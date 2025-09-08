@@ -17,69 +17,101 @@ MouseInputManager::MouseInputManager(HANDLE input_Handle):
 	Start_MouseInputReading();
 }
 
-void MouseInputManager::UpdateMouseInput()
+
+void MouseInputManager::UpdateMouseInput()// version 2, using Centralized TimeManagement
 {
-	//==== no no conditions ====//
-	if (!_isActive) return;
-	if (_OnMouseEvent == nullptr) return;
-	//if (!PeekConsoleInput(_input_H, &_input_Record, 1, &_events)) return;// not so sure
+	//======= No No Conditions =====//
+	if (!_isActive || _OnMouseEvent == nullptr) return;
 	if (!ReadConsoleInput(_input_H, &_input_Record, 1, &_events)) return;
 	if (_input_Record.EventType != MOUSE_EVENT) return;
-	//--------------------------//
+	//-----------------------------//
 
-	_input_type = None;//reset the input type
-	_mouse_event_Record = _input_Record.Event.MouseEvent;// record mouse events from Event(which is from input record by dread console input)
-	_cursor_coord_on_event = _mouse_event_Record.dwMousePosition;//dworld mouse cursor position
+	_input_type = None;
+	_mouse_event_Record = _input_Record.Event.MouseEvent;
+	_cursor_coord_on_event = _mouse_event_Record.dwMousePosition;
 
 	bool L_pressed_Now = (_mouse_event_Record.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED);
 	bool R_pressed_Now = (_mouse_event_Record.dwButtonState & RIGHTMOST_BUTTON_PRESSED);
 
-
-	//========== Left Trigger ==========//
-	if (L_pressed_Now && !R_pressed_Now && _isClickable)// when only left is pressed whil it is clickable
+	//==== Left Button ====//
+	if (L_pressed_Now && !_is_Left_Pressed && _isClickable)
 	{
 		_is_Left_Pressed = true;
-		if (_Interaction_targetPtr != nullptr && CheckTargetValid(_Interaction_targetPtr))// target address is not empty and target is valid
+		if (CheckTargetValid(_Interaction_targetPtr))
 		{
-			_Interaction_targetPtr->Trigger_ActiveState();// pressed
+			_Interaction_targetPtr->TriggerState(active_state,0);// trigger now!
+			_Interaction_targetPtr->OnLeftPressed();
 			_input_type = Left_click;
 		}
 	}
-	else if (!L_pressed_Now && _is_Left_Pressed)// if was pressed but now, it is released
+	else if (!L_pressed_Now && _is_Left_Pressed)
 	{
-		_is_Left_Pressed = false;// no longer pressed
-		if (_Interaction_targetPtr != nullptr && CheckTargetValid(_Interaction_targetPtr))// if the target and pointer is still valid
+		_is_Left_Pressed = false;
+		if (CheckTargetValid(_Interaction_targetPtr))
 		{
-			if (_Interaction_targetPtr->GetState() == active_state)// if current state is active
+			if (_Interaction_targetPtr->GetState() == active_state)
 			{
-				_Interaction_targetPtr->OnLeftPressed();
+				_Interaction_targetPtr->OnLeftReleased();
+				_Interaction_targetPtr->TriggerState(idle_state,5000);
 			}
 		}
 	}
-	//========== Right Trigger ==========//
-	if (R_pressed_Now && !L_pressed_Now && _isClickable)// when only left is pressed whil it is clickable
+
+	//==== Right Button ====//
+	if (R_pressed_Now && !_is_Right_Pressed && _isClickable)
 	{
 		_is_Right_Pressed = true;
-		if (_Interaction_targetPtr != nullptr && CheckTargetValid(_Interaction_targetPtr))// target address is not empty and target is valid
+		if (CheckTargetValid(_Interaction_targetPtr))
 		{
-			_Interaction_targetPtr->Trigger_ActiveState();// pressed
+			_Interaction_targetPtr->TriggerState(active_state,0);
+			_Interaction_targetPtr->OnRightPressed();
 			_input_type = Right_click;
 		}
 	}
-	else if (!R_pressed_Now && _is_Right_Pressed)// if was pressed but now, it is released
+	else if (!R_pressed_Now && _is_Right_Pressed)
 	{
-		_is_Right_Pressed = false;// no longer pressed
-		if (_Interaction_targetPtr != nullptr && CheckTargetValid(_Interaction_targetPtr))// if the target and pointer is still valid
+		_is_Right_Pressed = false;
+		if (CheckTargetValid(_Interaction_targetPtr))
 		{
-			if (_Interaction_targetPtr->GetState() == active_state)// if current state is active
+			if (_Interaction_targetPtr->GetState() == active_state)
 			{
-				_Interaction_targetPtr->OnLeftPressed();
+				_Interaction_targetPtr->OnRightReleased();
+				_Interaction_targetPtr->TriggerState(idle_state,5000);
 			}
 		}
 	}
 
+	//==== Hovering ====//
+	if (_mouse_event_Record.dwEventFlags == MOUSE_MOVED)
+	{
+		if (CheckTargetValid(_Interaction_targetPtr))
+		{
+			if (_Interaction_targetPtr->IsDetected(_cursor_coord_on_event))
+			{
+				if (_Interaction_targetPtr->GetState() != focused_state)
+				{
+					_Interaction_targetPtr->OnHovering_started();
+					_Interaction_targetPtr->TriggerState(focused_state,0);
+				}
+			}
+			else if (_Interaction_targetPtr->GetState() == idle_state)
+			{
+				_Interaction_targetPtr->OnHovering_ended();
+				_Interaction_targetPtr->TriggerState(idle_state,0);
+			}
+		}
+	}
 
+	// Callback hook if needed
+	if (_input_type != None)
+	{
+		_OnMouseEvent(_cursor_coord_on_event, _input_type);
+	}
 }
+
+
+
+
 
 void MouseInputManager::Start_MouseInputReading()// version 2, no looping( looping for console)// this checks for each frame of the update
 {
@@ -130,6 +162,7 @@ void MouseInputManager::Pause_MouseInputReading()
 }
 
 
+
 void MouseInputManager::ActivateMouseInput()
 {
 	_isActive = true;
@@ -172,12 +205,6 @@ void MouseInputManager::OnHovering_ended()
 {
 	this->_Interaction_targetPtr->OnHovering_ended();
 }
-
-//void MouseInputManager::Hovering()
-//{
-//	// condition for button coord matching with mouse cursor coord--> this triggers button to change color
-//	this->_Interaction_targetPtr->OnHovering();
-//}
 
 //------------------------------------------------------------------------------------** Interaction
 void MouseInputManager::SetInteractionTarget(Interactable* newTarget)

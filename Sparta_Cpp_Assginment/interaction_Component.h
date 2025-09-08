@@ -1,5 +1,7 @@
 #pragma once
 #include "Enum_Live_Interactable_state.h"
+#include "Windows.h"
+#include "ClockTower.h"
 /*
 this will allow classes with possession of this component(?) to be able to get interaction from mouse or other input events
 current interactions are
@@ -19,14 +21,21 @@ class Interactable
 {
 //private:--> the owner can get access
 protected:
-	Interactable_State _current_State = idle_state;
+	Interactable_State _current_State=idle_state;
 	
 	//==== timer ====//
-	int _state_timer;
-	int _state_duration;
+	int _reserved_time = 0;// the clock time of state update end
+	int _state_duration=0;
 
 
 public:
+
+	//virtual bool IsDetected(COORD mouseCoord) {};--> this one has body. it needs to return a bool value
+
+	virtual bool IsDetected(COORD mouseCoord) =0;// making it into pure virtual// doesnt have to return anything in here.
+	// allows classes that have this component to override and use detection// which will be used in Mouse input manager!!!! fuck yeah now i get it fuck
+
+
 
 	// interaction events
 
@@ -41,14 +50,16 @@ public:
 
 	//===== trigger function =====//
 
-	void Trigger_ActiveState();
-	void Trigger_FocusedState_Start();
-	void Trigger_FocusedState_End();
-	void Trigger_ErrorState();
+	void SetStateDuration(int duration);
 
 
-	virtual void I_Live_Update();// timer for owner
+	void TriggerState(Interactable_State newState, int duration);
+	
+	Interactable_State GetState();
 
+	virtual void I_Live_Update();// some will use their own timer.
+
+	/*
 	void SetState(Interactable_State newState);
 	Interactable_State GetState();
 
@@ -56,9 +67,10 @@ public:
 	void ResetStateTimer();// back to 0
 	int GetStateTimer();// get how much time has past
 
-	void SetStateDuration(int duration);
 	int GetStateDuration();
-
+	*/
+	// this method was allowing interactables to get their own timer, but when the number goes up, if burden the computing
+	// for effeciency, i chose centralized time manager to siganl and check every interactables.
 
 
 
