@@ -67,6 +67,9 @@
     <Filter Include="console_manager\UI_Manager">
       <UniqueIdentifier>{af73566f-0d22-4858-85ee-5b937f84ebc6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="console_manager\Popout">
+      <UniqueIdentifier>{83d7ed0a-70f6-491e-b56d-167e8e3067d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sparta_Cpp_Assginment.cpp">
@@ -111,9 +114,6 @@
     <ClCompile Include="BattleStage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Bomb.cpp">
-      <Filter>Source Files\Item</Filter>
-    </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>Source Files\Item</Filter>
     </ClCompile>
@@ -138,14 +138,17 @@
     <ClCompile Include="Printer.cpp">
       <Filter>console_manager\printer</Filter>
     </ClCompile>
-    <ClCompile Include="SceneMaker.cpp">
-      <Filter>console_manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Popout.cpp">
-      <Filter>console_manager</Filter>
-    </ClCompile>
     <ClCompile Include="StringUpdater.cpp">
       <Filter>console_manager\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Display.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Popout.cpp">
+      <Filter>console_manager\Popout</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMaker.cpp">
+      <Filter>console_manager\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,9 +191,6 @@
     <ClInclude Include="BattleStage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Bomb.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
@@ -227,12 +227,6 @@
     <ClInclude Include="Printer.h">
       <Filter>console_manager\printer</Filter>
     </ClInclude>
-    <ClInclude Include="Popout.h">
-      <Filter>console_manager</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneMaker.h">
-      <Filter>console_manager</Filter>
-    </ClInclude>
     <ClInclude Include="Enum_FrameType.h">
       <Filter>console_manager</Filter>
     </ClInclude>
@@ -250,6 +244,21 @@
     </ClInclude>
     <ClInclude Include="UI_Manager.h">
       <Filter>console_manager\UI_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Display.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_Text_Color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneEditor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Popout.h">
+      <Filter>console_manager\Popout</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMaker.h">
+      <Filter>console_manager\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
