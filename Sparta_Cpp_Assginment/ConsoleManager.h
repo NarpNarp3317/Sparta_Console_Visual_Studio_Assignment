@@ -5,6 +5,7 @@
 #include "MouseInputManager.h"// for mouse input/and keyboard input(default)
 #include "Display.h"// for a scene on screen
 #include "Printer.h"// renerer
+#include "Interaction_Component.h"
 
 class ConsoleManager
 	/*
@@ -53,6 +54,8 @@ private:
 
 	//vector<vector<int>> _button_id_storage --> 클릭 가능한 버튼들의 id들을 저장함
 
+	Scene _final_Scene;
+
 public:
 
 	void SetupScene();//화면 설정 시작
@@ -84,6 +87,8 @@ public:
 	void C_DeactivateMouseInput();
 	void C_ActivateMouseClicks();// ActivateMouseClick is already in use of mouse input manager
 	void C_DeactivateMouseClicks();
+
+	void SetupMouseInput();
 
 	//====== Actually updating the Console ====//
 	void Update();// input and output

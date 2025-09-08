@@ -1,8 +1,10 @@
 #pragma once
 #include "Scene.h"
 #include "PivotPoint.h"
+#include "Enum_FrameType.h"
 #include <vector>
 #include <Windows.h>
+
 
 using namespace std;
 
@@ -12,8 +14,6 @@ class BaseFrame
 public:
 	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset);//offset을 주고 frame을 생성
 	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width);//주어진 타입에 맞춰 프레임 생성
-
-
 
 protected:
 //private:
@@ -33,7 +33,6 @@ protected:
 
 	static COORD _screen_Limit;// all shared by same class
 
-	short int _frame_color;// frame color
 	Scene _visual;//frame // could this be a texture?
 	FrameStyle _frame_style;// look of frame
 	Scene _texture;// the texture content of the frame
@@ -43,22 +42,16 @@ protected:
 	//--------> yes this will be used but not in here, but in scene struct
 	
 	//COORD _pivotPoint;//pivot point(anchor point)가 되는 곳의 좌표
-	//edited ----> coord is already decided by the enum PivotPoiontLocation. additional movement can be adjusted by offset
-
-	COORD _offset;// by adding the offset, reposition the frame
-
-	static COORD _screen_Limit;// all shared by same class
-	
+	//edited ----> coord is already decided by the enum PivotPoiontLocation. additional movement can be adjusted by offset	
 
 
 public:
-	void CalulatePrintStartCoord(PivotPoiontLocation anchor_type);// printring starts from the top left corner, this coord will be calculated based on the anchor type of frame
+	void CalculatePrintStartCoord(PivotPoiontLocation anchor_type);// printring starts from the top left corner, this coord will be calculated based on the anchor type of frame
 
 	COORD GetPrintStartCoord();
 	COORD GetWidthXY();
 	const Scene& GetFramePtr();
-
-	Scene* GetFramePtr();
+	// Scene* GetFramePtr();
 	Scene* GetTexturePtr();// get what's inside the frame
 
 	void SetPicture(const Scene& new_picture);// set whats in side the frame

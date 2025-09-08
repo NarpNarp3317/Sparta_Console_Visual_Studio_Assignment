@@ -14,7 +14,7 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_frame{},// blank frame at begining
 	_frame_color{7},//default white
 	print_start_coord{0,0},
-	_frame_style{ frame_style },
+	_frame_style{ def_frame_style },
 	_visual{},// blank frame at begining
 	_texture{}//empty
 
@@ -31,14 +31,14 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width)
 	_offset{ 0,0 },//default offset == no offset
 	_frame{},
 	print_start_coord{ 0,0 },
-	_frame_style{ frame_style },
+	_frame_style{ def_frame_style },
 	_visual{},
 	_frame_color{ 7 }//default white
 {
 	GenerateFrame();
 }
 
-void BaseFrame::CalulatePrintStartCoord(PivotPoiontLocation anchor_type)
+void BaseFrame::CalculatePrintStartCoord(PivotPoiontLocation anchor_type)
 {
 	short int lX = _screen_Limit.X;
 	short int lY = _screen_Limit.Y;
@@ -204,21 +204,8 @@ void BaseFrame::GenerateFrame()
 	_visual._alpha[y - 1][x - 1] = true;
 
 
-	// now for ║, ═
-	for (int i = 1; i < x - 1; i++)//first and last on top and bottom is corners
+	for (int i = 1; i < y - 1; i++)//same here
 	{
-		_frame._T_Pixel_frame[0][i] = T_Pixel{ _frame_color, 205 }; // top ═
-		_frame._alpha[0][i] = true;
-		_frame._T_Pixel_frame[y - 1][i] = T_Pixel{ _frame_color, 205 }; // bottom ═
-		_frame._alpha[y - 1][i] = true;
-	}
-	for (int j = 1; j < y - 1; j++)//same here
-	{
-		_frame._T_Pixel_frame[j][0] = T_Pixel{ _frame_color, 186 }; // left ║
-		_frame._alpha[j][0] = true;
-		_frame._T_Pixel_frame[j][x - 1] = T_Pixel{ _frame_color, 186 }; // right ║
-		_frame._alpha[j][x - 1] = true;
-
 		_visual._T_Pixel_frame[0][i] = T_Pixel{ _frame_color,  horizontal };
 		_visual._alpha[0][i] = true;
 		_visual._T_Pixel_frame[y - 1][i] = T_Pixel{ _frame_color,  horizontal };

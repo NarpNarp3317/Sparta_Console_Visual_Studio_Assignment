@@ -245,6 +245,9 @@
     <ClInclude Include="Text_Align.h">
       <Filter>console_manager</Filter>
     </ClInclude>
+    <ClInclude Include="Enum_FrameType.h">
+      <Filter>console_manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="AttackBoost.cpp.rej" />

@@ -22,28 +22,28 @@ private:
 
 	//==== Interaction ====//
 	Interactable* _Interaction_targetPtr;
+	Enum_MouseInput _input_type;
+	
 public:
-
-
 	void Start_MouseInputReading();
-
+	void Pause_MouseInputReading();
 	void ActivateMouseInput();
 	void DeactivateMouseInput();
-
 
 	void ActivateMouseClick();// 마우스 클릭 가능하게 함
 	void DisableMouseClick();// 마우스 클릭 읽기를 중단함
 
 	void OnRightClick();
 	void OnLeftClick();
-	void Hovering();
+	// void Hovering();
+	void OnHovering_started();
+	void OnHovering_ended();
 
 	void SetInteractionTarget(Interactable* newTarget);
 
 	void DetectInteractionTarget();// check if the interactable's coord is matching with mouse cursor's coord and set it as target
 	Interactable* GetCurrentInteractionTarget();
 	bool CheckTargetValid(Interactable* newTarget);// check if interaction target is valid or not
-
 
 	~MouseInputManager();
 

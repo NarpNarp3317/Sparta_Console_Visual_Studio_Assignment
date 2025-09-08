@@ -56,9 +56,6 @@ void ConsoleManager::SetupScene()
 	
 }
 
-
-void ConsoleManager::ResizeConsoleWindow()
-
 //======== Mouse Input ==========//
 void ConsoleManager::C_ActivateMouseInput()
 {
@@ -95,17 +92,17 @@ void ConsoleManager::SetupMouseInput()
 
 					switch (input_type)
 					{
-						case Left_click:button->OnLeftClick(); break;
+					case Left_click:button->OnLeftClick(); break;
 
-						case Right_click:button->OnRightClick(); break;
+					case Right_click:button->OnRightClick(); break;
 
 						//case Hovering:button->OnHovering(); break; no more
 
-						default:
-						{
-							//error, invalid enum has been used
-							break;
-						}
+					default:
+					{
+						//error, invalid enum has been used
+						break;
+					}
 					}
 				}
 				else
@@ -115,8 +112,6 @@ void ConsoleManager::SetupMouseInput()
 				//break;// stop loop!, button detected!(only for non overlapping button situation, but...why would there be overlapping situation?)
 			}
 		};
-
-	
 }
 
 
@@ -191,11 +186,13 @@ void ConsoleManager::ConsoleWindowResizing()// maximize the scale of console win
 	BaseFrame::SetScreenLimits(_windows_Scale);// informs base frames the max limit of the projectable area (screen limit)	
 }
 
+// ¾È¾¸
 void ConsoleManager::SetDisplacement()
 {
 	
 }
 
+// ¾È¾¸
 void ConsoleManager::MouseinputReader(COORD mouse_coord)
 {
 	if (_currentDisplay == nullptr) return;
@@ -238,19 +235,6 @@ void ConsoleManager::FillConsoleWithDot()
 		WriteConsoleOutputCharacterA(_output_H, line.c_str(), line.size(), pos, &charsWritten);
 	}
 }
-
-void ConsoleManager::PrintOutDisplay()
-{
-	//print out
-	_printer->PrintFrame(_final_Scene);
-
-}
-
-Printer* ConsoleManager::Get_Printer()
-{
-	return _printer;
-}
-
 
 
 void ConsoleManager::Update()

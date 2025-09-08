@@ -4,6 +4,7 @@
 #include "TextPixel.h"
 #include "Scene.h"
 #include "Button.h"
+#include "Display.h"
 
 
 

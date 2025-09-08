@@ -88,3 +88,11 @@ void SceneMaker::AddTexts(std::vector<std::string> Texts, PivotPoiontLocation an
 	}
 }
 
+void SceneMaker::AddFrame(FrameStyle style, int color)
+{
+
+}
+void SceneMaker::ChangeColor(int color)
+{
+
+}
