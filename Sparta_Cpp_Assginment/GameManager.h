@@ -9,6 +9,7 @@
 #include "Goblin.h"
 #include "Orc.h"
 #include "Troll.h"
+#include "Shop.h"
 
 using namespace std;
 
@@ -42,5 +43,6 @@ private : // 함수
 
 private: // 변수
 	Character* player1;
+	Shop* nowShop;
 };
 

@@ -10,13 +10,16 @@ GameManager::~GameManager()
 {
 	player1 = nullptr;
 	delete player1;
+
+	nowShop = nullptr;
+	delete nowShop;
 }
 
 // 25.09.04. 이무표
 // Log를 찍어보며 디버깅할 것이 있다면 이곳에 추가해서 확인하세요
 void GameManager::StartGame()
 {
-
+	nowShop = new Shop();
 	this->startMenu();
 
 }
@@ -170,5 +173,33 @@ void GameManager::battle(Character* _player)
 
 void GameManager::vistShop(Character* _player)
 {
+	bool shopFlag = true;
+	while (shopFlag)
+	{
+		int selectNum = 0;
+		cout << "==========================" << endl;
+		cout << "Welcome to the Shop!" << endl;
+		cout << "You can choose one of the following options:" << endl;
+		cout << "1. Buy Item" << endl;
+		cout << "2. Sell Item" << endl;
+		cout << "3. Exit Shop" << endl;
+		cout << "==========================" << endl;
+		cin >> selectNum;
 
+		switch (selectNum)
+		{
+
+		case(1):
+			nowShop->BuyItem(*_player);
+			break;
+		case(2):
+			nowShop->SellItem(*_player);
+			break;
+		case(3):
+			shopFlag = false;
+			break;
+		default:			
+			break;
+		}
+	}
 }

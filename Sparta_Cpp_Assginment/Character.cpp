@@ -24,7 +24,7 @@ Character::Character(string name)
 {
 	this->name = name;
 	maxHealth = 100;
-	baseAttack = 1;
+	baseAttack = 50;
 	attack = baseAttack;
 	level = 1;
 	experience = 0;

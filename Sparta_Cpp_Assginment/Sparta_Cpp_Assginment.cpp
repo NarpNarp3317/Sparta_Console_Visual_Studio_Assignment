@@ -10,9 +10,10 @@ int main()
 {
 
 	/// 그 외 조원 시작지점(기존)
-	//GameManager startGame;
-	//startGame.StartGame();
+	GameManager startGame;
+	startGame.StartGame();
 
+    return 0;
     StringUpdater string_updater({10,2});
     ConsoleManager C_manager;// for the getting max sceen size first so that base frames can know the screen limit
 
