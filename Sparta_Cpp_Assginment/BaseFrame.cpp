@@ -225,7 +225,7 @@ void BaseFrame::GenerateFrame()
 	_texture._alpha[y - 1][x - 1] = true;
 
 
-	for (int i = 1; i < y - 1; i++)//same here
+	for (int i = 1; i < x - 1; i++)//same here/alsnkljkb adsljkbf saflsdjkbsdfhajk fuck
 	{
 		_texture._T_Pixel_frame[0][i] = T_Pixel{ _frame_color,  horizontal };
 		_texture._alpha[0][i] = true;
