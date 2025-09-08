@@ -9,6 +9,7 @@ void Weapon::use(Character* character)
 	curr_w = nullptr;
 	character->setEquippedWeapon(new Weapon(*this));
 	character->refreshATK();
+	cout << "Changed weapon to " + character->getEquippedWeapon()->getName() + "." << endl;
 }
 
 int Weapon::getDamage() { return this->damage; }

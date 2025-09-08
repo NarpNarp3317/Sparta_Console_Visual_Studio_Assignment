@@ -3,7 +3,6 @@
 #include "Monster.h"
 #include "BattleStage.h"
 #include "AttackBoost.h"
-#include "Bomb.h"
 #include "HealthPotion.h"
 #include <limits> 
 
@@ -130,7 +129,7 @@ void Battle::playerUseItemBehavior(Character* _player)
 
 		if (_player->checkingInventory(selectNum - 1)) //선택한 번호가 가방에 있는지 확인
 		{
-			_player->useItem(selectNum - 1, _monster); //있다면 아이템 사용
+			_player->useItem(selectNum - 1); //있다면 아이템 사용
 			break;
 		}
 		else
@@ -205,10 +204,10 @@ void Battle::battleResult(Character* _player, BattleStage& battleStage){
 				cout << "AttackBoost" << endl;
 				_player->addItem(new AttackBoost("AttackBoost", 15, 15));
 				break;
-			case EItem::Bomb:
-				cout << "Bomb" << endl;
-				_player->addItem(new Bomb("Bomb", 15, 15));
-				break;
+			//case EItem::Bomb:
+			//	cout << "Bomb" << endl;
+			//	_player->addItem(new Bomb("Bomb", 15, 15));
+			//	break;
 			case EItem::HealthPotion:
 				cout << "HealthPotion" << endl;
 				_player->addItem(new HealthPotion("HealthPotion", 15, 15));

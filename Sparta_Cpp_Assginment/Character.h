@@ -15,7 +15,7 @@ public:
 	Character(string name);
 	~Character();
 public:
-	void useItem(int index, Monster* monster);
+	void useItem(int index);
 	void addItem(Item* item);
 	bool removeItem(string name);
 	bool removeItemIdx(int index);
@@ -30,6 +30,7 @@ public:
 	Weapon* getEquippedWeapon() const;
 	void setEquippedWeapon(Weapon* weapon);
 	int getBaseAttack() const;
+	void setBaseAttack(int atk);
 	// --------------------------------------------
 
 	//Getter

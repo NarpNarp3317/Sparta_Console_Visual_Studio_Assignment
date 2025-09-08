@@ -2,7 +2,6 @@
 #include "Item.h"
 #include "HealthPotion.h"
 #include "Weapon.h"
-#include "Bomb.h"
 #include "Monster.h"
 
 //이 생성자 임시로 사용
@@ -34,19 +33,10 @@ Character::Character(string name)
 	addItem(new HealthPotion("Heal", 0, true, false, "is Junk")); // 임시 추가
 }
 
-void Character::useItem(int index, Monster* monster)
+void Character::useItem(int index)
 {
 	Item* item = inventory[index];
-
-	if (Bomb* bomb = dynamic_cast<Bomb*>(item)) // 폭탄 아이템 예외
-	{
-		bomb->use(this, monster);
-	}
-	else
-	{
-		item->use(this);
-	}
-
+	item->use(this);
 
 	if (item->isConsumable()) 
 	{
@@ -206,6 +196,13 @@ int Character::getBaseAttack() const
 {
 	return this->baseAttack;
 }
+
+void Character::setBaseAttack(int atk)
+{
+	this->baseAttack = atk;
+	this->refreshATK();
+}
+
 // ---------------------
 
 int Character::getHealth() const

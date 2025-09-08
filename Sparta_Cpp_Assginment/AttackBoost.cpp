@@ -5,8 +5,10 @@ using namespace std;
 void AttackBoost::use(Character* character)
 {
 	Item::use(character);
-	int updatedValue = character->getAttack() + this->amount;
-	// character->setAttack(updatedValue);
+	int updatedValue = character->getBaseAttack() + this->amount;
+	character->setBaseAttack(updatedValue);
+
+	cout << "Attack increased by " + to_string(this->amount) + "." << endl;
 }
 
 int AttackBoost::getAmount() { return this->amount; }
