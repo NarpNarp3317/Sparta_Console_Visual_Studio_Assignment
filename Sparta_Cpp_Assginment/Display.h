@@ -8,7 +8,7 @@
 class Display :public BaseFrame
 {
 public:
-	Display(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset);
+	Display();
 
 
 

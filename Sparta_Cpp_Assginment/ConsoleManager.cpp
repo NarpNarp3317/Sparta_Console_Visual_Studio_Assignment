@@ -214,27 +214,27 @@ ConsoleManager::~ConsoleManager()
 	SwitchInputmode(KeyboardTypeInMode);// before dying, set to default console input
 }
 
-void ConsoleManager::FillConsoleWithDot()
-{
-	const COORD screenLimit = BaseFrame::GetScreenLimits();
-	const short paddingX = 10;
-	const short paddingY = 10;
-
-	const short startX = paddingX / 2;
-	const short startY = paddingY / 2;
-	const short endX = screenLimit.X - (paddingX / 2);
-	const short endY = screenLimit.Y - (paddingY / 2);
-
-	DWORD charsWritten;
-
-	std::string line(endX - startX, '.'); // line length = padded width
-
-	for (short y = startY; y < endY; ++y)
-	{
-		COORD pos = { startX, y };
-		WriteConsoleOutputCharacterA(_output_H, line.c_str(), line.size(), pos, &charsWritten);
-	}
-}
+//void ConsoleManager::FillConsoleWithDot()
+//{
+//	const COORD screenLimit = BaseFrame::GetScreenLimits();
+//	const short paddingX = 10;
+//	const short paddingY = 10;
+//
+//	const short startX = paddingX / 2;
+//	const short startY = paddingY / 2;
+//	const short endX = screenLimit.X - (paddingX / 2);
+//	const short endY = screenLimit.Y - (paddingY / 2);
+//
+//	DWORD charsWritten;
+//
+//	std::string line(endX - startX, '.'); // line length = padded width
+//
+//	for (short y = startY; y < endY; ++y)
+//	{
+//		COORD pos = { startX, y };
+//		WriteConsoleOutputCharacterA(_output_H, line.c_str(), line.size(), pos, &charsWritten);
+//	}
+//}
 
 
 void ConsoleManager::Update()

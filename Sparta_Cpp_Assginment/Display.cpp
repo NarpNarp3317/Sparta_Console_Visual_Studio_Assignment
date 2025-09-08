@@ -1,8 +1,7 @@
 #include "Display.h"
 
-Display::Display(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset) :BaseFrame(priority, anchor_type, width, offset)
+Display::Display() :BaseFrame(1, top_left, GetScreenLimits(), {0,0})
 {
-	GenerateFrame();
 }
 
 void Display::AddButton(Button* new_button)

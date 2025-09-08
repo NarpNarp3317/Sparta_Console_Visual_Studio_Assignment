@@ -1,7 +1,6 @@
 // Sparta_Cpp_Assginment.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-
 #include "Display.h"
 #include "GameManager.h"
 #include "ConsoleManager.h"

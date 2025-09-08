@@ -1,8 +1,8 @@
 #include "Button.h"
 
 //===================  Constructor ================//
-Button::Button(int button_id, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset)// with offset, no label
-	:BaseFrame(priority, anchor_type, width, offset),
+Button::Button(int button_id, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style)// with offset, no label
+	:BaseFrame(priority, anchor_type, width, offset, frame_style),
 
 	_id{ button_id },
 	_onLeftClick{nullptr},
@@ -15,8 +15,8 @@ Button::Button(int button_id, int priority, PivotPoiontLocation anchor_type, COO
 	FillAlpha();// so that the button can be detected not only the frame but also the inside
 }
 
-Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COORD width)// without offset, no label
-	:BaseFrame(priority, anchor_type, width, {0,0}),
+Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style)// without offset, no label
+	:BaseFrame(priority, anchor_type, width, {0,0}, frame_style),
 
 	_id{ buttonID },
 	_onLeftClick{ nullptr },
@@ -30,8 +30,8 @@ Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COOR
 }
 
 
-Button::Button(int button_id, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset)// with offset and lable
-	:BaseFrame(priority, anchor_type, width, offset),
+Button::Button(int button_id, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style)// with offset and lable
+	:BaseFrame(priority, anchor_type, width, offset, frame_style),
 	_id{ button_id },
 	_onLeftClick{ nullptr },
 	_onRightClick{ nullptr },
@@ -43,8 +43,8 @@ Button::Button(int button_id, int priority, string lable, PivotPoiontLocation an
 	FillAlpha();
 }
 
-Button::Button(int buttonID, int priority, string lable, PivotPoiontLocation anchor_type, COORD width)// without offset, with lable
-	:BaseFrame(priority, anchor_type, width, { 0,0 }),
+Button::Button(int buttonID, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style)// without offset, with lable
+	:BaseFrame(priority, anchor_type, width, { 0,0 }, frame_style),
 
 	_id{ buttonID },
 	_onLeftClick{ nullptr },

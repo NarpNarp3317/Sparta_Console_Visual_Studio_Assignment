@@ -9,11 +9,11 @@
 class Button :public BaseFrame, public Interactable
 {
 public:
-	Button(int button_id, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset);
-	Button(int button_id, int priority, PivotPoiontLocation anchor_type, COORD width);
+	Button(int button_id, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style);
+	Button(int button_id, int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style);
 
-	Button(int button_id, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset);
-	Button(int button_id, int priority, string lable, PivotPoiontLocation anchor_type, COORD width);
+	Button(int button_id, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style);
+	Button(int button_id, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style);
 
 
 
