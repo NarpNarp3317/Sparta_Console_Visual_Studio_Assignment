@@ -3,8 +3,13 @@
 
 ConsoleManager::ConsoleManager()
 	:_input_H(GetStdHandle(STD_INPUT_HANDLE))
-	,_output_H(GetStdHandle(STD_OUTPUT_HANDLE))// input, ouput handle설정
+	,_output_H(GetStdHandle(STD_OUTPUT_HANDLE)),// input, ouput handle설정
+	_isrunning{ false }// start as paused
 {
+
+
+	SetConsoleOutputCP(437);// to print extended ascii
+
 	//SetConsoleFonstsize(16, 11);
 
 	// 시작 세팅
@@ -19,6 +24,17 @@ ConsoleManager::ConsoleManager()
 
 	this->_mouse = new MouseInputManager (_input_H);
 	this->_printer = new Printer(_output_H);
+
+
+	SetupScene();// setup scene and print out on console screen
+
+
+
+	//==== mouse settings =====//
+	C_ActivateMouseClicks();//---> at the beginning, activate mouse event and button click
+	C_ActivateMouseInput();
+	SetupMouseInput();// setup mouse input function so that mouseinput can be detected
+
 	
 }
 
@@ -40,7 +56,72 @@ void ConsoleManager::SetupScene()
 	
 }
 
+
 void ConsoleManager::ResizeConsoleWindow()
+
+//======== Mouse Input ==========//
+void ConsoleManager::C_ActivateMouseInput()
+{
+	if (_mouse != nullptr)_mouse->ActivateMouseInput();
+}
+
+void ConsoleManager::C_DeactivateMouseInput()
+{
+	if (_mouse != nullptr)_mouse->DeactivateMouseInput();
+}
+
+void ConsoleManager::C_ActivateMouseClicks()
+{
+	if (_mouse != nullptr)_mouse->ActivateMouseClick();
+}
+
+void ConsoleManager::C_DeactivateMouseClicks()
+{
+	if (_mouse != nullptr)_mouse->DisableMouseClick();
+}
+
+void ConsoleManager::SetupMouseInput()
+{
+	_mouse->_OnMouseEvent =// define what MouseEvent is
+		[this](COORD mouse_coord, Enum_MouseInput input_type)
+		{
+			if (_currentDisplay == nullptr) return;// no no situation
+
+			for (Button* button : _currentDisplay->GetInteractables())// check every interactables in current display(for now, its a buttons)
+			{
+				if (button->IsDetected(mouse_coord))// if button is in range and overlap with alpha
+				{
+					button->OnHovering_started();
+
+					switch (input_type)
+					{
+						case Left_click:button->OnLeftClick(); break;
+
+						case Right_click:button->OnRightClick(); break;
+
+						//case Hovering:button->OnHovering(); break; no more
+
+						default:
+						{
+							//error, invalid enum has been used
+							break;
+						}
+					}
+				}
+				else
+				{
+					button->OnHovering_ended();
+				}
+				//break;// stop loop!, button detected!(only for non overlapping button situation, but...why would there be overlapping situation?)
+			}
+		};
+
+	
+}
+
+
+void ConsoleManager::ResizeConsoleWindow()// if the console window size is changed, reposition the scenes
+
 {
 
 }
@@ -77,6 +158,13 @@ void ConsoleManager::SwitchInputmode(Enum_ConsoleMode inputmode)//입력 모드를 주
 
 	SetConsoleMode(_input_H, _input_Mode);
 	_consoleMode = inputmode;//for current enum of input mode
+}
+
+
+void ConsoleManager::ReadMouseInput()// do this after printing is done
+{
+	if(_mouse!=nullptr)
+	_mouse->Start_MouseInputReading();
 }
 
 void ConsoleManager::ConsoleWindowResizing()// maximize the scale of console window
@@ -150,3 +238,48 @@ void ConsoleManager::FillConsoleWithDot()
 		WriteConsoleOutputCharacterA(_output_H, line.c_str(), line.size(), pos, &charsWritten);
 	}
 }
+
+void ConsoleManager::PrintOutDisplay()
+{
+	//print out
+	_printer->PrintFrame(_final_Scene);
+
+}
+
+Printer* ConsoleManager::Get_Printer()
+{
+	return _printer;
+}
+
+
+
+void ConsoleManager::Update()
+{
+	if (!_currentDisplay || !_printer) return;// nothing to print or cannot print
+
+	// update the scene first
+	_final_Scene = _printer->MergeDisplay(_currentDisplay);
+	_printer->PrintFrame(_final_Scene);// print out the updated scene
+
+	if (_mouse != nullptr)
+	{
+		_mouse->Start_MouseInputReading();
+	}
+
+}
+
+void ConsoleManager::Run_Update()
+{
+	_isrunning = true;
+	while (_isrunning)
+	{
+		Update();
+		Sleep(30);//frame rate of the update
+	}
+}
+
+void ConsoleManager::Pause_Update()
+{
+	_isrunning = false;
+}
+

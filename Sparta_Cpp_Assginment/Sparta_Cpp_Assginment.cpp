@@ -1,22 +1,81 @@
 // Sparta_Cpp_Assginment.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <iostream>
+
+#include "Display.h"
 #include "GameManager.h"
 #include "ConsoleManager.h"
+#include "StringUpdater.h"
 
 int main()
 {
+
 	/// 그 외 조원 시작지점(기존)
 	//GameManager startGame;
 	//startGame.StartGame();
+
+    StringUpdater string_updater({10,2});
+    ConsoleManager C_manager;// for the getting max sceen size first so that base frames can know the screen limit
+
+    // generate required displays in here, first and then start the console manager
+
+    Display GameMenu;
+
+    Display Character_Maker;
+
+    // generate required buttons for game menu
+    Button gamestart(0, 2, center_center, { 20,5 }, { 0,-2 }, double_line);
+    gamestart.SetOnLeftClick([&string_updater]() {string_updater.StringUpdate("left clicked"); });
+    gamestart.SetOnRightClick([&string_updater]() {string_updater.StringUpdate("right clicked"); });
+    gamestart.SetOnHovering_started([&string_updater]() {string_updater.StringUpdate("Hoverring"); });
+
+   // gamestart.SetOnHovering_ended([&string_updater]() {string_updater.StringUpdate("not hovering"); });
+
+    Button load(0, 2, center_center, { 20,5 }, { 0,6 }, double_line);
+    load.SetOnLeftClick([]() {printf("Load Clicked"); });// add funtio
+    load.SetOnHovering_started([]() { printf("load hovering\n"); });
+
+    Button next(0, 2, center_center, { 20,5 }, { 0,12 }, double_line);
+    next.SetOnLeftClick([&C_manager, &Character_Maker]() { C_manager.SetCurrentDisplay(&Character_Maker); });
+
+    GameMenu.AddButton(&gamestart);
+    GameMenu.AddButton(&load);
+    GameMenu.AddButton(&next);
+
+    //--------------------------------------------------------
+ 
+    Button character(0, 2, left_center, { 20,40 }, { 0,5 }, double_line);
+    character.SetOnLeftClick([]() {});
+
+    Button list1 (0, 2, left_center, { 20,5 }, { 40,-10 }, double_line);
+    list1.SetOnHovering_started([]() {});
+    list1.SetOnHovering_ended([]() {});
+
+    Button list2 (0, 2, left_center, { 20,5 }, {40,0 }, double_line);
+
+    Button list3(0, 2, left_center, { 20,5 }, { 40, 10 }, double_line);
+
+    Character_Maker.AddButton(&character);
+    Character_Maker.AddButton(&list1);
+    Character_Maker.AddButton(&list2);
+    Character_Maker.AddButton(&list3);
+
+    //----------------------------------------------------
+
 
 
 	/// 세민님 시작지점
 	ConsoleManager consolManager;
 	BaseFrame newFrame(0,center,{80,80},{0,0});
 
+
 	
+
+
+    C_manager.SetCurrentDisplay(&GameMenu);// start up display here
+
+    C_manager.Run_Update();// run the console manager
+
 
 	return 0;
 }

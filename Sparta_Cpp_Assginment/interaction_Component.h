@@ -20,9 +20,9 @@ class Interactable
 public:
 	virtual void OnLeftClick(){}
 	virtual void OnRightClick(){}
-	virtual void OnHovering() {}// while makes more sence, but for unifomity(?) just "On"
-	//virtual void InvalidInput(){}// for left, right click. try to interact but cannot for reason?
-	//--> make functions for exceptional cases in the class, not in here
+	virtual void OnHovering_started(){}
+	virtual void OnHovering_ended(){}// so that hovering is not keep calling event on every frame
+
 
 	virtual bool isDetected();
 

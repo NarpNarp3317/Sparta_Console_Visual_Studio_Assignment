@@ -1,6 +1,9 @@
 #pragma once
 #include <Windows.h>
-#include "interaction_Component.h"// to get interaction target
+#include <functional>
+#include "Interaction_Component.h"// to get interaction target
+#include "Enum_MouseInput.h"
+
 
 class MouseInputManager
 {
@@ -23,7 +26,9 @@ public:
 
 
 	void Start_MouseInputReading();
-	void Pause_MouseInputReading();
+
+	void ActivateMouseInput();
+	void DeactivateMouseInput();
 
 
 	void ActivateMouseClick();// 마우스 클릭 가능하게 함
@@ -38,6 +43,7 @@ public:
 	void DetectInteractionTarget();// check if the interactable's coord is matching with mouse cursor's coord and set it as target
 	Interactable* GetCurrentInteractionTarget();
 	bool CheckTargetValid(Interactable* newTarget);// check if interaction target is valid or not
+
 
 	~MouseInputManager();
 

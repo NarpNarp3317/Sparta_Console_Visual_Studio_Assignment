@@ -25,6 +25,8 @@ public:
 
 private:
 
+	bool _isrunning;//to start and pause the live update
+
 	MouseInputManager* _mouse;//마우스 입력
 	Printer* _printer;
 
@@ -60,6 +62,9 @@ public:
 
 	void SwitchInputmode(Enum_ConsoleMode inputmode);
 
+	void ReadMouseInput();
+
+
 	void ConsoleWindowResizing();// maximize the console window
 
 	//void PlaceButtons();//클릭 가능한 버튼들의 좌표와 anchor pivot point와 맞게 배치함// edited--> set placement infos in Display obj(ex. menue, ingame, battle, shop)
@@ -73,6 +78,17 @@ public:
 
 
 
+
+
+	void C_ActivateMouseInput();
+	void C_DeactivateMouseInput();
+	void C_ActivateMouseClicks();// ActivateMouseClick is already in use of mouse input manager
+	void C_DeactivateMouseClicks();
+
+	//====== Actually updating the Console ====//
+	void Update();// input and output
+	void Run_Update();
+	void Pause_Update();
 
 	~ConsoleManager();
 

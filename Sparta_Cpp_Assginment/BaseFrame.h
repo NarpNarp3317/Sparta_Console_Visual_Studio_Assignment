@@ -15,13 +15,11 @@ public:
 
 
 
-//protected: //--> nah, ill use getter function. seems right
+protected:
+//private:
 
-private:
-//protected://--> just use getter function
 	//bool isclampable;// if the frame is out of full size of console screen, it could be not generated or get clamped. this bool decides the obj's condition
 	// --> not done yet
-
 	int _layerPriority;//layer순서
 	short int _frame_color;// frame color
 	
@@ -30,6 +28,16 @@ private:
 
 	Scene _frame;//
 	COORD _print_start;
+	COORD _offset;// by adding the offset, reposition the frame
+	COORD print_start_coord;
+
+	static COORD _screen_Limit;// all shared by same class
+
+	short int _frame_color;// frame color
+	Scene _visual;//frame // could this be a texture?
+	FrameStyle _frame_style;// look of frame
+	Scene _texture;// the texture content of the frame
+	
 	//vector<vector<bool>> _alpha;// 픽셀이 존재하는 곳을 true로 저장//클릭 가능한 곳을 저장?//지금은 프레임이 있는 범위는 전부 되는걸로
 	//  ---> by only reading the _frame, this wont be necessary for now
 	//--------> yes this will be used but not in here, but in scene struct
@@ -51,8 +59,16 @@ public:
 	COORD GetWidthXY();
 	const Scene& GetFramePtr();
 
+	Scene* GetFramePtr();
+	Scene* GetTexturePtr();// get what's inside the frame
+
+	void SetPicture(const Scene& new_picture);// set whats in side the frame
+	
+	bool IsOuterFrameVisible();// for merging, check if the frame style is no line, so that it can decide the range of the merged scene(if visual frame ---> 1 less, else as its width)
+
 
 	void GenerateFrame();//변경된 정보로 프레임을 생성함
+	//void FillAlpha();// for button, fill all with true so that button can be detected
 
 	static void SetScreenLimits(COORD limit_area);
 	static COORD GetScreenLimits();

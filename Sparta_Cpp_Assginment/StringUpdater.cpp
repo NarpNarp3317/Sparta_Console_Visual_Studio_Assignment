@@ -42,7 +42,7 @@ void StringUpdater::CleanStrings()
 {
 	for (int length : _str_lengths)//이전 입력된 string의 열만큼 반복
 	{
-		for (int i = 0; i < length; i++)
+		for (int i = 0; i <= length; i++)
 		{
 			printf(" ");//이전 출력을 " "를 덮어 씌워서 지움
 		}

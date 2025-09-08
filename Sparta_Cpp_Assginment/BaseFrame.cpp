@@ -11,8 +11,16 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_width_XY{ width },
 	_anchor_type{ anchor_type },
 	_offset{ offset },
+
 	_frame{},// blank frame at begining
 	_frame_color{7}//default white
+
+	print_start_coord{0,0},
+	_frame_style{ frame_style },
+	_visual{},// blank frame at begining
+	_frame_color{7},//default white
+	_texture{}//empty
+
 {
 	GenerateFrame();
 }
@@ -25,6 +33,9 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width)
 	_anchor_type{ anchor_type },
 	_offset{ 0,0 },//default offset == no offset
 	_frame{},
+	print_start_coord{ 0,0 },
+	_frame_style{ frame_style },
+	_visual{},
 	_frame_color{ 7 }//default white
 {
 	GenerateFrame();
@@ -40,31 +51,31 @@ void BaseFrame::CalulatePrintStartCoord(PivotPoiontLocation anchor_type)
 	switch (anchor_type)
 	{
 	case top_left:
-		_print_start = { 0,0 };
+		print_start_coord = { 0,0 };
 		break;
 	case top_center:
-		_print_start = { static_cast<short>((lX - wX) / 2),0 };
+		print_start_coord = { static_cast<short>((lX - wX) / 2),0 };
 		break;
 	case top_right:
-		_print_start = { static_cast<short>(lX - wX),0 };
+		print_start_coord = { static_cast<short>(lX - wX),0 };
 		break;
 	case left_center:
-		_print_start = { 0,static_cast<short>((lY - wY)/2) };
+		print_start_coord = { 0,static_cast<short>((lY - wY)/2) };
 		break;
-	case center:
-		_print_start = { static_cast<short>((lX - wX) / 2),static_cast<short>((lY - wY) / 2) };
+	case center_center:
+		print_start_coord = { static_cast<short>((lX - wX) / 2),static_cast<short>((lY - wY) / 2) };
 		break;
 	case right_center:
-		_print_start = { static_cast<short>(lX - wX),static_cast<short>((lY - wY) / 2) };
+		print_start_coord = { static_cast<short>(lX - wX),static_cast<short>((lY - wY) / 2) };
 		break;
 	case bottom_left:
-		_print_start = { 0,static_cast<short>(lY - wY) };
+		print_start_coord = { 0,static_cast<short>(lY - wY) };
 		break;
 	case bottom_center:
-		_print_start = { static_cast<short>((lX - wX) / 2),static_cast<short>(lY - wY) };
+		print_start_coord = { static_cast<short>((lX - wX) / 2),static_cast<short>(lY - wY) };
 		break;
 	case bottom_right:
-		_print_start = { static_cast<short>(lX - wX),static_cast<short>(lY - wY) };
+		print_start_coord = { static_cast<short>(lX - wX),static_cast<short>(lY - wY) };
 		break;
 	default:
 		//error, invalid enum detected, do not add more pivotpoint
@@ -72,21 +83,21 @@ void BaseFrame::CalulatePrintStartCoord(PivotPoiontLocation anchor_type)
 	}
 	//add offset
 
-	_print_start.X += _offset.X;
-	_print_start.Y += _offset.Y;
+	print_start_coord.X += _offset.X;
+	print_start_coord.Y += _offset.Y;
 
 	// clamp the size of the frame based on console screen limit// dont create frame? or cut out the frame?
 	// decided by isclampable//-----> *** not done yey ***
 
-	if (_print_start.X < 0 || _print_start.Y < 0)// min<0
+	if (print_start_coord.X < 0 || print_start_coord.Y < 0)// min<0
 	{
 		//error, the frame will be out of the console window.
-		_print_start = { 0,0 };
+		print_start_coord = { 0,0 };
 	}
-	else if(_print_start.X+ _width_XY.X> _screen_Limit.X|| _print_start.Y + _width_XY.Y > _screen_Limit.Y)//max>>limit
+	else if(print_start_coord.X+ _width_XY.X> _screen_Limit.X|| print_start_coord.Y + _width_XY.Y > _screen_Limit.Y)//max>>limit
 	{
 		//error, the frame will be out of the console window.
-		_print_start = { 0,0 };
+		print_start_coord = { 0,0 };
 	}
 
 	//return _print_start;
@@ -95,7 +106,7 @@ void BaseFrame::CalulatePrintStartCoord(PivotPoiontLocation anchor_type)
 
 COORD BaseFrame::GetPrintStartCoord()
 {
-	return _print_start;
+	return print_start_coord;
 }
 
 COORD BaseFrame::GetWidthXY()
@@ -106,10 +117,56 @@ COORD BaseFrame::GetWidthXY()
 const Scene& BaseFrame::GetFramePtr()
 {
 	return _frame;
+	return &_visual;
 }
+
+Scene* BaseFrame::GetTexturePtr()
+{
+	return &_texture;
+}
+
+
+void BaseFrame::SetPicture(const Scene& new_picture)// trim out where frames are( if its no visible frame, just as size of frame)
+{
+	_texture = new_picture;
+}
+
+bool BaseFrame::IsOuterFrameVisible()
+{
+	return _frame_style != no_line;// if style is noline--> return false, else, return true
+}
+
 
 void BaseFrame::GenerateFrame()
 {
+
+	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
+
+	//==== frame style ====//
+
+	unsigned char top_left, top_right, bottom_left, bottom_right, horizontal, vertical;// for frame
+
+	switch (_frame_style)
+	{
+	case double_line:
+		top_left = 201; top_right = 187; bottom_left = 200; bottom_right = 188; horizontal = 205; vertical = 186;
+		break;
+
+	case single_line:
+		top_left = 218; top_right = 191; bottom_left = 192; bottom_right = 217; horizontal = 196; vertical = 197;
+		break;
+
+	case no_line:// nothing
+		top_left = ' '; top_right = ' '; bottom_left = ' '; bottom_right = ' '; horizontal = ' '; vertical = ' ';
+		break;
+
+	default:
+		printf("Error, invalid frame style detected");
+		//error no enum detected
+		break;
+	}
+
+
 	short int x = _width_XY.X;
 	short int y = _width_XY.Y;
 	//short int off_x = _offset.X;//---> offset is for print start position
@@ -121,10 +178,11 @@ void BaseFrame::GenerateFrame()
 		return;
 	}
 
-	_frame._T_Pixel_frame.assign(y, vector< T_Pixel>(x, T_Pixel{ _frame_color ,' ' }));// fill the fame with blannk first.
-	_frame._alpha.assign(y, vector<bool>(x, false));// fill alpha mask with false(empty)
+	_visual._T_Pixel_frame.assign(y, vector< T_Pixel>(x, T_Pixel{ _frame_color ,' ' }));// fill the fame with blank first.
+	_visual._alpha.assign(y, vector<bool>(x, false));// fill alpha mask with false(empty)
 
 	// change corner chars
+
 	_frame._T_Pixel_frame[0][0] = T_Pixel{ _frame_color,201 };        // top-left ╔
 	_frame._alpha[0][0] = true;
 
@@ -136,6 +194,19 @@ void BaseFrame::GenerateFrame()
 
 	_frame._T_Pixel_frame[y - 1][x - 1] = T_Pixel{ _frame_color,188 };// bottom-right ╝
 	_frame._alpha[y - 1][x - 1] = true;
+
+	_visual._T_Pixel_frame[0][0] = T_Pixel{ _frame_color,top_left }; 
+	_visual._alpha[0][0] = true;
+
+	_visual._T_Pixel_frame[0][x - 1] = T_Pixel{ _frame_color,top_right };
+	_visual._alpha[0][x - 1] = true;
+
+	_visual._T_Pixel_frame[y - 1][0] = T_Pixel{ _frame_color,bottom_left}; 
+	_visual._alpha[y - 1][0] = true;
+
+	_visual._T_Pixel_frame[y - 1][x - 1] = T_Pixel{ _frame_color,bottom_right };
+	_visual._alpha[y - 1][x - 1] = true;
+
 
 	// now for ║, ═
 	for (int i = 1; i < x - 1; i++)//first and last on top and bottom is corners
@@ -151,8 +222,29 @@ void BaseFrame::GenerateFrame()
 		_frame._alpha[j][0] = true;
 		_frame._T_Pixel_frame[j][x - 1] = T_Pixel{ _frame_color, 186 }; // right ║
 		_frame._alpha[j][x - 1] = true;
+
+		_visual._T_Pixel_frame[0][i] = T_Pixel{ _frame_color,  horizontal };
+		_visual._alpha[0][i] = true;
+		_visual._T_Pixel_frame[y - 1][i] = T_Pixel{ _frame_color,  horizontal };
+		_visual._alpha[y - 1][i] = true;
+	}
+	for (int j = 1; j < y - 1; j++)//same here
+	{
+		_visual._T_Pixel_frame[j][0] = T_Pixel{ _frame_color,  vertical };
+		_visual._alpha[j][0] = true;
+		_visual._T_Pixel_frame[j][x - 1] = T_Pixel{ _frame_color,  vertical };
+		_visual._alpha[j][x - 1] = true;
 	}
 }
+/*
+void BaseFrame::FillAlpha()
+{
+	short int x = _width_XY.X;
+	short int y = _width_XY.Y;
+
+	_frame._alpha.assign(y, vector<bool>(x, true));// just assign it all true
+}
+*/ //----> its not for base frame, but for buttons, and not alphamask from scene, but for collision mask
 
 void BaseFrame::SetScreenLimits(COORD limit_area)
 {

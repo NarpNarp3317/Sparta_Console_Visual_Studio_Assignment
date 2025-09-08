@@ -1,4 +1,4 @@
-#include "interaction_Component.h"
+#include "Interaction_Component.h"
 
 bool Interactable::isDetected()
 {
