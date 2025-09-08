@@ -3,7 +3,6 @@
 #include "Monster.h"
 #include "BattleStage.h"
 #include "AttackBoost.h"
-#include "Bomb.h"
 #include "HealthPotion.h"
 #include <limits> 
 
@@ -131,7 +130,7 @@ void Battle::playerUseItemBehavior(Character* _player)
 
 		if (_player->checkingInventory(selectNum - 1)) //선택한 번호가 가방에 있는지 확인
 		{
-			_player->useItem(selectNum - 1, _monster); //있다면 아이템 사용
+			_player->useItem(selectNum - 1); //있다면 아이템 사용
 			break;
 		}
 		else
