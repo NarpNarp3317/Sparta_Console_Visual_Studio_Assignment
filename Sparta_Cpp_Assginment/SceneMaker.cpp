@@ -1,7 +1,8 @@
 #include "SceneMaker.h"
 #include "Text_Align.h"
-using namespace std;
 
+
+/*
 SceneMaker::SceneMaker():_width_XY{0,0}, _scene{nullptr}
 {
 }
@@ -41,21 +42,22 @@ void SceneMaker::ImportScene(Scene* scene, COORD width_XY, COORD offset)
 	_scene->_T_Pixel_frame = newFrame;
 	_scene->_alpha = newAlpha;
 }
+*/
 
-void SceneMaker::AddTexts(std::vector<std::string> Texts, PivotPoiontLocation anchor_type, COORD offset, Text_Color text_color, Text_Color background_color)
+void SceneMaker::AddTexts(Scene* scene, COORD width_XY, COORD offset, vector<string> Texts, PivotPoiontLocation anchor_type, Text_Color text_color, Text_Color background_color)
 {
 	short int color = FindColorCode(text_color, background_color);
 
-	if (_scene == nullptr) return;
+	if (scene == nullptr) return;
 	if (Texts.empty()) return;
 
-	int max_LineCount = _width_XY.Y-2;
-	int lineCount = (Texts.size() < _width_XY.Y - 2) ? Texts.size() : _width_XY.Y - 2;// chose smallest one// -2 for margine by frame
+	int max_LineCount = width_XY.Y-2;
+	int lineCount = (Texts.size() < width_XY.Y - 2) ? Texts.size() : width_XY.Y - 2;// chose smallest one// -2 for margine by frame
 
 	for (int i = 0; i < lineCount; i++)
 	{
 		string current_Line = Texts[i];
-		int current_Line_Length = (current_Line.length() < _width_XY.X-2) ? current_Line.length() : _width_XY.X-2;// same here
+		int current_Line_Length = (current_Line.length() < width_XY.X-2) ? current_Line.length() : width_XY.X-2;// same here
 
 		//Text_Align t_align;// the alignment of text by anchor type ---> not necessary
 
@@ -69,11 +71,11 @@ void SceneMaker::AddTexts(std::vector<std::string> Texts, PivotPoiontLocation an
 		}
 		else if (anchor_type == top_center || anchor_type == center_center || anchor_type == bottom_center)
 		{
-			string_start.X = 1+((_width_XY.X - current_Line_Length) / 2);
+			string_start.X = 1+((width_XY.X - current_Line_Length) / 2);
 		}
 		else if (anchor_type == top_right || anchor_type == right_center || anchor_type == bottom_right)
 		{
-			string_start.X = _width_XY.X - current_Line_Length-1;
+			string_start.X = width_XY.X - current_Line_Length-1;
 		}
 		else
 		{
@@ -87,11 +89,11 @@ void SceneMaker::AddTexts(std::vector<std::string> Texts, PivotPoiontLocation an
 		}
 		else if (anchor_type == left_center || anchor_type == center_center || anchor_type == right_center)
 		{
-			string_start.Y = ((_width_XY.Y - lineCount) / 2)+i+1;
+			string_start.Y = ((width_XY.Y - lineCount) / 2)+i+1;
 		}
 		else if (anchor_type == bottom_left || anchor_type == bottom_center || anchor_type == bottom_right)
 		{
-			string_start.Y = _width_XY.Y - lineCount + i-1;
+			string_start.Y = width_XY.Y - lineCount + i-1;
 		}
 		else
 		{
@@ -108,19 +110,19 @@ void SceneMaker::AddTexts(std::vector<std::string> Texts, PivotPoiontLocation an
 			int  c_coordY = string_start.Y;
 
 
-			if (c_coordX < 1 || c_coordX >= _width_XY.X-1 || c_coordY < 1 || c_coordY >= _width_XY.Y-1) continue;
+			if (c_coordX < 1 || c_coordX >= width_XY.X-1 || c_coordY < 1 || c_coordY >= width_XY.Y-1) continue;
 
-			_scene->_T_Pixel_frame[c_coordY][c_coordX] = T_Pixel{ color ,static_cast<unsigned char>(current_Line[c]) };
-			_scene->_alpha[c_coordY][c_coordX] = true;
+			scene->_T_Pixel_frame[c_coordY][c_coordX] = T_Pixel{ color ,static_cast<unsigned char>(current_Line[c]) };
+			scene->_alpha[c_coordY][c_coordX] = true;
 		}
 	}
 }
 
-void SceneMaker::AddFrame(FrameStyle style, Text_Color text_color, Text_Color background_color)
+void SceneMaker::AddFrame(Scene* scene, COORD width_XY, COORD offset, FrameStyle style, Text_Color text_color, Text_Color background_color)
 {
 	short int color = FindColorCode(text_color, background_color);
 
-	if (_scene == nullptr) return;
+	if (scene == nullptr) return;
 	if (style == no_line) return;// do not allocate any thing when ther is no frame
 
 	//==== frame style ====//
@@ -142,8 +144,8 @@ void SceneMaker::AddFrame(FrameStyle style, Text_Color text_color, Text_Color ba
 		break;
 	}
 
-	short int x = _width_XY.X;
-	short int y = _width_XY.Y;
+	short int x = width_XY.X;
+	short int y = width_XY.Y;
 
 	if (x < 2 || y < 2)// the frame needs to be at least bigger than 2*2 so that corner can be made
 	{
@@ -151,68 +153,68 @@ void SceneMaker::AddFrame(FrameStyle style, Text_Color text_color, Text_Color ba
 	}
 	// change corner chars
 
-	_scene->_T_Pixel_frame[0][0] = T_Pixel{ color,top_left };
-	_scene->_alpha[0][0] = true;
+	scene->_T_Pixel_frame[0][0] = T_Pixel{ color,top_left };
+	scene->_alpha[0][0] = true;
 
-	_scene->_T_Pixel_frame[0][x - 1] = T_Pixel{ color,top_right };
-	_scene->_alpha[0][x - 1] = true;
+	scene->_T_Pixel_frame[0][x - 1] = T_Pixel{ color,top_right };
+	scene->_alpha[0][x - 1] = true;
 
-	_scene->_T_Pixel_frame[y - 1][0] = T_Pixel{ color,bottom_left };
-	_scene->_alpha[y - 1][0] = true;
+	scene->_T_Pixel_frame[y - 1][0] = T_Pixel{ color,bottom_left };
+	scene->_alpha[y - 1][0] = true;
 
-	_scene->_T_Pixel_frame[y - 1][x - 1] = T_Pixel{ color,bottom_right };
-	_scene->_alpha[y - 1][x - 1] = true;
+	scene->_T_Pixel_frame[y - 1][x - 1] = T_Pixel{ color,bottom_right };
+	scene->_alpha[y - 1][x - 1] = true;
 
 
 	for (int i = 1; i < x - 1; i++)//same here/alsnkljkb adsljkbf saflsdjkbsdfhajk fuck
 	{
-		_scene->_T_Pixel_frame[0][i] = T_Pixel{ color,  horizontal };
-		_scene->_alpha[0][i] = true;
-		_scene->_T_Pixel_frame[y - 1][i] = T_Pixel{ color,  horizontal };
-		_scene->_alpha[y - 1][i] = true;
+		scene->_T_Pixel_frame[0][i] = T_Pixel{ color,  horizontal };
+		scene->_alpha[0][i] = true;
+		scene->_T_Pixel_frame[y - 1][i] = T_Pixel{ color,  horizontal };
+		scene->_alpha[y - 1][i] = true;
 	}
 	for (int j = 1; j < y - 1; j++)//same here
 	{
-		_scene->_T_Pixel_frame[j][0] = T_Pixel{ color,  vertical };
-		_scene->_alpha[j][0] = true;
-		_scene->_T_Pixel_frame[j][x - 1] = T_Pixel{ color,  vertical };
-		_scene->_alpha[j][x - 1] = true;
+		scene->_T_Pixel_frame[j][0] = T_Pixel{ color,  vertical };
+		scene->_alpha[j][0] = true;
+		scene->_T_Pixel_frame[j][x - 1] = T_Pixel{ color,  vertical };
+		scene->_alpha[j][x - 1] = true;
 	}
 }
-void SceneMaker::ChangeWholeColor(Text_Color text_color, Text_Color background_color)
+void SceneMaker::ChangeWholeColor(Scene* scene, COORD width_XY, Text_Color text_color, Text_Color background_color)
 {
 	short int color = FindColorCode(text_color, background_color);
 
-	if (_scene == nullptr) return;
+	if (scene == nullptr) return;
 
-	for (int y = 0; y < _width_XY.Y; y++)
+	for (int y = 0; y < width_XY.Y; y++)
 	{
-		for (int x=0; x < _width_XY.X; x++)
+		for (int x=0; x < width_XY.X; x++)
 		{
-			if (_scene->_alpha[y][x])
+			if (scene->_alpha[y][x])
 			{
-				_scene->_T_Pixel_frame[y][x].color = color;
+				scene->_T_Pixel_frame[y][x].color = color;
 			}
 		}
 	}
 }
 
-void SceneMaker::Switch_Text_BG_Colors()
+void SceneMaker::Switch_Text_BG_Colors(Scene* scene, COORD width_XY)
 {
-	if (_scene == nullptr) return;
+	if (scene == nullptr) return;
 
-	for (int y = 0; y < _width_XY.Y; y++)
+	for (int y = 0; y < width_XY.Y; y++)
 	{
-		for (int x=0; x < _width_XY.X; x++)
+		for (int x=0; x < width_XY.X; x++)
 		{
-			if (_scene->_alpha[y][x])
+			if (scene->_alpha[y][x])
 			{
-				short int color = _scene->_T_Pixel_frame[y][x].color;// find the color;
+				short int color = scene->_T_Pixel_frame[y][x].color;// find the color;
 
 				short int text = color % 16;// get the rest of division(text)X coord
 				short int bg = (color- text) / 16;// Background Y coord
 
-				_scene->_T_Pixel_frame[y][x].color = (text * 16) + bg;
+				scene->_T_Pixel_frame[y][x].color = (text * 16) + bg;
 
 				//_scene->_T_Pixel_frame[y][x].color = FindColorCode(bg, text);// this is using enum for color
 
@@ -220,6 +222,8 @@ void SceneMaker::Switch_Text_BG_Colors()
 		}
 	}
 }
+
+
 
 short int SceneMaker::FindColorCode(Text_Color text_color, Text_Color background_color)
 {

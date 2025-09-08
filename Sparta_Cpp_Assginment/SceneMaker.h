@@ -7,6 +7,8 @@
 #include "PivotPoint.h"
 #include "Enum_Text_Color.h"
 
+using namespace std;
+
 /*
 this is for generating 2d vector of T-Pixels and alpha from empty scene obj.
 functions
@@ -19,28 +21,22 @@ functions
 // the generative functions will overpaint the previous scene
 
 */
-class SceneMaker
+class SceneMaker// make it into static function
 {
+	// all needs to get scene ptr and width for argument
 public:
-	SceneMaker();
+	//static void ImportScene(Scene* scene, COORD width_XY, COORD offset);// no longer needed
 
-private:
-	Scene* _scene;
-	COORD _width_XY;
+	static void AddTexts(Scene* scene, COORD width_XY, COORD offset, vector<string> Texts, PivotPoiontLocation anchor_type, Text_Color text_color, Text_Color background_color);
 
-public:
-	void ImportScene(Scene* scene, COORD width_XY, COORD offset);
-
-	void AddTexts(std::vector<std::string> Texts, PivotPoiontLocation anchor_type, COORD offset, Text_Color text_color, Text_Color background_color);
-
-	void AddFrame(FrameStyle style, Text_Color text_color, Text_Color background_color);
+	static void AddFrame(Scene* scene, COORD width_XY, COORD offset, FrameStyle style, Text_Color text_color, Text_Color background_color);
 
 	//Scene ExportScene();
 
-	void ChangeWholeColor(Text_Color text_color, Text_Color background_color);
+	static void ChangeWholeColor(Scene* scene, COORD width_XY, Text_Color text_color, Text_Color background_color);
 
-	void Switch_Text_BG_Colors();
+	static void Switch_Text_BG_Colors(Scene* scene, COORD width_XY);
 
-	short int FindColorCode(Text_Color text_color, Text_Color background_color);
+	static short int FindColorCode(Text_Color text_color, Text_Color background_color);
 
 };
