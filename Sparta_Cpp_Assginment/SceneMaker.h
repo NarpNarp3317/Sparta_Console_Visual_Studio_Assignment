@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "Enum_FrameType.h"
 #include "PivotPoint.h"
+#include "Enum_Text_Color.h"
 
 /*
 this is for generating 2d vector of T-Pixels and alpha from empty scene obj.
@@ -26,18 +27,20 @@ public:
 private:
 	Scene* _scene;
 	COORD _width_XY;
-	short int _color;
 
 public:
 	void ImportScene(Scene* scene, COORD width_XY, COORD offset);
 
-	void AddTexts(std::vector<std::string> Texts, PivotPoiontLocation anchor_type, COORD offset, short int color);
+	void AddTexts(std::vector<std::string> Texts, PivotPoiontLocation anchor_type, COORD offset, Text_Color text_color, Text_Color background_color);
 
-	void AddFrame(FrameStyle style, short int color);
+	void AddFrame(FrameStyle style, Text_Color text_color, Text_Color background_color);
 
 	//Scene ExportScene();
 
-	void ChangeColor(short int color);
+	void ChangeWholeColor(Text_Color text_color, Text_Color background_color);
 
+	void InvertWholeColor();
+
+	short int FindColorCode(Text_Color text_color, Text_Color background_color);
 
 };
