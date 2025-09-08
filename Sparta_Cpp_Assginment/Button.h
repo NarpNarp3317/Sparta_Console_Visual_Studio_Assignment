@@ -5,15 +5,18 @@
 #include <functional>// for call function
 #include <string>
 #include <Windows.h>
+#include <map>
+
+using namespace std;
 
 class Button :public BaseFrame, public Interactable
 {
 public:
-	Button(int button_id, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style);
-	Button(int button_id, int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style);
+	Button(int button_id, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color);
+	Button(int button_id, int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color);
 
-	Button(int button_id, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style);
-	Button(int button_id, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style);
+	Button(int button_id, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color);
+	Button(int button_id, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color);
 
 
 
@@ -22,13 +25,14 @@ private:
 	int _buttonID;
 	bool _isOverlapping;// to toggle the hovering state
 
-	std::vector<std::vector<bool>> _collision_mask;// alpha mask for mouse detection
+	vector<vector<bool>> _collision_mask;// alpha mask for mouse detection
 
 	//------change the T-Pixel frame with this when the button state is changed
 
-	std::vector < std::vector<T_Pixel>> _idle_texture;
-	std::vector < std::vector<T_Pixel>> _pressed_texture;
-	std::vector < std::vector<T_Pixel>> _hovering_texture;
+	//Scene* _idle_texture;--> use the original "_texture"
+	Scene* _pressed_texture;
+	Scene* _hovering_texture;
+	Scene* _activate_failed_texture;
 
 
 	function<void()> _onLeftClick;// using functions as variable using <functional>
@@ -42,6 +46,8 @@ public:
 
 	bool IsDetected(COORD mouse_coord);// when the cursor is in range, detect the mouse cursor and check if the alpha mask is overlapping
 
+	void GenerateDefaultButton(Scene* newTexture);
+	void GenerateDefaultButtonSet();// this will generate defualt buttons with event states
 
 	void SetButtonID(int newId);
 	int GetButtonID();

@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "PivotPoint.h"
 #include "Enum_FrameType.h"
+#include "Enum_Text_Color.h"
 #include <vector>
 #include <Windows.h>
 
@@ -12,10 +13,10 @@ using namespace std;
 class BaseFrame
 {
 public:
-	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_Style);
-	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_Style);
-	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset);//offset을 주고 frame을 생성
-	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width);//주어진 타입에 맞춰 프레임 생성
+	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_Style, Text_Color text_color, Text_Color bg_color);
+	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_Style, Text_Color text_color, Text_Color bg_color);
+	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, Text_Color text_color, Text_Color bg_color);//offset을 주고 frame을 생성
+	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, Text_Color text_color, Text_Color bg_color);//주어진 타입에 맞춰 프레임 생성
 
 protected:
 //private:
@@ -23,7 +24,7 @@ protected:
 	// bool isclampable;// if the frame is out of full size of console screen, it could be not generated or get clamped. this bool decides the obj's condition
 	// --> not done yet
 	int _layerPriority;//layer순서
-	short int _frame_color;// frame color
+	short int _text_color;// frame color
 	
 	COORD _width_XY;
 	PivotPoiontLocation _anchor_type;// top left, midle center, middle right....
@@ -59,7 +60,7 @@ public:
 	bool IsOuterFrameVisible();// for merging, check if the frame style is no line, so that it can decide the range of the merged scene(if visual frame ---> 1 less, else as its width)
 
 
-	void GenerateFrame();//변경된 정보로 프레임을 생성함
+	void GenerateEmptyScene();//make a holder for the new texture
 	//void FillAlpha();// for button, fill all with true so that button can be detected
 
 	static void SetScreenLimits(COORD limit_area);

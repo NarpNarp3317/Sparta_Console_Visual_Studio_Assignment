@@ -1,7 +1,7 @@
 #include "Popout.h"
 
 
-Popout::Popout(int priority, PivotPoiontLocation anchor_type, COORD witdh, FrameStyle frame_style):BaseFrame (0, anchor_type, witdh, frame_style)
+Popout::Popout(int priority, PivotPoiontLocation anchor_type, COORD witdh, FrameStyle frame_style, Text_Color text, Text_Color bg):BaseFrame (0, anchor_type, witdh, frame_style,text, bg )
 {
 }
 

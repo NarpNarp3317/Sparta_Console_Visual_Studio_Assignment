@@ -40,9 +40,6 @@
     <Filter Include="console_manager">
       <UniqueIdentifier>{a37d3a21-0b5f-4c16-9c35-343693ad19df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="console_manager\button">
-      <UniqueIdentifier>{1a0e2dde-362f-45d7-b964-96f3da855582}</UniqueIdentifier>
-    </Filter>
     <Filter Include="console_manager\frame">
       <UniqueIdentifier>{72ddbcea-470a-4a27-8d0c-903ce1552c58}</UniqueIdentifier>
     </Filter>
@@ -69,6 +66,12 @@
     </Filter>
     <Filter Include="console_manager\Popout">
       <UniqueIdentifier>{83d7ed0a-70f6-491e-b56d-167e8e3067d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\Dlisplay">
+      <UniqueIdentifier>{72a737ee-a107-46a8-9751-dd9d201b486d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\button">
+      <UniqueIdentifier>{1a0e2dde-362f-45d7-b964-96f3da855582}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -141,14 +144,14 @@
     <ClCompile Include="StringUpdater.cpp">
       <Filter>console_manager\Text</Filter>
     </ClCompile>
-    <ClCompile Include="Display.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Popout.cpp">
       <Filter>console_manager\Popout</Filter>
     </ClCompile>
     <ClCompile Include="SceneMaker.cpp">
       <Filter>console_manager\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Display.cpp">
+      <Filter>console_manager\Dlisplay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,19 +248,19 @@
     <ClInclude Include="UI_Manager.h">
       <Filter>console_manager\UI_Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Display.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enum_Text_Color.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneEditor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Popout.h">
       <Filter>console_manager\Popout</Filter>
     </ClInclude>
     <ClInclude Include="SceneMaker.h">
+      <Filter>console_manager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_Text_Color.h">
+      <Filter>console_manager\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Display.h">
+      <Filter>console_manager\Dlisplay</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneEditor.h">
       <Filter>console_manager\Scene</Filter>
     </ClInclude>
   </ItemGroup>

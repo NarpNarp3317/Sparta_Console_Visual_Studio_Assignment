@@ -27,11 +27,19 @@ class SceneMaker// make it into static function
 public:
 	//static void ImportScene(Scene* scene, COORD width_XY, COORD offset);// no longer needed
 
+	static void PrepareCanvas(Scene* scene, COORD width_XY);// assignt un empty 2d vector, like preparing right size of canvas to paint
+
 	static void AddTexts(Scene* scene, COORD width_XY, COORD offset, vector<string> Texts, PivotPoiontLocation anchor_type, Text_Color text_color, Text_Color background_color);
 
-	static void AddFrame(Scene* scene, COORD width_XY, COORD offset, FrameStyle style, Text_Color text_color, Text_Color background_color);
+	static void AddTexts_withChosenColor(Scene* scene, COORD width_XY, COORD offset, vector<string> Texts, PivotPoiontLocation anchor_type, short int color);// when the color is already chosen
+
+	static void AddFrame(Scene* scene, COORD width_XY, FrameStyle style, Text_Color text_color, Text_Color background_color);
+
+	static void AddFrame_withChosenColor(Scene* scene, COORD width_XY,  FrameStyle style, short int color);// same here // when the color is already chosen
 
 	//Scene ExportScene();
+
+	static void FillColor(Scene* scene, COORD width_XY, Text_Color text_color, Text_Color background_color);
 
 	static void ChangeWholeColor(Scene* scene, COORD width_XY, Text_Color text_color, Text_Color background_color);
 

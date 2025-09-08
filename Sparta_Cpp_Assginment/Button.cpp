@@ -1,8 +1,9 @@
 #include "Button.h"
+#include "SceneMaker.h"
 
 //===================  Constructor ================//
-Button::Button(int button_id, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style)// with offset, no label
-	:BaseFrame(priority, anchor_type, width, offset, frame_style),
+Button::Button(int button_id, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// with offset, no label
+	:BaseFrame(priority, anchor_type, width, offset, frame_style, text_color, bg_color),
 
 	_buttonID{ button_id },
 	_onLeftClick{nullptr},
@@ -12,11 +13,12 @@ Button::Button(int button_id, int priority, PivotPoiontLocation anchor_type, COO
 	_isOverlapping{false},// buttons never overlaps
 	_lable{"Button"}
 {
+	GenerateDefaultButtonSet();
 	FillAlpha();// so that the button can be detected not only the frame but also the inside
 }
 
-Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style)// without offset, no label
-	:BaseFrame(priority, anchor_type, width, {0,0}, frame_style),
+Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// without offset, no label
+	:BaseFrame(priority, anchor_type, width, {0,0}, frame_style, text_color, bg_color),
 
 	_buttonID{ buttonID },
 	_onLeftClick{ nullptr },
@@ -26,12 +28,13 @@ Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COOR
 	_isOverlapping{ false },
 	_lable{ "Button" }
 {
+	GenerateDefaultButtonSet();
 	FillAlpha();
 }
 
 
-Button::Button(int button_id, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style)// with offset and lable
-	:BaseFrame(priority, anchor_type, width, offset, frame_style),
+Button::Button(int button_id, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// with offset and lable
+	:BaseFrame(priority, anchor_type, width, offset, frame_style, text_color, bg_color),
 	_buttonID{ button_id },
 	_onLeftClick{ nullptr },
 	_onRightClick{ nullptr },
@@ -40,11 +43,12 @@ Button::Button(int button_id, int priority, string lable, PivotPoiontLocation an
 	_isOverlapping{ false },
 	_lable{ lable }
 {
+	GenerateDefaultButtonSet();
 	FillAlpha();
 }
 
-Button::Button(int buttonID, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style)// without offset, with lable
-	:BaseFrame(priority, anchor_type, width, { 0,0 }, frame_style),
+Button::Button(int buttonID, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// without offset, with lable
+	:BaseFrame(priority, anchor_type, width, { 0,0 }, frame_style, text_color, bg_color),
 
 	_buttonID{ buttonID },
 	_onLeftClick{ nullptr },
@@ -54,6 +58,7 @@ Button::Button(int buttonID, int priority, string lable, PivotPoiontLocation anc
 	_isOverlapping{ false },
 	_lable{ lable }
 {
+	GenerateDefaultButtonSet();
 	FillAlpha();
 }
 //-----------------------<<      MOUSE EVENTS       >>-----------------------------//
@@ -79,6 +84,19 @@ bool Button::IsDetected(COORD mouse_coord)// return bool by checking if the mous
 	return _collision_mask[relative_coord.Y][relative_coord.X];//return relative coord of mouse cursor and it will be used
 
 
+}
+
+void Button::GenerateDefaultButton(Scene* newTexture)
+{
+	SceneMaker::FillColor(newTexture, _width_XY, Black, DarkGray);
+	SceneMaker::AddFrame(newTexture, _width_XY, double_line, Black, DarkGray);
+	SceneMaker::AddTexts(newTexture, _width_XY, { 0,0 }, { _lable }, center_center, Black, DarkGray);
+}
+
+void Button::GenerateDefaultButtonSet()
+{
+	GenerateDefaultButton(&_texture);
+	
 }
 
 void Button::SetButtonID(int newId)
