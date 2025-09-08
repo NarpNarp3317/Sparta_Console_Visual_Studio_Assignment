@@ -10,7 +10,7 @@ Character::Character()
 	name = "test";
 	maxHealth = 100;
 	attack = 50;
-	level = 1;
+	level = 10;
 	experience = 0;
 	gold = 0;
 	health = maxHealth;
@@ -21,13 +21,13 @@ Character::Character(string name)
 {
 	this->name = name;
 	maxHealth = 100;
-	attack = 1;
+	attack = 100;
 	level = 1;
 	experience = 0;
 	gold = 0;
 	health = maxHealth;
 
-	addItem(new HealthPotion("Heal", 0, true, false, "is Junk")); // 임시 추가
+	addItem(new Bomb("Bomb", 0, true, false, "is Junk")); // 임시 추가
 }
 
 void Character::useItem(int index, Monster* monster)
@@ -101,6 +101,8 @@ bool Character::removeItemIdx(int index)	// 아이템을 인덱스로 삭제하는 함수
 
 void Character::levelUp()
 {
+	cout << "===========MESSAGE===========" << endl;
+	cout << "LEVEL UP! Level :" << level << " >> " << level + 1 << endl;
 	level++;
 	maxHealth += (level * 20);
 	attack += (level * 5);
@@ -126,7 +128,9 @@ void Character::reward(int exp, int gainGold)
 
 	if (experience >= MAX_EXPERIENCE)
 	{
+		int remainExp = experience - MAX_EXPERIENCE;
 		levelUp();
+		experience += remainExp;
 	}
 }
 

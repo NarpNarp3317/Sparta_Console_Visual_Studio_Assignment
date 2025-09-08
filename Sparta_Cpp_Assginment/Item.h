@@ -4,6 +4,15 @@
 #include "Monster.h"
 using namespace std;
 
+enum class EItem
+{
+	AttackBoost,
+	Bomb,
+	HealthPotion,
+	Weapon
+};
+
+
 class Item
 {
 private:

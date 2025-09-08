@@ -2,6 +2,10 @@
 #include "Character.h"
 #include "Monster.h"
 #include "BattleStage.h"
+#include "AttackBoost.h"
+#include "Bomb.h"
+#include "HealthPotion.h"
+#include <limits> 
 
 Battle::Battle()
 {
@@ -20,7 +24,15 @@ void Battle::startBattle(Character* _player)
 	battleStage.randomMonsterAdded(_player->getLevel());
 	_monster = battleStage.getMonster(monsterIndex);
 
-	cout << "===========Battle===========" << endl;
+	if (_player->getLevel() >= 10)
+	{
+		cout << "===========BossStage!!===========" << endl;
+	}
+	else
+	{
+		cout << "===========Battle===========" << endl;
+	}
+
 	cout << _player->getName() <<" vs " << _monster->getName() << endl;
 	cout << "Battle Start!" << endl;
 
@@ -110,6 +122,12 @@ void Battle::playerUseItemBehavior(Character* _player)
 		cout << "Select Item : ";
 		cin >> selectNum;
 
+		if (!inputCheck())
+		{
+			continue;
+		}
+
+
 		if (_player->checkingInventory(selectNum - 1)) //선택한 번호가 가방에 있는지 확인
 		{
 			_player->useItem(selectNum - 1, _monster); //있다면 아이템 사용
@@ -144,6 +162,12 @@ int Battle::selecting(const Character& _player)
 		cout << "SELECT NUM : ";
 		cin >> selectNum;
 
+
+		if (!inputCheck())
+		{
+			continue;
+		}
+
 		if (selectNum == 1 || selectNum == 2 ||selectNum == 3)
 		{
 			if (selectNum == 2 && _player.getInventorySize() <= 0)
@@ -161,14 +185,61 @@ int Battle::selecting(const Character& _player)
 
 }
 
-void Battle::battleResult(Character* _player, const BattleStage& battleStage){
+void Battle::battleResult(Character* _player, BattleStage& battleStage){
+	cout << "===========RESULT===========" << endl;
 	if (isWin)
 	{
-		cout << "===========RESULT===========" << endl;
 		cout << "Win!\nGold : +" << battleStage.getRewardGold() << " , EXP : +" << battleStage.getRewardExp() << endl;
+		int randomItemIndex = battleStage.randomItem();
+
+		// 30퍼 확률로 아이템 획득
+		if (randomItemIndex >= 0)
+		{
+			EItem item_enum = static_cast<EItem>(randomItemIndex);
+
+			cout << "Got a random item!! >> ";
+
+			switch (item_enum)
+			{
+			case EItem::AttackBoost:
+				cout << "AttackBoost" << endl;
+				_player->addItem(new AttackBoost("AttackBoost", 15, 15));
+				break;
+			case EItem::Bomb:
+				cout << "Bomb" << endl;
+				_player->addItem(new Bomb("Bomb", 15, 15));
+				break;
+			case EItem::HealthPotion:
+				cout << "HealthPotion" << endl;
+				_player->addItem(new HealthPotion("HealthPotion", 15, 15));
+				break;
+			default:
+				break;
+			}
+		}
+
+
 		_player->reward(battleStage.getRewardExp(), battleStage.getRewardGold());
 		_player->displayStatus();
 	}
+	else
+	{
+		cout << "DEFEAT..Return to Lounge!" << endl;
+	}
+}
+
+bool Battle::inputCheck()
+{
+	// 입력에 숫자가 아닌 문자나 기타 다른 이상한게 들어오면 fail 처리
+	if (cin.fail())
+	{
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "Invalid input. Please enter a number." << endl;
+		return false;
+	}
+
+	return true;
 }
 
 void Battle::printMonsterDie(const string& name)
