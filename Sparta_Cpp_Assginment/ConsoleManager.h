@@ -27,6 +27,7 @@ public:
 private:
 
 	bool _isrunning;//to start and pause the live update
+	bool _wasPrinted;// check if it printed before(for printing once per update)
 
 	MouseInputManager* _mouse;//마우스 입력
 	Printer* _printer;

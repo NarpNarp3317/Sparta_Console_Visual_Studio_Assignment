@@ -5,10 +5,9 @@ ConsoleManager::ConsoleManager()
 	:_input_H(GetStdHandle(STD_INPUT_HANDLE))
 	,_output_H(GetStdHandle(STD_OUTPUT_HANDLE)),// input, ouput handle¼³Á¤
 	_consoleWindow(GetConsoleWindow()),// get console window 
-	_isrunning{ false }// start as paused
+	_isrunning{ false },// start as paused
+	_wasPrinted{false}
 {
-
-
 	SetConsoleOutputCP(437);// to print extended ascii
 
 
@@ -180,6 +179,7 @@ void ConsoleManager::Update()
 	if (!_currentDisplay || !_printer) return;// nothing to print or cannot print
 
 	// update the scene first
+
 	_final_Scene = _printer->MergeDisplay(_currentDisplay);
 	_printer->PrintFrame(_final_Scene);// print out the updated scene
 

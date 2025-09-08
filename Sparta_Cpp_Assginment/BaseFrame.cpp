@@ -17,6 +17,7 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_texture{}// blank frame at begining
 
 {
+	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
 	GenerateFrame();
 }
 BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_Style)
@@ -30,6 +31,7 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_frame_style{ frame_Style },
 	_texture{}// blank frame at begining
 {
+	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
 	GenerateFrame();
 }
 BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset)// offset 과 함께 생성
@@ -44,6 +46,7 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_texture{}
 
 {
+	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
 	GenerateFrame();
 }
 
@@ -59,6 +62,7 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width)
 	_frame_color{ 7 },//default white
 	_texture{}
 {
+	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
 	GenerateFrame();
 }
 
@@ -167,7 +171,7 @@ bool BaseFrame::IsOuterFrameVisible()
 void BaseFrame::GenerateFrame()
 {
 
-	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
+	
 
 	//==== frame style ====//
 
