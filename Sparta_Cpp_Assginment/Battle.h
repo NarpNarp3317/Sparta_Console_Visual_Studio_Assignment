@@ -19,7 +19,8 @@ public:
 	void playerRecallBehavior();
 	void printAttackBehaviorResult(const string& name, const int& damage, const int& curHp);
 	int selecting(const Character& _player);
-	void battleResult(Character* _player, const BattleStage& battleStage);
+	void battleResult(Character* _player, BattleStage& battleStage);
+	bool inputCheck();
 	~Battle();
 private:
 	bool isWin;

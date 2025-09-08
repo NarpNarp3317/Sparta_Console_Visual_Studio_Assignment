@@ -1,15 +1,18 @@
+#include <random>
 #include "BattleStage.h"
 #include "Item.h"
 #include "Goblin.h"
 #include "Orc.h"
 #include "Troll.h"
-#include <random>
+#include "BossMonster.h"
+
+
+
 
 BattleStage::BattleStage()
 {
-	//임시 코드
-	rewardExp = 50;
-	rewardGold = 15;
+	rewardExp = 0;
+	rewardGold = 0;
 }
 
 Monster* BattleStage::getMonster(int index)
@@ -47,6 +50,15 @@ int BattleStage::getRewardExp() const
 
 void BattleStage::randomMonsterAdded(const int& playerLevel)
 {
+	if (playerLevel >= 10)
+	{
+
+
+		monsterList.push_back(new BossMonster(randomValue(playerLevel * 30, playerLevel * 40), randomValue(playerLevel * 7.5f, playerLevel * 15)));
+		return;
+	}
+
+
 	//랜덤 2~3
 	random_device rd;
 	mt19937 gen(rd());
@@ -58,7 +70,42 @@ void BattleStage::randomMonsterAdded(const int& playerLevel)
 	{
 		monsterList.push_back(randomMonster(playerLevel));
 	}
+
+	///int* randomRewardArr = randomRewardValue();
+	bool isMonsterSizeThr = monsterList.size() >= 3;
+
+	rewardExp = randomValue(isMonsterSizeThr ? 60 : 30, isMonsterSizeThr ? 90 : 60);
+	rewardGold = randomValue(isMonsterSizeThr ? 40 : 20, isMonsterSizeThr ? 60 : 40);
 }
+
+int BattleStage::randomItem()
+{
+	if (randomValue(1, 100) <= 30) //30퍼의 확률
+	{
+		int randomVal = randomValue(0, 2);
+		return randomVal;
+	}
+
+	return -1;
+}
+
+
+/// <summary>
+/// 범위 안에서 랜덤값 리턴
+/// </summary>
+/// <param name="minValue">최소값</param>
+/// <param name="maxValue">최대값</param>
+/// <returns></returns>
+int BattleStage::randomValue(const int& minValue, const int& maxValue)
+{
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<int> dis(minValue, maxValue);
+
+	return dis(gen);
+}
+
+
 
 Monster* BattleStage::randomMonster(const int& playerLevel)
 {
@@ -69,14 +116,17 @@ Monster* BattleStage::randomMonster(const int& playerLevel)
 
 	int value = dis(gen);
 
+	int healthRange[2] = { playerLevel * 20, playerLevel * 30 };
+	int atkRange[2] = { playerLevel * 5, playerLevel * 10 };
+
 	switch (value)
 	{
 	case 0:
-		return new Orc();
+		return new Orc(randomValue(healthRange[0], healthRange[1]), randomValue(atkRange[0], atkRange[1]));
 	case 1:
-		return new Goblin();
+		return new Goblin(randomValue(healthRange[0], healthRange[1]), randomValue(atkRange[0], atkRange[1]));
 	case 2:
-		return new Troll();
+		return new Troll(randomValue(healthRange[0], healthRange[1]), randomValue(atkRange[0], atkRange[1]));
 	default:
 		return nullptr;
 	}

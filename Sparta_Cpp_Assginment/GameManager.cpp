@@ -35,6 +35,12 @@ void GameManager::startMenu()
 		int selectNum = 0;
 		cout << "Select Num : ";
 		cin >> selectNum;
+
+		if (!inputCheck())
+		{
+			continue;
+		}
+
 		if (selectNum == 1)
 		{
 			this->makePlayer();
@@ -85,6 +91,12 @@ void GameManager::visitLounge(Character* _player)
 		int selectNum = 0;
 		cout << "Select Num : ";
 		cin >> selectNum;
+
+		if (!inputCheck())
+		{
+			continue;
+		}
+
 		if (selectNum == 1)
 		{
 			this->battle(_player);
@@ -125,6 +137,20 @@ void GameManager::makePlayer()
 	cin >> playerName;
 
 	player1 = new Character(playerName);
+}
+
+// 입력 단계에서 숫자가 아닌게 들어왔을 때 확인 후 다시 입력하게하기 위해 추가된 함수
+bool GameManager::inputCheck()
+{
+	if (cin.fail())
+	{
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "Invalid input. Please enter a number." << endl;
+		return false;
+	}
+
+	return true;
 }
 
 // 25.09.05. 이무표

@@ -3,6 +3,7 @@
 #include <memory>
 
 class Monster;
+class Item;
 
 using namespace std;
 
@@ -13,7 +14,7 @@ public:
 	Monster* getMonster(int index);
 	void removeMonsterList();
 	void randomMonsterAdded(const int& playerLevel);
-
+	int randomItem();
 
 	//getter
 	int getRewardGold() const;
@@ -22,9 +23,11 @@ public:
 
 private:
 	Monster* randomMonster(const int& playerLevel);
+	int randomValue(const int& minValue, const int& maxValue);
 
 private:
 	vector<Monster*> monsterList;
+
 	int rewardGold;
 	int rewardExp;
 };
