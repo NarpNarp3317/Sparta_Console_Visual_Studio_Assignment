@@ -65,9 +65,9 @@ bool Button::IsDetected(COORD mouse_coord)// return bool by checking if the mous
 
 	// const Scene& frame = GetFramePtr();// get for read only
 
-	const Scene* frame = GetTexturePtr();// get for read only //-->_collision_mask will be used for detection
+	//const Scene* frame = GetTexturePtr();// get for read only //-->_collision_mask will be used for detection
 
-	
+
 	//---> find relative coord of mouse position
 
 	COORD relative_coord = { mouse_coord.X - start.X, mouse_coord.Y - start.Y };

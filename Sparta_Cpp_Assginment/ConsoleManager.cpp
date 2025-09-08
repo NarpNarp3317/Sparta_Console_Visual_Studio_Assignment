@@ -97,10 +97,10 @@ void ConsoleManager::SetupMouseInput()
 						//case Hovering:button->OnHovering(); break; no more
 
 					default:
-					{
-						//error, invalid enum has been used
-						break;
-					}
+						{
+							//error, invalid enum has been used
+							break;
+						}
 					}
 				}
 				else
@@ -157,6 +157,7 @@ void ConsoleManager::ConsoleWindowResizing()// maximize the scale of console win
 	   static_cast<SHORT>(_windows_Scale.Y - paddingY)
 	};
 
+	_windows_Scale = bufferSize;// set padded buffer size as screen size
 
 	SetConsoleScreenBufferSize(_output_H, bufferSize);//화면 크기를 정해둔 크기로 바꿈
 

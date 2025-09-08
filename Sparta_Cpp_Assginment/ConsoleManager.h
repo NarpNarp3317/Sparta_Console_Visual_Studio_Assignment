@@ -60,7 +60,7 @@ public:
 
 	void SetupScene();//화면 설정 시작
 
-	void ResizeConsoleWindow();//화면 최대 크기로 콘솔창 확대
+	void ResizeConsoleWindow();//load the saved display scene when the console window size get changed
 
 	void SwitchInputmode(Enum_ConsoleMode inputmode);
 
