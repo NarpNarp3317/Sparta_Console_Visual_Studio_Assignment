@@ -30,7 +30,7 @@ Character::Character(string name)
 	gold = 0;
 	health = maxHealth;
 	equippedWeapon = nullptr;
-	addItem(new HealthPotion("Heal", 0, true, false, "is Junk")); // 임시 추가
+	addItem(new HealthPotion("HealPotion", 0, true, false, "is Junk")); // 임시 추가
 }
 
 void Character::useItem(int index)
@@ -153,9 +153,11 @@ void Character::printInventory()
 	}
 
 	// 아이템 수량 코드 추가
+	cout << "===========INVENTORY===========" << endl;
 	for (int i = 0; i < inventory.size(); i++)
 	{
-		cout << i + 1 << " . " << inventory[i]->getName() << "/Count : " << itemCountMap[inventory[i]->getName()] << endl;
+		
+		cout << i + 1 << ". " << inventory[i]->getName() << "/Count : " << itemCountMap[inventory[i]->getName()] << endl;
 	}
 }
 
