@@ -67,7 +67,7 @@ public:
 	void ReadMouseInput();
 
 
-	void ConsoleWindowResizing();// maximize the console window
+	void ConsoleWindowSizeSetting();// maximize the console window
 
 	//void PlaceButtons();//클릭 가능한 버튼들의 좌표와 anchor pivot point와 맞게 배치함// edited--> set placement infos in Display obj(ex. menue, ingame, battle, shop)
 

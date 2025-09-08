@@ -110,16 +110,27 @@ void BaseFrame::CalculatePrintStartCoord(PivotPoiontLocation anchor_type)
 	// clamp the size of the frame based on console screen limit// dont create frame? or cut out the frame?
 	// decided by isclampable//-----> *** not done yey ***
 
-	if (print_start_coord.X < 0 || print_start_coord.Y < 0)// min<0
-	{
-		//error, the frame will be out of the console window.
-		print_start_coord = { 0,0 };
-	}
-	else if(print_start_coord.X+ _width_XY.X> _screen_Limit.X|| print_start_coord.Y + _width_XY.Y > _screen_Limit.Y)//max>>limit
-	{
-		//error, the frame will be out of the console window.
-		print_start_coord = { 0,0 };
-	}
+	//if (print_start_coord.X < 0 || print_start_coord.Y < 0)// min<0
+	//{
+	//	//error, the frame will be out of the console window.
+	//	print_start_coord = { 0,0 };
+	//}
+	//else if(print_start_coord.X+ _width_XY.X> _screen_Limit.X|| print_start_coord.Y + _width_XY.Y > _screen_Limit.Y)//max>>limit
+	//{
+	//	//error, the frame will be out of the console window.
+	//	print_start_coord = { 0,0 };
+	//}
+
+	// Clamp min
+	if (print_start_coord.X < 0) print_start_coord.X = 0;
+	if (print_start_coord.Y < 0) print_start_coord.Y = 0;
+
+	// Clamp max (so frame fits on screen)
+	if (print_start_coord.X + _width_XY.X > _screen_Limit.X)
+		print_start_coord.X = _screen_Limit.X - _width_XY.X;
+
+	if (print_start_coord.Y + _width_XY.Y > _screen_Limit.Y)
+		print_start_coord.Y = _screen_Limit.Y - _width_XY.Y;
 
 	//return _print_start;
 
@@ -169,7 +180,7 @@ void BaseFrame::GenerateFrame()
 		break;
 
 	case single_line:
-		top_left = 218; top_right = 191; bottom_left = 192; bottom_right = 217; horizontal = 196; vertical = 197;
+		top_left = 218; top_right = 191; bottom_left = 192; bottom_right = 217; horizontal = 196; vertical = 179;
 		break;
 
 	case no_line:// nothing
@@ -197,19 +208,9 @@ void BaseFrame::GenerateFrame()
 	_texture._T_Pixel_frame.assign(y, vector< T_Pixel>(x, T_Pixel{ _frame_color ,' ' }));// fill the fame with blank first.
 	_texture._alpha.assign(y, vector<bool>(x, false));// fill alpha mask with false(empty)
 
+	if (_frame_style == no_line) return;// do not allocate any thing when ther is no frame
+
 	// change corner chars
-
-	_texture._T_Pixel_frame[0][0] = T_Pixel{ _frame_color,201 };        // top-left ╔
-	_texture._alpha[0][0] = true;
-
-	_texture._T_Pixel_frame[0][x - 1] = T_Pixel{ _frame_color,187 };    // top-right ╗
-	_texture._alpha[0][x - 1] = true;
-
-	_texture._T_Pixel_frame[y - 1][0] = T_Pixel{ _frame_color,200 };    // bottom-left ╚
-	_texture._alpha[y - 1][0] = true;
-
-	_texture._T_Pixel_frame[y - 1][x - 1] = T_Pixel{ _frame_color,188 };// bottom-right ╝
-	_texture._alpha[y - 1][x - 1] = true;
 
 	_texture._T_Pixel_frame[0][0] = T_Pixel{ _frame_color,top_left };
 	_texture._alpha[0][0] = true;

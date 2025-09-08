@@ -98,21 +98,16 @@ Scene Printer::MergeDisplay(Display* display)
 
 				if (isFrameVisible)// i know it can be improved but it just works. improve it later// basically, deciding the range 
 				{
-
 					if (mergedX <1 || mergedX > display_range.X-2) continue;
 					if (mergedY <1 || mergedY > display_range.Y-2) continue;
-
-					merged._T_Pixel_frame[mergedY][mergedX] = button_scene->_T_Pixel_frame[y][x];
-					merged._alpha[mergedY][mergedX] = true;
 				}
 				else
 				{
 					if (mergedX <0 || mergedX >= display_range.X) continue;
 					if (mergedY <0 || mergedY >= display_range.Y) continue;
-
-					merged._T_Pixel_frame[mergedY][mergedX] = button_scene->_T_Pixel_frame[y][x];
-					merged._alpha[mergedY][mergedX] = true;
-				}	
+				}
+				merged._T_Pixel_frame[mergedY][mergedX] = button_scene->_T_Pixel_frame[y][x];
+				merged._alpha[mergedY][mergedX] = true;
 			}
 		}
 	}

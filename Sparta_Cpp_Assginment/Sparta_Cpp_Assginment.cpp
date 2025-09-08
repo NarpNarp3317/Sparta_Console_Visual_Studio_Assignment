@@ -30,8 +30,8 @@ int main()
    // gamestart.SetOnHovering_ended([&string_updater]() {string_updater.StringUpdate("not hovering"); });
 
     Button load(0, 2, center_center, { 20,5 }, { 0,6 }, double_line);
-    load.SetOnLeftClick([]() {printf("Load Clicked"); });// add funtio
-    load.SetOnHovering_started([]() { printf("load hovering\n"); });
+   // load.SetOnLeftClick([]() {printf("Load Clicked"); });// add funtio
+   // load.SetOnHovering_started([]() { printf("load hovering\n"); });
 
     Button next(0, 2, center_center, { 20,5 }, { 0,12 }, double_line);
     next.SetOnLeftClick([&C_manager, &Character_Maker]() { C_manager.SetCurrentDisplay(&Character_Maker); });
