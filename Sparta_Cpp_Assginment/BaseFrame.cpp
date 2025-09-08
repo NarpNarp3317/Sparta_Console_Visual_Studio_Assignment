@@ -11,12 +11,10 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_width_XY{ width },
 	_anchor_type{ anchor_type },
 	_offset{ offset },
-	_frame{},// blank frame at begining
 	_frame_color{ 7 },//default white
 	print_start_coord{ 0,0 },
 	_frame_style{ frame_Style },
-	_visual{},// blank frame at begining
-	_texture{}//empty
+	_texture{}// blank frame at begining
 
 {
 	GenerateFrame();
@@ -27,13 +25,10 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_width_XY{ width },
 	_anchor_type{ anchor_type },
 	_offset{ 0, 0 },
-	_frame{},// blank frame at begining
 	_frame_color{ 7 },//default white
 	print_start_coord{ 0,0 },
 	_frame_style{ frame_Style },
-	_visual{},// blank frame at begining
-	_texture{}//empty
-
+	_texture{}// blank frame at begining
 {
 	GenerateFrame();
 }
@@ -43,12 +38,10 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_width_XY{ width },
 	_anchor_type{ anchor_type },
 	_offset{ offset },
-	_frame{},// blank frame at begining
 	_frame_color{7},//default white
 	print_start_coord{0,0},
 	_frame_style{ double_line },
-	_visual{},// blank frame at begining
-	_texture{}//empty
+	_texture{}
 
 {
 	GenerateFrame();
@@ -61,11 +54,10 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width)
 	_width_XY{ width },
 	_anchor_type{ anchor_type },
 	_offset{ 0,0 },//default offset == no offset
-	_frame{},
 	print_start_coord{ 0,0 },
 	_frame_style{ double_line },
-	_visual{},
-	_frame_color{ 7 }//default white
+	_frame_color{ 7 },//default white
+	_texture{}
 {
 	GenerateFrame();
 }
@@ -143,15 +135,6 @@ COORD BaseFrame::GetWidthXY()
 	return _width_XY;
 }
 
-//const Scene& BaseFrame::GetFramePtr()
-//{
-//	return _frame;
-//}
-
-Scene* BaseFrame::GetFramePtr()
-{
-	return &_frame;
-}
 
 Scene* BaseFrame::GetTexturePtr()
 {
@@ -211,49 +194,49 @@ void BaseFrame::GenerateFrame()
 		return;
 	}
 
-	_visual._T_Pixel_frame.assign(y, vector< T_Pixel>(x, T_Pixel{ _frame_color ,' ' }));// fill the fame with blank first.
-	_visual._alpha.assign(y, vector<bool>(x, false));// fill alpha mask with false(empty)
+	_texture._T_Pixel_frame.assign(y, vector< T_Pixel>(x, T_Pixel{ _frame_color ,' ' }));// fill the fame with blank first.
+	_texture._alpha.assign(y, vector<bool>(x, false));// fill alpha mask with false(empty)
 
 	// change corner chars
 
-	_frame._T_Pixel_frame[0][0] = T_Pixel{ _frame_color,201 };        // top-left ╔
-	_frame._alpha[0][0] = true;
+	_texture._T_Pixel_frame[0][0] = T_Pixel{ _frame_color,201 };        // top-left ╔
+	_texture._alpha[0][0] = true;
 
-	_frame._T_Pixel_frame[0][x - 1] = T_Pixel{ _frame_color,187 };    // top-right ╗
-	_frame._alpha[0][x - 1] = true;
+	_texture._T_Pixel_frame[0][x - 1] = T_Pixel{ _frame_color,187 };    // top-right ╗
+	_texture._alpha[0][x - 1] = true;
 
-	_frame._T_Pixel_frame[y - 1][0] = T_Pixel{ _frame_color,200 };    // bottom-left ╚
-	_frame._alpha[y - 1][0] = true;
+	_texture._T_Pixel_frame[y - 1][0] = T_Pixel{ _frame_color,200 };    // bottom-left ╚
+	_texture._alpha[y - 1][0] = true;
 
-	_frame._T_Pixel_frame[y - 1][x - 1] = T_Pixel{ _frame_color,188 };// bottom-right ╝
-	_frame._alpha[y - 1][x - 1] = true;
+	_texture._T_Pixel_frame[y - 1][x - 1] = T_Pixel{ _frame_color,188 };// bottom-right ╝
+	_texture._alpha[y - 1][x - 1] = true;
 
-	_visual._T_Pixel_frame[0][0] = T_Pixel{ _frame_color,top_left }; 
-	_visual._alpha[0][0] = true;
+	_texture._T_Pixel_frame[0][0] = T_Pixel{ _frame_color,top_left };
+	_texture._alpha[0][0] = true;
 
-	_visual._T_Pixel_frame[0][x - 1] = T_Pixel{ _frame_color,top_right };
-	_visual._alpha[0][x - 1] = true;
+	_texture._T_Pixel_frame[0][x - 1] = T_Pixel{ _frame_color,top_right };
+	_texture._alpha[0][x - 1] = true;
 
-	_visual._T_Pixel_frame[y - 1][0] = T_Pixel{ _frame_color,bottom_left}; 
-	_visual._alpha[y - 1][0] = true;
+	_texture._T_Pixel_frame[y - 1][0] = T_Pixel{ _frame_color,bottom_left};
+	_texture._alpha[y - 1][0] = true;
 
-	_visual._T_Pixel_frame[y - 1][x - 1] = T_Pixel{ _frame_color,bottom_right };
-	_visual._alpha[y - 1][x - 1] = true;
+	_texture._T_Pixel_frame[y - 1][x - 1] = T_Pixel{ _frame_color,bottom_right };
+	_texture._alpha[y - 1][x - 1] = true;
 
 
 	for (int i = 1; i < y - 1; i++)//same here
 	{
-		_visual._T_Pixel_frame[0][i] = T_Pixel{ _frame_color,  horizontal };
-		_visual._alpha[0][i] = true;
-		_visual._T_Pixel_frame[y - 1][i] = T_Pixel{ _frame_color,  horizontal };
-		_visual._alpha[y - 1][i] = true;
+		_texture._T_Pixel_frame[0][i] = T_Pixel{ _frame_color,  horizontal };
+		_texture._alpha[0][i] = true;
+		_texture._T_Pixel_frame[y - 1][i] = T_Pixel{ _frame_color,  horizontal };
+		_texture._alpha[y - 1][i] = true;
 	}
 	for (int j = 1; j < y - 1; j++)//same here
 	{
-		_visual._T_Pixel_frame[j][0] = T_Pixel{ _frame_color,  vertical };
-		_visual._alpha[j][0] = true;
-		_visual._T_Pixel_frame[j][x - 1] = T_Pixel{ _frame_color,  vertical };
-		_visual._alpha[j][x - 1] = true;
+		_texture._T_Pixel_frame[j][0] = T_Pixel{ _frame_color,  vertical };
+		_texture._alpha[j][0] = true;
+		_texture._T_Pixel_frame[j][x - 1] = T_Pixel{ _frame_color,  vertical };
+		_texture._alpha[j][x - 1] = true;
 	}
 }
 /*

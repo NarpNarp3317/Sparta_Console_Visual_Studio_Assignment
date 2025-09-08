@@ -11,7 +11,6 @@ public:
 	Display();
 
 
-
 private:
 	vector<Button*> _buttons;// containter for buttonPtrs
 

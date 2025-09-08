@@ -19,7 +19,7 @@ public:
 
 private:
 
-	int _id;
+	int _buttonID;
 	bool _isOverlapping;// to toggle the hovering state
 
 	std::vector<std::vector<bool>> _collision_mask;// alpha mask for mouse detection

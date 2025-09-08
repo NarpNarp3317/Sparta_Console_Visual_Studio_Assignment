@@ -4,7 +4,7 @@
 Button::Button(int button_id, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style)// with offset, no label
 	:BaseFrame(priority, anchor_type, width, offset, frame_style),
 
-	_id{ button_id },
+	_buttonID{ button_id },
 	_onLeftClick{nullptr},
 	_onRightClick{nullptr},
 	_onHovering_Started{nullptr},
@@ -18,7 +18,7 @@ Button::Button(int button_id, int priority, PivotPoiontLocation anchor_type, COO
 Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style)// without offset, no label
 	:BaseFrame(priority, anchor_type, width, {0,0}, frame_style),
 
-	_id{ buttonID },
+	_buttonID{ buttonID },
 	_onLeftClick{ nullptr },
 	_onRightClick{ nullptr },
 	_onHovering_Started{ nullptr },
@@ -32,7 +32,7 @@ Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COOR
 
 Button::Button(int button_id, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style)// with offset and lable
 	:BaseFrame(priority, anchor_type, width, offset, frame_style),
-	_id{ button_id },
+	_buttonID{ button_id },
 	_onLeftClick{ nullptr },
 	_onRightClick{ nullptr },
 	_onHovering_Started{ nullptr },
@@ -46,7 +46,7 @@ Button::Button(int button_id, int priority, string lable, PivotPoiontLocation an
 Button::Button(int buttonID, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style)// without offset, with lable
 	:BaseFrame(priority, anchor_type, width, { 0,0 }, frame_style),
 
-	_id{ buttonID },
+	_buttonID{ buttonID },
 	_onLeftClick{ nullptr },
 	_onRightClick{ nullptr },
 	_onHovering_Started{ nullptr },
@@ -65,7 +65,7 @@ bool Button::IsDetected(COORD mouse_coord)// return bool by checking if the mous
 
 	// const Scene& frame = GetFramePtr();// get for read only
 
-	const Scene* frame = GetFramePtr();// get for read only //-->_collision_mask will be used for detection
+	const Scene* frame = GetTexturePtr();// get for read only //-->_collision_mask will be used for detection
 
 	
 	//---> find relative coord of mouse position
@@ -83,12 +83,12 @@ bool Button::IsDetected(COORD mouse_coord)// return bool by checking if the mous
 
 void Button::SetButtonID(int newId)
 {
-	_id = newId;
+	_buttonID = newId;
 }
 
 int Button::GetButtonID()
 {
-	return _id;
+	return _buttonID;
 }
 
 

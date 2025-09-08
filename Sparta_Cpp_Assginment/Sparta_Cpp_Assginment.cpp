@@ -61,15 +61,6 @@ int main()
     //----------------------------------------------------
 
 
-
-	/// ¼¼¹Î´Ô ½ÃÀÛÁöÁ¡
-	ConsoleManager consolManager;
-	BaseFrame newFrame(0, center_center,{80,80},{0,0});
-
-
-	
-
-
     C_manager.SetCurrentDisplay(&GameMenu);// start up display here
 
     C_manager.Run_Update();// run the console manager

@@ -28,14 +28,12 @@ protected:
 	COORD _width_XY;
 	PivotPoiontLocation _anchor_type;// top left, midle center, middle right....
 
-	Scene _frame;//
 	COORD _print_start;
 	COORD _offset;// by adding the offset, reposition the frame
 	COORD print_start_coord;
 
 	static COORD _screen_Limit;// all shared by same class
 
-	Scene _visual;//frame // could this be a texture?
 	FrameStyle _frame_style;// look of frame
 	Scene _texture;// the texture content of the frame
 	
@@ -53,7 +51,7 @@ public:
 	COORD GetPrintStartCoord();
 	COORD GetWidthXY();
 	// const Scene& GetFramePtr();
-	Scene* GetFramePtr();
+
 	Scene* GetTexturePtr();// get what's inside the frame
 
 	void SetPicture(const Scene& new_picture);// set whats in side the frame

@@ -70,7 +70,7 @@ Scene Printer::MergeDisplay(Display* display)
 
 	if (!display) return merged;
 
-	Scene* base = display->GetFramePtr(); // start with display frame
+	Scene* base = display->GetTexturePtr(); // start with display frame
 	if(base==nullptr) return merged;// if display base frame is invalid// the cunstructor generate it at the beginning but just in case
 
 	merged = *base;
@@ -79,7 +79,7 @@ Scene Printer::MergeDisplay(Display* display)
 
 	for (Button* button : display->GetInteractables())
 	{
-		Scene* button_scene = button->GetFramePtr();
+		Scene* button_scene = button->GetTexturePtr();
 		// Scene* button_scene = button->GetTexturePtr();
 		if (button_scene == nullptr) continue;// if button scene is empty, skip
 
