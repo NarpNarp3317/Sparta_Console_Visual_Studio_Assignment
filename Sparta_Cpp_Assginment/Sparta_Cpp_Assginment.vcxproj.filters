@@ -141,9 +141,6 @@
     <ClCompile Include="Popout.cpp">
       <Filter>console_manager</Filter>
     </ClCompile>
-    <ClCompile Include="interaction_Component.cpp">
-      <Filter>console_manager</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">

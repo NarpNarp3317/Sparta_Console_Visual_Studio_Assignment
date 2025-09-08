@@ -23,8 +23,4 @@ public:
 	virtual void OnHovering_started(){}
 	virtual void OnHovering_ended(){}// so that hovering is not keep calling event on every frame
 
-
-	virtual bool isDetected();
-
-	virtual~Interactable(){}
 };
