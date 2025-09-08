@@ -96,7 +96,7 @@ void SceneMaker::AddTexts(Scene* scene, COORD width_XY, COORD offset, vector<str
 		}
 		else if (anchor_type == left_center || anchor_type == center_center || anchor_type == right_center)
 		{
-			string_start.Y = ((width_XY.Y - lineCount) / 2)+i+1;
+			string_start.Y = ((width_XY.Y - lineCount) / 2)+i;
 		}
 		else if (anchor_type == bottom_left || anchor_type == bottom_center || anchor_type == bottom_right)
 		{
@@ -168,7 +168,7 @@ void SceneMaker::AddTexts_withChosenColor(Scene* scene, COORD width_XY, COORD of
 		}
 		else if (anchor_type == left_center || anchor_type == center_center || anchor_type == right_center)
 		{
-			string_start.Y = ((width_XY.Y - lineCount) / 2) + i + 1;
+			string_start.Y = ((width_XY.Y - lineCount) / 2) + i ;
 		}
 		else if (anchor_type == bottom_left || anchor_type == bottom_center || anchor_type == bottom_right)
 		{

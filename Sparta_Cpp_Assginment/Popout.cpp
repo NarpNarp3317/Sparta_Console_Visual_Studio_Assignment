@@ -18,8 +18,8 @@ void Popout::P_OnMouseEvent(COORD mouse_coord, Enum_MouseInput input_type)// onl
 		{
 			switch (input_type)
 			{
-			case Left_click: button->OnLeftClick(); break;
-			case Right_click: button->OnRightClick(); break;
+			case Left_click: button->OnLeftPressed(); break;
+			case Right_click: button->OnRightPressed(); break;
 			case Hovering: button->OnHovering_started(); break;
 			default: break;
 			}

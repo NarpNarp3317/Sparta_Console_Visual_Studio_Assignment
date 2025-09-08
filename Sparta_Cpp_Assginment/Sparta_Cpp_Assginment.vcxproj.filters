@@ -153,6 +153,9 @@
     <ClCompile Include="Display.cpp">
       <Filter>console_manager\Dlisplay</Filter>
     </ClCompile>
+    <ClCompile Include="interaction_Component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -262,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="SceneEditor.h">
       <Filter>console_manager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_Live_Interactable_state.h">
+      <Filter>console_manager\interactables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

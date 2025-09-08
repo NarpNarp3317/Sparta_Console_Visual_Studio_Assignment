@@ -92,15 +92,33 @@ bool Button::IsDetected(COORD mouse_coord)// return bool by checking if the mous
 
 void Button::GenerateDefaultButton(Scene* newTexture)
 {
-	SceneMaker::FillColor(newTexture, _width_XY, DarkGray, DarkGray);
-	SceneMaker::AddFrame(newTexture, _width_XY, double_line, DarkGray, Black);
-	SceneMaker::AddTexts(newTexture, _width_XY, { 0,0 }, { _lable }, center_center, Black, DarkGray);
+	
 }
 
 void Button::GenerateDefaultButtonSet()
 {
-	GenerateDefaultButton(&_idle_texture);
-	_texture = _idle_texture;// set the the idle state image to base texture
+	//====== un triggered =====//
+	SceneMaker::FillColor(&_idle_texture, _width_XY, DarkGray, DarkGray);
+	SceneMaker::AddFrame(&_idle_texture, _width_XY, double_line, DarkGray, Black);
+	SceneMaker::AddTexts(&_idle_texture, _width_XY, { 0,0 }, { _lable }, center_center, Black, DarkGray);
+
+	SwitchTexturePtr(&_idle_texture);// switch the pointing texture address
+
+	//====== triggered ======//
+	SceneMaker::FillColor(&_pressed_texture, _width_XY, White, White);
+	SceneMaker::AddFrame(&_pressed_texture, _width_XY, double_line, White, Black);
+	SceneMaker::AddTexts(&_pressed_texture, _width_XY, { 0,0 }, { _lable }, center_center, Black, White);
+
+	//====== triggered ======//
+	SceneMaker::FillColor(&_hovering_texture, _width_XY, Gray, Gray);
+	SceneMaker::AddFrame(&_hovering_texture, _width_XY, double_line, Gray, Black);
+	SceneMaker::AddTexts(&_hovering_texture, _width_XY, { 0,0 }, { _lable }, center_center, Black, Gray);
+
+	//====== triggered ======//
+	SceneMaker::FillColor(&_activate_failed_texture, _width_XY, DarkRed, DarkRed);
+	SceneMaker::AddFrame(&_activate_failed_texture, _width_XY, double_line, DarkRed, Black);
+	SceneMaker::AddTexts(&_activate_failed_texture, _width_XY, { 0,0 }, { _lable }, center_center, Black, DarkRed);
+	
 }
 
 void Button::SetButtonID(int newId)
@@ -117,23 +135,32 @@ int Button::GetButtonID()
 //===== Left Click ======//
 void Button::SetOnLeftClick(function<void()> function)
 {
-	
 	_onLeftClick = function;
 }
 
-void Button::OnLeftClick()
+void Button::OnLeftPressed()
 {
-	if (_onLeftClick != nullptr)_onLeftClick();// if the function is valid call function
+	if (_onLeftClick != nullptr)// if the function is valid call function
+	{
+		SwitchTexturePtr(&_pressed_texture);
+		_onLeftClick();// show indication texture when button event is triggered
+	}
+
 	else OnInvalidInput();// if not, do this
 }
 //===== Left Click ======//
 void Button::SetOnRightClick(function<void()> function)
 {
+	_onRightClick = function;// missed here, now recovered!
 }
 
-void Button::OnRightClick()
+void Button::OnRightPressed()
 {
-	if (_onRightClick != nullptr)_onRightClick();// if the function is valid call function
+	if (_onRightClick != nullptr)// if the function is valid call function
+	{
+		SwitchTexturePtr(&_pressed_texture);
+		_onRightClick();
+	}
 	else OnInvalidInput();// if not, do this
 }
 //===== Left Click ======//
@@ -152,6 +179,7 @@ void Button::OnHovering_started()
 		_isOverlapping = true;
 		if (_onHovering_Started != nullptr)
 		{
+			SwitchTexturePtr(&_hovering_texture);
 			//change the texture of the button for indication
 			_onHovering_Started();
 		}
@@ -168,13 +196,17 @@ void Button::OnHovering_ended()
 	if (_isOverlapping)
 	{
 		_isOverlapping = false;
-		if (_onHovering_Ended != nullptr) _onHovering_Ended();
+		if (_onHovering_Ended != nullptr)
+		{
+			SwitchTexturePtr(&_idle_texture);
+			_onHovering_Ended();
+		}
 	}
 }
 
 void Button::OnInvalidInput()// event fucntion when click failed (if containing function isnt valid)
 {
-	// not decided yet
+	SwitchTexturePtr(&_activate_failed_texture);
 }
 
 void Button::FillAlpha()

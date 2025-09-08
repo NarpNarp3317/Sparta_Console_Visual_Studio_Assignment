@@ -6,6 +6,7 @@
 #include <string>
 #include <Windows.h>
 #include <map>
+#include "Enum_Live_Interactable_state.h"// to use timer function!!!!
 
 using namespace std;
 
@@ -24,6 +25,9 @@ private:
 
 	int _buttonID;
 	bool _isOverlapping;// to toggle the hovering state
+
+	int _start_Timer;// to recall the trigger when the time is up
+	int _pressDuration;
 
 	vector<vector<bool>> _collision_mask;// alpha mask for mouse detection
 
@@ -44,6 +48,7 @@ private:
 
 public:
 
+	void SetupTimer(int );
 	bool IsDetected(COORD mouse_coord);// when the cursor is in range, detect the mouse cursor and check if the alpha mask is overlapping
 
 	void GenerateDefaultButton(Scene* newTexture);
@@ -53,10 +58,10 @@ public:
 	int GetButtonID();
 
 	void SetOnLeftClick(function<void()> function);
-	void OnLeftClick() override;
+	void OnLeftPressed() override;
 
 	void SetOnRightClick(function<void()> function);
-	void OnRightClick() override;
+	void OnRightPressed() override;
 
 	void SetOnHovering_started(function<void()> function);
 	void OnHovering_started() override;

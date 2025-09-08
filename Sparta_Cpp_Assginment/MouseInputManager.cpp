@@ -3,6 +3,8 @@
 MouseInputManager::MouseInputManager(HANDLE input_Handle):
 	_isActive{false},
 	_isClickable{false},
+	_is_Left_Pressed{false},
+	_is_Right_Pressed{ false },
 	_Interaction_targetPtr{nullptr},
 	_cursor_coord_on_event{0,0},// default for now
 	_input_type{None},
@@ -15,46 +17,70 @@ MouseInputManager::MouseInputManager(HANDLE input_Handle):
 	Start_MouseInputReading();
 }
 
-//--------------------------------------------------------- ** Mouse Event 
-/*
-void MouseInputManager::Start_MouseInputReading()
+void MouseInputManager::UpdateMouseInput()
 {
-	this->_isActive = true;
-	while (_isActive)// loop reading mouse event while it is active
+	//==== no no conditions ====//
+	if (!_isActive) return;
+	if (_OnMouseEvent == nullptr) return;
+	//if (!PeekConsoleInput(_input_H, &_input_Record, 1, &_events)) return;// not so sure
+	if (!ReadConsoleInput(_input_H, &_input_Record, 1, &_events)) return;
+	if (_input_Record.EventType != MOUSE_EVENT) return;
+	//--------------------------//
+
+	_input_type = None;//reset the input type
+	_mouse_event_Record = _input_Record.Event.MouseEvent;// record mouse events from Event(which is from input record by dread console input)
+	_cursor_coord_on_event = _mouse_event_Record.dwMousePosition;//dworld mouse cursor position
+
+	bool L_pressed_Now = (_mouse_event_Record.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED);
+	bool R_pressed_Now = (_mouse_event_Record.dwButtonState & RIGHTMOST_BUTTON_PRESSED);
+
+
+	//========== Left Trigger ==========//
+	if (L_pressed_Now && !R_pressed_Now && _isClickable)// when only left is pressed whil it is clickable
 	{
-		if (ReadConsoleInput(_input_H, &_input_Record, 1, &_events))// input handle에서 읽힌 input을 _input_record에 저장함, 
+		_is_Left_Pressed = true;
+		if (_Interaction_targetPtr != nullptr && CheckTargetValid(_Interaction_targetPtr))// target address is not empty and target is valid
 		{
-			if (_input_Record.EventType == MOUSE_EVENT && _isClickable)//만약 읽힌 이벤트의 타입이 mouse event이고, 지금 클릭 가능한 상황일시에
+			_Interaction_targetPtr->Trigger_ActiveState();// pressed
+			_input_type = Left_click;
+		}
+	}
+	else if (!L_pressed_Now && _is_Left_Pressed)// if was pressed but now, it is released
+	{
+		_is_Left_Pressed = false;// no longer pressed
+		if (_Interaction_targetPtr != nullptr && CheckTargetValid(_Interaction_targetPtr))// if the target and pointer is still valid
+		{
+			if (_Interaction_targetPtr->GetState() == active_state)// if current state is active
 			{
-				_mouse_event_Record = _input_Record.Event.MouseEvent;// record mouse events from Event(which is from input record by dread console input)
-				_cursor_coord_on_event = _mouse_event_Record.dwMousePosition;//dworld mouse cursor position
-
-				//if (_Interaction_targetPtr->)// only works if the mouse cursor's coord overlaps with targrt's //alshjdklajhsfdlkua fuck
-				//{
-					if (_mouse_event_Record.dwEventFlags == 0)//if no mouse input mode is flagged, 
-					{
-						if (_mouse_event_Record.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED)//flag for left click
-						{
-							OnLeftClick();
-						}
-						else if (_mouse_event_Record.dwButtonState & RIGHTMOST_BUTTON_PRESSED)
-						{
-							OnRightClick();
-						}
-					}
-					else if (_mouse_event_Record.dwEventFlags == MOUSE_MOVED)
-					{
-						Hovering();
-					}
-				//}
-
-
-	
+				_Interaction_targetPtr->OnLeftPressed();
 			}
 		}
 	}
+	//========== Right Trigger ==========//
+	if (R_pressed_Now && !L_pressed_Now && _isClickable)// when only left is pressed whil it is clickable
+	{
+		_is_Right_Pressed = true;
+		if (_Interaction_targetPtr != nullptr && CheckTargetValid(_Interaction_targetPtr))// target address is not empty and target is valid
+		{
+			_Interaction_targetPtr->Trigger_ActiveState();// pressed
+			_input_type = Right_click;
+		}
+	}
+	else if (!R_pressed_Now && _is_Right_Pressed)// if was pressed but now, it is released
+	{
+		_is_Right_Pressed = false;// no longer pressed
+		if (_Interaction_targetPtr != nullptr && CheckTargetValid(_Interaction_targetPtr))// if the target and pointer is still valid
+		{
+			if (_Interaction_targetPtr->GetState() == active_state)// if current state is active
+			{
+				_Interaction_targetPtr->OnLeftPressed();
+			}
+		}
+	}
+
+
 }
-*/
+
 void MouseInputManager::Start_MouseInputReading()// version 2, no looping( looping for console)// this checks for each frame of the update
 {
 	//==== no no conditions ====//
@@ -129,12 +155,12 @@ void MouseInputManager::DisableMouseClick()
 //----------------------------------------------------- mouse events
 void MouseInputManager::OnRightClick()
 {
-	this->_Interaction_targetPtr->OnRightClick();
+	this->_Interaction_targetPtr->OnRightPressed();
 }
 
 void MouseInputManager::OnLeftClick()
 {
-	this->_Interaction_targetPtr->OnLeftClick();
+	this->_Interaction_targetPtr->OnLeftPressed();
 }
 
 void MouseInputManager::OnHovering_started()
@@ -169,7 +195,7 @@ Interactable* MouseInputManager::GetCurrentInteractionTarget()
 	return nullptr;
 }
 
-bool MouseInputManager::CheckTargetValid(Interactable* newTarget)
+bool MouseInputManager::CheckTargetValid(Interactable* newTarget)// check if the interaction target is valid or not
 {
 	if (newTarget != nullptr) return true;
 	else return false;	
