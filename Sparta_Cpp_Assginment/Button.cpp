@@ -13,8 +13,9 @@ Button::Button(int button_id, int priority, PivotPoiontLocation anchor_type, COO
 	_isOverlapping{false},// buttons never overlaps
 	_lable{"Button"}
 {
-	GenerateDefaultButtonSet();
+	
 	FillAlpha();// so that the button can be detected not only the frame but also the inside
+	GenerateDefaultButtonSet();
 }
 
 Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// without offset, no label
@@ -28,8 +29,9 @@ Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COOR
 	_isOverlapping{ false },
 	_lable{ "Button" }
 {
-	GenerateDefaultButtonSet();
+	
 	FillAlpha();
+	GenerateDefaultButtonSet();
 }
 
 
@@ -43,8 +45,9 @@ Button::Button(int button_id, int priority, string lable, PivotPoiontLocation an
 	_isOverlapping{ false },
 	_lable{ lable }
 {
-	GenerateDefaultButtonSet();
+	
 	FillAlpha();
+	GenerateDefaultButtonSet();
 }
 
 Button::Button(int buttonID, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// without offset, with lable
@@ -58,8 +61,9 @@ Button::Button(int buttonID, int priority, string lable, PivotPoiontLocation anc
 	_isOverlapping{ false },
 	_lable{ lable }
 {
-	GenerateDefaultButtonSet();
+	
 	FillAlpha();
+	GenerateDefaultButtonSet();
 }
 //-----------------------<<      MOUSE EVENTS       >>-----------------------------//
 
@@ -88,15 +92,15 @@ bool Button::IsDetected(COORD mouse_coord)// return bool by checking if the mous
 
 void Button::GenerateDefaultButton(Scene* newTexture)
 {
-	SceneMaker::FillColor(newTexture, _width_XY, Black, DarkGray);
+	SceneMaker::FillColor(newTexture, _width_XY, DarkGray, DarkGray);
 	SceneMaker::AddFrame(newTexture, _width_XY, double_line, Black, DarkGray);
 	SceneMaker::AddTexts(newTexture, _width_XY, { 0,0 }, { _lable }, center_center, Black, DarkGray);
 }
 
 void Button::GenerateDefaultButtonSet()
 {
-	GenerateDefaultButton(&_texture);
-	
+	GenerateDefaultButton(&_idle_texture);
+	_texture = _idle_texture;// set the the idle state image to base texture
 }
 
 void Button::SetButtonID(int newId)
@@ -113,6 +117,7 @@ int Button::GetButtonID()
 //===== Left Click ======//
 void Button::SetOnLeftClick(function<void()> function)
 {
+	
 	_onLeftClick = function;
 }
 

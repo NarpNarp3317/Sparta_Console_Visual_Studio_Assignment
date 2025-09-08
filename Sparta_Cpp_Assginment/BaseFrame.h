@@ -55,12 +55,12 @@ public:
 
 	Scene* GetTexturePtr();// get what's inside the frame
 
-	void SetPicture(const Scene& new_picture);// set whats in side the frame
+	void SetPicture(Scene* new_picture);// set whats in side the frame
 	
 	bool IsOuterFrameVisible();// for merging, check if the frame style is no line, so that it can decide the range of the merged scene(if visual frame ---> 1 less, else as its width)
 
 
-	void GenerateEmptyScene();//make a holder for the new texture
+	
 	//void FillAlpha();// for button, fill all with true so that button can be detected
 
 	static void SetScreenLimits(COORD limit_area);

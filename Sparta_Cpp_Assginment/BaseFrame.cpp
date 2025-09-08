@@ -15,11 +15,11 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_text_color{ SceneMaker::FindColorCode(text_color,bg_color)},
 	print_start_coord{ 0,0 },
 	_frame_style{ frame_Style },
-	_texture{}// blank frame at begining
+	_texture{}// put the assigned texture at the begining
 
 {
+	SceneMaker::PrepareCanvas(&_texture, _width_XY);
 	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
-	GenerateEmptyScene();
 }
 BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_Style, Text_Color text_color, Text_Color bg_color)
 	:
@@ -30,10 +30,10 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_text_color{ SceneMaker::FindColorCode(text_color,bg_color) },
 	print_start_coord{ 0,0 },
 	_frame_style{ frame_Style },
-	_texture{}// blank frame at begining
+	_texture{ }//
 {
+	SceneMaker::PrepareCanvas(&_texture, _width_XY);
 	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
-	GenerateEmptyScene();
 }
 BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, Text_Color text_color, Text_Color bg_color)// offset 과 함께 생성
 	:
@@ -47,8 +47,8 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_texture{}
 
 {
+	SceneMaker::PrepareCanvas(&_texture, _width_XY);
 	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
-	GenerateEmptyScene();
 }
 
 
@@ -61,10 +61,10 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	print_start_coord{ 0,0 },
 	_frame_style{ double_line },
 	_text_color{ SceneMaker::FindColorCode(text_color,bg_color) },
-	_texture{}
+	_texture{  }
 {
+	SceneMaker::PrepareCanvas(&_texture, _width_XY);
 	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
-	GenerateEmptyScene();
 }
 
 void BaseFrame::CalculatePrintStartCoord(PivotPoiontLocation anchor_type)
@@ -158,19 +158,14 @@ Scene* BaseFrame::GetTexturePtr()
 }
 
 
-void BaseFrame::SetPicture(const Scene& new_picture)// trim out where frames are( if its no visible frame, just as size of frame)
+void BaseFrame::SetPicture(Scene* new_picture)// trim out where frames are( if its no visible frame, just as size of frame)
 {
-	_texture = new_picture;
+	_texture = *new_picture;
 }
 
 bool BaseFrame::IsOuterFrameVisible()
 {
 	return _frame_style != no_line;// if style is noline--> return false, else, return true
-}
-
-void BaseFrame::GenerateEmptyScene()
-{
-	SceneMaker::PrepareCanvas(&_texture, _width_XY);
 }
 
 /*

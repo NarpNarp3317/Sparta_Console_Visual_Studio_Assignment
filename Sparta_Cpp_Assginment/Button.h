@@ -29,10 +29,10 @@ private:
 
 	//------change the T-Pixel frame with this when the button state is changed
 
-	//Scene* _idle_texture;--> use the original "_texture"
-	Scene* _pressed_texture;
-	Scene* _hovering_texture;
-	Scene* _activate_failed_texture;
+	Scene _idle_texture;
+	Scene _pressed_texture;
+	Scene _hovering_texture;
+	Scene _activate_failed_texture;
 
 
 	function<void()> _onLeftClick;// using functions as variable using <functional>

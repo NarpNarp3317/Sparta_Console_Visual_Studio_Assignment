@@ -44,9 +44,10 @@ void SceneMaker::ImportScene(Scene* scene, COORD width_XY, COORD offset)
 }
 */
 
+
 void SceneMaker::PrepareCanvas(Scene* scene, COORD width_XY)
 {
-	scene->_T_Pixel_frame.assign(width_XY.Y,vector<T_Pixel>(width_XY.X,{7,' '}));
+	scene->_T_Pixel_frame.assign(width_XY.Y, vector<T_Pixel>(width_XY.X, { 7,' ' }));
 	scene->_alpha.assign(width_XY.Y, vector<bool>(width_XY.X, false));
 }
 
@@ -320,6 +321,7 @@ void SceneMaker::AddFrame_withChosenColor(Scene* scene, COORD width_XY,  FrameSt
 		scene->_alpha[j][x - 1] = true;
 	}
 }
+
 void SceneMaker::FillColor(Scene* scene, COORD width_XY, Text_Color text_color, Text_Color background_color)
 {
 	T_Pixel pixel{ FindColorCode(text_color,background_color),' '};// make color pixel with empty
@@ -327,6 +329,7 @@ void SceneMaker::FillColor(Scene* scene, COORD width_XY, Text_Color text_color, 
 	scene->_T_Pixel_frame.assign(width_XY.Y, vector<T_Pixel>(width_XY.X, pixel));//assign full
 	scene->_alpha.assign(width_XY.Y, vector<bool>(width_XY.X, true));//same here
 }
+
 void SceneMaker::ChangeWholeColor(Scene* scene, COORD width_XY, Text_Color text_color, Text_Color background_color)
 {
 	short int color = FindColorCode(text_color, background_color);
