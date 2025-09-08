@@ -42,7 +42,7 @@ int main()
 
     //--------------------------------------------------------
  
-    Button character(0, 2, left_center, { 20,40 }, { 0,5 }, double_line);
+    Button character(0, 2, bottom_center, { 20,40 }, { 0,5 }, double_line);
     character.SetOnLeftClick([]() {});
 
     Button list1 (0, 2, left_center, { 20,5 }, { 40,-10 }, double_line);

@@ -80,8 +80,6 @@ public:
 	void SetCurrentDisplay(Display* _disp);
 
 
-
-
 	void C_ActivateMouseInput();
 	void C_DeactivateMouseInput();
 	void C_ActivateMouseClicks();// ActivateMouseClick is already in use of mouse input manager
