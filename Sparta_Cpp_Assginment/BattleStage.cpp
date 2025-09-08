@@ -78,17 +78,6 @@ void BattleStage::randomMonsterAdded(const int& playerLevel)
 	rewardGold = randomValue(isMonsterSizeThr ? 40 : 20, isMonsterSizeThr ? 60 : 40);
 }
 
-int BattleStage::randomItem()
-{
-	if (randomValue(1, 100) <= 30) //30퍼의 확률
-	{
-		int randomVal = randomValue(0, 2);
-		return randomVal;
-	}
-
-	return -1;
-}
-
 
 /// <summary>
 /// 범위 안에서 랜덤값 리턴
