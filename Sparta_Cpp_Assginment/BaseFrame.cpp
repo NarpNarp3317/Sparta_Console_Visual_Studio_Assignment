@@ -5,7 +5,7 @@
 COORD BaseFrame::_screen_Limit = { 0,0 };// for default
 //without this, unresolved external symbol "private: static struct _COORD BaseFrame::_screen_Limit" (?_screen_Limit@BaseFrame@@0U_COORD@@A)
 
-BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle _frameStyle)
+BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_Style)
 	:
 	_layerPriority{ priority },
 	_width_XY{ width },
@@ -14,14 +14,14 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_frame{},// blank frame at begining
 	_frame_color{ 7 },//default white
 	print_start_coord{ 0,0 },
-	_frame_style{ def_frame_style },
+	_frame_style{ frame_Style },
 	_visual{},// blank frame at begining
 	_texture{}//empty
 
 {
 	GenerateFrame();
 }
-BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle _frameStyle)
+BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_Style)
 	:
 	_layerPriority{ priority },
 	_width_XY{ width },
@@ -30,7 +30,7 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_frame{},// blank frame at begining
 	_frame_color{ 7 },//default white
 	print_start_coord{ 0,0 },
-	_frame_style{ def_frame_style },
+	_frame_style{ frame_Style },
 	_visual{},// blank frame at begining
 	_texture{}//empty
 
@@ -46,7 +46,7 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_frame{},// blank frame at begining
 	_frame_color{7},//default white
 	print_start_coord{0,0},
-	_frame_style{ def_frame_style },
+	_frame_style{ double_line },
 	_visual{},// blank frame at begining
 	_texture{}//empty
 
@@ -63,7 +63,7 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width)
 	_offset{ 0,0 },//default offset == no offset
 	_frame{},
 	print_start_coord{ 0,0 },
-	_frame_style{ def_frame_style },
+	_frame_style{ double_line },
 	_visual{},
 	_frame_color{ 7 }//default white
 {

@@ -12,8 +12,8 @@ using namespace std;
 class BaseFrame
 {
 public:
-	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle _frameStyle);
-	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle _frameStyle);
+	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_Style);
+	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_Style);
 	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset);//offset을 주고 frame을 생성
 	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width);//주어진 타입에 맞춰 프레임 생성
 

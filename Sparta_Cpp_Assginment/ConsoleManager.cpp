@@ -48,8 +48,7 @@ void ConsoleManager::SetupScene()
 	
 	
 	ConsoleWindowResizing();
-	
-	FillConsoleWithDot();
+
 	SwitchInputmode(MouseClickMode);
 
 	//GetConsoleMode(_input_H, &_MouseControllMode);// and put it on mouse console mode
