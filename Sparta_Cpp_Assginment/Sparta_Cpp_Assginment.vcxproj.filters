@@ -61,11 +61,11 @@
     <Filter Include="console_manager\Layout">
       <UniqueIdentifier>{878e6cd6-cf37-45c4-8af0-97f2897b45b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DisplayManager">
-      <UniqueIdentifier>{882e57a7-9704-43f3-bfa3-f8bb4d9aaaab}</UniqueIdentifier>
-    </Filter>
     <Filter Include="console_manager\Text">
       <UniqueIdentifier>{e87f9283-0e71-41e4-9dad-3b796d3e6d7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\UI_Manager">
+      <UniqueIdentifier>{af73566f-0d22-4858-85ee-5b937f84ebc6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +247,9 @@
     </ClInclude>
     <ClInclude Include="Layout.h">
       <Filter>console_manager\Layout</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Manager.h">
+      <Filter>console_manager\UI_Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
