@@ -15,8 +15,8 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_text_color{ SceneMaker::FindColorCode(text_color,bg_color)},
 	print_start_coord{ 0,0 },
 	_frame_style{ frame_Style },
-	_texture{}// put the assigned texture at the begining
-
+	_texture{},// put the assigned texture at the begining
+	_texturePtr{ &_texture }
 {
 	SceneMaker::PrepareCanvas(&_texture, _width_XY);
 	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
@@ -30,7 +30,8 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_text_color{ SceneMaker::FindColorCode(text_color,bg_color) },
 	print_start_coord{ 0,0 },
 	_frame_style{ frame_Style },
-	_texture{ }//
+	_texture{},// put the assigned texture at the begining
+	_texturePtr{ &_texture }
 {
 	SceneMaker::PrepareCanvas(&_texture, _width_XY);
 	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
@@ -44,7 +45,8 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	_text_color{ SceneMaker::FindColorCode(text_color,bg_color) },
 	print_start_coord{0,0},
 	_frame_style{ double_line },
-	_texture{}
+	_texture{},// put the assigned texture at the begining
+	_texturePtr{ &_texture }
 
 {
 	SceneMaker::PrepareCanvas(&_texture, _width_XY);
@@ -61,7 +63,8 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	print_start_coord{ 0,0 },
 	_frame_style{ double_line },
 	_text_color{ SceneMaker::FindColorCode(text_color,bg_color) },
-	_texture{  }
+	_texture{},// put the assigned texture at the begining
+	_texturePtr{ &_texture }
 {
 	SceneMaker::PrepareCanvas(&_texture, _width_XY);
 	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
@@ -154,7 +157,7 @@ COORD BaseFrame::GetWidthXY()
 
 Scene* BaseFrame::GetTexturePtr()
 {
-	return &_texture;
+	return _texturePtr;
 }
 
 

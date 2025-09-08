@@ -93,7 +93,7 @@ bool Button::IsDetected(COORD mouse_coord)// return bool by checking if the mous
 void Button::GenerateDefaultButton(Scene* newTexture)
 {
 	SceneMaker::FillColor(newTexture, _width_XY, DarkGray, DarkGray);
-	SceneMaker::AddFrame(newTexture, _width_XY, double_line, Black, DarkGray);
+	SceneMaker::AddFrame(newTexture, _width_XY, double_line, DarkGray, Black);
 	SceneMaker::AddTexts(newTexture, _width_XY, { 0,0 }, { _lable }, center_center, Black, DarkGray);
 }
 
@@ -150,7 +150,11 @@ void Button::OnHovering_started()
 	if (!_isOverlapping)// if it did not overlapped before
 	{
 		_isOverlapping = true;
-		if (_onHovering_Started != nullptr) _onHovering_Started();
+		if (_onHovering_Started != nullptr)
+		{
+			//change the texture of the button for indication
+			_onHovering_Started();
+		}
 	}
 }
 

@@ -37,6 +37,8 @@ protected:
 
 	FrameStyle _frame_style;// look of frame
 	Scene _texture;// the texture content of the frame
+	Scene* _texturePtr;// this is for later when the scene gets switched, it would be inefficient to put new value to texture everytime when texture is switched
+	//----> so make a ptr for a real texture and when the switch happens, change the address in ptr and send it to caller.(like iterator)
 	
 	//vector<vector<bool>> _alpha;// 픽셀이 존재하는 곳을 true로 저장//클릭 가능한 곳을 저장?//지금은 프레임이 있는 범위는 전부 되는걸로
 	//  ---> by only reading the _frame, this wont be necessary for now
