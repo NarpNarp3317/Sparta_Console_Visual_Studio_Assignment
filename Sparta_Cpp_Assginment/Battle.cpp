@@ -9,6 +9,7 @@
 Battle::Battle()
 {
 	isWin = false;
+	_monster = nullptr;
 }
 
 // 25.09.04. 이무표
@@ -18,6 +19,9 @@ Battle::Battle()
 
 void Battle::startBattle(Character* _player)
 {
+
+
+
 	int monsterIndex = 0;
 	BattleStage battleStage;
 	battleStage.randomMonsterAdded(_player->getLevel());
@@ -122,11 +126,6 @@ void Battle::playerUseItemBehavior(Character* _player)
 		cout << "Select Item : ";
 		cin >> selectNum;
 
-		if (!inputCheck())
-		{
-			continue;
-		}
-
 
 		if (_player->checkingInventory(selectNum - 1)) //선택한 번호가 가방에 있는지 확인
 		{
@@ -162,11 +161,6 @@ int Battle::selecting(const Character& _player)
 		cout << "SELECT NUM : ";
 		cin >> selectNum;
 
-
-		if (!inputCheck())
-		{
-			continue;
-		}
 
 		if (selectNum == 1 || selectNum == 2 ||selectNum == 3)
 		{
@@ -231,15 +225,16 @@ void Battle::resultPrint()
 
 bool Battle::inputCheck()
 {
-	// 입력에 숫자가 아닌 문자나 기타 다른 이상한게 들어오면 fail 처리
-	if (cin.fail())
-	{
-		cin.clear();
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << "Invalid input. Please enter a number." << endl;
-		return false;
-	}
+	//// 입력에 숫자가 아닌 문자나 기타 다른 이상한게 들어오면 fail 처리
+	//if (cin.fail())
+	//{
+	//	cin.clear();
+	//	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	//	cout << "Invalid input. Please enter a number." << endl;
+	//	return false;
+	//}
 
+	//return true;
 	return true;
 }
 

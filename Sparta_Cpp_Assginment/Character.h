@@ -56,7 +56,7 @@ public:
 
 private:
 	void RemoveItemCountMap(const string& name);
-
+	void setInventory();
 protected: 
 	const int MAX_EXPERIENCE = 100;
 	string name;
