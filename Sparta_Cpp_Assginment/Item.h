@@ -2,8 +2,8 @@
 #include <string>
 #include "Character.h"
 #define ITEM_WEAPON "Weapon"
-#define ITEM_ATKBOOST "AttackBoost"
-#define ITEM_HPPOTION "HealthPotion"
+#define ITEM_ATKBOOST "Attack Boost"
+#define ITEM_HPPOTION "Health Potion"
 
 using namespace std;
 
@@ -29,8 +29,6 @@ protected:
 public:
 	Item(string name, int price, bool usable = false, bool consumable = false, string description = "None")
 	{
-		cout << "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n";
-
 		this->name = name;
 		this->description;
 		this->usable = usable;

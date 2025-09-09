@@ -12,9 +12,7 @@ public:
 			this->damage = 1;
 		if (description == "None")
 			this->setDescription("is Weapon.");
-		cout << "s123\n";
 		this->typeName = ITEM_WEAPON;
-		cout << "s12345\n";
 	} // Weapon("iron sword", 30, 15, true, true, "A balanced weapon.")
 	~Weapon() {};
 	int getDamage();

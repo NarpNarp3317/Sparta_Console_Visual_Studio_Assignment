@@ -353,8 +353,8 @@ void Character::RemoveItemCountMap(const string& name)
 
 void Character::setInventory()
 {
-	inventory.push_back(new HealthPotion("HealthPotion", 15, 15, true, true));
-	inventory.push_back(new AttackBoost("AttackBoost", 15, 15, true, true));
+	inventory.push_back(new HealthPotion(ITEM_HPPOTION, 15, 15, true, true));
+	inventory.push_back(new AttackBoost(ITEM_ATKBOOST, 15, 15, true, true));
 
 	itemCountMap.insert(make_pair(inventory[0]->getName(), 0));
 	itemCountMap.insert(make_pair(inventory[1]->getName(), 0));

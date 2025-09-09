@@ -39,10 +39,10 @@ void Shop::BuyItem(Character& player) {
     Item* selected = items[choice - 1];
     if (player.SpendGold(selected->getPrice())) {
         if (selected->getName().find("Health") != std::string::npos) {
-            player.addItem(new HealthPotion("Health Potion", 10, 50));
+            player.addItem(new HealthPotion(ITEM_HPPOTION, 10, 50));
         }
         else if (selected->getName().find("Attack") != std::string::npos) {
-            player.addItem(new AttackBoost("Attack Boost", 15, 10));
+            player.addItem(new AttackBoost(ITEM_ATKBOOST, 15, 10));
         }
         else if (selected->getName().find("Sword") != std::string::npos) {
             player.addItem(new Weapon("Iron Sword", 30, 15, true, true, "A balanced weapon."));
@@ -81,10 +81,10 @@ void Shop::BuyItemByIndex(Character& player, int index) {
     Item* selected = items[index];
     if (player.SpendGold(selected->getPrice())) {
         if (selected->getName().find("Health") != std::string::npos) {
-            player.addItem(new HealthPotion("Health Potion", 10, 50));
+            player.addItem(new HealthPotion(ITEM_HPPOTION, 10, 50));
         }
         else if (selected->getName().find("Attack") != std::string::npos) {
-            player.addItem(new AttackBoost("Attack Boost", 15, 10));
+            player.addItem(new AttackBoost(ITEM_ATKBOOST, 15, 10));
         }
         else if (selected->getName().find("Sword") != std::string::npos) {
             player.addItem(new Weapon("Iron Sword", 30, 15, true, true, "A balanced weapon."));
