@@ -7,6 +7,10 @@
 #include "StringUpdater.h"
 #include <map>
 #include <vector>
+
+//------<<<< 여기에 자신의 layer헤더 넣기
+#include "BattleStage_Layout.h"
+
 using namespace std;
 
 int main()
@@ -18,9 +22,12 @@ int main()
     return 0;
 
     //===== Managers ====//
+
     StringUpdater string_updater({10,2});
     ConsoleManager C_manager;// for the getting max sceen size first so that base frames can know the screen limit
 
+    /*
+    
     // generate required displays in here, first and then start the console manager
 
     Layout GameMenu;// start
@@ -49,8 +56,7 @@ int main()
     Scene x_button;
     Scene skip_button;
 
-    Layout Character_Maker;
-    Layout ShopMenu;  //Add shop layout
+
 
     // generate required buttons for game menu
     Button new_game(0, 2, "<<NEW_GAME>>", center_center, {20,5}, {0,4}, single_line, White, Gray);
@@ -92,41 +98,16 @@ int main()
     Character_Selection.AddButton(&list3);
 
     //----------------------------------------------------
-    Shop shop;
-    Character player("Test");
 
-    Button buyHealth(0, 2, left_center, { 20,5 }, { 5,0 }, double_line, White, Gray);
-    buyHealth.SetOnLeftPressed([&]() { shop.BuyItemByIndex(player, 0); });
-
-    Button buyAttack(0, 2, left_center, { 20,5 }, { 5,6 }, double_line, White, Gray);
-    buyAttack.SetOnLeftPressed([&]() { shop.BuyItemByIndex(player, 1); });
-
-    Button buySword(0, 2, left_center, { 20,5 }, { 5,12 }, double_line, White, Gray);
-    buySword.SetOnLeftPressed([&]() { shop.BuyItemByIndex(player, 2); });
-
-    Button sellHealth(0, 2, right_center, { 20,5 }, { -5,0 }, double_line, White, Gray);
-    sellHealth.SetOnLeftPressed([&]() { shop.SellItemByIndex(player, 0); });
-
-    Button sellAttack(0, 2, right_center, { 20,5 }, { -5,6 }, double_line, White, Gray);
-    sellAttack.SetOnLeftPressed([&]() { shop.SellItemByIndex(player, 1); });
-
-    Button sellSword(0, 2, right_center, { 20,5 }, { -5,12 }, double_line, White, Gray);
-    sellSword.SetOnLeftPressed([&]() { shop.SellItemByIndex(player, 2); });
-
-    ShopMenu.AddButton(&buyHealth);
-    ShopMenu.AddButton(&buyAttack);
-    ShopMenu.AddButton(&buySword);
-    ShopMenu.AddButton(&sellHealth);
-    ShopMenu.AddButton(&sellAttack);
-    ShopMenu.AddButton(&sellSword);
-
-    //----------------------------------------------------
-
+    */
 
 
     //==========<< Game Start ==========//
 
-    C_manager.SetCurrentDisplay(&GameMenu);// start up display here
+
+    BattleStage_Layout B_layout;
+
+    C_manager.SetCurrentDisplay(& B_layout);// start up display here
 
     C_manager.Run_Update();// run the console manager
 

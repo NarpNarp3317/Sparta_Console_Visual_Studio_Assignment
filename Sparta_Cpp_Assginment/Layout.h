@@ -10,9 +10,8 @@ class Layout :public BaseFrame
 public:
     Layout();
 
-
 private:
-    vector<Scene*> _Scenes;// container for textures
+    //vector<Scene*> _Scenes;// container for textures
 
     vector<Button*> _buttons;// containter for buttonPtrs
 
@@ -20,4 +19,8 @@ public:
     void AddButton(Button* new_button);
 
     vector<Button*> GetInteractables();
+
+  /*  void AddScene(Scene* scene);
+
+    vector<Scene*>GetScenes();*/
 };
