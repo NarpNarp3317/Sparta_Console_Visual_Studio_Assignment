@@ -7,10 +7,10 @@ void Item::use(Character* character)
 	cout << character->getName() + " used " + this->getName() << endl;
 }
 
-void Item::use(Character* character, Monster* monster)
-{
-	cout << character->getName() + " used " + this->getName() + " on " + monster->getName() << endl;
-}
+//void Item::use(Character* character, Monster* monster)
+//{
+//	cout << character->getName() + " used " + this->getName() + " on " + monster->getName() << endl;
+//}
 
 string Item::getName() { return this->name; }
 int Item::getPrice() { return this->price; }
