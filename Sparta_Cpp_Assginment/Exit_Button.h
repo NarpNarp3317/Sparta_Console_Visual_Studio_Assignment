@@ -1,12 +1,9 @@
 #pragma once
-#include "Button.h"
+#include "SimpleButton.h"
 
-class ExitButton :public Button
+class ExitButton :public SimpleButton
 {
 public:
-	ExitButton();
-
-private: 
-	Scene _default_Scene;
-	Scene _pressed_Scene;
+    ExitButton(int buttonID, int priority, PivotPoiontLocation anchor, COORD width, Text_Color text_color, Text_Color bg_color);
+        
 };

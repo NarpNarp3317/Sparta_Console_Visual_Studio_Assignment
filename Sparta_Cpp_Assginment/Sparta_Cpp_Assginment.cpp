@@ -5,6 +5,9 @@
 #include "GameManager.h"
 #include "ConsoleManager.h"
 #include "StringUpdater.h"
+#include <map>
+#include <vector>
+using namespace std;
 
 int main()
 {
@@ -14,36 +17,55 @@ int main()
 	//startGame.StartGame();
 
  //   return 0;
+
     StringUpdater string_updater({10,2});
     ConsoleManager C_manager;// for the getting max sceen size first so that base frames can know the screen limit
 
     // generate required displays in here, first and then start the console manager
 
-    Layout GameMenu;
-    Layout Character_Maker;
+    Layout GameMenu;// start
+    Layout LoadGame;// loading new games
+    Layout Character_Selection;
+    Layout Lounge_Stage;
+    Layout Store;
+    Layout Battle_Stage;
+
+    //======== Required Scenes =======// original scene here, delt with pointer
+
+    //=== Layout type ===//
+    Scene intermission;// during layout change
+    Scene loading;
+    Scene victory;
+    Scene lost;
+
+    //=== Props ===//
+    Scene potion_bottle;
+    Scene weapon;// there could be a type but for now, just one
+
+    //=== extra ====//
+    Scene x_button;
+    Scene skip_button;
+
+
 
     // generate required buttons for game menu
-    Button gamestart(0, 2, center_center, { 20,5 }, { 0,-2 }, double_line,White,Gray);
-    gamestart.SetOnLeftPressed([&string_updater]() {string_updater.StringUpdate("left clicked"); });
-    gamestart.SetOnLeftReleased([&string_updater]() {string_updater.StringUpdate("left released"); });
-    gamestart.SetOnRightPressed([&string_updater]() {string_updater.StringUpdate("right clicked"); });
-    gamestart.SetOnHovering_started([&string_updater]() {string_updater.StringUpdate("Hoverring"); });
-    gamestart.SetOnHovering_ended([&string_updater]() {string_updater.StringUpdate("Hoverring"); });
+    Button new_game(0, 2, "<<NEW_GAME>>", center_center, {20,5}, {0,4}, single_line, White, Gray);
+    new_game.SetOnLeftPressed([&string_updater]() {});
+    new_game.SetOnLeftReleased([&string_updater](){});// for release trigger
 
    // gamestart.SetOnHovering_ended([&string_updater]() {string_updater.StringUpdate("not hovering"); });
 
-    Button load(0, 2, center_center, { 20,5 }, { 0,6 }, double_line,  White, Gray);
+    Button load_game(0, 2, "<<LOAD_GAME>>", center_center, { 20,5 }, { 0,9 }, double_line,  White, Gray);
    // load.SetOnLeftClick([]() {printf("Load Clicked"); });// add funtio
-   // load.SetOnHovering_started([]() { printf("load hovering\n"); });
 
-    Button next(0, 2, center_center, { 20,5 }, { 0,12 }, double_line, White, Gray);
-    next.SetOnLeftPressed([&C_manager, &Character_Maker]() { C_manager.SetCurrentDisplay(&Character_Maker); });
+    Button next(0, 2, "<<CREDITS>>", center_center, { 20,5 }, { 0,14 }, double_line, White, Gray);
+    next.SetOnLeftPressed([&C_manager, &Character_Selection]() { C_manager.SetCurrentDisplay(&Character_Selection); });
 
-	Button gameExit(0, 2, center_center, { 20,5 }, { 0,18 }, double_line, White, Gray);
+	Button gameExit(0, 2, "<<EXIT_GAME>>", center_center, { 20,5 }, { 0,19 }, double_line, White, Gray);
     gameExit.SetOnLeftPressed([&C_manager]() {C_manager.gameExit(); });
 
-    GameMenu.AddButton(&gamestart);
-    GameMenu.AddButton(&load);
+    GameMenu.AddButton(&new_game);
+    GameMenu.AddButton(&load_game);
     GameMenu.AddButton(&next);
     GameMenu.AddButton(&gameExit);
 
@@ -60,13 +82,17 @@ int main()
 
     Button list3(0, 2, left_center, { 20,5 }, { 40, 10 }, double_line, White, Gray);
 
-    Character_Maker.AddButton(&character);
-    Character_Maker.AddButton(&list1);
-    Character_Maker.AddButton(&list2);
-    Character_Maker.AddButton(&list3);
+    Character_Selection.AddButton(&character);
+    Character_Selection.AddButton(&list1);
+    Character_Selection.AddButton(&list2);
+    Character_Selection.AddButton(&list3);
 
     //----------------------------------------------------
 
+
+
+
+    //==========<< Game Start ==========//
 
     C_manager.SetCurrentDisplay(&GameMenu);// start up display here
 

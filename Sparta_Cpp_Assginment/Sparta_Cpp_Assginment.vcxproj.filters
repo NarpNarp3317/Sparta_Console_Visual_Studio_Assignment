@@ -168,6 +168,9 @@
     <ClCompile Include="Exit_Button.cpp">
       <Filter>console_manager\button\CommonButtons</Filter>
     </ClCompile>
+    <ClCompile Include="SimpleButton.cpp">
+      <Filter>console_manager\button\CommonButtons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
