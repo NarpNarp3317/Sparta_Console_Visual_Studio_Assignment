@@ -25,6 +25,7 @@ int main()
     // generate required buttons for game menu
     Button gamestart(0, 2, center_center, { 20,5 }, { 0,-2 }, double_line,White,Gray);
     gamestart.SetOnLeftPressed([&string_updater]() {string_updater.StringUpdate("left clicked"); });
+    gamestart.SetOnLeftReleased([&string_updater]() {string_updater.StringUpdate("left released"); });
     gamestart.SetOnRightPressed([&string_updater]() {string_updater.StringUpdate("right clicked"); });
     gamestart.SetOnHovering_started([&string_updater]() {string_updater.StringUpdate("Hoverring"); });
     gamestart.SetOnHovering_ended([&string_updater]() {string_updater.StringUpdate("Hoverring"); });

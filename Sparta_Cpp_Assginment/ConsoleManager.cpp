@@ -1,4 +1,5 @@
 #include "ConsoleManager.h"
+#include <iostream>// for cout << "\033[2J\033[1;1H";// clear screen
 #include <string>
 
 ConsoleManager::ConsoleManager()
@@ -215,8 +216,9 @@ void ConsoleManager::Pause_Update()
 	_isrunning = false;
 }
 
-void ConsoleManager::SetCurrentDisplay(Layout* _disp)
+void ConsoleManager::SetCurrentDisplay(Layout* _disp)// for now, just clear
 {
+	cout << "\033[2J\033[1;1H";
 	_currentDisplay = _disp;
 }
 

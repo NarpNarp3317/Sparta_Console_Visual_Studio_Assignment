@@ -108,9 +108,9 @@ void Button::GenerateDefaultButtonSet()
 	SwitchTexturePtr(&_idle_texture);// switch the pointing texture address
 
 	//====== triggered ======//
-	SceneMaker::FillColor(&_pressed_texture, _width_XY, White, White);
-	SceneMaker::AddFrame(&_pressed_texture, _width_XY, double_line, White, Black);
-	SceneMaker::AddTexts(&_pressed_texture, _width_XY, { 0,0 }, { _lable }, center_center, Black, White);
+	SceneMaker::FillColor(&_pressed_texture, _width_XY, DarkGreen, DarkGreen);
+	SceneMaker::AddFrame(&_pressed_texture, _width_XY, double_line, DarkGreen, Black);
+	SceneMaker::AddTexts(&_pressed_texture, _width_XY, { 0,0 }, { _lable }, center_center, Black, DarkGreen);
 
 	//====== triggered ======//
 	SceneMaker::FillColor(&_hovering_texture, _width_XY, Gray, Gray);
