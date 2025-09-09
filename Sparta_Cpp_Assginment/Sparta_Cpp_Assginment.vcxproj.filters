@@ -165,8 +165,6 @@
     <ClCompile Include="interaction_Component.cpp">
       <Filter>console_manager\interactables</Filter>
     </ClCompile>
-    <ClCompile Include="SaveLoadManager.cpp">
-      <Filter>Source Files</Filter>
     <ClCompile Include="Exit_Button.cpp">
       <Filter>console_manager\button\CommonButtons</Filter>
     </ClCompile>
@@ -289,8 +287,6 @@
     <ClInclude Include="ClockTower.h">
       <Filter>console_manager\TimeManager</Filter>
     </ClInclude>
-    <ClInclude Include="SaveLoadManager.h">
-      <Filter>Header Files</Filter>
     <ClInclude Include="Exit_Button.h">
       <Filter>console_manager\button\CommonButtons</Filter>
     </ClInclude>
