@@ -19,7 +19,6 @@ int main()
  //   return 0;
 
     //===== Managers ====//
-
     StringUpdater string_updater({10,2});
     ConsoleManager C_manager;// for the getting max sceen size first so that base frames can know the screen limit
 
@@ -51,7 +50,8 @@ int main()
     Scene x_button;
     Scene skip_button;
 
-
+    Layout Character_Maker;
+    Layout ShopMenu;  //Add shop layout
 
     // generate required buttons for game menu
     Button new_game(0, 2, "<<NEW_GAME>>", center_center, {20,5}, {0,4}, single_line, White, Gray);
@@ -93,7 +93,35 @@ int main()
     Character_Selection.AddButton(&list3);
 
     //----------------------------------------------------
+    Shop shop;
+    Character player("Test");
 
+    Button buyHealth(0, 2, left_center, { 20,5 }, { 5,0 }, double_line, White, Gray);
+    buyHealth.SetOnLeftPressed([&]() { shop.BuyItemByIndex(player, 0); });
+
+    Button buyAttack(0, 2, left_center, { 20,5 }, { 5,6 }, double_line, White, Gray);
+    buyAttack.SetOnLeftPressed([&]() { shop.BuyItemByIndex(player, 1); });
+
+    Button buySword(0, 2, left_center, { 20,5 }, { 5,12 }, double_line, White, Gray);
+    buySword.SetOnLeftPressed([&]() { shop.BuyItemByIndex(player, 2); });
+
+    Button sellHealth(0, 2, right_center, { 20,5 }, { -5,0 }, double_line, White, Gray);
+    sellHealth.SetOnLeftPressed([&]() { shop.SellItemByIndex(player, 0); });
+
+    Button sellAttack(0, 2, right_center, { 20,5 }, { -5,6 }, double_line, White, Gray);
+    sellAttack.SetOnLeftPressed([&]() { shop.SellItemByIndex(player, 1); });
+
+    Button sellSword(0, 2, right_center, { 20,5 }, { -5,12 }, double_line, White, Gray);
+    sellSword.SetOnLeftPressed([&]() { shop.SellItemByIndex(player, 2); });
+
+    ShopMenu.AddButton(&buyHealth);
+    ShopMenu.AddButton(&buyAttack);
+    ShopMenu.AddButton(&buySword);
+    ShopMenu.AddButton(&sellHealth);
+    ShopMenu.AddButton(&sellAttack);
+    ShopMenu.AddButton(&sellSword);
+
+    //----------------------------------------------------
 
 
 

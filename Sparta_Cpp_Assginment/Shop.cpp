@@ -10,7 +10,7 @@ Shop::Shop() {
     items.push_back(new HealthPotion("Health Potion", 10, 50));   // +50 HP, 10 Gold
     items.push_back(new AttackBoost("Attack Boost", 15, 10));     // +10 ATK, 15 Gold
     items.push_back(new Weapon("Iron Sword", 30, 15, true, true, "A balanced weapon.")); // ¹«±â
-    //items.push_back(new Bomb("Bomb", 20, 30, true, true, "Deals 30 damage to an enemy.")); // ÆøÅº (20 Gold, 30 Damage)
+    //items.push_back(new Bomb("Bomb", 20, 30, true, true, "Deals 30 damage to an enemy.")); // ÆøÅº
 }
 
 Shop::~Shop() {
@@ -38,7 +38,6 @@ void Shop::BuyItem(Character& player) {
 
     Item* selected = items[choice - 1];
     if (player.SpendGold(selected->getPrice())) {
-        // ¾ÆÀÌÅÛ º¹»çº»À» ÀÎº¥Åä¸®¿¡ Ãß°¡
         if (selected->getName().find("Health") != std::string::npos) {
             player.addItem(new HealthPotion("Health Potion", 10, 50));
         }
@@ -48,12 +47,9 @@ void Shop::BuyItem(Character& player) {
         else if (selected->getName().find("Sword") != std::string::npos) {
             player.addItem(new Weapon("Iron Sword", 30, 15, true, true, "A balanced weapon."));
         }
-        //else if (selected->getName().find("Bomb") != std::string::npos) {
-        //    player.addItem(new Bomb("Bomb", 20, 30, true, true, "Deals 30 damage to an enemy."));
-        //}
 
         std::cout << selected->getName() << " has been purchased!\n";
-        std::cout << "Current Gold: " << player.getGold() << "\n"; // º¸À¯ °ñµå Ç¥½Ã
+        std::cout << "Current Gold: " << player.getGold() << "\n";
     }
     else {
         std::cout << "Not enough gold!\n";
@@ -76,5 +72,42 @@ void Shop::SellItem(Character& player) {
 
     std::cout << sellingItem->getName() << " has been sold! +"
         << sellPrice << " Gold\n";
-    std::cout << "Current Gold: " << player.getGold() << "\n"; // º¸À¯ °ñµå Ç¥½Ã
+    std::cout << "Current Gold: " << player.getGold() << "\n";
+}
+
+void Shop::BuyItemByIndex(Character& player, int index) {
+    if (index < 0 || index >= (int)items.size()) return;
+
+    Item* selected = items[index];
+    if (player.SpendGold(selected->getPrice())) {
+        if (selected->getName().find("Health") != std::string::npos) {
+            player.addItem(new HealthPotion("Health Potion", 10, 50));
+        }
+        else if (selected->getName().find("Attack") != std::string::npos) {
+            player.addItem(new AttackBoost("Attack Boost", 15, 10));
+        }
+        else if (selected->getName().find("Sword") != std::string::npos) {
+            player.addItem(new Weapon("Iron Sword", 30, 15, true, true, "A balanced weapon."));
+        }
+
+        std::cout << selected->getName() << " has been purchased!\n";
+        std::cout << "Current Gold: " << player.getGold() << "\n";
+    }
+    else {
+        std::cout << "Not enough gold!\n";
+    }
+}
+
+void Shop::SellItemByIndex(Character& player, int index) {
+    if (index < 0 || index >= (int)player.getInventorySize()) return;
+
+    Item* sellingItem = player.GetItem(index);
+    int sellPrice = (sellingItem->getPrice() * 60) / 100;
+
+    player.AddGold(sellPrice);
+    player.RemoveItem(index);
+
+    std::cout << sellingItem->getName() << " has been sold! +"
+        << sellPrice << " Gold\n";
+    std::cout << "Current Gold: " << player.getGold() << "\n";
 }
