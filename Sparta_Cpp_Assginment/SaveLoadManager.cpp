@@ -4,6 +4,7 @@
 #include "Item.h"
 #include "AttackBoost.h"
 #include "HealthPotion.h"
+#include "Logger.h"
 
 bool SaveLoadManager::SaveGame(Character* _player)
 {
@@ -90,6 +91,8 @@ bool SaveLoadManager::SaveGame(Character* _player)
 
 bool SaveLoadManager::LoadGame(Character* _player)
 {
+	Logger::getInstance().myLog("두 번째 로그 메시지입니다.");
+
 	std::ifstream loadFile(SAVE_FILENAME);
 	if (!loadFile.is_open())
 			{
