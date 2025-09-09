@@ -1,11 +1,11 @@
 1
-280
-280
-95
-95
-4
-17
-117
+200
+200
+75
+75
+3
+93
+100
 ###
 Health Potion
 Health Potion
@@ -14,6 +14,7 @@ Health Potion
 1
 Restores 15 HP.
 15
+$$$
 Attack Boost
 Attack Boost
 15
@@ -21,6 +22,7 @@ Attack Boost
 1
 15 Attack Boost.
 15
+$$$
 Weapon
 Iron Sword
 30
@@ -28,3 +30,4 @@ Iron Sword
 1
 
 15
+$$$
