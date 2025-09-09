@@ -1,5 +1,9 @@
 #include "SaveLoadManager.h"
 #include "Character.h"
+#include "Weapon.h"
+#include "Item.h"
+#include "AttackBoost.h"
+#include "HealthPotion.h"
 
 bool SaveLoadManager::SaveGame(Character* _player)
 {
@@ -14,7 +18,7 @@ bool SaveLoadManager::SaveGame(Character* _player)
 		std::cerr << "Error: Could not open save file." << std::endl;
 		return false;
 	}
-	
+	cout << "0\n";
 	/// CHARACTER DATA ///
 	saveFile << _player->getName() << endl;
 	saveFile << _player->getHealth() << endl;
@@ -24,6 +28,48 @@ bool SaveLoadManager::SaveGame(Character* _player)
 	saveFile << _player->getLevel() << endl;
 	saveFile << _player->getExperience() << endl;
 	saveFile << _player->getGold() << endl;
+	cout << "0.5\n";
+	/// equimentWeapon Divider///
+	saveFile << WEAPON_DIVIDER << endl;
+	saveFile << _player->getEquippedWeapon()->getName() << endl;
+	saveFile << _player->getEquippedWeapon()->getPrice() << endl;
+	saveFile << _player->getEquippedWeapon()->getDamage() << endl;
+	saveFile << (_player->getEquippedWeapon()->isUsable() ? "1" : "0") << endl;
+	saveFile << (_player->getEquippedWeapon()->isConsumable() ? "1" : "0") << endl;
+	saveFile << _player->getEquippedWeapon()->getDescription() << endl;
+	saveFile << INVENTORY_DIVIDER << endl;
+	/// inventory Divider///
+	cout << "1\n";
+	for (int i = 0; i < _player->getInventorySize(); i++)
+	{
+		cout << "ss\n";
+		Item* item = _player->GetItem(i);
+		if (item == nullptr) continue; // 안전장치
+		saveFile << item->getTypeName() << endl; // 아이템 종류 구분
+		saveFile << item->getName() << endl;
+		saveFile << item->getPrice() << endl;
+		saveFile << (item->isUsable() ? "1" : "0") << endl;
+		saveFile << (item->isConsumable() ? "1" : "0") << endl;
+		saveFile << item->getDescription() << endl;
+
+		/// 신규 아이템 종류 추가시 이곳에 저장될 수 있도록 추가해야 함
+		if (item->getTypeName() == ITEM_HPPOTION) {
+			cout << "2\n";
+			HealthPotion* potion = static_cast<HealthPotion*>(item);
+			saveFile << potion->getAmount() << std::endl;
+		}
+		else if (item->getTypeName() == ITEM_ATKBOOST) {
+			cout << "3\n";
+			AttackBoost* potion = static_cast<AttackBoost*>(item);
+			saveFile << potion->getAmount() << std::endl;
+		}
+		else if (item->getTypeName() == ITEM_WEAPON) {
+			cout << "4\n";
+			Weapon* potion = static_cast<Weapon*>(item);
+			saveFile << potion->getDamage() << std::endl;
+		}
+	}
+
 
 	/// CHARACTER EQUIPPED DATA ///
 	//saveFile << _player->getEquippedWeapon() << "DIVISION_WORD\n";
@@ -53,27 +99,76 @@ bool SaveLoadManager::LoadGame(Character* _player)
 	}
 	else
 	{
-		vector<string> data;
+		vector<string> Playerdata;
+		vector<string> PlayerWeapon;
+		vector<string> PlayerInventory;
 		std::string line;
-
+		bool weaponTrigger = false;
+		bool InventoryTrigger = false;
 		
 		while (std::getline(loadFile, line)) { // 파일의 내용을 한 줄씩 읽습니다.
 			cout << line << endl;
-			data.push_back(line);
+			if (line == WEAPON_DIVIDER)
+			{
+				weaponTrigger = true;
+				continue;
+			}
+
+			if(line == INVENTORY_DIVIDER)
+			{
+				weaponTrigger = false;
+				InventoryTrigger = true;
+				continue;
+			}
+
+			/// 실제 읽음 부분
+			Playerdata.push_back(line);
+			if (weaponTrigger)
+				PlayerWeapon.push_back(line);
+			if(InventoryTrigger)
+				PlayerInventory.push_back(line);
 		}
+		cout << "sss\n";
 		loadFile.close();
-	
+		cout << "ddd\n";
+		_player->setName(Playerdata[0]);
+		_player->setHealth(stoi(Playerdata[1]));
+		_player->setMaxHealth(stoi(Playerdata[2]));
+		_player->setBaseAttack(stoi(Playerdata[3]));
+		_player->setAttack(stoi(Playerdata[4]));
+		_player->setLevel(stoi(Playerdata[5]));
+		_player->setExperience(stoi(Playerdata[6]));
+		_player->setGold(stoi(Playerdata[7]));
+		cout << "sssaaaaaaaaaaaas\n";
+		// 끼고 있던 무기 장착
+		Weapon *weapon = new Weapon(
+			PlayerWeapon[0],
+			stoi(PlayerWeapon[1]),
+			stoi(PlayerWeapon[2]),
+			(PlayerWeapon[3] == "1"),
+			(PlayerWeapon[4] == "1"),
+			PlayerWeapon[5]
+		);
+		cout << "sssaaa\n";
+		_player->setEquippedWeapon(weapon);
 
-		_player->setName(data[0]);
-		_player->setHealth(stoi(data[1]));
-		_player->setMaxHealth(stoi(data[2]));
-		_player->setBaseAttack(stoi(data[3]));
-		_player->setAttack(stoi(data[4]));
-		_player->setLevel(stoi(data[5]));
-		_player->setExperience(stoi(data[6]));
-		_player->setGold(stoi(data[7]));
+		cout << "========PlayerData========" << endl;
+		for(int i = 0; i < Playerdata.size(); i++)
+		{
+			cout << Playerdata[i] << endl;
+		}
 
-
+		cout << "========WeaponData========" << endl;
+		for(int i = 0 ; i < PlayerWeapon.size(); i++)
+		{
+			cout << PlayerWeapon[i] << endl;
+		}
+		cout << "========Inventory========" << endl;
+		for(int i = 0; i < PlayerInventory.size(); i++)
+		{
+			cout << PlayerInventory[i] << endl;
+		}
 	}
 	return true;
 }
+

@@ -13,9 +13,13 @@ public:
 			this->amount = 1;
 		if (description == "None")
 			this->setDescription(to_string(amount)+" Attack Boost.");
+		this->typeName = ITEM_ATKBOOST;
 	}
 	~AttackBoost();
 	int getAmount();
 	void setAmount(int amt);
 	void use(Character* character) override;
+	virtual std::string getTypeName() const override {
+		return this->typeName;
+	}
 };

@@ -4,6 +4,8 @@
 #include <string>
 
 #define SAVE_FILENAME "savedata.save"
+#define WEAPON_DIVIDER "@@@"
+#define INVENTORY_DIVIDER "###"
 
 // 전방 선언
 class Weapon;
@@ -54,8 +56,11 @@ public:
     }
 
 private:
-    const string DIVIDER = "@@@";
-    const string INVENTORY_DIVIDER = "###";
+    //const string WEAPON_DIVIDER = "@@@";
+    //const string INVENTORY_DIVIDER = "###";
 	const string SAVE_FILE = "savefile.txt";
+
+	void loadAttackBoost();
+	void loadHealthPotion();
 };
 

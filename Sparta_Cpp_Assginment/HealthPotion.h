@@ -12,9 +12,13 @@ public:
 			this->amount = 1;
 		if(description == "None")
 			this->setDescription("Restores "+to_string(amount)+" HP.");
+		this->typeName = ITEM_HPPOTION;
 	}
 	~HealthPotion() {};
 	int getAmount();
 	void setAmount(int amt);
 	void use(Character* character) override;
+	virtual std::string getTypeName() const override {
+		return this->typeName;
+	}
 };

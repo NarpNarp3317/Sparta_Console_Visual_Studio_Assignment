@@ -200,12 +200,12 @@ void Battle::battleResult(Character* _player, BattleStage& battleStage){
 		switch (item_enum)
 		{
 		case EItem::AttackBoost:
-			cout << "AttackBoost" << endl;
-			_player->addItem(new AttackBoost("AttackBoost", 15, 15));
+			cout << "Attack Boost" << endl;
+			_player->addItem(new AttackBoost("Attack Boost", 15, 15));
 			break;
 		case EItem::HealthPotion:
-			cout << "HealthPotion" << endl;
-			_player->addItem(new HealthPotion("HealthPotion", 15, 15));
+			cout << "Health Potion" << endl;
+			_player->addItem(new HealthPotion("Health Potion", 15, 15));
 			break;
 		default:
 			break;

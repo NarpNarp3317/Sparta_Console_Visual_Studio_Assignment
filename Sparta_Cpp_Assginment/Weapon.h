@@ -12,16 +12,15 @@ public:
 			this->damage = 1;
 		if (description == "None")
 			this->setDescription("is Weapon.");
+		cout << "s123\n";
+		this->typeName = ITEM_WEAPON;
+		cout << "s12345\n";
 	} // Weapon("iron sword", 30, 15, true, true, "A balanced weapon.")
 	~Weapon() {};
 	int getDamage();
 	void setDamage(int dmg);
 	void use(Character* character) override;
-
-	// SAVE/LOAD¿ë
-	void setname(string name) { Item::setDescription(name); }
-	void setprice(int price) { Item::setDescription(to_string(price)); }
-	void setusable(bool usable) { Item::setDescription(usable ? "true" : "false"); }
-	void setconsumable(bool consumable) { Item::setDescription(consumable ? "true" : "false"); }
-	void setdescription(string desc) { Item::setDescription(desc); }
+	virtual std::string getTypeName() const override {
+		return this->typeName;
+	}
 };

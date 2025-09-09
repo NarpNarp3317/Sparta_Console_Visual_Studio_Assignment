@@ -182,7 +182,7 @@ void Character::refreshATK()
 	attack = baseAttack + equippedWeapon->getDamage();
 }
 
-Weapon* Character::getEquippedWeapon() const
+Weapon* Character::getEquippedWeapon()
 {
 	return this->equippedWeapon;
 }

@@ -27,7 +27,7 @@ public:
 	bool checkingInventory(int index);
 
 	void refreshATK();						// 새로 추가된 함수 09.08 -----
-	Weapon* getEquippedWeapon() const;
+	Weapon* getEquippedWeapon(); // save/load 활용을 위해 const 제거
 	// --------------------------------------------
 
 	//Getter
