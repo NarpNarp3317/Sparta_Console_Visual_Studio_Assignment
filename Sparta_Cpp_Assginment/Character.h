@@ -28,9 +28,6 @@ public:
 
 	void refreshATK();						// 새로 추가된 함수 09.08 -----
 	Weapon* getEquippedWeapon() const;
-	void setEquippedWeapon(Weapon* weapon);
-	int getBaseAttack() const;
-	void setBaseAttack(int atk);
 	// --------------------------------------------
 
 	//Getter
@@ -41,12 +38,24 @@ public:
 	int getLevel() const;
 	int getMaxHealth() const;
 	int getGold() const { return gold; }
+	int getBaseAttack() const;
+	int getExperience() const { return experience; }
 
-	//Setter
+	//Setter <-- SAVE/LOAD에서 사용
+	void setName(string _name);
 	void setHealth(int _health);
-	// 라운지에서 회복 기능을 추가하기 위해 getMaxHealth() 및
-	// set Health 추가하였습니다
-	// 25.09.05. 이무표
+	void setMaxHealth(int _maxHealth);
+	void setBaseAttack(int _baseAttack);
+	void setAttack(int _attack);
+	void setLevel(int _level);
+	void setExperience(int _exp);
+	void setGold(int _gold);
+	void setEquippedWeapon(Weapon* _weapon);
+	void setInventory(const vector<Item*>& items);
+	void setInventoryMap(const map<string, int>& itemCountMap);
+	
+	
+	
 
 	// For Shop (상점 연동용 함수)
 	bool SpendGold(int amount);      // 골드 차감

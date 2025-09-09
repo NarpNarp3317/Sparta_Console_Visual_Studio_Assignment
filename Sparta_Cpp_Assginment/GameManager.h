@@ -10,6 +10,7 @@
 #include "Orc.h"
 #include "Troll.h"
 #include "Shop.h"
+#include "SaveLoadManager.h"
 
 using namespace std;
 
@@ -34,6 +35,7 @@ private : // 함수
 	void visitLounge(Character* _player);
 
 	void startMenu();
+	void savePlayer();
 	void loadPlayer();
 	void makePlayer();
 
@@ -44,5 +46,6 @@ private : // 함수
 private: // 변수
 	Character* player1;
 	Shop* nowShop;
+	SaveLoadManager* saveManager;
 };
 

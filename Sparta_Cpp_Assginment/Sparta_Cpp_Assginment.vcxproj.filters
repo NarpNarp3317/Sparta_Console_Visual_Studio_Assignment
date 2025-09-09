@@ -162,6 +162,9 @@
     <ClCompile Include="interaction_Component.cpp">
       <Filter>console_manager\interactables</Filter>
     </ClCompile>
+    <ClCompile Include="SaveLoadManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -277,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="ClockTower.h">
       <Filter>console_manager\TimeManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveLoadManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

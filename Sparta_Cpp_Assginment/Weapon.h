@@ -17,4 +17,11 @@ public:
 	int getDamage();
 	void setDamage(int dmg);
 	void use(Character* character) override;
+
+	// SAVE/LOAD¿ë
+	void setname(string name) { Item::setDescription(name); }
+	void setprice(int price) { Item::setDescription(to_string(price)); }
+	void setusable(bool usable) { Item::setDescription(usable ? "true" : "false"); }
+	void setconsumable(bool consumable) { Item::setDescription(consumable ? "true" : "false"); }
+	void setdescription(string desc) { Item::setDescription(desc); }
 };

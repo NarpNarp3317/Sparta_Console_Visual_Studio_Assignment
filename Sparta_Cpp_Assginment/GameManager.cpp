@@ -5,6 +5,10 @@ GameManager::GameManager()
 {
 	// player1 = new Character(); // makePlayer로 이동
 	player1 = nullptr;
+	// 외부 기능 생성
+	nowShop = new Shop();
+	saveManager = new SaveLoadManager();
+
 }
 GameManager::~GameManager()
 {
@@ -13,15 +17,16 @@ GameManager::~GameManager()
 
 	nowShop = nullptr;
 	delete nowShop;
+
+	saveManager = nullptr;
+	delete saveManager;
 }
 
 // 25.09.04. 이무표
 // Log를 찍어보며 디버깅할 것이 있다면 이곳에 추가해서 확인하세요
 void GameManager::StartGame()
 {
-	nowShop = new Shop();
 	this->startMenu();
-
 }
 
 // 25.09.05. 이무표
@@ -90,7 +95,8 @@ void GameManager::visitLounge(Character* _player)
 		cout << "2. Visit Shop" << endl;
 		cout << "3. Display Player Status" << endl;
 		cout << "4. Display Inventory" << endl;
-		cout << "5. Exit Game" << endl;
+		cout << "5. Save Game" << endl;
+		cout << "6. Exit Game" << endl;
 		int selectNum = 0;
 		cout << "Select Num : ";
 		cin >> selectNum;
@@ -117,6 +123,10 @@ void GameManager::visitLounge(Character* _player)
 			_player->printInventory();
 		}
 		else if (selectNum == 5)
+		{
+			this->savePlayer();
+		}
+		else if (selectNum == 6)
 		{
 			cout << "Exiting game. Goodbye!" << endl;
 			exit(0);
@@ -160,8 +170,19 @@ bool GameManager::inputCheck()
 // 플레이어 로드
 void GameManager::loadPlayer()
 {
-	// 추후 구현 일단 makePlayer로 대체
-	this->makePlayer();
+	player1 = new Character();
+	if (!saveManager->LoadGame(this->player1))
+	{
+		// 로드 실패시 신규 생성으로 진입
+		player1 = nullptr;
+		delete player1;
+		this->makePlayer();
+	}
+}
+
+void GameManager::savePlayer()
+{
+	saveManager->SaveGame(this->player1);
 }
 
 void GameManager::battle(Character* _player)

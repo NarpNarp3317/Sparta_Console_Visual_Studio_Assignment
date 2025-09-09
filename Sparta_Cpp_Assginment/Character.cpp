@@ -239,6 +239,11 @@ int Character::getMaxHealth() const
 	return maxHealth;
 }
 
+void Character::setName(string _name)
+{
+	this->name = _name;
+}
+
 void Character::setHealth(int _health)
 {
 	this->health += health;
@@ -247,6 +252,52 @@ void Character::setHealth(int _health)
 	{
 		this->health = maxHealth;
 	}
+}
+
+void Character::setMaxHealth(int _maxHealth)
+{
+	this->maxHealth = _maxHealth;
+}
+
+void Character::setAttack(int _attack)
+{
+	this->attack = _attack;
+}
+
+void Character::setLevel(int _level)
+{
+	this->level = _level;
+}
+
+void Character::setExperience(int _exp)
+{
+	this->experience = _exp;
+}
+
+void Character::setGold(int _gold)
+{
+	this->gold = _gold;
+}
+
+void Character::setInventory(const vector<Item*>& items)
+{
+	// 기존 인벤토리 메모리 해제
+	for (int i = 0; i < inventory.size(); i++)
+	{
+		delete inventory[i];
+		inventory[i] = nullptr;
+	}
+	inventory.clear();
+	// 새로운 아이템 추가
+	for (const auto& item : items)
+	{
+		inventory.push_back(item);
+	}
+}
+
+void Character::setInventoryMap(const map<string, int>& itemCountMap)
+{
+	this->itemCountMap = itemCountMap;
 }
 
 // For Shop (상점 연동용 함수)
