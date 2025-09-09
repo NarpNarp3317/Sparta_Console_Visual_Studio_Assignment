@@ -27,14 +27,19 @@ bool SaveLoadManager::SaveGame(Character* _player)
 	saveFile << _player->getLevel() << endl;
 	saveFile << _player->getExperience() << endl;
 	saveFile << _player->getGold() << endl;
+	
+	/// 장비중인 무기 있을 시 저장
 	/// equimentWeapon Divider///
-	saveFile << WEAPON_DIVIDER << endl;
-	saveFile << _player->getEquippedWeapon()->getName() << endl;
-	saveFile << _player->getEquippedWeapon()->getPrice() << endl;
-	saveFile << _player->getEquippedWeapon()->getDamage() << endl;
-	saveFile << (_player->getEquippedWeapon()->isUsable() ? "1" : "0") << endl;
-	saveFile << (_player->getEquippedWeapon()->isConsumable() ? "1" : "0") << endl;
-	saveFile << _player->getEquippedWeapon()->getDescription() << endl;
+	if (_player->getEquippedWeapon())
+	{
+		saveFile << WEAPON_DIVIDER << endl;
+		saveFile << _player->getEquippedWeapon()->getName() << endl;
+		saveFile << _player->getEquippedWeapon()->getPrice() << endl;
+		saveFile << _player->getEquippedWeapon()->getDamage() << endl;
+		saveFile << (_player->getEquippedWeapon()->isUsable() ? "1" : "0") << endl;
+		saveFile << (_player->getEquippedWeapon()->isConsumable() ? "1" : "0") << endl;
+		saveFile << _player->getEquippedWeapon()->getDescription() << endl;
+	}
 	saveFile << INVENTORY_DIVIDER << endl;
 	/// inventory Divider///
 	for (int i = 0; i < _player->getInventorySize(); i++)
@@ -50,16 +55,16 @@ bool SaveLoadManager::SaveGame(Character* _player)
 
 		/// 신규 아이템 종류 추가시 이곳에 저장될 수 있도록 추가해야 함
 		if (item->getTypeName() == ITEM_HPPOTION) {
-			HealthPotion* potion = static_cast<HealthPotion*>(item);
-			saveFile << potion->getAmount() << std::endl;
+			HealthPotion* HPpotion = static_cast<HealthPotion*>(item);
+			saveFile << HPpotion->getAmount() << std::endl;
 		}
 		else if (item->getTypeName() == ITEM_ATKBOOST) {
-			AttackBoost* potion = static_cast<AttackBoost*>(item);
-			saveFile << potion->getAmount() << std::endl;
+			AttackBoost* ATKpotion = static_cast<AttackBoost*>(item);
+			saveFile << ATKpotion->getAmount() << std::endl;
 		}
 		else if (item->getTypeName() == ITEM_WEAPON) {
-			Weapon* potion = static_cast<Weapon*>(item);
-			saveFile << potion->getDamage() << std::endl;
+			Weapon* weapon = static_cast<Weapon*>(item);
+			saveFile << weapon->getDamage() << std::endl;
 		}
 	}
 
@@ -98,12 +103,14 @@ bool SaveLoadManager::LoadGame(Character* _player)
 		std::string line;
 		bool weaponTrigger = false;
 		bool InventoryTrigger = false;
+		bool equipmentTrigger = false;
 		
 		while (std::getline(loadFile, line)) { // 파일의 내용을 한 줄씩 읽습니다.
 			cout << line << endl;
 			if (line == WEAPON_DIVIDER)
 			{
 				weaponTrigger = true;
+				equipmentTrigger = true;
 				continue;
 			}
 
@@ -131,16 +138,18 @@ bool SaveLoadManager::LoadGame(Character* _player)
 		_player->setExperience(stoi(Playerdata[6]));
 		_player->setGold(stoi(Playerdata[7]));
 		// 끼고 있던 무기 장착
-		Weapon *weapon = new Weapon(
-			PlayerWeapon[0],
-			stoi(PlayerWeapon[1]),
-			stoi(PlayerWeapon[2]),
-			(PlayerWeapon[3] == "1"),
-			(PlayerWeapon[4] == "1"),
-			PlayerWeapon[5]
-		);
-		_player->setEquippedWeapon(weapon);
-
+		if (equipmentTrigger)
+		{
+			Weapon* weapon = new Weapon(
+				PlayerWeapon[0],
+				stoi(PlayerWeapon[1]),
+				stoi(PlayerWeapon[2]),
+				(PlayerWeapon[3] == "1"),
+				(PlayerWeapon[4] == "1"),
+				PlayerWeapon[5]
+			);
+			_player->setEquippedWeapon(weapon);
+		}
 		cout << "========PlayerData========" << endl;
 		for(int i = 0; i < Playerdata.size(); i++)
 		{
