@@ -87,7 +87,12 @@ bool Button::IsDetected(COORD mouse_coord)// return bool by checking if the mous
 	COORD relative_coord = { mouse_coord.X - start.X, mouse_coord.Y - start.Y };
 
 	if (relative_coord.X < 0 || relative_coord.Y < 0 || relative_coord.X >= width.X || relative_coord.Y >= width.Y)
+	{
+		SwitchTexturePtr(&_idle_texture);
 		return false;
+	}
+		
+	SwitchTexturePtr(&_hovering_texture);
 
 	return _collision_mask[relative_coord.Y][relative_coord.X];//return relative coord of mouse cursor and it will be used
 }
@@ -172,11 +177,6 @@ void Button::SetOnLeftReleased(function<void()> function)
 }
 void Button::OnLeftReleased()
 {
-	if (_current_State == idle_state)// so that it does not immediately trigger the switch ptr. when it is in rejective state the button needs to stay as error texture
-	{
-		SwitchTexturePtr(&_idle_texture);
-	}
-
 	if (_onLeftReleased != nullptr)
 	{
 		_onLeftPressed();
@@ -204,11 +204,6 @@ void Button::SetOnRightReleased(function<void()> function)
 }
 void Button::OnRightReleased()
 {	
-	if (_current_State == idle_state)// same as the left release 
-	{
-		SwitchTexturePtr(&_idle_texture);
-	}
-
 	if (_onRightReleased != nullptr)
 	{
 		_onRightReleased();
@@ -229,7 +224,6 @@ void Button::OnHovering_started()
 		_isOverlapping = true;
 		if (_onHovering_Started != nullptr)
 		{
-			SwitchTexturePtr(&_hovering_texture);
 			//change the texture of the button for indication
 			_onHovering_Started();
 		}
@@ -247,7 +241,6 @@ void Button::OnHovering_ended()
 		_isOverlapping = false;
 		if (_onHovering_Ended != nullptr)
 		{
-			SwitchTexturePtr(&_idle_texture);
 			_onHovering_Ended();
 		}
 	}
@@ -259,10 +252,10 @@ void Button::OnInvalidInput()// event fucntion when click failed (if containing 
 	SwitchTexturePtr(&_activate_failed_texture);
 	_isClickable = false;
 
-	TriggerState(rejective_state, 16);// disable input for 500 frames
+	//TriggerState(rejective_state, 16);// disable input for 16 frames// not now
 }
 
-
+/*
 void Button::I_Live_Update()
 {
 	Interactable::I_Live_Update();
@@ -272,6 +265,7 @@ void Button::I_Live_Update()
 		_isClickable = true;
 	}
 }
+*/
 
 Button::~Button()
 {

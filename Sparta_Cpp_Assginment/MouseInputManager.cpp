@@ -21,7 +21,7 @@ MouseInputManager::MouseInputManager(HANDLE input_Handle):
 void MouseInputManager::UpdateMouseInput()// version 3
 {
 	if (!_isActive || !_OnMouseEvent) return;
-
+	if (!PeekConsoleInput(_input_H, &_input_Record, 1, &_events)) return;
 	if (!ReadConsoleInput(_input_H, &_input_Record, 1, &_events)) return;
 	if (_input_Record.EventType != MOUSE_EVENT) return;
 

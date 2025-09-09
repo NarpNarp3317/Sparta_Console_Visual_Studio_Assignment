@@ -92,7 +92,7 @@ public:
 	void OnInvalidInput();
 	//--------------------------//
 
-	void I_Live_Update() override;// from interacction component
+	//void I_Live_Update() override;// from interacction component// not now
 
 	~Button();
 
