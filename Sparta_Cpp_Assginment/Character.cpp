@@ -1,6 +1,7 @@
 #include "Character.h"
 #include "Item.h"
 #include "HealthPotion.h"
+#include "AttackBoost.h"
 #include "Weapon.h"
 #include "Monster.h"
 
@@ -30,7 +31,12 @@ Character::Character(string name)
 	gold = 0;
 	health = maxHealth;
 	equippedWeapon = nullptr;
-	addItem(new HealthPotion("HealthPotion", 0, true, false, "is Junk")); // 임시 추가
+
+	// 생성 시 인벤토리에 아이템 추가
+	setInventory();
+
+
+	//addItem(new HealthPotion("HealthPotion", 0, true, false, "is Junk")); // 임시 추가
 }
 
 void Character::useItem(int index)
@@ -41,12 +47,13 @@ void Character::useItem(int index)
 	if (item->isConsumable()) 
 	{
 		itemCountMap[item->getName()]--;
-		int count = itemCountMap[item->getName()];
+		// 아이템 이제 사라지지 않음
+		/*int count = itemCountMap[item->getName()];
 		if (count <= 0)
 		{
 			RemoveItemCountMap(item->getName());
 			removeItemIdx(index);
-		}
+		}*/
 	}
 }
 
@@ -57,9 +64,16 @@ void Character::addItem(Item* item)	// 아이템을 인벤토리에 추가하는 함수
 	// 새로운 아이템 등록
 	if (itemCountMap.find(item->getName()) != itemCountMap.end())
 	{
+		int itemCount = itemCountMap[item->getName()];
+		
+		if (itemCount + 1 > 10)
+		{
+			return;
+		}
+
 		itemCountMap[item->getName()]++; // 있다면 아이템 수량 추가
 	}
-	else
+	else // 이 경우 발생하면 사고??
 	{
 		itemCountMap.insert(make_pair(item->getName(), 1));
 		inventory.push_back(item);
@@ -335,6 +349,15 @@ bool Character::RemoveItem(int index)
 void Character::RemoveItemCountMap(const string& name)
 {
 	itemCountMap.erase(name);
+}
+
+void Character::setInventory()
+{
+	inventory.push_back(new HealthPotion("HealthPotion", 15, 15, true, true));
+	inventory.push_back(new AttackBoost("AttackBoost", 15, 15, true, true));
+
+	itemCountMap.insert(make_pair(inventory[0]->getName(), 0));
+	itemCountMap.insert(make_pair(inventory[1]->getName(), 0));
 }
 
 Character::~Character()

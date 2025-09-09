@@ -1,7 +1,7 @@
 #include "Printer.h"
 #include <algorithm>// for layer sorting
 
-Printer::Printer(HANDLE output_handle):_output_H{ output_handle }, _previous_Scene{nullptr}
+Printer::Printer(HANDLE output_handle):_output_H{ output_handle }, _previous_Scene{}, _hasPrintedOnce{false}// it did not printed in the beginning
 {
 }
 
@@ -96,7 +96,7 @@ Scene Printer::MergeLayout(Layout* layout)
 	return merged;
 }
 
-void Printer::PrintFrame(const Scene& scene)
+void Printer::PrintScene(const Scene& scene)// this one is only printing the texture
 {
 	COORD position{0,0};
 
@@ -121,28 +121,63 @@ void Printer::PrintFrame(const Scene& scene)
 			}
 		}
 	}
+	_hasPrintedOnce = true;
 }
 
-void Printer::PrintMergedDisplay(Layout* display)
+void Printer::PrintLayout(Layout* layout)
 {
+	if (layout == nullptr) return;
 
+	Scene merged = MergeLayout(layout);
+	PrintScene(merged);
+
+	_previous_Scene = merged;
 }
 
-void Printer::PrintPartialUpdates(Layout* display)
+void Printer::PrintPartialUpdates(Layout* layout)// compare the difference and print the new one only
 {
-	for (Button* button : display->GetInteractables())
+	if (layout == nullptr) return;
+
+	if (!_hasPrintedOnce)// if printer did not printed
 	{
-		Scene* current_scene = button->GetTexturePtr();
-
-		if (current_scene == nullptr) continue;// if there is no texture to print
-		
-
-
-		COORD start = button->GetPrintStartCoord();
-		COORD size = button->GetWidthXY();
-
-
-
-
+		PrintLayout(layout);// print all
+		return;
 	}
+
+	Scene merged = MergeLayout(layout);
+
+    COORD print_start{0,0};
+
+    for (int y = 0; y < merged._T_Pixel_frame.size(); ++y)
+    {
+        for (int x = 0; x < merged._T_Pixel_frame[y].size(); ++x)
+        {
+            const T_Pixel& current_T_Pixel = merged._T_Pixel_frame[y][x];
+            const T_Pixel& previous_T_Pixel  = _previous_Scene._T_Pixel_frame[y][x];
+
+            if (current_T_Pixel.Pixel != previous_T_Pixel.Pixel || current_T_Pixel.color != previous_T_Pixel.color)
+            {
+                print_start.X = static_cast<short>(x);
+                print_start.Y = static_cast<short>(y);
+
+                SetConsoleCursorPosition(_output_H, print_start);
+                SetConsoleTextAttribute(_output_H, current_T_Pixel.color);
+                WriteConsoleA(_output_H, &current_T_Pixel.Pixel, 1, nullptr, nullptr);
+            }
+        }
+    }
+	_hasPrintedOnce = true;// check did printed
+
+    // update previous Scene
+    _previous_Scene = merged;
+}
+
+void Printer::ResetPrintRecord()
+{
+	_hasPrintedOnce = false;// printed more than once
+}
+
+bool Printer::GetPrintRecord()
+{
+	return _hasPrintedOnce;
 }

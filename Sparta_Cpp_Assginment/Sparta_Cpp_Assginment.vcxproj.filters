@@ -79,6 +79,9 @@
     <Filter Include="console_manager\button\CommonButtons">
       <UniqueIdentifier>{9506bb43-53bb-4e91-b227-d2a5ef9cac81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="console_manager\Scene\Images">
+      <UniqueIdentifier>{11270de8-6f65-4ca4-a502-7163ffce69ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sparta_Cpp_Assginment.cpp">
@@ -170,6 +173,9 @@
     </ClCompile>
     <ClCompile Include="SimpleButton.cpp">
       <Filter>console_manager\button\CommonButtons</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Manager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -292,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="SimpleButton.h">
       <Filter>console_manager\button\CommonButtons</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_Layout.h">
+      <Filter>console_manager\UI_Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

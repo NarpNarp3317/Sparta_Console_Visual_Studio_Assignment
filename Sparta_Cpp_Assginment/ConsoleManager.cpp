@@ -181,8 +181,16 @@ void ConsoleManager::Update_ConsoleManager()
 
 	// update the scene first
 
-	_final_Scene = _printer->MergeLayout(_currentDisplay);
-	_printer->PrintFrame(_final_Scene);// print out the updated scene
+	if (_printer->GetPrintRecord() == false)// if printer did not printed the new layout
+	{
+		_printer->PrintLayout(_currentDisplay);// print the new scene for the first time
+		return;
+	}
+	else
+	{
+		_printer->PrintPartialUpdates(_currentDisplay);// now print only changed parts
+	}
+
 
 	if (_mouse != nullptr)
 	{
@@ -190,7 +198,7 @@ void ConsoleManager::Update_ConsoleManager()
 	}
 
 
-	//====== Global Tick ========//
+	//====== Global Tick ========//   
 
 	ClockTower::Update_Tick();// update the tick
 
@@ -220,6 +228,8 @@ void ConsoleManager::SetCurrentDisplay(Layout* _disp)// for now, just clear
 {
 	cout << "\033[2J\033[1;1H";
 	_currentDisplay = _disp;
+
+	if(_printer!=nullptr) _printer->ResetPrintRecord();// hasPrintedOnce==false;
 }
 
 void ConsoleManager::gameExit()
