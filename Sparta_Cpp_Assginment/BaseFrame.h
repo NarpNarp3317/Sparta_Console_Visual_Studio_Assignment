@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "PivotPoint.h"
 #include "Enum_FrameType.h"
+#include "Enum_Text_Color.h"
 #include <vector>
 #include <Windows.h>
 
@@ -12,10 +13,10 @@ using namespace std;
 class BaseFrame
 {
 public:
-	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_Style);
-	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_Style);
-	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset);//offset을 주고 frame을 생성
-	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width);//주어진 타입에 맞춰 프레임 생성
+	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_Style, Text_Color text_color, Text_Color bg_color);
+	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_Style, Text_Color text_color, Text_Color bg_color);
+	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, Text_Color text_color, Text_Color bg_color);//offset을 주고 frame을 생성
+	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, Text_Color text_color, Text_Color bg_color);//주어진 타입에 맞춰 프레임 생성
 
 protected:
 //private:
@@ -23,7 +24,7 @@ protected:
 	// bool isclampable;// if the frame is out of full size of console screen, it could be not generated or get clamped. this bool decides the obj's condition
 	// --> not done yet
 	int _layerPriority;//layer순서
-	short int _frame_color;// frame color
+	short int _text_color;// frame color
 	
 	COORD _width_XY;
 	PivotPoiontLocation _anchor_type;// top left, midle center, middle right....
@@ -36,6 +37,8 @@ protected:
 
 	FrameStyle _frame_style;// look of frame
 	Scene _texture;// the texture content of the frame
+	Scene* _texturePtr;// this is for later when the scene gets switched, it would be inefficient to put new value to texture everytime when texture is switched
+	//----> so make a ptr for a real texture and when the switch happens, change the address in ptr and send it to caller.(like iterator)
 	
 	//vector<vector<bool>> _alpha;// 픽셀이 존재하는 곳을 true로 저장//클릭 가능한 곳을 저장?//지금은 프레임이 있는 범위는 전부 되는걸로
 	//  ---> by only reading the _frame, this wont be necessary for now
@@ -53,13 +56,14 @@ public:
 	// const Scene& GetFramePtr();
 
 	Scene* GetTexturePtr();// get what's inside the frame
+	void SwitchTexturePtr(Scene* switched_texturePtr);// switch the address of the texture
 
-	void SetPicture(const Scene& new_picture);// set whats in side the frame
+	void SetPicture(Scene* new_picture);// set whats in side the frame
 	
 	bool IsOuterFrameVisible();// for merging, check if the frame style is no line, so that it can decide the range of the merged scene(if visual frame ---> 1 less, else as its width)
 
 
-	void GenerateFrame();//변경된 정보로 프레임을 생성함
+	
 	//void FillAlpha();// for button, fill all with true so that button can be detected
 
 	static void SetScreenLimits(COORD limit_area);

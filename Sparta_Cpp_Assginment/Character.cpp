@@ -30,7 +30,7 @@ Character::Character(string name)
 	gold = 0;
 	health = maxHealth;
 	equippedWeapon = nullptr;
-	addItem(new HealthPotion("Heal", 0, true, false, "is Junk")); // 임시 추가
+	addItem(new HealthPotion("HealthPotion", 0, true, false, "is Junk")); // 임시 추가
 }
 
 void Character::useItem(int index)
@@ -53,16 +53,16 @@ void Character::useItem(int index)
 
 void Character::addItem(Item* item)	// 아이템을 인벤토리에 추가하는 함수
 {
-	inventory.push_back(item);
 	
 	// 새로운 아이템 등록
 	if (itemCountMap.find(item->getName()) != itemCountMap.end())
 	{
-		itemCountMap.insert(make_pair(item->getName(), 1));
+		itemCountMap[item->getName()]++; // 있다면 아이템 수량 추가
 	}
 	else
 	{
-		itemCountMap[item->getName()]++; // 있다면 아이템 수량 추가
+		itemCountMap.insert(make_pair(item->getName(), 1));
+		inventory.push_back(item);
 	}
 }
 
@@ -96,7 +96,7 @@ bool Character::removeItemIdx(int index)	// 아이템을 인덱스로 삭제하는 함수
 void Character::levelUp()
 {
 	cout << "===========MESSAGE===========" << endl;
-	cout << "LEVEL UP!! " << level << ">> " << level + 1 << endl;
+	cout << "LEVEL UP!! " << level << " >> " << level + 1 << endl;
 
 	level++;
 	maxHealth += (level * 20);
@@ -151,11 +151,15 @@ void Character::printInventory()
 		cout << "Your inventory is empty!" << endl;
 		cout << "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" << endl;
 	}
-
-	// 아이템 수량 코드 추가
-	for (int i = 0; i < inventory.size(); i++)
+	else
 	{
-		cout << i + 1 << " . " << inventory[i]->getName() << "/Count : " << itemCountMap[inventory[i]->getName()] << endl;
+		// 아이템 수량 코드 추가
+		cout << "===========INVENTORY===========" << endl;
+		for (int i = 0; i < inventory.size(); i++)
+		{
+
+			cout << i + 1 << ". " << inventory[i]->getName() << "/Count : " << itemCountMap[inventory[i]->getName()] << endl;
+		}
 	}
 }
 

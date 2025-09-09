@@ -32,10 +32,10 @@ void Battle::startBattle(Character* _player)
 		cout << "===========Battle===========" << endl;
 	}
 
-	cout << _player->getName() <<" vs " << _monster->getName() << endl;
+	cout << _player->getName() << " vs " << _monster->getName() << endl;
 	cout << "Battle Start!" << endl;
 
-	
+
 	while (true)
 	{
 		if (_player->getHealth() <= 0)
@@ -70,6 +70,7 @@ void Battle::startBattle(Character* _player)
 		if (_monster->getHealth() <= 0)
 		{
 			printMonsterDie(_monster->getName());
+			battleResult(_player, battleStage); //보상 지급 처리
 			_monster = battleStage.getMonster(++monsterIndex); //다음 몬스터
 
 			if (_monster == nullptr) // 다음 몬스터가 없으면 승리로 처리하고 break
@@ -82,7 +83,7 @@ void Battle::startBattle(Character* _player)
 				cout << "===========Battle===========" << endl;
 				cout << _player->getName() << " vs " << _monster->getName() << endl;
 				cout << "Battle Start!" << endl;
-				continue; 
+				continue;
 			}
 		}
 
@@ -93,7 +94,7 @@ void Battle::startBattle(Character* _player)
 	}
 
 	battleStage.removeMonsterList(); 	// 벡터 내부 요소 동적할당 해제
-	battleResult(_player, battleStage); //보상 지급 처리
+	resultPrint();
 }
 
 void Battle::printSelectList()
@@ -185,47 +186,48 @@ int Battle::selecting(const Character& _player)
 }
 
 void Battle::battleResult(Character* _player, BattleStage& battleStage){
-	cout << "===========RESULT===========" << endl;
+	cout << "===========Slayed a monster ===========" << endl;
+	cout << "Gold : +" << _monster->getRewardGold() << " , EXP : +" << _monster->getRewardExp() << endl;
+	int randomItemIndex = _monster->randomItem();
+
+	// 30퍼 확률로 아이템 획득
+	if (randomItemIndex >= 0)
+	{
+		EItem item_enum = static_cast<EItem>(randomItemIndex);
+
+		cout << "Got a random item!! >> ";
+
+		switch (item_enum)
+		{
+		case EItem::AttackBoost:
+			cout << "AttackBoost" << endl;
+			_player->addItem(new AttackBoost("AttackBoost", 15, 15));
+			break;
+		case EItem::HealthPotion:
+			cout << "HealthPotion" << endl;
+			_player->addItem(new HealthPotion("HealthPotion", 15, 15));
+			break;
+		default:
+			break;
+		}
+	}
+	_player->reward(_monster->getRewardExp(), _monster->getRewardGold());
+	_player->displayStatus();
+}
+
+void Battle::resultPrint()
+{
+	cout << "===========BATTLE RESULT===========" << endl;
 	if (isWin)
 	{
-		cout << "Win!\nGold : +" << battleStage.getRewardGold() << " , EXP : +" << battleStage.getRewardExp() << endl;
-		int randomItemIndex = battleStage.randomItem();
-
-		// 30퍼 확률로 아이템 획득
-		if (randomItemIndex >= 0)
-		{
-			EItem item_enum = static_cast<EItem>(randomItemIndex);
-
-			cout << "Got a random item!! >> ";
-
-			switch (item_enum)
-			{
-			case EItem::AttackBoost:
-				cout << "AttackBoost" << endl;
-				_player->addItem(new AttackBoost("AttackBoost", 15, 15));
-				break;
-			//case EItem::Bomb:
-			//	cout << "Bomb" << endl;
-			//	_player->addItem(new Bomb("Bomb", 15, 15));
-			//	break;
-			case EItem::HealthPotion:
-				cout << "HealthPotion" << endl;
-				_player->addItem(new HealthPotion("HealthPotion", 15, 15));
-				break;
-			default:
-				break;
-			}
-		}
-
-
-		_player->reward(battleStage.getRewardExp(), battleStage.getRewardGold());
-		_player->displayStatus();
+		cout << "WIN!!\nReturn to Lounge.." << endl;
 	}
 	else
 	{
-		cout << "DEFEAT..Return to Lounge!" << endl;
+		cout << "DEFEAT..\nReturn to Lounge.." << endl;
 	}
 }
+
 
 bool Battle::inputCheck()
 {
@@ -243,6 +245,7 @@ bool Battle::inputCheck()
 
 void Battle::printMonsterDie(const string& name)
 {
+	cout << "===========MESSAGE===========" << endl;
 	cout << name << " Die" << endl;
 }
 

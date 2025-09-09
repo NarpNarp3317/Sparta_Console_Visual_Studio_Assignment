@@ -1,7 +1,8 @@
-#include "SceneMaker.h"
+﻿#include "SceneMaker.h"
 #include "Text_Align.h"
-using namespace std;
 
+
+/*
 SceneMaker::SceneMaker():_width_XY{0,0}, _scene{nullptr}
 {
 }
@@ -41,58 +42,339 @@ void SceneMaker::ImportScene(Scene* scene, COORD width_XY, COORD offset)
 	_scene->_T_Pixel_frame = newFrame;
 	_scene->_alpha = newAlpha;
 }
+*/
 
-void SceneMaker::AddTexts(std::vector<std::string> Texts, PivotPoiontLocation anchor_type, COORD offset, int color)
+
+void SceneMaker::PrepareCanvas(Scene* scene, COORD width_XY)
 {
-	
-	if (_scene == nullptr || Texts.empty()) return;
+	scene->_T_Pixel_frame.assign(width_XY.Y, vector<T_Pixel>(width_XY.X, { 7,' ' }));
+	scene->_alpha.assign(width_XY.Y, vector<bool>(width_XY.X, false));
+}
 
-	int lineCount = (Texts.size() < _width_XY.Y - 2) ? Texts.size() : _width_XY.Y - 2;// chose smallest one// -2 for margine by frame
+void SceneMaker::AddTexts(Scene* scene, COORD width_XY, COORD offset, vector<string> Texts, PivotPoiontLocation anchor_type, Text_Color text_color, Text_Color background_color)
+{
+	short int color = FindColorCode(text_color, background_color);
 
-	vector<std::string> valid_lines(lineCount);//clamp the strings from texts vector
-	
-	Text_Align t_align;// the alignment of text by anchor type
+	if (scene == nullptr) return;
+	if (Texts.empty()) return;
 
-	switch (anchor_type)
+	int max_LineCount = width_XY.Y-2;
+	int lineCount = (Texts.size() < width_XY.Y - 2) ? Texts.size() : width_XY.Y - 2;// chose smallest one// -2 for margine by frame
+
+	for (int i = 0; i < lineCount; i++)
 	{
-	case top_left:
-		t_align = left;
-		break;
-	case top_center:
-		t_align = center;
-		break;
-	case top_right:
-		t_align = right;
-		break;
-	case left_center:
-		t_align = left;
-		break;
-	case center_center:
-		t_align = center;
-		break;
-	case right_center:
-		t_align = right;
-		break;
-	case bottom_left:
-		t_align = left;
-		break;
-	case bottom_center:
-		t_align = center;
-		break;
-	case bottom_right:
-		t_align = right;
-		break;
-	default:
-		//error! invalid enum detected!
-		break;
+		string current_Line = Texts[i];
+		int current_Line_Length = (current_Line.length() < width_XY.X-2) ? current_Line.length() : width_XY.X-2;// same here
+
+		//Text_Align t_align;// the alignment of text by anchor type ---> not necessary
+
+		COORD string_start = { 0, 0 };// the starting point of string based on the anchor(alignment)
+
+
+		//======== X coord =======//
+		if (anchor_type == top_left || anchor_type == left_center || anchor_type == bottom_left)
+		{
+			string_start.X = 1;
+		}
+		else if (anchor_type == top_center || anchor_type == center_center || anchor_type == bottom_center)
+		{
+			string_start.X = 1+((width_XY.X - current_Line_Length) / 2);
+		}
+		else if (anchor_type == top_right || anchor_type == right_center || anchor_type == bottom_right)
+		{
+			string_start.X = width_XY.X - current_Line_Length-1;
+		}
+		else
+		{
+			//error, invalid enum
+		}
+
+		//======== Y coord =======//
+		if (anchor_type == top_left || anchor_type == top_center || anchor_type == top_right)
+		{
+			string_start.Y = 1+i;
+		}
+		else if (anchor_type == left_center || anchor_type == center_center || anchor_type == right_center)
+		{
+			string_start.Y = ((width_XY.Y - lineCount) / 2)+i;
+		}
+		else if (anchor_type == bottom_left || anchor_type == bottom_center || anchor_type == bottom_right)
+		{
+			string_start.Y = width_XY.Y - lineCount + i-1;
+		}
+		else
+		{
+			//error, invalid enum
+		}
+
+		//=== apply offset ===//
+		string_start.X += offset.X;
+		string_start.Y += offset.Y;
+
+		for (int c = 0; c < current_Line_Length; c++)
+		{
+			int c_coordX = string_start.X + c;
+			int  c_coordY = string_start.Y;
+
+
+			if (c_coordX < 1 || c_coordX >= width_XY.X-1 || c_coordY < 1 || c_coordY >= width_XY.Y-1) continue;
+
+			scene->_T_Pixel_frame[c_coordY][c_coordX] = T_Pixel{ color ,static_cast<unsigned char>(current_Line[c]) };
+			scene->_alpha[c_coordY][c_coordX] = true;
+		}
 	}
 }
 
-void SceneMaker::AddFrame(FrameStyle style, int color)
+void SceneMaker::AddTexts_withChosenColor(Scene* scene, COORD width_XY, COORD offset, vector<string> Texts, PivotPoiontLocation anchor_type, short int color)
 {
+	if (scene == nullptr) return;
+	if (Texts.empty()) return;
 
+	int max_LineCount = width_XY.Y - 2;
+	int lineCount = (Texts.size() < width_XY.Y - 2) ? Texts.size() : width_XY.Y - 2;// chose smallest one// -2 for margine by frame
+
+	for (int i = 0; i < lineCount; i++)
+	{
+		string current_Line = Texts[i];
+		int current_Line_Length = (current_Line.length() < width_XY.X - 2) ? current_Line.length() : width_XY.X - 2;// same here
+
+		//Text_Align t_align;// the alignment of text by anchor type ---> not necessary
+
+		COORD string_start = { 0, 0 };// the starting point of string based on the anchor(alignment)
+
+
+		//======== X coord =======//
+		if (anchor_type == top_left || anchor_type == left_center || anchor_type == bottom_left)
+		{
+			string_start.X = 1;
+		}
+		else if (anchor_type == top_center || anchor_type == center_center || anchor_type == bottom_center)
+		{
+			string_start.X = 1 + ((width_XY.X - current_Line_Length) / 2);
+		}
+		else if (anchor_type == top_right || anchor_type == right_center || anchor_type == bottom_right)
+		{
+			string_start.X = width_XY.X - current_Line_Length - 1;
+		}
+		else
+		{
+			//error, invalid enum
+		}
+
+		//======== Y coord =======//
+		if (anchor_type == top_left || anchor_type == top_center || anchor_type == top_right)
+		{
+			string_start.Y = 1 + i;
+		}
+		else if (anchor_type == left_center || anchor_type == center_center || anchor_type == right_center)
+		{
+			string_start.Y = ((width_XY.Y - lineCount) / 2) + i ;
+		}
+		else if (anchor_type == bottom_left || anchor_type == bottom_center || anchor_type == bottom_right)
+		{
+			string_start.Y = width_XY.Y - lineCount + i - 1;
+		}
+		else
+		{
+			//error, invalid enum
+		}
+
+		//=== apply offset ===//
+		string_start.X += offset.X;
+		string_start.Y += offset.Y;
+
+		for (int c = 0; c < current_Line_Length; c++)
+		{
+			int c_coordX = string_start.X + c;
+			int  c_coordY = string_start.Y;
+
+
+			if (c_coordX < 1 || c_coordX >= width_XY.X - 1 || c_coordY < 1 || c_coordY >= width_XY.Y - 1) continue;
+
+			scene->_T_Pixel_frame[c_coordY][c_coordX] = T_Pixel{ color ,static_cast<unsigned char>(current_Line[c]) };
+			scene->_alpha[c_coordY][c_coordX] = true;
+		}
+	}
 }
-void SceneMaker::ChangeColor(int color)
-{
 
+void SceneMaker::AddFrame(Scene* scene, COORD width_XY, FrameStyle style, Text_Color text_color, Text_Color background_color)
+{
+	short int color = FindColorCode(text_color, background_color);
+
+	if (scene == nullptr) return;
+	if (style == no_line) return;// do not allocate any thing when ther is no frame
+
+	//==== frame style ====//
+
+	unsigned char top_left, top_right, bottom_left, bottom_right, horizontal, vertical;// for frame
+
+	switch (style)
+	{
+	case double_line:
+		top_left = 201; top_right = 187; bottom_left = 200; bottom_right = 188; horizontal = 205; vertical = 186;
+		break;
+
+	case single_line:
+		top_left = 218; top_right = 191; bottom_left = 192; bottom_right = 217; horizontal = 196; vertical = 179;
+		break;
+
+	default:
+		//error no enum detected
+		break;
+	}
+
+	short int x = width_XY.X;
+	short int y = width_XY.Y;
+
+	if (x < 2 || y < 2)// the frame needs to be at least bigger than 2*2 so that corner can be made
+	{
+		return;
+	}
+	// change corner chars
+
+	scene->_T_Pixel_frame[0][0] = T_Pixel{ color,top_left };
+	scene->_alpha[0][0] = true;
+
+	scene->_T_Pixel_frame[0][x - 1] = T_Pixel{ color,top_right };
+	scene->_alpha[0][x - 1] = true;
+
+	scene->_T_Pixel_frame[y - 1][0] = T_Pixel{ color,bottom_left };
+	scene->_alpha[y - 1][0] = true;
+
+	scene->_T_Pixel_frame[y - 1][x - 1] = T_Pixel{ color,bottom_right };
+	scene->_alpha[y - 1][x - 1] = true;
+
+
+	for (int i = 1; i < x - 1; i++)//same here/alsnkljkb adsljkbf saflsdjkbsdfhajk fuck
+	{
+		scene->_T_Pixel_frame[0][i] = T_Pixel{ color,  horizontal };
+		scene->_alpha[0][i] = true;
+		scene->_T_Pixel_frame[y - 1][i] = T_Pixel{ color,  horizontal };
+		scene->_alpha[y - 1][i] = true;
+	}
+	for (int j = 1; j < y - 1; j++)//same here
+	{
+		scene->_T_Pixel_frame[j][0] = T_Pixel{ color,  vertical };
+		scene->_alpha[j][0] = true;
+		scene->_T_Pixel_frame[j][x - 1] = T_Pixel{ color,  vertical };
+		scene->_alpha[j][x - 1] = true;
+	}
+}
+void SceneMaker::AddFrame_withChosenColor(Scene* scene, COORD width_XY,  FrameStyle style, short int color)
+{
+	if (scene == nullptr) return;
+	if (style == no_line) return;// do not allocate any thing when ther is no frame
+
+	//==== frame style ====//
+
+	unsigned char top_left, top_right, bottom_left, bottom_right, horizontal, vertical;// for frame
+
+	switch (style)
+	{
+	case double_line:
+		top_left = 201; top_right = 187; bottom_left = 200; bottom_right = 188; horizontal = 205; vertical = 186;
+		break;
+
+	case single_line:
+		top_left = 218; top_right = 191; bottom_left = 192; bottom_right = 217; horizontal = 196; vertical = 179;
+		break;
+
+	default:
+		//error no enum detected
+		break;
+	}
+
+	short int x = width_XY.X;
+	short int y = width_XY.Y;
+
+	if (x < 2 || y < 2)// the frame needs to be at least bigger than 2*2 so that corner can be made
+	{
+		return;
+	}
+	// change corner chars
+
+	scene->_T_Pixel_frame[0][0] = T_Pixel{ color,top_left };
+	scene->_alpha[0][0] = true;
+
+	scene->_T_Pixel_frame[0][x - 1] = T_Pixel{ color,top_right };
+	scene->_alpha[0][x - 1] = true;
+
+	scene->_T_Pixel_frame[y - 1][0] = T_Pixel{ color,bottom_left };
+	scene->_alpha[y - 1][0] = true;
+
+	scene->_T_Pixel_frame[y - 1][x - 1] = T_Pixel{ color,bottom_right };
+	scene->_alpha[y - 1][x - 1] = true;
+
+
+	for (int i = 1; i < x - 1; i++)//same here/alsnkljkb adsljkbf saflsdjkbsdfhajk fuck
+	{
+		scene->_T_Pixel_frame[0][i] = T_Pixel{ color,  horizontal };
+		scene->_alpha[0][i] = true;
+		scene->_T_Pixel_frame[y - 1][i] = T_Pixel{ color,  horizontal };
+		scene->_alpha[y - 1][i] = true;
+	}
+	for (int j = 1; j < y - 1; j++)//same here
+	{
+		scene->_T_Pixel_frame[j][0] = T_Pixel{ color,  vertical };
+		scene->_alpha[j][0] = true;
+		scene->_T_Pixel_frame[j][x - 1] = T_Pixel{ color,  vertical };
+		scene->_alpha[j][x - 1] = true;
+	}
+}
+
+void SceneMaker::FillColor(Scene* scene, COORD width_XY, Text_Color text_color, Text_Color background_color)
+{
+	T_Pixel pixel{ FindColorCode(text_color,background_color),219};// // 219 = █, ' ' does not print anything 
+
+	scene->_T_Pixel_frame.assign(width_XY.Y, vector<T_Pixel>(width_XY.X, pixel));//assign full
+	scene->_alpha.assign(width_XY.Y, vector<bool>(width_XY.X, true));//same here
+}
+
+void SceneMaker::ChangeWholeColor(Scene* scene, COORD width_XY, Text_Color text_color, Text_Color background_color)
+{
+	short int color = FindColorCode(text_color, background_color);
+
+	if (scene == nullptr) return;
+
+	for (int y = 0; y < width_XY.Y; y++)
+	{
+		for (int x=0; x < width_XY.X; x++)
+		{
+			if (scene->_alpha[y][x])
+			{
+				scene->_T_Pixel_frame[y][x].color = color;
+			}
+		}
+	}
+}
+
+void SceneMaker::Switch_Text_BG_Colors(Scene* scene, COORD width_XY)
+{
+	if (scene == nullptr) return;
+
+	for (int y = 0; y < width_XY.Y; y++)
+	{
+		for (int x=0; x < width_XY.X; x++)
+		{
+			if (scene->_alpha[y][x])
+			{
+				short int color = scene->_T_Pixel_frame[y][x].color;// find the color;
+
+				short int text = color % 16;// get the rest of division(text)X coord
+				short int bg = (color- text) / 16;// Background Y coord
+
+				scene->_T_Pixel_frame[y][x].color = (text * 16) + bg;
+
+				//_scene->_T_Pixel_frame[y][x].color = FindColorCode(bg, text);// this is using enum for color
+
+			}
+		}
+	}
+}
+
+
+
+short int SceneMaker::FindColorCode(Text_Color text_color, Text_Color background_color)
+{
+	 return ((background_color * 16) + text_color);// use color chart (X--> 0~15(16)colors, same for Y)--> overflow--> set color
 }

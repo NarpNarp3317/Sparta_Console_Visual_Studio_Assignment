@@ -1,13 +1,12 @@
 #pragma once
 #include <string>
 #include "Character.h"
-#include "Monster.h"
+
 using namespace std;
 
 enum class EItem
 {
 	AttackBoost,
-	Bomb,
 	HealthPotion,
 	Weapon
 };
@@ -40,6 +39,5 @@ public:
 	string getDescription();
 	void setDescription(string desc);
 	virtual void use(Character* character);
-	virtual void use(Character* character, Monster* monster);
 };
 

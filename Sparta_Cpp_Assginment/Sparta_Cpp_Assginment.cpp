@@ -13,7 +13,11 @@ int main()
 	//GameManager startGame;
 	//startGame.StartGame();
 
+<<<<<<< HEAD
 //return 0;
+=======
+ //   return 0;
+>>>>>>> Dev
     StringUpdater string_updater({10,2});
     ConsoleManager C_manager;// for the getting max sceen size first so that base frames can know the screen limit
 
@@ -23,36 +27,42 @@ int main()
     Layout Character_Maker;
 
     // generate required buttons for game menu
-    Button gamestart(0, 2, center_center, { 20,5 }, { 0,-2 }, double_line);
-    gamestart.SetOnLeftClick([&string_updater]() {string_updater.StringUpdate("left clicked"); });
-    gamestart.SetOnRightClick([&string_updater]() {string_updater.StringUpdate("right clicked"); });
+    Button gamestart(0, 2, center_center, { 20,5 }, { 0,-2 }, double_line,White,Gray);
+    gamestart.SetOnLeftPressed([&string_updater]() {string_updater.StringUpdate("left clicked"); });
+    gamestart.SetOnLeftReleased([&string_updater]() {string_updater.StringUpdate("left released"); });
+    gamestart.SetOnRightPressed([&string_updater]() {string_updater.StringUpdate("right clicked"); });
     gamestart.SetOnHovering_started([&string_updater]() {string_updater.StringUpdate("Hoverring"); });
+    gamestart.SetOnHovering_ended([&string_updater]() {string_updater.StringUpdate("Hoverring"); });
 
    // gamestart.SetOnHovering_ended([&string_updater]() {string_updater.StringUpdate("not hovering"); });
 
-    Button load(0, 2, center_center, { 20,5 }, { 0,6 }, double_line);
+    Button load(0, 2, center_center, { 20,5 }, { 0,6 }, double_line,  White, Gray);
    // load.SetOnLeftClick([]() {printf("Load Clicked"); });// add funtio
    // load.SetOnHovering_started([]() { printf("load hovering\n"); });
 
-    Button next(0, 2, center_center, { 20,5 }, { 0,12 }, double_line);
-    next.SetOnLeftClick([&C_manager, &Character_Maker]() { C_manager.SetCurrentDisplay(&Character_Maker); });
+    Button next(0, 2, center_center, { 20,5 }, { 0,12 }, double_line, White, Gray);
+    next.SetOnLeftPressed([&C_manager, &Character_Maker]() { C_manager.SetCurrentDisplay(&Character_Maker); });
+
+	Button gameExit(0, 2, center_center, { 20,5 }, { 0,18 }, double_line, White, Gray);
+    gameExit.SetOnLeftPressed([&C_manager]() {C_manager.gameExit(); });
 
     GameMenu.AddButton(&gamestart);
     GameMenu.AddButton(&load);
     GameMenu.AddButton(&next);
+    GameMenu.AddButton(&gameExit);
 
     //--------------------------------------------------------
  
-    Button character(0, 2, left_center, { 30,40 }, { 5,0 }, double_line);
-    character.SetOnLeftClick([]() {});
+    Button character(0, 2, left_center, { 30,40 }, { 5,0 }, double_line, White, Gray);
+    character.SetOnLeftPressed([]() {});
 
-    Button list1 (0, 2, left_center, { 20,5 }, { 40,-10 }, double_line);
+    Button list1 (0, 2, left_center, { 20,5 }, { 40,-10 }, double_line, White, Gray);
     list1.SetOnHovering_started([]() {});
     list1.SetOnHovering_ended([]() {});
 
-    Button list2 (0, 2, left_center, { 20,5 }, {40,0 }, double_line);
+    Button list2 (0, 2, left_center, { 20,5 }, {40,0 }, double_line, White, Gray);
 
-    Button list3(0, 2, left_center, { 20,5 }, { 40, 10 }, double_line);
+    Button list3(0, 2, left_center, { 20,5 }, { 40, 10 }, double_line, White, Gray);
 
     Character_Maker.AddButton(&character);
     Character_Maker.AddButton(&list1);
