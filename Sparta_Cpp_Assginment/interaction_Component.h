@@ -16,11 +16,17 @@ right click ---> info
 hoverring--> change color(highlight)
 
 */
-
+//template<typename Owner>// use template to get unknown class of owner as pointer
+//--> still needs to put the data type in <>
 class Interactable
 {
+
+//public: Interactable(void* owner);// use generic pointer instead----> cannot use it for -> any ways. mission failed
+
+
 //private:--> the owner can get access
 protected:
+	//void* _owner;
 	Interactable_State _current_State=idle_state;
 	
 	//==== timer ====//
@@ -51,7 +57,7 @@ public:
 	//===== trigger function =====//
 
 	void SetStateDuration(int duration);
-
+	//void* GetOwner();
 
 	void TriggerState(Interactable_State newState, int duration);
 	

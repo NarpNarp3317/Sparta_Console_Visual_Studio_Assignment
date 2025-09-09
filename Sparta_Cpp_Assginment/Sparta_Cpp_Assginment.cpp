@@ -71,7 +71,7 @@ int main()
 
     //--------------------------------------------------------
  
-    Button character(0, 2, left_center, { 30,40 }, { 5,0 }, double_line, White, Gray);
+    Button character(0, 2,"New_Player", center_center, {35,40}, {5,0}, double_line, White, Gray);
     character.SetOnLeftPressed([]() {});
 
     Button list1 (0, 2, left_center, { 20,5 }, { 40,-10 }, double_line, White, Gray);

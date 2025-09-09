@@ -46,38 +46,21 @@ Scene Printer::MergeLayers(const vector<Scene*>& scenes)
 
 	return merged;
 }
-/*
-Scene Printer::MergeDisplay(Display* display)
-{
-	if (!display) return Scene();// return empty scene
 
-	vector<Scene*> display_layers;//empty storage
-
-	display_layers.push_back(display->GetFramePtr());// frame of display
-
-	for (Button* button : display->GetInteractables())// add all buttons
-	{
-		display_layers.push_back(button->GetFramePtr());
-	}
-
-	return MergeLayers(display_layers);// send it to the merge function and return scene
-}
-*/ //-----> this was only out frames at 00, print start was not considered in this code
-
-Scene Printer::MergeDisplay(Layout* display)
+Scene Printer::MergeLayout(Layout* layout)
 {
 	Scene merged;
 
-	if (!display) return merged;
+	if (!layout) return merged;
 
-	Scene* base = display->GetTexturePtr(); // start with display frame
+	Scene* base = layout->GetTexturePtr(); // start with display frame
 	if(base==nullptr) return merged;// if display base frame is invalid// the cunstructor generate it at the beginning but just in case
 
 	merged = *base;
-	COORD display_range = display->GetWidthXY();
-	bool isFrameVisible=display->IsOuterFrameVisible();
+	COORD display_range = layout->GetWidthXY();
+	bool isFrameVisible=layout->IsOuterFrameVisible();
 
-	for (Button* button : display->GetInteractables())
+	for (Button* button : layout->GetInteractables())
 	{
 		Scene* button_scene = button->GetTexturePtr();
 		// Scene* button_scene = button->GetTexturePtr();
@@ -85,7 +68,6 @@ Scene Printer::MergeDisplay(Layout* display)
 
 		COORD start = button->GetPrintStartCoord();// this was essentiall!!!
 		COORD button_width = button->GetWidthXY();// get range
-
 
 		for (int y = 0; y < button_width.Y; y++)
 		{
