@@ -140,3 +140,27 @@ void Printer::PrintFrame(const Scene& scene)
 		}
 	}
 }
+
+void Printer::PrintMergedDisplay(Layout* display)
+{
+
+}
+
+void Printer::PrintPartialUpdates(Layout* display)
+{
+	for (Button* button : display->GetInteractables())
+	{
+		Scene* current_scene = button->GetTexturePtr();
+
+		if (current_scene == nullptr) continue;// if there is no texture to print
+		
+
+
+		COORD start = button->GetPrintStartCoord();
+		COORD size = button->GetWidthXY();
+
+
+
+
+	}
+}

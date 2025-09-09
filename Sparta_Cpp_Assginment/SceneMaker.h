@@ -5,6 +5,9 @@
 #include "Scene.h"
 #include "Enum_FrameType.h"
 #include "PivotPoint.h"
+#include "Enum_Text_Color.h"
+
+using namespace std;
 
 /*
 this is for generating 2d vector of T-Pixels and alpha from empty scene obj.
@@ -18,25 +21,30 @@ functions
 // the generative functions will overpaint the previous scene
 
 */
-class SceneMaker
+class SceneMaker// make it into static function
 {
+	// all needs to get scene ptr and width for argument
 public:
-	SceneMaker();
+	//static void ImportScene(Scene* scene, COORD width_XY, COORD offset);// no longer needed
 
-private:
-	Scene* _scene;
-	COORD _width_XY;
+	static void PrepareCanvas(Scene* scene, COORD width_XY);// assignt un empty 2d vector, like preparing right size of canvas to paint
 
-public:
-	void ImportScene(Scene* scene, COORD width_XY, COORD offset);
+	static void AddTexts(Scene* scene, COORD width_XY, COORD offset, vector<string> Texts, PivotPoiontLocation anchor_type, Text_Color text_color, Text_Color background_color);
 
-	void AddTexts(std::vector<std::string> Texts, PivotPoiontLocation anchor_type, COORD offset, int color);
+	static void AddTexts_withChosenColor(Scene* scene, COORD width_XY, COORD offset, vector<string> Texts, PivotPoiontLocation anchor_type, short int color);// when the color is already chosen
 
-	void AddFrame(FrameStyle style,int color);
+	static void AddFrame(Scene* scene, COORD width_XY, FrameStyle style, Text_Color text_color, Text_Color background_color);
+
+	static void AddFrame_withChosenColor(Scene* scene, COORD width_XY,  FrameStyle style, short int color);// same here // when the color is already chosen
 
 	//Scene ExportScene();
 
-	void ChangeColor(int color);
+	static void FillColor(Scene* scene, COORD width_XY, Text_Color text_color, Text_Color background_color);
 
+	static void ChangeWholeColor(Scene* scene, COORD width_XY, Text_Color text_color, Text_Color background_color);
+
+	static void Switch_Text_BG_Colors(Scene* scene, COORD width_XY);
+
+	static short int FindColorCode(Text_Color text_color, Text_Color background_color);
 
 };

@@ -1,54 +1,60 @@
 ﻿#include "BaseFrame.h"
+#include "SceneMaker.h"
 
 // for static data, _screen_Limit;// definition for static member of this class
 
 COORD BaseFrame::_screen_Limit = { 0,0 };// for default
 //without this, unresolved external symbol "private: static struct _COORD BaseFrame::_screen_Limit" (?_screen_Limit@BaseFrame@@0U_COORD@@A)
 
-BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_Style)
+BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_Style, Text_Color text_color, Text_Color bg_color)
 	:
 	_layerPriority{ priority },
 	_width_XY{ width },
 	_anchor_type{ anchor_type },
 	_offset{ offset },
-	_frame_color{ 7 },//default white
+	_text_color{ SceneMaker::FindColorCode(text_color,bg_color)},
 	print_start_coord{ 0,0 },
 	_frame_style{ frame_Style },
-	_texture{}// blank frame at begining
-
+	_texture{},// put the assigned texture at the begining
+	_texturePtr{ &_texture }
 {
-	GenerateFrame();
+	SceneMaker::PrepareCanvas(&_texture, _width_XY);
+	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
 }
-BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_Style)
+BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_Style, Text_Color text_color, Text_Color bg_color)
 	:
 	_layerPriority{ priority },
 	_width_XY{ width },
 	_anchor_type{ anchor_type },
 	_offset{ 0, 0 },
-	_frame_color{ 7 },//default white
+	_text_color{ SceneMaker::FindColorCode(text_color,bg_color) },
 	print_start_coord{ 0,0 },
 	_frame_style{ frame_Style },
-	_texture{}// blank frame at begining
+	_texture{},// put the assigned texture at the begining
+	_texturePtr{ &_texture }
 {
-	GenerateFrame();
+	SceneMaker::PrepareCanvas(&_texture, _width_XY);
+	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
 }
-BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset)// offset 과 함께 생성
+BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, Text_Color text_color, Text_Color bg_color)// offset 과 함께 생성
 	:
 	_layerPriority{ priority },
 	_width_XY{ width },
 	_anchor_type{ anchor_type },
 	_offset{ offset },
-	_frame_color{7},//default white
+	_text_color{ SceneMaker::FindColorCode(text_color,bg_color) },
 	print_start_coord{0,0},
 	_frame_style{ double_line },
-	_texture{}
+	_texture{},// put the assigned texture at the begining
+	_texturePtr{ &_texture }
 
 {
-	GenerateFrame();
+	SceneMaker::PrepareCanvas(&_texture, _width_XY);
+	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
 }
 
 
-BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width)//offset 없이 생성
+BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, Text_Color text_color, Text_Color bg_color)//offset 없이 생성
 :
 	_layerPriority{ priority },
 	_width_XY{ width },
@@ -56,10 +62,12 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width)
 	_offset{ 0,0 },//default offset == no offset
 	print_start_coord{ 0,0 },
 	_frame_style{ double_line },
-	_frame_color{ 7 },//default white
-	_texture{}
+	_text_color{ SceneMaker::FindColorCode(text_color,bg_color) },
+	_texture{},// put the assigned texture at the begining
+	_texturePtr{ &_texture }
 {
-	GenerateFrame();
+	SceneMaker::PrepareCanvas(&_texture, _width_XY);
+	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
 }
 
 void BaseFrame::CalculatePrintStartCoord(PivotPoiontLocation anchor_type)
@@ -149,13 +157,18 @@ COORD BaseFrame::GetWidthXY()
 
 Scene* BaseFrame::GetTexturePtr()
 {
-	return &_texture;
+	return _texturePtr;
+}
+
+void BaseFrame::SwitchTexturePtr(Scene* switched_texturePtr)
+{
+	_texturePtr = switched_texturePtr;
 }
 
 
-void BaseFrame::SetPicture(const Scene& new_picture)// trim out where frames are( if its no visible frame, just as size of frame)
+void BaseFrame::SetPicture(Scene* new_picture)// trim out where frames are( if its no visible frame, just as size of frame)
 {
-	_texture = new_picture;
+	_texture = *new_picture;
 }
 
 bool BaseFrame::IsOuterFrameVisible()
@@ -163,11 +176,9 @@ bool BaseFrame::IsOuterFrameVisible()
 	return _frame_style != no_line;// if style is noline--> return false, else, return true
 }
 
-
+/*
 void BaseFrame::GenerateFrame()
 {
-
-	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
 
 	//==== frame style ====//
 
@@ -193,7 +204,6 @@ void BaseFrame::GenerateFrame()
 		break;
 	}
 
-
 	short int x = _width_XY.X;
 	short int y = _width_XY.Y;
 	//short int off_x = _offset.X;//---> offset is for print start position
@@ -204,7 +214,6 @@ void BaseFrame::GenerateFrame()
 		//print error code
 		return;
 	}
-
 	_texture._T_Pixel_frame.assign(y, vector< T_Pixel>(x, T_Pixel{ _frame_color ,' ' }));// fill the fame with blank first.
 	_texture._alpha.assign(y, vector<bool>(x, false));// fill alpha mask with false(empty)
 
@@ -240,15 +249,8 @@ void BaseFrame::GenerateFrame()
 		_texture._alpha[j][x - 1] = true;
 	}
 }
-/*
-void BaseFrame::FillAlpha()
-{
-	short int x = _width_XY.X;
-	short int y = _width_XY.Y;
-
-	_frame._alpha.assign(y, vector<bool>(x, true));// just assign it all true
-}
-*/ //----> its not for base frame, but for buttons, and not alphamask from scene, but for collision mask
+*/
+// no longer needed
 
 void BaseFrame::SetScreenLimits(COORD limit_area)
 {

@@ -1,14 +1,14 @@
 #include "ConsoleManager.h"
+#include <iostream>// for cout << "\033[2J\033[1;1H";// clear screen
 #include <string>
 
 ConsoleManager::ConsoleManager()
 	:_input_H(GetStdHandle(STD_INPUT_HANDLE))
 	,_output_H(GetStdHandle(STD_OUTPUT_HANDLE)),// input, ouput handle설정
 	_consoleWindow(GetConsoleWindow()),// get console window 
-	_isrunning{ false }// start as paused
+	_isrunning{ false },// start as paused
+	_wasPrinted{false}
 {
-
-
 	SetConsoleOutputCP(437);// to print extended ascii
 
 
@@ -90,11 +90,10 @@ void ConsoleManager::SetupMouseInput()
 
 					switch (input_type)
 					{
-					case Left_click:button->OnLeftClick(); break;
-
-					case Right_click:button->OnRightClick(); break;
-
-						//case Hovering:button->OnHovering(); break; no more
+					case Left_Pressed:button->OnLeftPressed(); break;
+					case Left_Released:button->OnLeftReleased(); break;
+					case Right_Pressed:button->OnRightPressed(); break;
+					case Right_Released:button->OnRightReleased(); break;
 
 					default:
 						{
@@ -111,6 +110,7 @@ void ConsoleManager::SetupMouseInput()
 			}
 		};
 }
+
 
 void ConsoleManager::ResizeConsoleWindow()// if the console window size is changed, reposition the scenes
 
@@ -137,7 +137,7 @@ void ConsoleManager::SwitchInputmode(Enum_ConsoleMode inputmode)//입력 모드를 주
 void ConsoleManager::ReadMouseInput()// do this after printing is done
 {
 	if(_mouse!=nullptr)
-	_mouse->Start_MouseInputReading();
+	_mouse->UpdateMouseInput();
 }
 
 void ConsoleManager::ConsoleWindowSizeSetting()// maximize the scale of console window
@@ -175,17 +175,28 @@ ConsoleManager::~ConsoleManager()
 	SwitchInputmode(KeyboardTypeInMode);// before dying, set to default console input
 }
 
-void ConsoleManager::Update()
+void ConsoleManager::Update_ConsoleManager()
 {
 	if (!_currentDisplay || !_printer) return;// nothing to print or cannot print
 
 	// update the scene first
+
 	_final_Scene = _printer->MergeDisplay(_currentDisplay);
 	_printer->PrintFrame(_final_Scene);// print out the updated scene
 
 	if (_mouse != nullptr)
 	{
-		_mouse->Start_MouseInputReading();
+		_mouse->UpdateMouseInput();
+	}
+
+
+	//====== Global Tick ========//
+
+	ClockTower::Update_Tick();// update the tick
+
+	for (Interactable* interactable : _currentDisplay->GetInteractables())// find elements with interaction component (wich are also running I_Live_Update())
+	{
+		interactable->I_Live_Update();
 	}
 
 }
@@ -195,7 +206,7 @@ void ConsoleManager::Run_Update()
 	_isrunning = true;
 	while (_isrunning)
 	{
-		Update();
+		Update_ConsoleManager();
 		Sleep(30);//frame rate of the update
 	}
 }
@@ -205,8 +216,9 @@ void ConsoleManager::Pause_Update()
 	_isrunning = false;
 }
 
-void ConsoleManager::SetCurrentDisplay(Layout* _disp)
+void ConsoleManager::SetCurrentDisplay(Layout* _disp)// for now, just clear
 {
+	cout << "\033[2J\033[1;1H";
 	_currentDisplay = _disp;
 }
 

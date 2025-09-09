@@ -1,7 +1,7 @@
 #include "Popout.h"
 
 
-Popout::Popout(int priority, PivotPoiontLocation anchor_type, COORD witdh, FrameStyle frame_style):BaseFrame (0, anchor_type, witdh, frame_style)
+Popout::Popout(int priority, PivotPoiontLocation anchor_type, COORD witdh, FrameStyle frame_style, Text_Color text, Text_Color bg):BaseFrame (0, anchor_type, witdh, frame_style,text, bg )
 {
 }
 
@@ -18,8 +18,8 @@ void Popout::P_OnMouseEvent(COORD mouse_coord, Enum_MouseInput input_type)// onl
 		{
 			switch (input_type)
 			{
-			case Left_click: button->OnLeftClick(); break;
-			case Right_click: button->OnRightClick(); break;
+			case Left_Pressed: button->OnLeftPressed(); break;
+			case Right_Pressed: button->OnRightPressed(); break;
 			case Hovering: button->OnHovering_started(); break;
 			default: break;
 			}

@@ -27,6 +27,7 @@ public:
 private:
 
 	bool _isrunning;//to start and pause the live update
+	bool _wasPrinted;// check if it printed before(for printing once per update)
 
 	MouseInputManager* _mouse;//마우스 입력
 	Printer* _printer;
@@ -88,7 +89,7 @@ public:
 	void SetupMouseInput();
 
 	//====== Actually updating the Console ====//
-	void Update();// input and output
+	void Update_ConsoleManager();// input and output
 	void Run_Update();
 	void Pause_Update();
 

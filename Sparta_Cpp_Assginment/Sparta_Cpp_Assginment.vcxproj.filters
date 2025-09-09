@@ -40,9 +40,6 @@
     <Filter Include="console_manager">
       <UniqueIdentifier>{a37d3a21-0b5f-4c16-9c35-343693ad19df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="console_manager\button">
-      <UniqueIdentifier>{1a0e2dde-362f-45d7-b964-96f3da855582}</UniqueIdentifier>
-    </Filter>
     <Filter Include="console_manager\frame">
       <UniqueIdentifier>{72ddbcea-470a-4a27-8d0c-903ce1552c58}</UniqueIdentifier>
     </Filter>
@@ -66,6 +63,18 @@
     </Filter>
     <Filter Include="console_manager\UI_Manager">
       <UniqueIdentifier>{af73566f-0d22-4858-85ee-5b937f84ebc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\Popout">
+      <UniqueIdentifier>{83d7ed0a-70f6-491e-b56d-167e8e3067d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\Dlisplay">
+      <UniqueIdentifier>{72a737ee-a107-46a8-9751-dd9d201b486d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\button">
+      <UniqueIdentifier>{1a0e2dde-362f-45d7-b964-96f3da855582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\TimeManager">
+      <UniqueIdentifier>{c0df47e1-9ba2-41de-9f0a-530922beb6b7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -111,9 +120,6 @@
     <ClCompile Include="BattleStage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Bomb.cpp">
-      <Filter>Source Files\Item</Filter>
-    </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>Source Files\Item</Filter>
     </ClCompile>
@@ -138,14 +144,23 @@
     <ClCompile Include="Printer.cpp">
       <Filter>console_manager\printer</Filter>
     </ClCompile>
-    <ClCompile Include="SceneMaker.cpp">
-      <Filter>console_manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Popout.cpp">
-      <Filter>console_manager</Filter>
-    </ClCompile>
     <ClCompile Include="StringUpdater.cpp">
       <Filter>console_manager\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Popout.cpp">
+      <Filter>console_manager\Popout</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMaker.cpp">
+      <Filter>console_manager\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Display.cpp">
+      <Filter>console_manager\Dlisplay</Filter>
+    </ClCompile>
+    <ClCompile Include="ClockTower.cpp">
+      <Filter>console_manager\TimeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="interaction_Component.cpp">
+      <Filter>console_manager\interactables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,9 +203,6 @@
     <ClInclude Include="BattleStage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Bomb.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
@@ -227,12 +239,6 @@
     <ClInclude Include="Printer.h">
       <Filter>console_manager\printer</Filter>
     </ClInclude>
-    <ClInclude Include="Popout.h">
-      <Filter>console_manager</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneMaker.h">
-      <Filter>console_manager</Filter>
-    </ClInclude>
     <ClInclude Include="Enum_FrameType.h">
       <Filter>console_manager</Filter>
     </ClInclude>
@@ -250,6 +256,27 @@
     </ClInclude>
     <ClInclude Include="UI_Manager.h">
       <Filter>console_manager\UI_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Popout.h">
+      <Filter>console_manager\Popout</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMaker.h">
+      <Filter>console_manager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_Text_Color.h">
+      <Filter>console_manager\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Display.h">
+      <Filter>console_manager\Dlisplay</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneEditor.h">
+      <Filter>console_manager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_Live_Interactable_state.h">
+      <Filter>console_manager\interactables</Filter>
+    </ClInclude>
+    <ClInclude Include="ClockTower.h">
+      <Filter>console_manager\TimeManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
