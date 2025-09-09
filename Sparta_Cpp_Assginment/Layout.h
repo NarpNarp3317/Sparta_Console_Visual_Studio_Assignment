@@ -12,6 +12,8 @@ public:
 
 
 private:
+    vector<Scene*> _Scenes;// container for textures
+
     vector<Button*> _buttons;// containter for buttonPtrs
 
 public:

@@ -32,6 +32,9 @@ int main()
     Layout Store;
     Layout Battle_Stage;
 
+    map<string, Layout*> layout_List;
+    Layout* _precious_Layout;
+
     //======== Required Scenes =======// original scene here, delt with pointer
 
     //=== Layout type ===//
@@ -52,7 +55,7 @@ int main()
 
     // generate required buttons for game menu
     Button new_game(0, 2, "<<NEW_GAME>>", center_center, {20,5}, {0,4}, single_line, White, Gray);
-    new_game.SetOnLeftPressed([&string_updater]() {});
+    new_game.SetOnLeftPressed([&C_manager, &Character_Selection]() { C_manager.SetCurrentDisplay(&Character_Selection); });
     new_game.SetOnLeftReleased([&string_updater](){});// for release trigger
 
    // gamestart.SetOnHovering_ended([&string_updater]() {string_updater.StringUpdate("not hovering"); });
@@ -61,7 +64,7 @@ int main()
    // load.SetOnLeftClick([]() {printf("Load Clicked"); });// add funtio
 
     Button next(0, 2, "<<CREDITS>>", center_center, { 20,5 }, { 0,14 }, double_line, White, Gray);
-    next.SetOnLeftPressed([&C_manager, &Character_Selection]() { C_manager.SetCurrentDisplay(&Character_Selection); });
+    next.SetOnLeftPressed([&string_updater]() {});
 
 	Button gameExit(0, 2, "<<EXIT_GAME>>", center_center, { 20,5 }, { 0,19 }, double_line, White, Gray);
     gameExit.SetOnLeftPressed([&C_manager]() {C_manager.gameExit(); });
