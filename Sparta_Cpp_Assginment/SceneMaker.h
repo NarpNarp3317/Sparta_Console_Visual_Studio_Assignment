@@ -41,6 +41,8 @@ public:
 
 	static void FillColor(Scene* scene, COORD width_XY, Text_Color text_color, Text_Color background_color);
 
+	static void FillChars(Scene* scene, COORD width_XY, unsigned char text,Text_Color text_color, Text_Color background_color);
+
 	static void ChangeWholeColor(Scene* scene, COORD width_XY, Text_Color text_color, Text_Color background_color);
 
 	static void Switch_Text_BG_Colors(Scene* scene, COORD width_XY);

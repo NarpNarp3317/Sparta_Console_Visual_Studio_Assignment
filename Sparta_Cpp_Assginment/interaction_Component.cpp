@@ -1,5 +1,9 @@
 #include "interaction_Component.h"
 
+
+
+
+
 void Interactable::I_Live_Update()
 {
 	if ((_current_State == active_state || _current_State == rejective_state) &&
@@ -9,10 +13,24 @@ void Interactable::I_Live_Update()
 	}
 }
 
+
+/*nteractable::Interactable(void* owner)
+{
+	_onwer = owner;
+}*/
+
+
 void Interactable::SetStateDuration(int duration)
 {
 	_state_duration = duration;
 }
+
+
+//void* Interactable::GetOwner()
+//{
+//	return _owner;
+//}
+
 
 void Interactable::TriggerState(Interactable_State newState, int duration)
 {
@@ -27,6 +45,7 @@ void Interactable::TriggerState(Interactable_State newState, int duration)
 		//_reserved_time = 0;// do it now!
 	}
 }
+
 
 Interactable_State Interactable::GetState()
 {

@@ -330,6 +330,14 @@ void SceneMaker::FillColor(Scene* scene, COORD width_XY, Text_Color text_color, 
 	scene->_alpha.assign(width_XY.Y, vector<bool>(width_XY.X, true));//same here
 }
 
+void SceneMaker::FillChars(Scene* scene, COORD width_XY, unsigned char text, Text_Color text_color, Text_Color background_color)
+{
+	T_Pixel pixel{ FindColorCode(text_color,background_color),text };// // 219 = █, ' ' does not print anything 
+
+	scene->_T_Pixel_frame.assign(width_XY.Y, vector<T_Pixel>(width_XY.X, pixel));//assign full
+	scene->_alpha.assign(width_XY.Y, vector<bool>(width_XY.X, true));//same here
+}
+
 void SceneMaker::ChangeWholeColor(Scene* scene, COORD width_XY, Text_Color text_color, Text_Color background_color)
 {
 	short int color = FindColorCode(text_color, background_color);

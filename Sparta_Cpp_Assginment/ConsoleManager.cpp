@@ -181,7 +181,7 @@ void ConsoleManager::Update_ConsoleManager()
 
 	// update the scene first
 
-	_final_Scene = _printer->MergeDisplay(_currentDisplay);
+	_final_Scene = _printer->MergeLayout(_currentDisplay);
 	_printer->PrintFrame(_final_Scene);// print out the updated scene
 
 	if (_mouse != nullptr)

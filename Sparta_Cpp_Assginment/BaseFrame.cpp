@@ -144,6 +144,77 @@ void BaseFrame::CalculatePrintStartCoord(PivotPoiontLocation anchor_type)
 
 }
 
+void BaseFrame::CalculatePrintStartCoord_In_Range(PivotPoiontLocation anchor_type, COORD area)
+{
+	short int lX = area.X;
+	short int lY = area.Y;
+	short int wX = _width_XY.X;
+	short int wY = _width_XY.Y;
+
+	switch (anchor_type)
+	{
+	case top_left:
+		print_start_coord = { 0,0 };
+		break;
+	case top_center:
+		print_start_coord = { static_cast<short>((lX - wX) / 2),0 };
+		break;
+	case top_right:
+		print_start_coord = { static_cast<short>(lX - wX),0 };
+		break;
+	case left_center:
+		print_start_coord = { 0,static_cast<short>((lY - wY) / 2) };
+		break;
+	case center_center:
+		print_start_coord = { static_cast<short>((lX - wX) / 2),static_cast<short>((lY - wY) / 2) };
+		break;
+	case right_center:
+		print_start_coord = { static_cast<short>(lX - wX),static_cast<short>((lY - wY) / 2) };
+		break;
+	case bottom_left:
+		print_start_coord = { 0,static_cast<short>(lY - wY) };
+		break;
+	case bottom_center:
+		print_start_coord = { static_cast<short>((lX - wX) / 2),static_cast<short>(lY - wY) };
+		break;
+	case bottom_right:
+		print_start_coord = { static_cast<short>(lX - wX),static_cast<short>(lY - wY) };
+		break;
+	default:
+		//error, invalid enum detected, do not add more pivotpoint
+		break;
+	}
+	//add offset
+
+	print_start_coord.X += _offset.X;
+	print_start_coord.Y += _offset.Y;
+
+	// clamp the size of the frame based on console screen limit// dont create frame? or cut out the frame?
+	// decided by isclampable//-----> *** not done yey ***
+
+	//if (print_start_coord.X < 0 || print_start_coord.Y < 0)// min<0
+	//{
+	//	//error, the frame will be out of the console window.
+	//	print_start_coord = { 0,0 };
+	//}
+	//else if(print_start_coord.X+ _width_XY.X> _screen_Limit.X|| print_start_coord.Y + _width_XY.Y > _screen_Limit.Y)//max>>limit
+	//{
+	//	//error, the frame will be out of the console window.
+	//	print_start_coord = { 0,0 };
+	//}
+
+	// Clamp min
+	if (print_start_coord.X < 0) print_start_coord.X = 0;
+	if (print_start_coord.Y < 0) print_start_coord.Y = 0;
+
+	// Clamp max (so frame fits on screen)
+	if (print_start_coord.X + _width_XY.X > _screen_Limit.X)
+		print_start_coord.X = _screen_Limit.X - _width_XY.X;
+
+	if (print_start_coord.Y + _width_XY.Y > _screen_Limit.Y)
+		print_start_coord.Y = _screen_Limit.Y - _width_XY.Y;
+}
+
 COORD BaseFrame::GetPrintStartCoord()
 {
 	return print_start_coord;

@@ -12,18 +12,19 @@ void Popout::P_AddButton(Button* button)
 
 void Popout::P_OnMouseEvent(COORD mouse_coord, Enum_MouseInput input_type)// only for the buttons
 {
-	for (Button* button : _buttons)
+	for (Interactable* interactable : _buttons)
 	{
-		if (button->IsDetected(mouse_coord))
+		if (interactable->IsDetected(mouse_coord))
 		{
 			switch (input_type)
 			{
-			case Left_Pressed: button->OnLeftPressed(); break;
-			case Right_Pressed: button->OnRightPressed(); break;
-			case Hovering: button->OnHovering_started(); break;
+			case Left_Pressed: interactable->OnLeftPressed(); break;
+			case Left_Released:interactable->OnLeftReleased(); break;
+			case Right_Pressed: interactable->OnRightPressed(); break;
+			case Right_Released: interactable->OnRightReleased(); break;
 			default: break;
 			}
 		}
-		else button->OnHovering_ended();
+		else interactable->OnHovering_ended();
 	}
 }

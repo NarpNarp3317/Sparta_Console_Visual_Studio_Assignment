@@ -28,7 +28,7 @@ private:
 public:
 
 	Scene MergeLayers(const vector<Scene*>& scenes);
-	Scene MergeDisplay(Layout* display);
+	Scene MergeLayout(Layout* display);
 
 	void PrintFrame(const Scene& scene);// read the scene and print out on display
 	void PrintMergedDisplay(Layout* display);

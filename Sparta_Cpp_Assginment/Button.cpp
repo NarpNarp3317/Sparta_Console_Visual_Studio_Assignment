@@ -1,5 +1,6 @@
 #include "Button.h"
 #include "SceneMaker.h"
+#include "SimpleButton.h"
 
 //===================  Constructor ================//
 Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// with offset, no label
@@ -175,6 +176,7 @@ void Button::SetOnLeftReleased(function<void()> function)
 {
 	_onLeftReleased = function;
 }
+
 void Button::OnLeftReleased()
 {
 	if (_onLeftReleased != nullptr)
