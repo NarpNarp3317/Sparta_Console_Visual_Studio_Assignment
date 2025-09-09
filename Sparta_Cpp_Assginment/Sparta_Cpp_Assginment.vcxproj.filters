@@ -177,6 +177,12 @@
     <ClCompile Include="UI_Manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BattleStage_Layout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveLoadManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -302,8 +308,18 @@
     <ClInclude Include="Enum_Layout.h">
       <Filter>console_manager\UI_Manager</Filter>
     </ClInclude>
+    <ClInclude Include="BattleStage_Layout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveLoadManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="AttackBoost.cpp.rej" />
+    <None Include="savedata.save" />
   </ItemGroup>
 </Project>

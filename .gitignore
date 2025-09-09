@@ -336,8 +336,9 @@ FodyWeavers.xsd
 *.msp
 
 
-
-
+# 이무표 개인추가
+log.txt
+savedata*
 
 
 
