@@ -202,10 +202,12 @@ void ConsoleManager::Update_ConsoleManager()
 
 	ClockTower::Update_Tick();// update the tick
 
+	/*
 	for (Interactable* interactable : _currentDisplay->GetInteractables())// find elements with interaction component (wich are also running I_Live_Update())
 	{
 		interactable->I_Live_Update();
 	}
+	*/
 
 }
 
