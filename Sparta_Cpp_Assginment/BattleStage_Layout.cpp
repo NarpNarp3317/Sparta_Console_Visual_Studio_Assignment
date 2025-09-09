@@ -1,11 +1,17 @@
 ﻿#include "BattleStage_Layout.h"
 #include "SceneMaker.h"
+#include "Battle.h"
+#include "BattleStage.h"
+#include "Character.h"
+
 
 BattleStage_Layout::BattleStage_Layout()
 {
 	//===== Example ======//
 
-
+	Battle* battle = new Battle();
+	Character* player = new Character();
+	battle->startBattle(player);
 
 	Button* ExampleButton= new Button(0, 1, "<<Sample>>", center_center, { 20,15 }, {0,0}, double_line, White, Black);
 
@@ -20,7 +26,8 @@ BattleStage_Layout::BattleStage_Layout()
 			- 글자색상, 배경 색상 (' '는 배경색상 지정해도 비어서 나오니 219 = █ 나 '_'사용 )
 	*/
 
-	ExampleButton->SetOnLeftPressed([] {});// function 추가
+	ExampleButton->SetOnLeftPressed([&battle, &player] { battle->playerAttackBehavior(); });// function 추가
+
 	AddButton(ExampleButton);// 다 만든후 layer에 보관
 
 

@@ -14,17 +14,21 @@ public:
 	void printMonsterDie(const string& name);
 	void startBattle(Character* _player);
 	void printSelectList();
-	void playerAttackBehavior(Character* _player);
-	void playerUseItemBehavior(Character* _player);
+	void playerAttackBehavior();
+	void playerUseItemBehavior();
 	void playerRecallBehavior();
 	void printAttackBehaviorResult(const string& name, const int& damage, const int& curHp);
-	int selecting(const Character& _player);
-	void battleResult(Character* _player, BattleStage& battleStage);
+	//int selecting(const Character& _player);
+	void battleResult(Character* _player);
 	void resultPrint();
-	bool inputCheck();
+	void battleturnBehavior(int index);
+	void monsterturnBehavior();
 	~Battle();
 private:
 	bool isWin;
+	int monsterIndex;
 	Monster* _monster;
+	Character* _player;
+	BattleStage* battleStage;
 };
 
