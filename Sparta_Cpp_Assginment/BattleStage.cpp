@@ -6,9 +6,6 @@
 #include "Troll.h"
 #include "BossMonster.h"
 
-
-
-
 BattleStage::BattleStage()
 {
 	rewardExp = 0;
@@ -52,13 +49,9 @@ void BattleStage::randomMonsterAdded(const int& playerLevel)
 {
 	if (playerLevel >= 10)
 	{
-
-
 		monsterList.push_back(new BossMonster(randomValue(playerLevel * 30, playerLevel * 40), randomValue(playerLevel * 7.5f, playerLevel * 15)));
 		return;
 	}
-
-
 	//·£´ý 1~3
 	random_device rd;
 	mt19937 gen(rd());
@@ -70,12 +63,6 @@ void BattleStage::randomMonsterAdded(const int& playerLevel)
 	{
 		monsterList.push_back(randomMonster(playerLevel));
 	}
-
-	///int* randomRewardArr = randomRewardValue();
-	bool isMonsterSizeThr = monsterList.size() >= 3;
-
-	rewardExp = randomValue(isMonsterSizeThr ? 60 : 30, isMonsterSizeThr ? 90 : 60);
-	rewardGold = randomValue(isMonsterSizeThr ? 40 : 20, isMonsterSizeThr ? 60 : 40);
 }
 
 
