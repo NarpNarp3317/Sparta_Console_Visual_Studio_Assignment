@@ -18,6 +18,8 @@ int main()
 
  //   return 0;
 
+    //===== Managers ====//
+
     StringUpdater string_updater({10,2});
     ConsoleManager C_manager;// for the getting max sceen size first so that base frames can know the screen limit
 
