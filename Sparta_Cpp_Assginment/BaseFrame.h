@@ -50,6 +50,8 @@ protected:
 
 public:
 	void CalculatePrintStartCoord(PivotPoiontLocation anchor_type);// printring starts from the top left corner, this coord will be calculated based on the anchor type of frame
+	void CalculatePrintStartCoord_In_Range(PivotPoiontLocation anchor_type, COORD area);// anchor point not based by full screen but custom range
+																						//---> so that sub buttons can be anchored in popout frame
 
 	COORD GetPrintStartCoord();
 	COORD GetWidthXY();
