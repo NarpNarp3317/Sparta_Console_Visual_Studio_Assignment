@@ -90,9 +90,9 @@ void ConsoleManager::SetupMouseInput()
 					switch (input_type)
 					{
 					case Left_Pressed:button->OnLeftPressed(); break;
-					case Left_Released:button->OnLeftPressed(); break;
-					case Right_Pressed:button->OnLeftPressed(); break;
-					case Right_Released:button->OnLeftPressed(); break;
+					case Left_Released:button->OnLeftReleased(); break;
+					case Right_Pressed:button->OnRightPressed(); break;
+					case Right_Released:button->OnRightReleased(); break;
 
 					default:
 						{
@@ -186,6 +186,16 @@ void ConsoleManager::Update_ConsoleManager()
 	if (_mouse != nullptr)
 	{
 		_mouse->UpdateMouseInput();
+	}
+
+
+	//====== Global Tick ========//
+
+	ClockTower::Update_Tick();// update the tick
+
+	for (Interactable* interactable : _currentDisplay->GetInteractables())// find elements with interaction component (wich are also running I_Live_Update())
+	{
+		interactable->I_Live_Update();
 	}
 
 }

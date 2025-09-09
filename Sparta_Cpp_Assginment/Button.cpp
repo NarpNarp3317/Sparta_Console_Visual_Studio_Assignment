@@ -172,7 +172,10 @@ void Button::SetOnLeftReleased(function<void()> function)
 }
 void Button::OnLeftReleased()
 {
-	SwitchTexturePtr(&_idle_texture);
+	if (_current_State == idle_state)// so that it does not immediately trigger the switch ptr. when it is in rejective state the button needs to stay as error texture
+	{
+		SwitchTexturePtr(&_idle_texture);
+	}
 
 	if (_onLeftReleased != nullptr)
 	{
@@ -201,7 +204,10 @@ void Button::SetOnRightReleased(function<void()> function)
 }
 void Button::OnRightReleased()
 {	
-	SwitchTexturePtr(&_idle_texture);
+	if (_current_State == idle_state)// same as the left release 
+	{
+		SwitchTexturePtr(&_idle_texture);
+	}
 
 	if (_onRightReleased != nullptr)
 	{
@@ -253,15 +259,21 @@ void Button::OnInvalidInput()// event fucntion when click failed (if containing 
 	SwitchTexturePtr(&_activate_failed_texture);
 	_isClickable = false;
 
-	TriggerState(rejective_state, 500);// disable input for 500 frames
+	TriggerState(rejective_state, 16);// disable input for 500 frames
 }
 
 
 void Button::I_Live_Update()
 {
+	Interactable::I_Live_Update();
 
+	if (_current_State == idle_state && !_isClickable)// if current state is idle and currently unclickable
+	{
+		_isClickable = true;
+	}
 }
 
 Button::~Button()
 {
+
 }

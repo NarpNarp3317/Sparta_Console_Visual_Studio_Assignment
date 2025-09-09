@@ -27,6 +27,7 @@ int main()
     gamestart.SetOnLeftPressed([&string_updater]() {string_updater.StringUpdate("left clicked"); });
     gamestart.SetOnRightPressed([&string_updater]() {string_updater.StringUpdate("right clicked"); });
     gamestart.SetOnHovering_started([&string_updater]() {string_updater.StringUpdate("Hoverring"); });
+    gamestart.SetOnHovering_ended([&string_updater]() {string_updater.StringUpdate("Hoverring"); });
 
    // gamestart.SetOnHovering_ended([&string_updater]() {string_updater.StringUpdate("not hovering"); });
 

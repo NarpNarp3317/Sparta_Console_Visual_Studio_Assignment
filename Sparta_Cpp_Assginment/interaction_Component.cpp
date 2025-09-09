@@ -24,7 +24,7 @@ void Interactable::TriggerState(Interactable_State newState, int duration)
 	}	
 	else
 	{
-		_reserved_time = 0;// do it now!
+		//_reserved_time = 0;// do it now!
 	}
 }
 
