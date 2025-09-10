@@ -17,7 +17,7 @@ public:
 public:
 	void useItem(int index);
 	void addItem(Item* item);
-	// 사용 x
+	// 사용 X
 	//bool removeItem(string name);
 	//bool removeItemIdx(int index);
 	//

@@ -116,6 +116,7 @@ void Battle::monsterturnBehavior()
 			{
 				isWin = true;
 				//라운지로 이동 코드 필요
+				//
 			}
 		}
 		else

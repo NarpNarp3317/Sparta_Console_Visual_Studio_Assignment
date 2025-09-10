@@ -20,7 +20,6 @@ Character::Character()
 	equippedWeapon = nullptr;
 
 	setInventory();
-	//inventory.push_back(new Item("Junk", 0, true, false, "is Junk"));	// 실험적으로 기본 아이템을 추가했습니다 [조기혁]
 }
 
 Character::Character(string name)

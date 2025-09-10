@@ -7,6 +7,7 @@
 
 using namespace std;
 
+//ItemEnum
 enum class EItem
 {
 	HealthPotion,
