@@ -11,13 +11,6 @@
 //------<<<< 여기에 자신의 layer헤더 넣기
 #include "BattleStage_Layout.h"
 #include "GameManager_Layout.h"
-#include "Shop_Layout.h"
-
-//테스트용 해두는 shop
-#include "Shop.h"
-#include "Character.h"
-Shop shop;
-Character player("Test");
 
 using namespace std;
 
@@ -45,7 +38,6 @@ int main()
 
 
     //BattleStage_Layout B_layout;
-    Shop_Layout shopLayout;
 
     GameManager_Layout* layout_GM = new GameManager_Layout(C_manager);
 

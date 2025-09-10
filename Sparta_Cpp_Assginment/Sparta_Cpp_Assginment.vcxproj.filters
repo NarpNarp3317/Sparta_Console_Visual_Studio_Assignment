@@ -37,51 +37,246 @@
     <ClCompile Include="Shop_Layout.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AttackBoost.h" />
-    <ClInclude Include="BaseFrame.h" />
-    <ClInclude Include="Battle.h" />
-    <ClInclude Include="BattleStage.h" />
-    <ClInclude Include="BattleStage_Layout.h" />
-    <ClInclude Include="BossMonster.h" />
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="Character.h" />
-    <ClInclude Include="ClockTower.h" />
-    <ClInclude Include="ConsoleManager.h" />
-    <ClInclude Include="Display.h" />
-    <ClInclude Include="Enum_Layout.h" />
-    <ClInclude Include="Enum_Live_Interactable_state.h" />
-    <ClInclude Include="Enum_Text_Color.h" />
-    <ClInclude Include="Enum_ConsoleMode.h" />
-    <ClInclude Include="Enum_FrameType.h" />
-    <ClInclude Include="Enum_MouseInput.h" />
-    <ClInclude Include="Exit_Button.h" />
-    <ClInclude Include="interaction_Component.h" />
-    <ClInclude Include="Layout.h" />
-    <ClInclude Include="Logger.h" />
-    <ClInclude Include="MouseInputManager.h" />
-    <ClInclude Include="PivotPoint.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Popout.h" />
-    <ClInclude Include="Printer.h" />
-    <ClInclude Include="SaveLoadManager.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneEditor.h" />
-    <ClInclude Include="SceneMaker.h" />
-    <ClInclude Include="SimpleButton.h" />
-    <ClInclude Include="StringUpdater.h" />
-    <ClInclude Include="TextPixel.h" />
-    <ClInclude Include="Text_Align.h" />
-    <ClInclude Include="UI_Manager.h" />
-    <ClInclude Include="Weapon.h" />
-    <ClInclude Include="GameManager.h" />
-    <ClInclude Include="Goblin.h" />
-    <ClInclude Include="HealthPotion.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="Monster.h" />
-    <ClInclude Include="Orc.h" />
-    <ClInclude Include="Shop.h" />
-    <ClInclude Include="Troll.h" />
-    <ClInclude Include="Shop_Layout.h" />
+    <ClCompile Include="Sparta_Cpp_Assginment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BossMonster.cpp">
+      <Filter>Source Files\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Goblin.cpp">
+      <Filter>Source Files\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Source Files\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Orc.cpp">
+      <Filter>Source Files\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Troll.cpp">
+      <Filter>Source Files\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Source Files\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackBoost.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthPotion.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleStage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleManager.cpp">
+      <Filter>console_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>console_manager\button</Filter>
+    </ClCompile>
+    <ClCompile Include="Layout.cpp">
+      <Filter>console_manager\Layout</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseFrame.cpp">
+      <Filter>console_manager\frame</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseInputManager.cpp">
+      <Filter>console_manager\mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="Printer.cpp">
+      <Filter>console_manager\printer</Filter>
+    </ClCompile>
+    <ClCompile Include="StringUpdater.cpp">
+      <Filter>console_manager\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Popout.cpp">
+      <Filter>console_manager\Popout</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMaker.cpp">
+      <Filter>console_manager\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Display.cpp">
+      <Filter>console_manager\Dlisplay</Filter>
+    </ClCompile>
+    <ClCompile Include="ClockTower.cpp">
+      <Filter>console_manager\TimeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="interaction_Component.cpp">
+      <Filter>console_manager\interactables</Filter>
+    </ClCompile>
+    <ClCompile Include="Exit_Button.cpp">
+      <Filter>console_manager\button\CommonButtons</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleButton.cpp">
+      <Filter>console_manager\button\CommonButtons</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleStage_Layout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveLoadManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager_Layout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackBoost.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Goblin.h">
+      <Filter>Header Files\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Header Files\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Orc.h">
+      <Filter>Header Files\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Troll.h">
+      <Filter>Header Files\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="BossMonster.h">
+      <Filter>Header Files\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthPotion.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Header Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleStage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleManager.h">
+      <Filter>console_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_ConsoleMode.h">
+      <Filter>console_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>console_manager\button</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseFrame.h">
+      <Filter>console_manager\frame</Filter>
+    </ClInclude>
+    <ClInclude Include="PivotPoint.h">
+      <Filter>console_manager\frame</Filter>
+    </ClInclude>
+    <ClInclude Include="interaction_Component.h">
+      <Filter>console_manager\interactables</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_MouseInput.h">
+      <Filter>console_manager\mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseInputManager.h">
+      <Filter>console_manager\mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>console_manager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Printer.h">
+      <Filter>console_manager\printer</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_FrameType.h">
+      <Filter>console_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Text_Align.h">
+      <Filter>console_manager\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="TextPixel.h">
+      <Filter>console_manager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="StringUpdater.h">
+      <Filter>console_manager\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Layout.h">
+      <Filter>console_manager\Layout</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Manager.h">
+      <Filter>console_manager\UI_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Popout.h">
+      <Filter>console_manager\Popout</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMaker.h">
+      <Filter>console_manager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_Text_Color.h">
+      <Filter>console_manager\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Display.h">
+      <Filter>console_manager\Dlisplay</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneEditor.h">
+      <Filter>console_manager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_Live_Interactable_state.h">
+      <Filter>console_manager\interactables</Filter>
+    </ClInclude>
+    <ClInclude Include="ClockTower.h">
+      <Filter>console_manager\TimeManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Exit_Button.h">
+      <Filter>console_manager\button\CommonButtons</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleButton.h">
+      <Filter>console_manager\button\CommonButtons</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_Layout.h">
+      <Filter>console_manager\UI_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleStage_Layout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveLoadManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager_Layout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+>>>>>>> Dev
   </ItemGroup>
   <ItemGroup>
     <None Include="AttackBoost.cpp.rej" />

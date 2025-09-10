@@ -10,7 +10,7 @@
 
 //------<<<< 여기에 자신의 layer헤더 넣기
 #include "BattleStage_Layout.h"
-#include "GameManager_Layout.h"
+<<<<<<< HEAD
 #include "Shop_Layout.h"
 
 //테스트용 해두는 shop
@@ -18,6 +18,9 @@
 #include "Character.h"
 Shop shop;
 Character player("Test");
+=======
+#include "GameManager_Layout.h"
+>>>>>>> Dev
 
 using namespace std;
 
@@ -47,7 +50,11 @@ int main()
     //BattleStage_Layout B_layout;
     Shop_Layout shopLayout;
 
+<<<<<<< HEAD
+    C_manager.SetCurrentDisplay(&shopLayout);// start up display here
+=======
     GameManager_Layout* layout_GM = new GameManager_Layout(C_manager);
+>>>>>>> Dev
 
     // new_game.SetOnLeftReleased([&string_updater]() {});// for release trigger
 

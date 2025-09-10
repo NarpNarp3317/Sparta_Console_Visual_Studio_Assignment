@@ -29,20 +29,22 @@ public:
 	~GameManager();
 	void StartGame();
 
-private : // 함수
+public : // 함수
 	void battle(Character* _player);
 	void vistShop(Character* _player);
 	void visitLounge(Character* _player);
 
 	void startMenu();
 	void savePlayer();
-	void loadPlayer();
-	void deletePlayer();
-	void makePlayer();
+	bool loadPlayer();
+	bool deletePlayer();
+	void makePlayer(string _name);
 
 	// 입력 처리 오류 확인
 	// 2025.09.08 현정석 추가
 	bool inputCheck();
+
+	Character* getPlayer() { return this->player1; }
 
 private: // 변수
 	Character* player1;
