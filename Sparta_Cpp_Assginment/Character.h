@@ -17,8 +17,10 @@ public:
 public:
 	void useItem(int index);
 	void addItem(Item* item);
-	bool removeItem(string name);
-	bool removeItemIdx(int index);
+	// »ç¿ë x
+	//bool removeItem(string name);
+	//bool removeItemIdx(int index);
+	//
 	void levelUp();
 	void displayStatus();
 	void reward(int exp, int gainGold);

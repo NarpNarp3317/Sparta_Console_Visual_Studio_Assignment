@@ -9,8 +9,8 @@ using namespace std;
 
 enum class EItem
 {
-	AttackBoost,
 	HealthPotion,
+	AttackBoost,
 	Weapon
 };
 

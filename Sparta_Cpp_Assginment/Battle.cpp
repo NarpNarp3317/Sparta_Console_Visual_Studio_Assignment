@@ -4,7 +4,8 @@
 #include "BattleStage.h"
 #include "AttackBoost.h"
 #include "HealthPotion.h"
-#include <Windows.h>
+#include "Logger.h"
+#include "StringUpdater.h"
 #include <limits> 
 
 Battle::Battle()
@@ -27,257 +28,120 @@ void Battle::startBattle(Character* _player)
 	this->_player = _player;
 	battleStage->randomMonsterAdded(_player->getLevel());
 	_monster = battleStage->getMonster(monsterIndex);
-	cout << _monster->getName() << endl;
-	cout << _player->getName() << endl;
-	
-	battleturnBehavior(0);
-
-	//if (_player->getLevel() >= 10)
-	//{
-	//	cout << "===========BossStage!!===========" << endl;
-	//}
-	//else
-	//{
-	//	cout << "===========Battle===========" << endl;
-	//}
-
-	//cout << _player->getName() << " vs " << _monster->getName() << endl;
-	//cout << "Battle Start!" << endl;
-
-
-	/*while (true)
-	{*/
-	//	if (_player->getHealth() <= 0)
-	//	{
-	//		isWin = false;
-	//		break;
-	//	}
-
-	//
-
-
-	//	//printSelectList();
-
-
-	//	int selectNum = selecting(*_player);
-	//	cout << "===========Player Behavior===========" << endl;
-	//	switch (selectNum)
-	//	{
-	//	case 1:
-	//		playerAttackBehavior();
-	//		printAttackBehaviorResult(_monster->getName(), _player->getAttack(), _monster->getHealth());
-	//		break;
-	//	case 2:
-	//		playerUseItemBehavior();
-	//		break;
-	//	case 3:
-	//		playerRecallBehavior();
-	//		battleStage.removeMonsterList(); 	// 벡터 내부 요소 동적할당 해제
-	//		return;
-	//	default:
-	//		break;
-	//	}
-	//}
-
-	//battleStage.removeMonsterList(); 	// 벡터 내부 요소 동적할당 해제
-	//resultPrint();
-}
-
-
-
-
-void Battle::printSelectList()
-{
-	cout << "===========SELECT===========" << endl;
-	cout << "1. Attack" << endl;
-	cout << "2. UseItem" << endl;
-	cout << "3. Recall" << endl;
 }
 
 void Battle::playerAttackBehavior()
 {
-	cout << _monster->getName() << endl;
-	_monster->takeDamage(_player->getAttack());
+	if (_player != nullptr && _monster != nullptr)
+	{
+		_monster->takeDamage(_player->getAttack());
+	}
 }
 
-void Battle::playerUseItemBehavior()
+void Battle::playerUseItemBehavior(int useItemIndex)
 {
-	
-	_player->printInventory();
-
-	while (true)
-	{
-		int selectNum = 0;
-
-		cout << "Select Item : ";
-		cin >> selectNum;
-
-
-		if (_player->checkingInventorymap(selectNum - 1)) //선택한 번호가 가방에 있는지 확인
-		{
-			_player->useItem(selectNum - 1); //있다면 아이템 사용
-			break;
-		}
-		else
-		{
-			cout << "Invalid number, Please re-enter" << endl;
-		}
-	}
-	
+	_player->useItem(useItemIndex); //있다면 아이템 사용	
 }
 
 void Battle::playerRecallBehavior()
 {
-	cout << "Leave Dungeon, Return to Lounge." << endl;
+	///cout << "Leave Dungeon, Return to Lounge." << endl;
+
+	/// 라운지로 이동시키는 코드 필요
 }
 
-void Battle::printAttackBehaviorResult(const string& name, const int& damage, const int& curHp)
-{
-	cout << name << " TakeDamage: " << damage << " HP : " << curHp << endl;
-}
-
-
-
-//int Battle::selecting(const Character& _player)
-//{
-//	while (true)
-//	{
-//		int selectNum = 0;
-//
-//		cout << "SELECT NUM : ";
-//		cin >> selectNum;
-//
-//
-//		if (selectNum == 1 || selectNum == 2 ||selectNum == 3)
-//		{
-//			if (selectNum == 2 && _player.getInventorySize() <= 0)
-//			{
-//				cout << "No Item, Please re-enter" << endl;
-//				continue;
-//			}
-//			return selectNum;
-//		}
-//		else
-//		{
-//			cout << "Invalid number, Please re-enter" << endl;
-//		}
-//	}
-//
-//}
 
 void Battle::battleResult(Character* _player){
-	cout << "===========Slayed a monster ===========" << endl;
-	cout << "Gold : +" << _monster->getRewardGold() << " , EXP : +" << _monster->getRewardExp() << endl;
 	int randomItemIndex = _monster->randomItem();
-
+	string getItemName = "";
 	// 30퍼 확률로 아이템 획득
 	if (randomItemIndex >= 0)
 	{
 		EItem item_enum = static_cast<EItem>(randomItemIndex);
-
-		cout << "Got a random item!! >> ";
-
 		switch (item_enum)
 		{
-		case EItem::AttackBoost:
-			cout << ITEM_ATKBOOST << endl;
-			_player->addItem(new AttackBoost(ITEM_ATKBOOST, 15, 15));
-			break;
 		case EItem::HealthPotion:
-			cout << ITEM_HPPOTION << endl;
+			getItemName = "HealthPotion";
 			_player->addItem(new HealthPotion(ITEM_HPPOTION, 15, 15));
+			break;
+		case EItem::AttackBoost:
+			getItemName = "AttackBoost";
+			_player->addItem(new AttackBoost(ITEM_ATKBOOST, 15, 15));
 			break;
 		default:
 			break;
 		}
 	}
 	_player->reward(_monster->getRewardExp(), _monster->getRewardGold());
-	_player->displayStatus();
+
+	ShowReward(getItemName, to_string(_monster->getRewardExp()), to_string(_monster->getRewardGold()));
 }
 
-void Battle::resultPrint()
+bool Battle::battleturnBehavior(int index, int itemIndex)
 {
-	cout << "===========BATTLE RESULT===========" << endl;
-	if (isWin)
-	{
-		cout << "WIN!!\nReturn to Lounge.." << endl;
-	}
-	else
-	{
-		cout << "DEFEAT..\nReturn to Lounge.." << endl;
-	}
-}
-
-void Battle::battleturnBehavior(int index)
-{
-	cout << index << endl;
-
-	if (_player == nullptr)
-	{
-		cout << "NULLPTR!!!" << endl;
-	}
-	else
-	{
-		cout << "NO NULLPTR!!!" << endl;
-	}
-
-
-	cout << index << endl;
 	switch (index)
 	{
 	case 0:
 		playerAttackBehavior();
 		break;
 	case 1:
-		playerUseItemBehavior();
+		if (_player->checkingInventory(itemIndex) == false)
+		{
+			return false;
+		}
+		playerUseItemBehavior(itemIndex);
 		break;
 	case 2:
 		playerRecallBehavior();
-		return;
+		return true;
 	default:
 		break;
 	}
 
-	//monsterturnBehavior();
+	monsterturnBehavior();
+
+	return true;
 }
 
 void Battle::monsterturnBehavior()
 {
-	cout << 2 << endl;
-	if (_monster->getHealth() <= 0)
+	if (_monster != nullptr && _player != nullptr)
 	{
-		printMonsterDie(_monster->getName());
-		battleResult(_player); //보상 지급 처리
-		_monster = battleStage->getMonster(++monsterIndex); //다음 몬스터
+		if (_monster->getHealth() <= 0)
+		{
+			battleResult(_player); //보상 지급 처리
+			_monster = battleStage->getMonster(++monsterIndex); //다음 몬스터
 
-		if (_monster == nullptr) // 다음 몬스터가 없으면 승리로 처리하고 break
-		{
-			isWin = true;
+			if (_monster == nullptr) // 다음 몬스터가 없으면 승리로 처리하고 break
+			{
+				isWin = true;
+				//라운지로 이동 코드 필요
+			}
 		}
-		else //있다면 메시지를 띄우고 전투 재시작
+		else
 		{
-			cout << "===========Battle===========" << endl;
-			cout << _player->getName() << " vs " << _monster->getName() << endl;
-			cout << "Battle Start!" << endl;
+			// 몬스터 -> 플레이어 공격
+			_player->takeDamage(_monster->getAttack());
 		}
 	}
-
-	// 몬스터 -> 플레이어 공격
-	cout << "===========Monster Behavior===========" << endl;
-	_player->takeDamage(_monster->getAttack());
-	printAttackBehaviorResult(_player->getName(), _monster->getAttack(), _player->getHealth());
 }
 
-void Battle::printMonsterDie(const string& name)
+void Battle::ShowReward(const string& item, const string& exp, const string& gold)
 {
-	cout << "===========MESSAGE===========" << endl;
-	cout << name << " Die" << endl;
+	StringUpdater string_updater({ 10,2 });
+	string_updater.CleanStrings();
+	string text = "Reward : ";
+	text += item.empty() ? "" : item + ", ";
+	text += "EXP : +" + exp + " ";
+	text += "Gold : +" + gold;
+	string_updater.StringUpdate(text);
 }
-
 
 Battle::~Battle()
 {
-
+	battleStage->removeMonsterList();
+	delete battleStage;
+	battleStage = nullptr;
 }
 
 
