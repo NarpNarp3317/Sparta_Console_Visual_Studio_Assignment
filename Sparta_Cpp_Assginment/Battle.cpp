@@ -7,11 +7,16 @@
 #include "Logger.h"
 #include "StringUpdater.h"
 #include "BattleStage_Layout.h"
+#include "Button.h"
+#include "ConsoleManager.h"
+
 #include <limits> 
+StringUpdater string_updater({ 20,10 });
 
-Button* ExampleButton;
-
-Battle::Battle()
+Battle::Battle(Layout* _LoungeLayout, ConsoleManager* _MyCM, BattleStage_Layout* _MyBattleStage):
+	LoungeLayout(_LoungeLayout),
+	MyCM(_MyCM),
+	MyBattleStage(_MyBattleStage)
 {
 	isWin = false;
 	_monster = nullptr;
@@ -43,9 +48,7 @@ void Battle::playerAttackBehavior()
 	if (_player != nullptr && _monster != nullptr)
 	{
 		_monster->takeDamage(_player->getAttack());
-		StringUpdater string_updater({ 10,2 });
-		string_updater.CleanStrings();
-		string_updater.StringUpdate("Player Attack >> Monster");
+		monsterStatRefresh();
 	}
 }
 
@@ -59,6 +62,10 @@ void Battle::playerRecallBehavior()
 	///cout << "Leave Dungeon, Return to Lounge." << endl;
 
 	/// 라운지로 이동시키는 코드 필요
+	this->MyCM->SetCurrentDisplay(LoungeLayout);
+	MyBattleStage->~BattleStage_Layout();
+
+	/// 
 }
 
 
@@ -94,23 +101,23 @@ bool Battle::battleturnBehavior(int index, int itemIndex)
 	{
 	case 0:
 		playerAttackBehavior();
-		break;
+		monsterturnBehavior();
+		return true;
+
 	case 1:
 		if (_player->checkingInventorymap(itemIndex) == false) // 디버깅시 지켜볼 것
 		{
 			return false;
 		}
 		playerUseItemBehavior(itemIndex);
-		break;
+		monsterturnBehavior();
+		return true;
 	case 2:
 		playerRecallBehavior();
 		return true;
 	default:
-		break;
+		return false;
 	}
-
-	monsterturnBehavior();
-
 	return true;
 }
 
@@ -130,43 +137,59 @@ void Battle::monsterturnBehavior()
 			{
 				isWin = true;
 				//라운지로 이동 코드 필요
-				//
-				Logger::getInstance().myLog("monster None");
+				string_updater.StringUpdate("Win!! Press the recall button to leave");
+				//playerRecallBehavior();
+				return;
 			}
 			else
 			{
 				monsterCreateButton();
-				Logger::getInstance().myLog("monster create");
+				monsterStatRefresh();
 			}
 		}
 		else
 		{
 			// 몬스터 -> 플레이어 공격
 			_player->takeDamage(_monster->getAttack());
-
-			StringUpdater string_updater({ 20,10 });
-			string_updater.CleanStrings();
-			string_updater.StringUpdate("Monster Attack >> Player");
+			_player->getStatus();
 		}
 	}
+
+	if (_player->getHealth() <= 0)
+	{
+		// 라운지로 이동 코드 필요
+		string_updater.StringUpdate("DEFEAT.. Press the recall button to leave");
+	}
+
 }
 
 void Battle::monsterCreateButton()
 {
-	layout->CreateButton(_monster->getName(), this);
+	layout->CreateButton(_monster->getName());
+
+	string stats = "HP=" + to_string(_monster->getHealth()) + "_ATK=" + to_string(_monster->getAttack());
+	monsterStatBtn = new Button(10, 1, stats, center_center, { 17, 5 }, { 0, -10 }, double_line, White, Black);
+
+	layout->AddButton(monsterStatBtn);
 }
 
-
+void Battle::monsterStatRefresh()
+{
+	string stats = "HP=" + to_string(_monster->getHealth()) + "_ATK=" + to_string(_monster->getAttack());
+	monsterStatBtn->SetLable(stats);
+	monsterStatBtn->UpdateButton();
+}
 
 void Battle::ShowReward(const string& item, const string& exp, const string& gold)
 {
-	StringUpdater string_updater({ 10,2 });
-	string_updater.CleanStrings();
+	string_updater.NextLine();
 	string text = "Reward : ";
 	text += item.empty() ? "" : item + ", ";
 	text += "EXP : +" + exp + " ";
 	text += "Gold : +" + gold;
 	string_updater.StringUpdate(text);
+
+	_player->getStatus();
 }
 
 Battle::~Battle()

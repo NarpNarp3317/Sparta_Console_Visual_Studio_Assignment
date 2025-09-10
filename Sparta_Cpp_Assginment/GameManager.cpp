@@ -123,7 +123,7 @@ void GameManager::visitLounge(Character* _player)
 		}
 		else if (selectNum == 3)
 		{
-			_player->displayStatus();
+			//_player->displayStatus();
 		}
 		else if (selectNum == 4)
 		{
@@ -205,7 +205,7 @@ void GameManager::savePlayer()
 
 void GameManager::battle(Character* _player)
 {
-	Battle battle;
+	// Battle battle;
 	//battle.startBattle(_player);
 
 }

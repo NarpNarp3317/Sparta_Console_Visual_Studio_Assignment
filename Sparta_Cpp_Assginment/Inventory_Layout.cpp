@@ -3,8 +3,20 @@
 #include "Character.h"
 #include "Logger.h"
 #include "Weapon.h"
+#include "StringUpdater.h"
 
-void printLog(map<string, int> Inventorymap, Character* chara) {	// 로그 확인
+
+Inventory_Layout::Inventory_Layout(Character* _chara, Layout* _LoungeLayout, ConsoleManager* _mainCM, StringUpdater* _su):
+mainCM(_mainCM),
+mainLoungeLayout(_LoungeLayout),
+mainPlayer(_chara),
+SU(_su)
+{
+
+};
+
+// 람다식 개선으로 이 함수 사용 안함
+void Inventory_Layout::printLog(map<string, int> Inventorymap, Character* chara) {	// 로그 확인
 	map<string, int> curr_Inventorymap = chara->getItemCountMap();
 	string logstr;
 	if (!Inventorymap.empty())
@@ -13,6 +25,7 @@ void printLog(map<string, int> Inventorymap, Character* chara) {	// 로그 확�
 	else
 		logstr = "None";
 	Logger::getInstance().myLog(logstr);
+	SU->StringUpdate(logstr);
 
 	logstr = "Inventory: ";
 	vector<Item*> curr_Inventory = chara->getInventory();
@@ -21,60 +34,135 @@ void printLog(map<string, int> Inventorymap, Character* chara) {	// 로그 확�
 	Logger::getInstance().myLog(logstr);
 }
 
-Inventory_Layout::Inventory_Layout()
-{
+void Inventory_Layout::ButtonRefresh() {
+	map<string, int> current_Inventorymap = this->mainPlayer->getItemCountMap();
+	for (int k = 0; k < this->itemButtons.size(); k++)
+	{
+		string newLableName = "";
+		string currentItemName = this->itemNames[k]; // Get the correct item name for this button
+		int pos = currentItemName.find(" ");
+		int currentCount = current_Inventorymap[currentItemName];
+
+		newLableName = currentItemName;
+		if (pos != string::npos) {
+			newLableName.replace(pos, 1, "_");
+		}
+		newLableName += "(" + to_string(currentCount) + ")";
+
+		this->itemButtons[k]->SetLable(newLableName);
+		this->itemButtons[k]->UpdateButton();
+	}
+}
+
+void Inventory_Layout::InventoryDisplay() {
 	//===== Example ======//
-	Character *chara = new Character("hello");
-	chara->addItem(new Weapon("Iron sword", 50, 20, true, true, "strong weapon"));
-	chara->addItem(new Weapon("Wooden Bow", 50, 20, true, true, "strong weapon"));
-	map<string, int> Inventorymap = chara->getItemCountMap();
-	vector<Button*> itemButtons;
+	//mainPlayer->addItem(new Weapon("Iron sword", 50, 20, true, true, "strong weapon"));
+	//mainPlayer->addItem(new Weapon("Wooden Bow", 50, 20, true, true, "strong weapon"));
+
+	for (Button* btn : itemButtons) {
+		delete btn;
+	}
+	itemButtons.clear();
+
 	int i = 0;
+	map<string, int> Inventorymap = mainPlayer->getItemCountMap();
+	int garo = 0;
+	int sero = 0;
 	for (auto item : Inventorymap) {
 		int index = i;
+		if (index % 4 == 0)
+		{
+			sero += 5;
+			garo = 0;
+		}
 		string temp_name = item.first;
 		int pos = temp_name.find(" ");
+		temp_name += "(" + to_string(Inventorymap[item.first]);
+		temp_name += ")";
+
+		LOG(item.first);
+		LOG(to_string(Inventorymap[item.first]));
+
 		if (pos != string::npos)
 			temp_name.replace(pos, 1, "_");
-		itemButtons.push_back(new Button(0, 1, temp_name, center_center, { 20,5 }, { (short)i*22, 0}, double_line, White, Black));
-		itemButtons[i]->SetOnLeftPressed([chara, index,  Inventorymap]() { chara->useItem(index); printLog(Inventorymap, chara); });// function 추가
-		AddButton(itemButtons[i]);// 다 만든후 layer에 보관
+
+		// 아이템 버튼 생성 수정
+		COORD width = { 30, 5 };
+		COORD offset = { (short)garo * 30 - 45, sero };
+		itemButtons.push_back(new Button(
+			0,
+			1,
+			temp_name,
+			center_center,
+			width,     // Pass the COORD object
+			offset,    // Pass the COORD object
+			double_line,
+			White,
+			Black
+		));
+
+		this->itemNames.push_back(item.first);
+
+		//itemButtons[i]->SetOnLeftPressed([this, index]() {
+		//	map<string, int> current_Inventorymap = this->mainPlayer->getItemCountMap();
+		//	this->mainPlayer->useItem(index);
+		//	this->printLog(current_Inventorymap, this->mainPlayer);
+		//	});
+
+		itemButtons[index]->SetOnLeftPressed([this, index]() {
+			this->mainPlayer->useItem(index);
+			map<string, int> current_Inventorymap = this->mainPlayer->getItemCountMap();
+
+			string logstr;
+			if (!current_Inventorymap.empty())
+				for (auto item : current_Inventorymap)
+					logstr += item.first + ": " + to_string(current_Inventorymap[item.first]) + "\t";
+			else
+				logstr = "None";
+
+			LOG(logstr);
+			SU->StringUpdate("NOW ITEM : " + logstr);
+			// LOG(this->itemButtons[index]->GetLable());
+
+			// 무기는 다른걸 끼면 다른걸 해제하면서 숫자가 +1 되어야 해서 모든 버튼을 재구성
+			for (int k = 0; k < this->itemButtons.size(); k++)
+			{
+				string newLableName = "";
+				string currentItemName = this->itemNames[k]; // Get the correct item name for this button
+				int pos = currentItemName.find(" ");
+				int currentCount = current_Inventorymap[currentItemName];
+
+				newLableName = currentItemName;
+				if (pos != string::npos) {
+					newLableName.replace(pos, 1, "_");
+				}
+				newLableName += "(" + to_string(currentCount) + ")";
+
+				this->itemButtons[k]->SetLable(newLableName);
+				this->itemButtons[k]->UpdateButton();
+			}
+		});
+
+		AddButton(itemButtons[i]);
 		i += 1;
+		garo++;
+
 	}
-	/*
-			- 버튼 아이디는 지금은 0으로;
-			- priority는 0아니면 됨
-			- 버튼에 표기할 label
-			- 버튼의 뿌리 좌표 위치
-			- 크기{x,y}
-			- 오프셋 {x,y}  ({5,20 }--> y방향 아래로 20만큼, 방향으로 5만큼)
-			- 외벽 프레임 스타일(두줄, 한줄, 줄 없음)
-			- 글자색상, 배경 색상 (' '는 배경색상 지정해도 비어서 나오니 219 = █ 나 '_'사용 )
-	*/
 
-
-
-	//===== Extra ====//
-
-	Scene newScene;
-
-	SceneMaker::PrepareCanvas(&newScene, { 20,20 });// Scene maker로 이미지 만들어서 버튼 이미지를 바꿀수 있음. 반드시 크기는 버튼의 크기와 같아야 함
-	//프레임 만들기, 색채우기, 색반전시키기, 글자 여러줄 넣기등 있음
-
-	// 만들어낸 이미지를 버튼에 넣기는 잠시 미루기
-
-
-
-		//----> 팝업창 작업중
-		// 
-		//----> popup 창이 필요하다면 여기에 필요로하는 기능과 글을 적어둘 것
-		// 선택가능한 팝업창 기능 1.글자 표시+끄기 2. 다음으로 넘기기, 2. 대상 값(int)올리기 내리기
-
-
-
-
-
-
-
-
+	// 되돌아가는 버튼
+	Button* ReturnBtn = new Button(
+		0,
+		1,
+		"Back_Lounge",
+		center_center,
+		{20, 5},
+		{0, -5},
+		double_line,
+		White,
+		Black
+	);
+	ReturnBtn->SetOnLeftPressed([this]() {
+		this->mainCM->SetCurrentDisplay(mainLoungeLayout);
+	});
+	AddButton(ReturnBtn);
 };

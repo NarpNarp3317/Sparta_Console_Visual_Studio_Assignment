@@ -1,4 +1,6 @@
 #include "Orc.h"
+#include "StringUpdater.h"
+
 Orc::Orc()
 {
 	this->name = "Orc";

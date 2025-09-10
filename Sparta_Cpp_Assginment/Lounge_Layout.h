@@ -3,7 +3,8 @@
 #include "ConsoleManager.h"
 #include "GameManager.h"
 #include "StringUpdater.h"
-
+#include "Shop_Layout.h"
+#include "Inventory_Layout.h"
 
 class Lounge_Layout
 {
@@ -18,9 +19,12 @@ public:
 private:
 	ConsoleManager* _C_manager;
 	Layout* mainLounge_Layout;
+	BattleStage_Layout* mainBattleStage_layout;
 	StringUpdater* _su;
 	GameManager* GM_Logic;
 
+	Shop_Layout* myShopLayout;
+	Inventory_Layout* inventory_Layout;
 
 	void onBtnBattle();
 	void onBtnShop();

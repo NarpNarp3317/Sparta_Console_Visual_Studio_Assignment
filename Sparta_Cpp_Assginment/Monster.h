@@ -1,6 +1,8 @@
 #pragma once
 #include "Character.h"
 
+class Button;
+
 class Monster
 {
 public:

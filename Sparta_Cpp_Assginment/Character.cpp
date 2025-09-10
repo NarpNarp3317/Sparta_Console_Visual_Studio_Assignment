@@ -4,7 +4,11 @@
 #include "AttackBoost.h"
 #include "Weapon.h"
 #include "Monster.h"
+#include "Logger.h"
+#include "StringUpdater.h"
 
+
+StringUpdater string_update({ 20, 30 });
 //이 생성자 임시로 사용
 Character::Character()
 {
@@ -17,18 +21,18 @@ Character::Character()
 	gold = 0;
 	health = maxHealth;
 	equippedWeapon = nullptr;
-	inventory.push_back(new Item("Junk", 0, true, false, "is Junk"));	// 실험적으로 기본 아이템을 추가했습니다 [조기혁]
+	//inventory.push_back(new Item("Junk", 0, true, false, "is Junk"));	// 실험적으로 기본 아이템을 추가했습니다 [조기혁]
 }
 
 Character::Character(string name)
 {
 	this->name = name;
 	maxHealth = 100;
-	baseAttack = 50;
+	baseAttack = 1;
 	attack = baseAttack;
 	level = 1;
 	experience = 0;
-	gold = 0;
+	gold = 10000;
 	health = maxHealth;
 	equippedWeapon = nullptr;
 
@@ -66,27 +70,43 @@ void Character::useItem(int key_num)		// 인벤토리맵 스타일에서 아이템을 사용하는
 {
 	auto item_map = itemCountMap.begin();
 	advance(item_map, key_num);	// index 이동
-	string itemname = item_map->first;
+	string itemname = inventory[key_num]->getName();
 
-	if (itemCountMap[itemname] > 0) {
-		for (int index = 0; index < inventory.size(); index++)
-			if (inventory[index]->getName() == itemname) {
-				inventory[index]->use(this);
-				if (inventory[index]->isConsumable()) {
-					itemCountMap[itemname] -= 1;
-					removeItemIdx(index);
-				}
-				return;
-			}
-		cout << "Error. Item not found." << endl;
+	if (itemCountMap[itemname] > 0)
+	{
+		//for (int index = 0; index < inventory.size(); index++)
+		//	if (inventory[index]->getName() == itemname) 
+		//	{
+		//		cout << inventory[index]->getName() << endl;
+		//		inventory[index]->use(this);
+		//		if (inventory[index]->isConsumable()) 
+		//		{
+		//			itemCountMap[itemname] -= 1;
+		//			//removeItemIdx(index);
+		//		}
+		//		return;
+		//	}
+		 
+		 //ui 변경으로 cout 제거
+		 //cout << "Error. Item not found." << endl;
+
+		inventory[key_num]->use(this);
+		itemCountMap[itemname]--;
 	}
 	else
-		cout << "No items left." << endl;
+	{
+		LOG("NO ITEM ERROR");
+		// UI에도 메시지 띄울 수 있도록 수정할 예정
+	}
+		// cout << "No items left." << endl;
 }
 
 void Character::addItem(Item* item)	// 아이템을 인벤토리에 추가하는 함수
 {
-	
+	if (itemCountMap[item->getName()] > 8) {
+		std::cout << "You have exceeded the maximum number of items.\n";
+		return;
+	}
 	// 새로운 아이템 등록
 	if (itemCountMap.find(item->getName()) != itemCountMap.end())
 	{
@@ -136,9 +156,6 @@ bool Character::removeItemIdx(int index)	// 아이템을 인덱스로 삭제하는 함수
 
 void Character::levelUp()
 {
-	cout << "===========MESSAGE===========" << endl;
-	cout << "LEVEL UP!! " << level << " >> " << level + 1 << endl;
-
 	level++;
 	maxHealth += (level * 20);
 	baseAttack += (level * 5);
@@ -147,17 +164,38 @@ void Character::levelUp()
 	experience = 0;
 }
 
-void Character::displayStatus()
+void Character::getStatus()
 {
-	cout << "===========STATUS===========" << endl;
-	cout << "Name : " << name << endl;
-	cout << "HP : " << health << endl;
-	cout << "level : " << level << endl;
-	cout << "ATK : " << baseAttack;
-	if (equippedWeapon != nullptr) cout << " (+" << equippedWeapon->getDamage() << ")";		// format "ATK: basedamage (+Weapondamage)"
-	cout << "" << endl;
-	cout << "EXP : " << experience << endl;
-	cout << "GOLD : " << gold << endl;
+
+	string status = "Name : " + name + "\n";
+	status += "HP : " + to_string(health) + "\n";
+	status += "Level : " + to_string(level) + "\n";
+	status += "ATK : " + to_string(attack);
+	if (equippedWeapon != nullptr)
+	{
+		status += "(" + to_string(equippedWeapon->getDamage()) + ")";
+	}
+	status += "\n";
+
+	status += "EXP : " + to_string(experience) + "\n";
+	status += "GOLD : " + to_string(gold);
+
+	string_update.StringUpdate(status);
+
+
+	/*vector<string> statVec;
+	statVec.push_back("Name : " + name);
+	statVec.push_back("HP : " + to_string(health));
+	statVec.push_back("Level : " + to_string(level));
+	statVec.push_back("ATK : " + to_string(attack));
+	if (equippedWeapon != nullptr)
+	{
+		statVec.push_back("(" + to_string(equippedWeapon->getDamage()) + ")");
+	}
+	statVec.push_back("EXP : " + to_string(experience));
+	statVec.push_back("GOLD : " + to_string(gold));*/
+
+	///return statVec;
 }
 
 void Character::reward(int exp, int gainGold)
@@ -219,14 +257,23 @@ bool Character::checkingInventory(int index)
 
 bool Character::checkingInventorymap(int key_num)		// 09.09 새로 추가됨
 {
-	auto item_map = itemCountMap.begin();
-	advance(item_map, key_num);	// index 이동
-	string itemname = item_map->first;
+	//auto item_map = itemCountMap.begin();
+	//advance(item_map, key_num);	// index 이동
+	//string itemname = item_map->first;
 
-	for (auto item : itemCountMap) {
-		if (item.first == itemname)
-			return true;
+	//for (auto item : itemCountMap) 
+	//{
+	//	if (item.first == itemname)
+	//	{
+	//		return item.second > 0 ? true : false;
+	//	}
+	//}
+
+	if (itemCountMap[inventory[key_num]->getName()] > 0)
+	{
+		return true;
 	}
+
 	return false;
 }
 
@@ -305,6 +352,12 @@ int Character::getLevel() const
 int Character::getMaxHealth() const
 {
 	return maxHealth;
+}
+
+int Character::getItemCount(int index)
+{
+	Logger::getInstance().myLog(to_string(itemCountMap[inventory[index]->getName()]));
+	return itemCountMap[inventory[index]->getName()];
 }
 
 void Character::setName(string _name)
@@ -410,9 +463,9 @@ void Character::setInventory()
 	inventory.push_back(new HealthPotion(ITEM_HPPOTION, 15, 15, true, true));
 	inventory.push_back(new AttackBoost(ITEM_ATKBOOST, 15, 15, true, true));
 
-	//itemCountMap.insert(make_pair(inventory[0]->getName(), 0));
-	//itemCountMap.insert(make_pair(inventory[1]->getName(), 0));
-	refreshInventory();
+	itemCountMap.insert(make_pair(inventory[0]->getName(), 2));
+	itemCountMap.insert(make_pair(inventory[1]->getName(), 1));
+	//refreshInventory();
 }
 
 Character::~Character()

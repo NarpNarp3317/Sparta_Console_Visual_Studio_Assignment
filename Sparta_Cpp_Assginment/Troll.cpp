@@ -1,4 +1,5 @@
 #include "Troll.h"
+#include "StringUpdater.h"
 
 Troll::Troll()
 {

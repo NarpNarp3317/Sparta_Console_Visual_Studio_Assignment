@@ -22,7 +22,7 @@ public:
 	bool removeItemIdx(int index);
 	//
 	void levelUp();
-	void displayStatus();
+	void getStatus();
 	void reward(int exp, int gainGold);
 	void takeDamage(int damage);
 	void printInventory();
@@ -46,6 +46,7 @@ public:
 	int getExperience() const { return experience; }
 	map<string, int> getItemCountMap() const { return itemCountMap; }
 	vector<Item*> getInventory() const { return inventory; }
+	int getItemCount(int index);
 
 	//Setter <-- SAVE/LOAD에서 사용
 	void setName(string _name);

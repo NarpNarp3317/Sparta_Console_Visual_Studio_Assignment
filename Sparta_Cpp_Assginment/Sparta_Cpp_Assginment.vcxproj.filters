@@ -82,9 +82,6 @@
     <Filter Include="console_manager\Scene\Images">
       <UniqueIdentifier>{11270de8-6f65-4ca4-a502-7163ffce69ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="console_manager\ItemSlot">
-      <UniqueIdentifier>{f27d1cf9-25d8-4026-8943-cfa500db6b81}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sparta_Cpp_Assginment.cpp">
@@ -156,6 +153,9 @@
     <ClCompile Include="StringUpdater.cpp">
       <Filter>console_manager\Text</Filter>
     </ClCompile>
+    <ClCompile Include="Popout.cpp">
+      <Filter>console_manager\Popout</Filter>
+    </ClCompile>
     <ClCompile Include="SceneMaker.cpp">
       <Filter>console_manager\Scene</Filter>
     </ClCompile>
@@ -173,6 +173,9 @@
     </ClCompile>
     <ClCompile Include="SimpleButton.cpp">
       <Filter>console_manager\button\CommonButtons</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Manager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BattleStage_Layout.cpp">
       <Filter>Source Files</Filter>
@@ -195,14 +198,8 @@
     <ClCompile Include="Shop_Layout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Popup.cpp">
-      <Filter>console_manager\Popout</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_Manager.cpp">
-      <Filter>console_manager\Layout</Filter>
-    </ClCompile>
-    <ClCompile Include="ItemSlot.cpp">
-      <Filter>console_manager\ItemSlot</Filter>
+    <ClCompile Include="Inventory_Layout.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -299,6 +296,9 @@
     <ClInclude Include="UI_Manager.h">
       <Filter>console_manager\UI_Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Popout.h">
+      <Filter>console_manager\Popout</Filter>
+    </ClInclude>
     <ClInclude Include="SceneMaker.h">
       <Filter>console_manager\Scene</Filter>
     </ClInclude>
@@ -341,7 +341,13 @@
     <ClInclude Include="Lounge_Layout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Enum_PopoutType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="ExitButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Str_PopoutLayers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneSaveAndLoader.h">
@@ -350,17 +356,8 @@
     <ClInclude Include="Shop_Layout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Popup.h">
-      <Filter>console_manager\Popout</Filter>
-    </ClInclude>
-    <ClInclude Include="Str_PopupLayers.h">
-      <Filter>console_manager\Popout</Filter>
-    </ClInclude>
-    <ClInclude Include="Enum_PopupType.h">
-      <Filter>console_manager\Popout</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemSlot.h">
-      <Filter>console_manager\ItemSlot</Filter>
+    <ClInclude Include="Inventory_Layout.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

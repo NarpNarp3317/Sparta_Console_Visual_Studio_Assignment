@@ -1,4 +1,5 @@
 #include "Monster.h"
+#include "Button.h"
 #include <random>
 
 //이 생성자 임시로 사용
@@ -73,6 +74,7 @@ int Monster::randomValue(const int& minValue, const int& maxValue)
 
     return dis(gen);
 }
+
 
 Monster::~Monster()
 {

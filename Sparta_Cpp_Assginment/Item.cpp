@@ -4,7 +4,7 @@ using namespace std;
 
 void Item::use(Character* character)
 {
-	cout << character->getName() + " used " + this->getName() << endl;
+	//cout << character->getName() + " used " + this->getName() << endl;
 }
 
 //void Item::use(Character* character, Monster* monster)

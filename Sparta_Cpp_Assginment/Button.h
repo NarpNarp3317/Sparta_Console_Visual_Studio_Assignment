@@ -20,11 +20,14 @@ public:
 	// with label
 	Button(int button_ID, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color);
 	Button(int button_ID, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color, COORD parent_area);
+	
 
 	// with no label
 	Button(int button_ID, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color);
 	Button(int button_ID, int priority,  PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color, COORD parent_area);
 	//--> parented button
+
+	void UpdateButton();
 
 private:
 
@@ -69,7 +72,7 @@ public:
 	std::vector < std::vector<bool>> GetCollisionMask();
 
 	void SetLable(string new_lable);
-
+	string GetLable() { return _lable; }
 
 	//===== Left button ======//
 	void SetOnLeftPressed(function<void()> function);
