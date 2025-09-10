@@ -35,9 +35,8 @@ void BattleStage_Layout::DeleteButton()
 
 void BattleStage_Layout::BattleStartSetup(Character* player)
 {
-	battle = new Battle();
+	battle = new Battle(mainLoungeLayout, mainCM, this);
 	battle->startBattle(player, this);
-
 
 	string itemcount0 = "HealItem(" + to_string(player->getItemCount(0)) + ")";
 	string itemcount1 = "AttackBoost(" + to_string(player->getItemCount(1)) + ")";
@@ -55,7 +54,6 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 				UseItemButton1->SetLable(newitemcount0);
 				UseItemButton1->UpdateButton();
 			}
-
 		});// function 추가
 
 
@@ -77,15 +75,13 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 		Button* RecallButton = new Button(0, 1, "Recall", center_center, { 17, 5 }, { 17, 15 }, double_line, White, Black);
 		RecallButton->SetOnLeftPressed([this, RecallButton]
 		{
-			//if (battle->battleturnBehavior(2) == false)
-			//{
-			//	// RecallButton->OnInvalidInput();
-			
-
-			//}
-			/// 25.09.10. mpyi _ 라운지로 복귀
-			LOG("GO LOUNGE");
-			this->mainCM->SetCurrentDisplay(mainLoungeLayout);
+			if (battle->battleturnBehavior(2) == false)
+			{
+				/// 25.09.10. mpyi _ 라운지로 복귀
+				LOG("GO LOUNGE");
+				RecallButton->OnInvalidInput();
+			}
+			/*this->mainCM->SetCurrentDisplay(mainLoungeLayout);*/
 			// this->~BattleStage_Layout();
 		});
 
@@ -95,11 +91,11 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 		AddButton(RecallButton);
 		//===== Extra ====//
 
-		Scene newScene;
+		//Scene newScene;
 
-		SceneMaker::PrepareCanvas(&newScene, { 20,20 });// Scene maker로 이미지 만들어서 버튼 이미지를 바꿀수 있음. 반드시 크기는 버튼의 크기와 같아야 함
+		//SceneMaker::PrepareCanvas(&newScene, { 20,20 });// Scene maker로 이미지 만들어서 버튼 이미지를 바꿀수 있음. 반드시 크기는 버튼의 크기와 같아야 함
 
-		SceneMaker::AddTexts(&newScene, { 50, 50 }, { -70, 0 }, { "test1","test2","test3","test4" }, center_center, White, Black);
+		//SceneMaker::AddTexts(&newScene, { 50, 50 }, { -70, 0 }, { "test1","test2","test3","test4" }, center_center, White, Black);
 }
 
 BattleStage_Layout::~BattleStage_Layout()

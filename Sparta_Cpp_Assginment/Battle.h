@@ -9,11 +9,13 @@ class BattleStage;
 class BattleStage_Layout;
 class StringUpdater;
 class Button;
+class Layout;
+class ConsoleManager;
 
 class Battle
 {
 public:
-	Battle();
+	Battle(Layout* _LoungeLayout, ConsoleManager* _MyCM, BattleStage_Layout* _MyBattleStage);
 	void startBattle(Character* _player, BattleStage_Layout* layout);
 	bool battleturnBehavior(int index, int itemIndex = 0);
 
@@ -37,5 +39,10 @@ private:
 	BattleStage_Layout* layout;
 	StringUpdater* string_updater;
 	Button* monsterStatBtn;
+
+	//// 라운지 정보
+	Layout* LoungeLayout;
+	ConsoleManager* MyCM;
+	BattleStage_Layout* MyBattleStage;
 };
 

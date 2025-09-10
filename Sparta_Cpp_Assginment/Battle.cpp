@@ -8,11 +8,17 @@
 #include "StringUpdater.h"
 #include "BattleStage_Layout.h"
 #include "Button.h"
+#include "ConsoleManager.h"
+#include "BattleStage_Layout.h"
+
 #include <limits> 
 
 Button* ExampleButton;
 
-Battle::Battle()
+Battle::Battle(Layout* _LoungeLayout, ConsoleManager* _MyCM, BattleStage_Layout* _MyBattleStage):
+	LoungeLayout(_LoungeLayout),
+	MyCM(_MyCM),
+	MyBattleStage(_MyBattleStage)
 {
 	isWin = false;
 	_monster = nullptr;
@@ -59,6 +65,10 @@ void Battle::playerRecallBehavior()
 	///cout << "Leave Dungeon, Return to Lounge." << endl;
 
 	/// 라운지로 이동시키는 코드 필요
+	this->MyCM->SetCurrentDisplay(LoungeLayout);
+	MyBattleStage->~BattleStage_Layout();
+
+	/// 
 }
 
 
@@ -130,6 +140,7 @@ void Battle::monsterturnBehavior()
 			{
 				isWin = true;
 				//라운지로 이동 코드 필요
+				playerRecallBehavior();
 			}
 			else
 			{
@@ -159,7 +170,7 @@ void Battle::monsterCreateButton()
 {
 	layout->CreateButton(_monster->getName());
 
-	string stats = "HP=" + to_string(_monster->getHealth()) + "ATK=" + to_string(_monster->getAttack());
+	string stats = "HP=" + to_string(_monster->getHealth()) + "_ATK=" + to_string(_monster->getAttack());
 	monsterStatBtn = new Button(10, 1, stats, center_center, { 17, 5 }, { 0, -10 }, double_line, White, Black);
 
 	layout->AddButton(monsterStatBtn);
@@ -167,7 +178,7 @@ void Battle::monsterCreateButton()
 
 void Battle::monsterStatRefresh()
 {
-	string stats = "HP=" + to_string(_monster->getHealth()) + "ATK=" + to_string(_monster->getAttack());
+	string stats = "HP=" + to_string(_monster->getHealth()) + "_ATK=" + to_string(_monster->getAttack());
 	monsterStatBtn->SetLable(stats);
 	monsterStatBtn->UpdateButton();
 }
