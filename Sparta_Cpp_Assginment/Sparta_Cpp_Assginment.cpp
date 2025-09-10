@@ -7,6 +7,7 @@
 #include "StringUpdater.h"
 #include <map>
 #include <vector>
+#include "SceneSaveAndLoader.h";
 
 //------<<<< 여기에 자신의 layer헤더 넣기
 #include "BattleStage_Layout.h"
@@ -19,7 +20,6 @@
 Shop shop;
 Character player("Test");
 
-#include "SceneSaveAndLoader.h";
 
 using namespace std;
 
