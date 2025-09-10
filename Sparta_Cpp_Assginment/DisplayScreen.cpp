@@ -1,6 +1,7 @@
 #include "DisplayScreen.h"
 #include "BaseFrame.h"
 #include <vector>
+#include "Button.h"
 /*
 DisplayScreen does not merge the elements as one Scene.
 
@@ -23,7 +24,7 @@ class DisplayScreen :public BaseFrame
 
 	Scene _background;
 
-	vector<S
+	vector<Button*> _CharactersPtrs;
 
 
 
