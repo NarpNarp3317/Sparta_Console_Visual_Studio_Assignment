@@ -68,21 +68,28 @@ void Character::useItem(int key_num)		// 인벤토리맵 스타일에서 아이템을 사용하는
 {
 	auto item_map = itemCountMap.begin();
 	advance(item_map, key_num);	// index 이동
-	string itemname = item_map->first;
+	string itemname = inventory[key_num]->getName();
 
-	if (itemCountMap[itemname] > 0) {
-		for (int index = 0; index < inventory.size(); index++)
-			if (inventory[index]->getName() == itemname) {
-				inventory[index]->use(this);
-				if (inventory[index]->isConsumable()) 
-				{
-					itemCountMap[itemname] -= 1;
-					//removeItemIdx(index);
-				}
-				return;
-			}
-		// ui 변경으로 cout 제거
-		// cout << "Error. Item not found." << endl;
+	if (itemCountMap[itemname] > 0)
+	{
+		//for (int index = 0; index < inventory.size(); index++)
+		//	if (inventory[index]->getName() == itemname) 
+		//	{
+		//		cout << inventory[index]->getName() << endl;
+		//		inventory[index]->use(this);
+		//		if (inventory[index]->isConsumable()) 
+		//		{
+		//			itemCountMap[itemname] -= 1;
+		//			//removeItemIdx(index);
+		//		}
+		//		return;
+		//	}
+		 
+		 //ui 변경으로 cout 제거
+		 //cout << "Error. Item not found." << endl;
+
+		inventory[key_num]->use(this);
+		itemCountMap[itemname]--;
 	}
 	else
 	{
@@ -245,17 +252,23 @@ bool Character::checkingInventory(int index)
 
 bool Character::checkingInventorymap(int key_num)		// 09.09 새로 추가됨
 {
-	auto item_map = itemCountMap.begin();
-	advance(item_map, key_num);	// index 이동
-	string itemname = item_map->first;
+	//auto item_map = itemCountMap.begin();
+	//advance(item_map, key_num);	// index 이동
+	//string itemname = item_map->first;
 
-	for (auto item : itemCountMap) 
+	//for (auto item : itemCountMap) 
+	//{
+	//	if (item.first == itemname)
+	//	{
+	//		return item.second > 0 ? true : false;
+	//	}
+	//}
+
+	if (itemCountMap[inventory[key_num]->getName()] > 0)
 	{
-		if (item.first == itemname)
-		{
-			return item.second > 0 ? true : false;
-		}
+		return true;
 	}
+
 	return false;
 }
 
@@ -445,7 +458,7 @@ void Character::setInventory()
 	inventory.push_back(new HealthPotion(ITEM_HPPOTION, 15, 15, true, true));
 	inventory.push_back(new AttackBoost(ITEM_ATKBOOST, 15, 15, true, true));
 
-	itemCountMap.insert(make_pair(inventory[0]->getName(), 1));
+	itemCountMap.insert(make_pair(inventory[0]->getName(), 2));
 	itemCountMap.insert(make_pair(inventory[1]->getName(), 1));
 	//refreshInventory();
 }
