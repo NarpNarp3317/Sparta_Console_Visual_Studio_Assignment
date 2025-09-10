@@ -25,7 +25,6 @@ public:
 
     vector<Button*> GetInteractables();
 
-    void RemoveButton(Button* new_button);
 
     /*  void AddScene(Scene* scene);
 
