@@ -1,4 +1,5 @@
 #include "Lounge_Layout.h"
+#include "BattleStage_Layout.h"
 #include "SceneMaker.h"
 #include <iostream>
 #include "Logger.h"
@@ -88,6 +89,9 @@ void Lounge_Layout::onBtnBattle()
     //// 이곳에서 Battle 레이아웃을 불러오면 됩니다
     // 예시
     // this->_C_manager->SetCurrentDisplay(여기에 레이아웃 포인터);
+    BattleStage_Layout* battleStage_layout = new BattleStage_Layout();
+    this->_C_manager->SetCurrentDisplay(battleStage_layout);
+    battleStage_layout->BattleStartSetup(GM_Logic->getPlayer());
 }
 
 void Lounge_Layout::onBtnShop()
