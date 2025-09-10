@@ -37,7 +37,6 @@ private:
 	Character* _player;
 	BattleStage* battleStage;
 	BattleStage_Layout* layout;
-	StringUpdater* string_updater;
 	Button* monsterStatBtn;
 
 	//// 라운지 정보

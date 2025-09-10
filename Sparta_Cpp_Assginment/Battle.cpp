@@ -9,11 +9,9 @@
 #include "BattleStage_Layout.h"
 #include "Button.h"
 #include "ConsoleManager.h"
-#include "BattleStage_Layout.h"
 
 #include <limits> 
-
-Button* ExampleButton;
+StringUpdater string_updater({ 20,10 });
 
 Battle::Battle(Layout* _LoungeLayout, ConsoleManager* _MyCM, BattleStage_Layout* _MyBattleStage):
 	LoungeLayout(_LoungeLayout),
@@ -25,7 +23,6 @@ Battle::Battle(Layout* _LoungeLayout, ConsoleManager* _MyCM, BattleStage_Layout*
 	_player = nullptr;
 	battleStage = new BattleStage();
 	monsterIndex = 0;
-	string_updater = new StringUpdater({ 10,2 });
 }
 
 // 25.09.04. 이무표
@@ -138,8 +135,6 @@ void Battle::monsterturnBehavior()
 			{
 				isWin = true;
 				//라운지로 이동 코드 필요
-				StringUpdater string_updater({ 20,10 });
-				string_updater.CleanStrings();
 				string_updater.StringUpdate("Win!! Press the recall button to leave");
 				//playerRecallBehavior();
 				return;
@@ -154,16 +149,13 @@ void Battle::monsterturnBehavior()
 		{
 			// 몬스터 -> 플레이어 공격
 			_player->takeDamage(_monster->getAttack());
-
-			StringUpdater string_updater({ 20,10 });
-			string_updater.CleanStrings();
-			string_updater.StringUpdate("Monster Attack >> Player");
 		}
 	}
 
 	if (_player->getHealth() <= 0)
 	{
 		// 라운지로 이동 코드 필요
+		string_updater.StringUpdate("DEFEAT.. Press the recall button to leave");
 	}
 
 }
@@ -187,12 +179,12 @@ void Battle::monsterStatRefresh()
 
 void Battle::ShowReward(const string& item, const string& exp, const string& gold)
 {
-	string_updater->CleanStrings();
+	string_updater.NextLine();
 	string text = "Reward : ";
 	text += item.empty() ? "" : item + ", ";
 	text += "EXP : +" + exp + " ";
 	text += "Gold : +" + gold;
-	string_updater->StringUpdate(text);
+	string_updater.StringUpdate(text);
 
 	_player->getStatus();
 }
@@ -201,9 +193,7 @@ Battle::~Battle()
 {
 	battleStage->removeMonsterList();
 	delete battleStage;
-	delete string_updater;
 	battleStage = nullptr;
-	string_updater = nullptr;
 }
 
 
