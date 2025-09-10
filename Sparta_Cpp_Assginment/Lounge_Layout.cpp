@@ -18,6 +18,7 @@ Lounge_Layout::Lounge_Layout(ConsoleManager* _C_manager, StringUpdater* su, Game
 {
     this->makeLayout();
     Logger::getInstance().myLog("PLAYER NAME : " + GM_Logic->getPlayer()->getName());
+    inventory_Layout->InventoryDisplay();
 }
 
 Lounge_Layout::~Lounge_Layout()
@@ -121,7 +122,7 @@ void Lounge_Layout::onBtnInventory()
     // 예시
     // this->_C_manager->SetCurrentDisplay(여기에 레이아웃 포인터);
    this->_C_manager->SetCurrentDisplay(inventory_Layout);
-   inventory_Layout->InventoryDisplay();
+
 }
 
 void Lounge_Layout::onBtnSave()

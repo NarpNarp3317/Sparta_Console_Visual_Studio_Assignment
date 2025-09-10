@@ -12,6 +12,7 @@ mainLoungeLayout(_LoungeLayout),
 mainPlayer(_chara),
 SU(_su)
 {
+
 };
 
 // 람다식 개선으로 이 함수 사용 안함
@@ -101,8 +102,7 @@ void Inventory_Layout::InventoryDisplay() {
 
 			LOG(logstr);
 			SU->StringUpdate("NOW ITEM : " + logstr);
-			LOG("----------");
-			LOG(this->itemButtons[index]->GetLable());
+			// LOG(this->itemButtons[index]->GetLable());
 
 			// 무기는 다른걸 끼면 다른걸 해제하면서 숫자가 +1 되어야 해서 모든 버튼을 재구성
 			for (int k = 0; k < this->itemButtons.size(); k++)
