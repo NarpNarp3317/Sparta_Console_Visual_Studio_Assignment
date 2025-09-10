@@ -111,8 +111,8 @@ int main()
 
     BattleStage_Layout B_layout;
 
-    GameManager_Layout* layout_GM = new GameManager_Layout(C_manager);
 
+    GameManager_Layout* layout_GM = new GameManager_Layout(C_manager);
     // new_game.SetOnLeftReleased([&string_updater]() {});// for release trigger
 
     // C_manager->SetCurrentDisplay(layout_GM);// start up display here <-- gamemanager layout에서 해결
