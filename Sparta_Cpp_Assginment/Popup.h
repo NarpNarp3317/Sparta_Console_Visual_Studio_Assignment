@@ -3,17 +3,17 @@
 #include "interaction_Component.h"
 #include "Button.h"
 #include "Enum_MouseInput.h"
-#include "Enum_PopoutType.h"
+#include "Enum_PopupType.h"
 #include <functional>
 #include <map>
-#include "Str_PopoutLayers.h"
+#include "Str_PopupLayers.h"
 
 using namespace std;
 
-class Popout :public BaseFrame
+class Popup :public BaseFrame
 {
 public:
-	Popout(Popout_Type type, PivotPoiontLocation anchor_type, COORD offset, Text_Color texts_color, Text_Color text, Text_Color bg);
+	Popup(PopupType type, PivotPoiontLocation anchor_type, COORD offset, Text_Color texts_color, Text_Color text, Text_Color bg);
 
 private:
 	/*
@@ -32,14 +32,14 @@ private:
 	*/
 
 	//=== Popout Window ===//
-	Popout_Type _pop_type;
+	PopupType _pop_type;
 	COORD _default_widh_XY;
 
 
 	//==== layer ====//
 
-	vector<PopoutLayer> _PopoutLayers;
-	int _current_PopoutLayer_index;
+	vector<PopupLayer> _PopupLayers;
+	int _current_PopupLayer_index;
 
 	//=== buttons  ====//
 	//confirm
@@ -65,13 +65,13 @@ private:
 	//----------------//
 
 public:
-	void AddPopoutLayer(Popout_Type type, Scene layer_texture);
+	void AddPopoutLayer(PopupType type, Scene layer_texture);
 	void AddCustomPopoutLayer(Scene layer_texture, vector<Button*> buttons, vector<function<void()>> custom_functions);
 
 	void NextLayer();
 	//void PreviousLayer();// no going back
 
-	void GetCurrentButtons();
+	std::vector<Button*> GetCurrentButtons();
 
 	void UpdateLayer();//update current popout
 	void LeavePopout();//close

@@ -5,9 +5,9 @@
 
 using namespace std;
 
-struct PopoutLayer
+struct PopupLayer
 {
-	Popout_Type layer_type;
+	PopupType layer_type;
 	Scene texture;
 	vector<Button*> buttons;// the required buttons
 	vector<string> texts;// for update texts

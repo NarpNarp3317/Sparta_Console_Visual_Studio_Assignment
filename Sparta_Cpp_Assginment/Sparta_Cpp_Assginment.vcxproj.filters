@@ -153,7 +153,7 @@
     <ClCompile Include="StringUpdater.cpp">
       <Filter>console_manager\Text</Filter>
     </ClCompile>
-    <ClCompile Include="Popout.cpp">
+    <ClCompile Include="Popupt.cpp">
       <Filter>console_manager\Popout</Filter>
     </ClCompile>
     <ClCompile Include="SceneMaker.cpp">
@@ -281,7 +281,7 @@
     <ClInclude Include="UI_Manager.h">
       <Filter>console_manager\UI_Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Popout.h">
+    <ClInclude Include="Popup.h">
       <Filter>console_manager\Popout</Filter>
     </ClInclude>
     <ClInclude Include="SceneMaker.h">
@@ -320,14 +320,14 @@
     <ClInclude Include="Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Enum_PopoutType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ExitButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Str_PopoutLayers.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Str_PopupLayers.h">
+      <Filter>console_manager\Popout</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_PopupType.h">
+      <Filter>console_manager\Popout</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

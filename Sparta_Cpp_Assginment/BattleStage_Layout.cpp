@@ -1,5 +1,6 @@
 ﻿#include "BattleStage_Layout.h"
 #include "SceneMaker.h"
+#include "Popup.h"
 
 BattleStage_Layout::BattleStage_Layout()
 {
@@ -42,9 +43,10 @@ BattleStage_Layout::BattleStage_Layout()
 		// 선택가능한 팝업창 기능 1.글자 표시+끄기 2. 다음으로 넘기기, 2. 대상 값(int)올리기 내리기
 
 
+	//===== Popup 
 
 
-
+	Popup* confirmPopup = new Popup(Confirmation, center_center, { 0,0 }, White, White, Black);
 
 
 
