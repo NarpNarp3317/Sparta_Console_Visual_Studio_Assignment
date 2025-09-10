@@ -42,6 +42,8 @@ public:
 	int getGold() const { return gold; }
 	int getBaseAttack() const;
 	int getExperience() const { return experience; }
+	map<string, int> getItemCountMap() const { return itemCountMap; }
+	vector<Item*> getInventory() const { return inventory; }
 
 	//Setter <-- SAVE/LOAD에서 사용
 	void setName(string _name);

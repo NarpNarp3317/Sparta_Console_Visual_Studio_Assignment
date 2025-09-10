@@ -78,6 +78,7 @@ void Character::useItem(int key_num)		// 인벤토리맵 스타일에서 아이템을 사용하는
 				}
 				return;
 			}
+		cout << "Use: " + itemname << endl;
 		cout << "Error. Item not found." << endl;
 	}
 	else
@@ -98,6 +99,7 @@ void Character::addItem(Item* item)	// 아이템을 인벤토리에 추가하는 함수
 		}
 
 		itemCountMap[item->getName()]++; // 있다면 아이템 수량 추가
+		inventory.push_back(item);
 	}
 	else // 이 경우 발생하면 사고??
 	{
@@ -124,7 +126,7 @@ bool Character::removeItemIdx(int index)	// 아이템을 인덱스로 삭제하는 함수
 {
 	if (checkingInventory(index)) 
 	{
-		RemoveItemCountMap(inventory[index]->getName());
+		//RemoveItemCountMap(inventory[index]->getName());
 		delete inventory[index]; // 메모리 해제
 		inventory[index] = nullptr;
 		inventory.erase(inventory.begin() + index);
