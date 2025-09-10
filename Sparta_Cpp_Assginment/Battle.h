@@ -11,20 +11,20 @@ class Battle
 {
 public:
 	Battle();
-	void printMonsterDie(const string& name);
 	void startBattle(Character* _player);
-	void printSelectList();
-	void playerAttackBehavior(Character* _player);
-	void playerUseItemBehavior(Character* _player);
+	void playerAttackBehavior();
+	void playerUseItemBehavior(int useItemIndex);
 	void playerRecallBehavior();
-	void printAttackBehaviorResult(const string& name, const int& damage, const int& curHp);
-	int selecting(const Character& _player);
-	void battleResult(Character* _player, BattleStage& battleStage);
-	void resultPrint();
-	bool inputCheck();
+	void battleResult(Character* _player);
+	bool battleturnBehavior(int index, int itemIndex = 0);
+	void monsterturnBehavior();
+	void ShowReward(const string& item, const string& exp, const string& gold);
 	~Battle();
 private:
 	bool isWin;
+	int monsterIndex;
 	Monster* _monster;
+	Character* _player;
+	BattleStage* battleStage;
 };
 

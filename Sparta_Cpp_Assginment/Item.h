@@ -7,10 +7,11 @@
 
 using namespace std;
 
+//ItemEnum
 enum class EItem
 {
-	AttackBoost,
 	HealthPotion,
+	AttackBoost,
 	Weapon
 };
 
