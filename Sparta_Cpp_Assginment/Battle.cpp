@@ -149,6 +149,7 @@ void Battle::monsterturnBehavior()
 		{
 			// 몬스터 -> 플레이어 공격
 			_player->takeDamage(_monster->getAttack());
+			_player->getStatus();
 		}
 	}
 

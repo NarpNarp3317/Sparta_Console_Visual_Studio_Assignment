@@ -7,6 +7,8 @@
 #include "Logger.h"
 #include "StringUpdater.h"
 
+
+StringUpdater string_update({ 20, 30 });
 //이 생성자 임시로 사용
 Character::Character()
 {
@@ -26,7 +28,7 @@ Character::Character(string name)
 {
 	this->name = name;
 	maxHealth = 100;
-	baseAttack = 50;
+	baseAttack = 1;
 	attack = baseAttack;
 	level = 1;
 	experience = 0;
@@ -164,7 +166,7 @@ void Character::levelUp()
 
 void Character::getStatus()
 {
-	StringUpdater string_update({ 20, 30 });
+
 	string status = "Name : " + name + "\n";
 	status += "HP : " + to_string(health) + "\n";
 	status += "Level : " + to_string(level) + "\n";
