@@ -3,6 +3,8 @@
 #include <iostream>// for cout << "\033[2J\033[1;1H";// clear screen
 #include <string>
 
+#define REFILL_COLOR
+
 ConsoleManager::ConsoleManager()
 	:_input_H(GetStdHandle(STD_INPUT_HANDLE))
 	,_output_H(GetStdHandle(STD_OUTPUT_HANDLE)),// input, ouput handle¼³Á¤
@@ -235,8 +237,11 @@ void ConsoleManager::SetCurrentDisplay(Layout* _disp)// for now, just clear
 {
 	cout << "\033[2J\033[1;1H";
 	Scene emptyScene;
+
+#ifdef REFILL_COLOR
 	SceneMaker::PrepareCanvas(&emptyScene, _windows_Scale);
 	SceneMaker::FillColor(&emptyScene, _windows_Scale, Text_Color::Black, Text_Color::Black);
+#endif
 	_printer->PrintScene(emptyScene);
 
 	_currentDisplay = _disp;
