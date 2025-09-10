@@ -4,7 +4,6 @@
 #include "AttackBoost.h"
 #include "Weapon.h"
 #include "Monster.h"
-#include "Logger.h"
 
 //이 생성자 임시로 사용
 Character::Character()
@@ -18,8 +17,7 @@ Character::Character()
 	gold = 0;
 	health = maxHealth;
 	equippedWeapon = nullptr;
-
-	setInventory();
+	inventory.push_back(new Item("Junk", 0, true, false, "is Junk"));	// 실험적으로 기본 아이템을 추가했습니다 [조기혁]
 }
 
 Character::Character(string name)
@@ -64,38 +62,22 @@ Character::Character(string name)
 //	}
 //}
 
-//인벤토리 고정입니다.
-//0번 인덱스 : HP 포션
-//1번 인덱스 : 공격 부스트
-
 void Character::useItem(int key_num)		// 인벤토리맵 스타일에서 아이템을 사용하는 경우로 변형함 09.09
 {
-	//auto item_map = itemCountMap.begin();
-	//advance(item_map, key_num);	// index 이동
-	//string itemname = item_map->first;
+	auto item_map = itemCountMap.begin();
+	advance(item_map, key_num);	// index 이동
+	string itemname = item_map->first;
 
-	string itemname = inventory[key_num]->getName();
-
-
-	if (itemCountMap[itemname] > 0) 
-	{
+	if (itemCountMap[itemname] > 0) {
 		for (int index = 0; index < inventory.size(); index++)
-		{
-			if (inventory[index]->getName() == itemname) 
-			{
+			if (inventory[index]->getName() == itemname) {
 				inventory[index]->use(this);
-				if (inventory[index]->isConsumable()) 
-				{
+				if (inventory[index]->isConsumable()) {
 					itemCountMap[itemname] -= 1;
-
-					if (itemCountMap[itemname] < 0)
-					{
-						itemCountMap[itemname] = 0;
-					}
+					removeItemIdx(index);
 				}
 				return;
 			}
-		}
 		cout << "Error. Item not found." << endl;
 	}
 	else
@@ -116,6 +98,7 @@ void Character::addItem(Item* item)	// 아이템을 인벤토리에 추가하는 함수
 		}
 
 		itemCountMap[item->getName()]++; // 있다면 아이템 수량 추가
+		inventory.push_back(item);
 	}
 	else // 이 경우 발생하면 사고??
 	{
@@ -137,19 +120,19 @@ void Character::addItem(Item* item)	// 아이템을 인벤토리에 추가하는 함수
 //		}
 //	return false;
 //}
-//
-//bool Character::removeItemIdx(int index)	// 아이템을 인덱스로 삭제하는 함수
-//{
-//	if (checkingInventory(index)) 
-//	{
-//		RemoveItemCountMap(inventory[index]->getName());
-//		delete inventory[index]; // 메모리 해제
-//		inventory[index] = nullptr;
-//		inventory.erase(inventory.begin() + index);
-//		return true;
-//	}
-//	return false;
-//}
+
+bool Character::removeItemIdx(int index)	// 아이템을 인덱스로 삭제하는 함수
+{
+	if (checkingInventory(index)) 
+	{
+		//RemoveItemCountMap(inventory[index]->getName());
+		delete inventory[index]; // 메모리 해제
+		inventory[index] = nullptr;
+		inventory.erase(inventory.begin() + index);
+		return true;
+	}
+	return false;
+}
 
 void Character::levelUp()
 {
@@ -227,8 +210,7 @@ void Character::printInventory()
 
 bool Character::checkingInventory(int index)
 {
-	string itemName = inventory[index]->getName();
-	if (itemCountMap[itemName] <= 0)
+	if (index < 0 || index >= inventory.size())
 	{
 		return false;
 	}
@@ -265,8 +247,7 @@ Weapon* Character::getEquippedWeapon()
 
 void Character::refreshInventory()
 {
-	for (int i = 0; i < inventory.size(); i++) 
-{
+	for (int i = 0; i < inventory.size(); i++) {
 		string itemname = inventory[i]->getName();
 		if (itemCountMap.find(itemname) == itemCountMap.end())	// item not found
 			itemCountMap[itemname] = 0;
@@ -429,8 +410,8 @@ void Character::setInventory()
 	inventory.push_back(new HealthPotion(ITEM_HPPOTION, 15, 15, true, true));
 	inventory.push_back(new AttackBoost(ITEM_ATKBOOST, 15, 15, true, true));
 
-	//itemCountMap.insert(make_pair(inventory[0]->getName(), 9));
-	//itemCountMap.insert(make_pair(inventory[1]->getName(), 9));
+	//itemCountMap.insert(make_pair(inventory[0]->getName(), 0));
+	//itemCountMap.insert(make_pair(inventory[1]->getName(), 0));
 	refreshInventory();
 }
 
