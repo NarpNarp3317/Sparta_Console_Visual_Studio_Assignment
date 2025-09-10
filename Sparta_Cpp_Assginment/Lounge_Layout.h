@@ -19,6 +19,7 @@ public:
 private:
 	ConsoleManager* _C_manager;
 	Layout* mainLounge_Layout;
+	BattleStage_Layout* mainBattleStage_layout;
 	StringUpdater* _su;
 	GameManager* GM_Logic;
 
