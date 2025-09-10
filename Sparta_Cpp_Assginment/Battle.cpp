@@ -85,7 +85,7 @@ bool Battle::battleturnBehavior(int index, int itemIndex)
 		playerAttackBehavior();
 		break;
 	case 1:
-		if (_player->checkingInventory(itemIndex) == false)
+		if (_player->checkingInventorymap(itemIndex) == false) // 디버깅시 지켜볼 것
 		{
 			return false;
 		}

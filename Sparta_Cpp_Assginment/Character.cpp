@@ -98,8 +98,9 @@ void Character::useItem(int key_num)		// 인벤토리맵 스타일에서 아이템을 사용하는
 		}
 		cout << "Error. Item not found." << endl;
 	}
+	else
+		cout << "No items left." << endl;
 }
-
 
 void Character::addItem(Item* item)	// 아이템을 인벤토리에 추가하는 함수
 {
@@ -212,10 +213,14 @@ void Character::printInventory()
 	{
 		// 아이템 수량 코드 추가
 		cout << "===========INVENTORY===========" << endl;
-		for (int i = 0; i < inventory.size(); i++)
-		{
-
-			cout << i + 1 << ". " << inventory[i]->getName() << "/Count : " << itemCountMap[inventory[i]->getName()] << endl;
+		//for (int i = 0; i < inventory.size(); i++)
+		//{
+		//	cout << i + 1 << ". " << inventory[i]->getName() << "/Count : " << itemCountMap[inventory[i]->getName()] << endl;
+		//}
+		int i = 1;
+		for (auto item : itemCountMap) {
+			cout << i << ". " << item.first << "/Count : " << item.second << endl;
+			i++;
 		}
 	}
 }
@@ -228,6 +233,19 @@ bool Character::checkingInventory(int index)
 		return false;
 	}
 	return true;
+}
+
+bool Character::checkingInventorymap(int key_num)		// 09.09 새로 추가됨
+{
+	auto item_map = itemCountMap.begin();
+	advance(item_map, key_num);	// index 이동
+	string itemname = item_map->first;
+
+	for (auto item : itemCountMap) {
+		if (item.first == itemname)
+			return true;
+	}
+	return false;
 }
 
 // 09.08 무기관련 새로추가된 함수 ---------
@@ -245,7 +263,6 @@ Weapon* Character::getEquippedWeapon()
 	return this->equippedWeapon;
 }
 
-<<<<<<< HEAD
 void Character::refreshInventory()
 {
 	for (int i = 0; i < inventory.size(); i++) 
@@ -257,8 +274,6 @@ void Character::refreshInventory()
 	}
 }
 
-=======
->>>>>>> Semin_branch
 void Character::setEquippedWeapon(Weapon* weapon)
 {
 	if (equippedWeapon != nullptr) {
@@ -414,11 +429,9 @@ void Character::setInventory()
 	inventory.push_back(new HealthPotion(ITEM_HPPOTION, 15, 15, true, true));
 	inventory.push_back(new AttackBoost(ITEM_ATKBOOST, 15, 15, true, true));
 
-
 	//itemCountMap.insert(make_pair(inventory[0]->getName(), 9));
 	//itemCountMap.insert(make_pair(inventory[1]->getName(), 9));
 	refreshInventory();
-
 }
 
 Character::~Character()

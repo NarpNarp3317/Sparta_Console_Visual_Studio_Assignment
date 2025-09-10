@@ -36,7 +36,8 @@ void GameManager::startMenu()
 	cout << "==========================" << endl;
 	cout << "1. First Play" << endl;
 	cout << "2. Load Data" << endl;
-	cout << "3. Exit Game" << endl;
+	cout << "3. Save Delete" << endl;
+	cout << "4. Exit Game" << endl;
 	cout << "==========================" << endl;
 	while(true)
 	{
@@ -191,7 +192,6 @@ bool GameManager::loadPlayer()
 	/// UI화에 맞춰 UI 클래스에서 로드 실패 후 진행 담당
 	return saveManager->LoadGame(this->player1);
 }
-
 bool GameManager::deletePlayer()
 {
 	return saveManager->saveDeleter();

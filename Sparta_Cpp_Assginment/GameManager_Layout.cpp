@@ -18,7 +18,7 @@ GameManager_Layout::GameManager_Layout(ConsoleManager* _C_manager)
     this->mainMenu_Layout = new Layout();
 
     // 메인 메뉴 버튼 생성
-    Button* new_game = new Button(0, 2, "<<NEW_GAME>>", center_center, { 20, 5 }, { 0, 4 }, single_line, White, Gray);
+    Button* new_game = new Button(0, 2, "<<START_GAME>>", center_center, { 20, 5 }, { 0, 4 }, single_line, White, Gray);
     Button* next = new Button(0, 2, "<<CREDITS>>", center_center, { 20, 5 }, { 0, 9 }, double_line, White, Gray);
     Button* gameExit = new Button(0, 2, "<<EXIT_GAME>>", center_center, { 20, 5 }, { 0, 14 }, double_line, White, Gray);
 
@@ -96,7 +96,8 @@ Layout* GameManager_Layout::gameStartLayout()
         });
 
     exitMenu->SetOnLeftPressed([this]() {
-        this->loadPlayerData();
+        this->_C_manager->SetCurrentDisplay(this->mainMenu_Layout);
+
         });
 
     nowLayout->AddButton(character);
