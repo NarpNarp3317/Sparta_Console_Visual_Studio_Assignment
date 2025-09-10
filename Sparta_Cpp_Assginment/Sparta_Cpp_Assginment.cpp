@@ -113,8 +113,9 @@ int main()
 
 
     //BattleStage_Layout B_layout;
+    Shop_Layout shopLayout;
 
-    C_manager.SetCurrentDisplay(&GameMenu);// start up display here
+    C_manager.SetCurrentDisplay(&shopLayout);// start up display here
 
     C_manager.Run_Update();// run the console manager
 

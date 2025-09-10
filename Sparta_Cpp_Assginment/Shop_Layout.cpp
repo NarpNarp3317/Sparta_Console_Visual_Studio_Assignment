@@ -11,48 +11,55 @@ Shop_Layout::Shop_Layout()
     : Layout() // 부모 생성자 호출
 {
     // ====== Health Potion ======
-    Button* buyHpBtn = new Button(0, 1, "Buy HP Potion", left_center, { 20,5 }, { -25,-10 }, double_line, White, Gray);
+    Button* buyHpBtn = new Button(0, 1, "Buy HP Potion",
+        center_center, { 20,5 }, { -25,-10 }, double_line, White, Gray);
     buyHpBtn->SetOnLeftPressed([] {
-        shop.BuyItemByIndex(player, 0); // HealthPotion index = 0
+        shop.BuyItemByIndex(player, 0);
         });
     AddButton(buyHpBtn);
 
-    Button* sellHpBtn = new Button(0, 1, "Sell HP Potion", left_center, { 20,5 }, { 25,-10 }, double_line, White, Gray);
+    Button* sellHpBtn = new Button(0, 1, "Sell HP Potion",
+        center_center, { 20,5 }, { 25,-10 }, double_line, White, Gray);
     sellHpBtn->SetOnLeftPressed([] {
         shop.SellItemByIndex(player, 0);
         });
     AddButton(sellHpBtn);
 
     // ====== Attack Boost ======
-    Button* buyAtkBtn = new Button(0, 1, "Buy ATK Boost", left_center, { 20,5 }, { -25,0 }, double_line, White, Gray);
+    Button* buyAtkBtn = new Button(0, 1, "Buy ATK Boost",
+        center_center, { 20,5 }, { -25,0 }, double_line, White, Gray);
     buyAtkBtn->SetOnLeftPressed([] {
-        shop.BuyItemByIndex(player, 1); // AttackBoost index = 1
+        shop.BuyItemByIndex(player, 1);
         });
     AddButton(buyAtkBtn);
 
-    Button* sellAtkBtn = new Button(0, 1, "Sell ATK Boost", left_center, { 20,5 }, { 25,0 }, double_line, White, Gray);
+    Button* sellAtkBtn = new Button(0, 1, "Sell ATK Boost",
+        center_center, { 20,5 }, { 25,0 }, double_line, White, Gray);
     sellAtkBtn->SetOnLeftPressed([] {
         shop.SellItemByIndex(player, 1);
         });
     AddButton(sellAtkBtn);
 
     // ====== Iron Sword ======
-    Button* buySwordBtn = new Button(0, 1, "Buy Iron Sword", left_center, { 20,5 }, { -25,10 }, double_line, White, Gray);
+    Button* buySwordBtn = new Button(0, 1, "Buy Iron Sword",
+        center_center, { 20,5 }, { -25,10 }, double_line, White, Gray);
     buySwordBtn->SetOnLeftPressed([] {
-        shop.BuyItemByIndex(player, 2); // Weapon index = 2
+        shop.BuyItemByIndex(player, 2);
         });
     AddButton(buySwordBtn);
 
-    Button* sellSwordBtn = new Button(0, 1, "Sell Iron Sword", left_center, { 20,5 }, { 25,10 }, double_line, White, Gray);
+    Button* sellSwordBtn = new Button(0, 1, "Sell Iron Sword",
+        center_center, { 20,5 }, { 25,10 }, double_line, White, Gray);
     sellSwordBtn->SetOnLeftPressed([] {
         shop.SellItemByIndex(player, 2);
         });
     AddButton(sellSwordBtn);
 
     // ====== Exit Shop ======
-    Button* exitBtn = new Button(0, 1, "Exit Shop", left_center, { 20,5 }, { 0,20 }, double_line, White, Gray);
+    Button* exitBtn = new Button(0, 1, "Exit Shop",
+        center_center, { 20,5 }, { 0,25 }, double_line, White, Gray);
     exitBtn->SetOnLeftPressed([] {
-        // 일단 기능 없음 (나중에 씬 전환이나 레이아웃 해제 넣을 수 있음)
+        // 나가기 시 처리 
         });
     AddButton(exitBtn);
 
