@@ -141,8 +141,6 @@ Layout* GameManager_Layout::createNewCharacterMakeLayout()
     Button* btn_ok = new Button(0, 2, "OK", left_center, { 15, 3 }, { 120, 0 }, single_line, White, Gray);
     Button* btn_exit = new Button(0, 2, "EXIT", left_center, { 15, 3 }, { 140, 0 }, single_line, White, Gray);
 
-
-
     btn_a->SetOnLeftPressed([this]() {
         this->addPlayerName("a");
         this->_su->StringUpdate("Player Name : " + s_playerName);
