@@ -41,10 +41,21 @@ void Lounge_Layout::makeLayout()
     Button* btn_save = new Button(0, 2, "<<SAVE>>", center_center, { 20, 5 }, { 0, 24 }, double_line, White, Gray);
     Button* btn_exit = new Button(0, 2, "<<EXIT_GAME>>", center_center, { 20, 5 }, { 0, 29 }, double_line, White, Gray);
 
-
     // 람다 함수를 통해 버튼 클릭 시 화면을 전환하는 로직을 추가합니다.
     btn_goBattle->SetOnLeftPressed([this]() {
-        this->_su->StringUpdate("This is Main Lounge");
+        this->onBtnBattle();
+        });
+
+    btn_goShop->SetOnLeftPressed([this]() {
+        this->onBtnShop();
+        });
+
+    btn_showPlayerStatus->SetOnLeftPressed([this]() {
+        this->onBtnPlayerStatus();
+        });
+
+    btn_showInventory->SetOnLeftPressed([this]() {
+        this->onBtnInventory();
         });
 
     btn_save->SetOnLeftPressed([this]() {
@@ -67,24 +78,37 @@ void Lounge_Layout::makeLayout()
     // _C_manager->SetCurrentDisplay(mainLounge_Layout);
 }
 
+/// <summary>
+/// 일단 레이아웃에 진입하는 것까지만 연결해 주시면
+/// 해당 기능 종료 후 라운지로 돌아오는 것은 제가 작업하겠습니다.
+/// 25.09.10. 이무표
+/// </summary>
 void Lounge_Layout::onBtnBattle()
 {
-
+    //// 이곳에서 Battle 레이아웃을 불러오면 됩니다
+    // 예시
+    // this->_C_manager->SetCurrentDisplay(여기에 레이아웃 포인터);
 }
 
 void Lounge_Layout::onBtnShop()
 {
-
+    //// 이곳에서 샵 레이아웃을 불러오면 됩니다
+    // 예시
+    // this->_C_manager->SetCurrentDisplay(여기에 레이아웃 포인터);
 }
 
 void Lounge_Layout::onBtnPlayerStatus()
 {
-
+    //// 이곳에서 스테이터스 레이아웃을 불러오면 됩니다
+    // 예시
+    // this->_C_manager->SetCurrentDisplay(여기에 레이아웃 포인터);
 }
 
 void Lounge_Layout::onBtnInventory()
 {
-
+    //// 이곳에서 인벤토리 레이아웃을 불러오면 됩니다
+    // 예시
+    // this->_C_manager->SetCurrentDisplay(여기에 레이아웃 포인터);
 }
 
 void Lounge_Layout::onBtnSave()

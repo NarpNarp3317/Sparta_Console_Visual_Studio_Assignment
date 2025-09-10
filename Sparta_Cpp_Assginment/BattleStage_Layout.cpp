@@ -11,22 +11,22 @@ BattleStage_Layout::BattleStage_Layout()
 
 	Battle* battle = new Battle();
 	Character* player = new Character();
-	battle->startBattle(player);
+	battle->startBattle(player, this);
 
-	Button* ExampleButton = new Button(0, 1, "<<Attack>>", center_center, { 20, 11 }, { 0,0 }, double_line, White, Black);
+	//Button* ExampleButton = new Button(0, 1, "<<Monster>>", center_center, { 20, 11 }, { 0,0 }, double_line, White, Black);
 
-	/*
-			- 버튼 아이디는 지금은 0으로;
-			- priority는 0아니면 됨
-			- 버튼에 표기할 label
-			- 버튼의 뿌리 좌표 위치
-			- 크기{x,y}
-			- 오프셋 {x,y}  ({5,20 }--> y방향 아래로 20만큼, 방향으로 5만큼)
-			- 외벽 프레임 스타일(두줄, 한줄, 줄 없음)
-			- 글자색상, 배경 색상 (' '는 배경색상 지정해도 비어서 나오니 219 = █ 나 '_'사용 )
-	*/
+	///*
+	//		- 버튼 아이디는 지금은 0으로;
+	//		- priority는 0아니면 됨
+	//		- 버튼에 표기할 label
+	//		- 버튼의 뿌리 좌표 위치
+	//		- 크기{x,y}
+	//		- 오프셋 {x,y}  ({5,20 }--> y방향 아래로 20만큼, 방향으로 5만큼)
+	//		- 외벽 프레임 스타일(두줄, 한줄, 줄 없음)
+	//		- 글자색상, 배경 색상 (' '는 배경색상 지정해도 비어서 나오니 219 = █ 나 '_'사용 )
+	//*/
 
-	ExampleButton->SetOnLeftPressed([battle] { battle->battleturnBehavior(0); });// function 추가
+	//ExampleButton->SetOnLeftPressed([battle] { battle->battleturnBehavior(0); });// function 추가
 
 
 	Button* UseItemButton1 = new Button(0, 1, "<<HealItem>>", center_center, { 20, 11 }, { -25, 15 }, double_line, White, Black);
@@ -56,8 +56,6 @@ BattleStage_Layout::BattleStage_Layout()
 		}
 	});
 
-
-	AddButton(ExampleButton);// 다 만든후 layer에 보관
 	AddButton(UseItemButton1);// 다 만든후 layer에 보관
 	AddButton(UseItemButton2);// 다 만든후 layer에 보관
 	AddButton(RecallButton);
@@ -81,12 +79,17 @@ BattleStage_Layout::BattleStage_Layout()
 		// 
 		//----> popup 창이 필요하다면 여기에 필요로하는 기능과 글을 적어둘 것
 		// 선택가능한 팝업창 기능 1.글자 표시+끄기 2. 다음으로 넘기기, 2. 대상 값(int)올리기 내리기
+}
 
+void BattleStage_Layout::CreateButton(const string& name, Battle* battle)
+{
+	monsterButton = new Button(0, 1, name , center_center, { 20, 11 }, { 0,0 }, double_line, White, Black);
+	monsterButton->SetOnLeftPressed([battle] {battle->battleturnBehavior(0); });
+	AddButton(monsterButton);
+}
 
-
-
-
-
-
-
-};
+void BattleStage_Layout::DeleteButton()
+{
+	delete monsterButton;
+	monsterButton = nullptr;
+}
