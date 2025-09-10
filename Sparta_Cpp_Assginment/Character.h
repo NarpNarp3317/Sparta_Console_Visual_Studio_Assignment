@@ -22,7 +22,7 @@ public:
 	//bool removeItemIdx(int index);
 	//
 	void levelUp();
-	void displayStatus();
+	void getStatus();
 	void reward(int exp, int gainGold);
 	void takeDamage(int damage);
 	void printInventory();

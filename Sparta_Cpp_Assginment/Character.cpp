@@ -5,6 +5,7 @@
 #include "Weapon.h"
 #include "Monster.h"
 #include "Logger.h"
+#include "StringUpdater.h"
 
 //이 생성자 임시로 사용
 Character::Character()
@@ -153,9 +154,6 @@ void Character::addItem(Item* item)	// 아이템을 인벤토리에 추가하는 함수
 
 void Character::levelUp()
 {
-	cout << "===========MESSAGE===========" << endl;
-	cout << "LEVEL UP!! " << level << " >> " << level + 1 << endl;
-
 	level++;
 	maxHealth += (level * 20);
 	baseAttack += (level * 5);
@@ -164,17 +162,38 @@ void Character::levelUp()
 	experience = 0;
 }
 
-void Character::displayStatus()
+void Character::getStatus()
 {
-	cout << "===========STATUS===========" << endl;
-	cout << "Name : " << name << endl;
-	cout << "HP : " << health << endl;
-	cout << "level : " << level << endl;
-	cout << "ATK : " << baseAttack;
-	if (equippedWeapon != nullptr) cout << " (+" << equippedWeapon->getDamage() << ")";		// format "ATK: basedamage (+Weapondamage)"
-	cout << "" << endl;
-	cout << "EXP : " << experience << endl;
-	cout << "GOLD : " << gold << endl;
+	StringUpdater string_update({ 20, 30 });
+	string status = "Name : " + name + "\n";
+	status += "HP : " + to_string(health) + "\n";
+	status += "Level : " + to_string(level) + "\n";
+	status += "ATK : " + to_string(attack);
+	if (equippedWeapon != nullptr)
+	{
+		status += "(" + to_string(equippedWeapon->getDamage()) + ")";
+	}
+	status += "\n";
+
+	status += "EXP : " + to_string(experience) + "\n";
+	status += "GOLD : " + to_string(gold);
+
+	string_update.StringUpdate(status);
+
+
+	/*vector<string> statVec;
+	statVec.push_back("Name : " + name);
+	statVec.push_back("HP : " + to_string(health));
+	statVec.push_back("Level : " + to_string(level));
+	statVec.push_back("ATK : " + to_string(attack));
+	if (equippedWeapon != nullptr)
+	{
+		statVec.push_back("(" + to_string(equippedWeapon->getDamage()) + ")");
+	}
+	statVec.push_back("EXP : " + to_string(experience));
+	statVec.push_back("GOLD : " + to_string(gold));*/
+
+	///return statVec;
 }
 
 void Character::reward(int exp, int gainGold)
@@ -241,9 +260,12 @@ bool Character::checkingInventorymap(int key_num)		// 09.09 새로 추가됨
 	advance(item_map, key_num);	// index 이동
 	string itemname = item_map->first;
 
-	for (auto item : itemCountMap) {
+	for (auto item : itemCountMap) 
+	{
 		if (item.first == itemname)
-			return true;
+		{
+			return item.second < 0 ? true : false;
+		}
 	}
 	return false;
 }

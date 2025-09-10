@@ -1,4 +1,5 @@
 #include "Goblin.h"
+#include "StringUpdater.h"
 
 //이 생성자 임시로 사용
 Goblin::Goblin() : Monster()
@@ -24,4 +25,13 @@ Goblin::Goblin(int maxHealth, int attack) : Monster(maxHealth, attack)
 
 Goblin::~Goblin()
 {
+
+}
+
+void Goblin::displayStatus()
+{
+	stringUpdater->CleanStrings();
+	string status = "Name : " + name + " ";
+	status += "ATK : " + to_string(attack);
+	stringUpdater->StringUpdate(status);
 }

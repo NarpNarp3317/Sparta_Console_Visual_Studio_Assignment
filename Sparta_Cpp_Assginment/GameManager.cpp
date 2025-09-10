@@ -123,7 +123,7 @@ void GameManager::visitLounge(Character* _player)
 		}
 		else if (selectNum == 3)
 		{
-			_player->displayStatus();
+			//_player->displayStatus();
 		}
 		else if (selectNum == 4)
 		{

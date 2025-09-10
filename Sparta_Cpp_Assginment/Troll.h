@@ -7,5 +7,7 @@ public:
 	Troll();
 	Troll(int maxHealth, int attack);
 	~Troll();
+
+	void displayStatus() override;
 };
 

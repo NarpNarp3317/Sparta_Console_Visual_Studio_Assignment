@@ -7,6 +7,7 @@ class Character;
 class Monster;
 class BattleStage;
 class BattleStage_Layout;
+class StringUpdater;
 
 class Battle
 {
@@ -32,5 +33,6 @@ private:
 	Character* _player;
 	BattleStage* battleStage;
 	BattleStage_Layout* layout;
+	StringUpdater* string_updater;
 };
 

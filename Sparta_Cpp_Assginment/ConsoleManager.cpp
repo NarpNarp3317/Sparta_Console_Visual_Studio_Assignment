@@ -1,4 +1,5 @@
 #include "ConsoleManager.h"
+#include "SceneMaker.h"
 #include <iostream>// for cout << "\033[2J\033[1;1H";// clear screen
 #include <string>
 
@@ -229,7 +230,12 @@ void ConsoleManager::Pause_Update()
 
 void ConsoleManager::SetCurrentDisplay(Layout* _disp)// for now, just clear
 {
-	cout << "\033[2J\033[1;1H";
+	//cout << "\033[2J\033[1;1H";
+	Scene emptyScene;
+	SceneMaker::PrepareCanvas(&emptyScene, _windows_Scale);
+	SceneMaker::FillColor(&emptyScene, _windows_Scale, Text_Color::Black, Text_Color::Black);
+	_printer->PrintScene(emptyScene);
+
 	_currentDisplay = _disp;
 
 	if(_printer!=nullptr) _printer->ResetPrintRecord();// hasPrintedOnce==false;
