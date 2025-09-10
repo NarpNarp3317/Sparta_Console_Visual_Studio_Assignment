@@ -20,7 +20,7 @@ public:
 
     vector<Button*> GetInteractables();
 
-  /*  void AddScene(Scene* scene);
+    /*  void AddScene(Scene* scene);
 
-    vector<Scene*>GetScenes();*/
+      vector<Scene*>GetScenes();*/
 };

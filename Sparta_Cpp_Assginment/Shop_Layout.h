@@ -1,8 +1,7 @@
 #pragma once
 #include "Layout.h"
 
-class Shop_Layout :public Layout
-{
+class Shop_Layout : public Layout {
 public:
-	Shop_Layout();
+    Shop_Layout();
 };
