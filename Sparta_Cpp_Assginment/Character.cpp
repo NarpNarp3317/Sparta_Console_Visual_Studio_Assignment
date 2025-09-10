@@ -30,7 +30,7 @@ Character::Character(string name)
 	attack = baseAttack;
 	level = 1;
 	experience = 0;
-	gold = 0;
+	gold = 10000;
 	health = maxHealth;
 	equippedWeapon = nullptr;
 

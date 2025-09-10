@@ -4,6 +4,9 @@
 #include "Weapon.h"
 #include <iostream>
 #include "Character.h"
+#include "StringUpdater.h"
+
+StringUpdater stringUpdater({ 10, 12 });
 
 Shop::Shop() {
     // 판매할 아이템 등록
@@ -47,9 +50,8 @@ void Shop::BuyItem(Character& player) {
         else if (selected->getName().find("Sword") != std::string::npos) {
             player.addItem(new Weapon("Iron Sword", 30, 15, true, true, "A balanced weapon."));
         }
-
-        std::cout << selected->getName() << " has been purchased!\n";
-        std::cout << "Current Gold: " << player.getGold() << "\n";
+        //std::cout << selected->getName() << " has been purchased!\n";
+        //std::cout << "Current Gold: " << player.getGold() << "\n";
     }
     else {
         std::cout << "Not enough gold!\n";
@@ -106,11 +108,17 @@ void Shop::BuyItemByIndex(Character& player, int index) {
             player.addItem(new Weapon("Iron Sword", 30, 15, true, true, "A balanced weapon."));
             player.SpendGold(selected->getPrice());
         }
-        std::cout << selected->getName() << " has been purchased!\n";
-        std::cout << "Current Gold: " << player.getGold() << "\n";
+
+  
+        string str = selected->getName() + " has been purchased! ";
+        str += "Current Gold: " + player.getGold();
+        stringUpdater.StringUpdate(str);
     }
     else {
-        std::cout << "Not enough gold!\n";
+
+        string str = "Not enough gold!";
+        stringUpdater.StringUpdate(str);
+        //std::cout << "Not enough gold!\n";
     }
 }
 
@@ -123,7 +131,12 @@ void Shop::SellItemByIndex(Character& player, int index) {
     player.AddGold(sellPrice);
     player.RemoveItem(index);
 
-    std::cout << sellingItem->getName() << " has been sold! +"
+    string str = sellingItem->getName() + " has been sold! + " + to_string(sellPrice) + " Gold";
+    str += "Current Gold: " + player.getGold();
+    stringUpdater.StringUpdate(str);
+
+
+   /* std::cout << sellingItem->getName() << " has been sold! +"
         << sellPrice << " Gold\n";
-    std::cout << "Current Gold: " << player.getGold() << "\n";
+    std::cout << "Current Gold: " << player.getGold() << "\n";*/
 }
