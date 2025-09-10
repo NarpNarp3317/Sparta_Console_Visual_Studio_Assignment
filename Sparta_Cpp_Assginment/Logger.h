@@ -4,6 +4,8 @@
 #include <string>
 #include <mutex>
 
+#define LOG(msg) Logger::getInstance().myLog(msg)
+
 class Logger {
 public:
     // 싱글톤 생성
@@ -31,5 +33,5 @@ private:
     Logger() {}
     ~Logger() {}
 
-    std::mutex m_mutex; // 멀티스레드 환경에서 안전하게 사용하기 위한 뮤텍스
+    std::mutex m_mutex;
 };

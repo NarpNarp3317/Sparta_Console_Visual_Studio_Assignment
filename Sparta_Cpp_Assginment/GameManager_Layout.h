@@ -3,6 +3,7 @@
 #include "ConsoleManager.h"
 #include "GameManager.h"
 #include "StringUpdater.h"
+#include "Lounge_Layout.h"
 
 class GameManager_Layout : public Layout
 {
@@ -20,6 +21,7 @@ private:
 	Layout* mainMenu_Layout;
 	Layout* CharacterSelect_Layout;
 	Layout* newCharacterMake;
+	Lounge_Layout* mainLounge;
 	StringUpdater* _su;
 	GameManager* GM_Logic;
 	string s_playerName = "";
@@ -28,5 +30,6 @@ private:
 	void addPlayerName(string _s);
 	void removePlayerName();
 	void makePlayerStart();
+	void loadPlayerData();
 };
 

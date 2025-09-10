@@ -10,13 +10,13 @@ bool SaveLoadManager::SaveGame(Character* _player)
 {
 	if (_player == nullptr)
 	{
-		std::cerr << "Error: Player is null, cannot save game." << std::endl;
+		// std::cerr << "Error: Player is null, cannot save game." << std::endl;
 		return false;
 	}
 	std::ofstream saveFile(SAVE_FILENAME);
 	if (!saveFile.is_open())
 	{
-		std::cerr << "Error: Could not open save file." << std::endl;
+		// std::cerr << "Error: Could not open save file." << std::endl;
 		return false;
 	}
 	/// CHARACTER DATA ///
@@ -83,7 +83,7 @@ bool SaveLoadManager::SaveGame(Character* _player)
 	//}
 
 	saveFile.close();
-	std::cout << "Game saved successfully." << std::endl;
+	// std::cout << "Game saved successfully." << std::endl;
 
 
 	return true;
@@ -91,16 +91,15 @@ bool SaveLoadManager::SaveGame(Character* _player)
 
 bool SaveLoadManager::LoadGame(Character* _player)
 {
-	Logger::getInstance().myLog("두 번째 로그 메시지입니다.");
-
 	std::ifstream loadFile(SAVE_FILENAME);
 	if (!loadFile.is_open())
 			{
-		std::cerr << "Error: Could not open load file." << std::endl;
+		LOG("LOAD FAIL Could not open load file.");
 		return false;
 	}
 	else
 	{
+		LOG("Load Start");
 		vector<string> Playerdata;
 		vector<string> PlayerWeapon;
 		vector<string> PlayerInventory;
@@ -133,6 +132,7 @@ bool SaveLoadManager::LoadGame(Character* _player)
 			if(InventoryTrigger)
 				PlayerInventory.push_back(line);
 		}
+
 		loadFile.close();
 		_player->setName(Playerdata[0]);
 		_player->setHealth(stoi(Playerdata[1]));
@@ -142,6 +142,7 @@ bool SaveLoadManager::LoadGame(Character* _player)
 		_player->setLevel(stoi(Playerdata[5]));
 		_player->setExperience(stoi(Playerdata[6]));
 		_player->setGold(stoi(Playerdata[7]));
+
 		// 끼고 있던 무기 장착
 		if (equipmentTrigger)
 		{
@@ -155,7 +156,7 @@ bool SaveLoadManager::LoadGame(Character* _player)
 			);
 			_player->setEquippedWeapon(weapon);
 		}
-		
+
 		if (inventoryLoadTrigger)
 		{
 			/// 아이템 디바이더가 나올때 까지 아이템을 만들기

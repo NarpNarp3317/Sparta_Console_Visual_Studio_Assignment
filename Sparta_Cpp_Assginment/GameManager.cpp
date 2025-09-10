@@ -178,21 +178,24 @@ bool GameManager::inputCheck()
 
 // 25.09.05. 이무표
 // 플레이어 로드
-void GameManager::loadPlayer()
+bool GameManager::loadPlayer()
 {
-	player1 = new Character();
-	if (!saveManager->LoadGame(this->player1))
-	{
-		// 로드 실패시 신규 생성으로 진입
-		player1 = nullptr;
-		delete player1;
-		this->makePlayer("TEMP");
-	}
+	//player1 = new Character();
+	//if (!saveManager->LoadGame(this->player1))
+	//{
+	//	// 로드 실패시 신규 생성으로 진입
+	//	player1 = nullptr;
+	//	delete player1;
+	//	this->makePlayer("TEMP");
+	//}
+
+	/// UI화에 맞춰 UI 클래스에서 로드 실패 후 진행 담당
+	return saveManager->LoadGame(this->player1);
 }
-void GameManager::deletePlayer()
+bool GameManager::deletePlayer()
 {
-	saveManager->saveDeleter();
-	std::cout << "Playe the New Character!" << std::endl;
+	return saveManager->saveDeleter();
+	// std::cout << "Playe the New Character!" << std::endl;
 }
 
 void GameManager::savePlayer()

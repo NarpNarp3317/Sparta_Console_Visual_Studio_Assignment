@@ -1,12 +1,14 @@
 ﻿#include "GameManager_Layout.h"
 #include "SceneMaker.h"
 #include <iostream>
+#include "Logger.h"
 
 // 생성자: 필요한 모든 화면(Layout) 객체를 만들고 초기 화면을 설정합니다.
 GameManager_Layout::GameManager_Layout(ConsoleManager* _C_manager)
     : _C_manager(_C_manager),
     mainMenu_Layout(nullptr),
     CharacterSelect_Layout(nullptr),
+    mainLounge(nullptr),
     newCharacterMake(nullptr),
     GM_Logic(new GameManager()),
     _su(new StringUpdater({ 10, 2 }))
@@ -20,21 +22,20 @@ GameManager_Layout::GameManager_Layout(ConsoleManager* _C_manager)
 
     // 메인 메뉴에 들어갈 버튼들을 만듭니다.
     Button* new_game = new Button(0, 2, "<<NEW_GAME>>", center_center, { 20, 5 }, { 0, 4 }, single_line, White, Gray);
-    Button* load_game = new Button(0, 2, "<<LOAD_GAME>>", center_center, { 20, 5 }, { 0, 9 }, double_line, White, Gray);
-    Button* next = new Button(0, 2, "<<CREDITS>>", center_center, { 20, 5 }, { 0, 14 }, double_line, White, Gray);
-    Button* gameExit = new Button(0, 2, "<<EXIT_GAME>>", center_center, { 20, 5 }, { 0, 19 }, double_line, White, Gray);
+    Button* next = new Button(0, 2, "<<CREDITS>>", center_center, { 20, 5 }, { 0, 9 }, double_line, White, Gray);
+    Button* gameExit = new Button(0, 2, "<<EXIT_GAME>>", center_center, { 20, 5 }, { 0, 14 }, double_line, White, Gray);
 
     // 람다 함수를 통해 버튼 클릭 시 화면을 전환하는 로직을 추가합니다.
     new_game->SetOnLeftPressed([this]() {
         this->_C_manager->SetCurrentDisplay(this->CharacterSelect_Layout);
         });
+
     gameExit->SetOnLeftPressed([this]() {
         this->_C_manager->gameExit();
         });
 
     // 버튼들을 메인 메뉴 화면에 추가합니다.
     mainMenu_Layout->AddButton(new_game);
-    mainMenu_Layout->AddButton(load_game);
     mainMenu_Layout->AddButton(next);
     mainMenu_Layout->AddButton(gameExit);
 
@@ -58,6 +59,7 @@ GameManager_Layout::~GameManager_Layout()
     delete newCharacterMake;
     delete GM_Logic;
     delete _su;
+    delete mainLounge;
 
     // 삭제 후 포인터를 nullptr로 초기화합니다.
     mainMenu_Layout = nullptr;
@@ -65,6 +67,7 @@ GameManager_Layout::~GameManager_Layout()
     newCharacterMake = nullptr;
     GM_Logic = nullptr;
     _su = nullptr;
+    mainLounge = nullptr;
 }
 
 // 캐릭터 선택 화면을 생성하는 함수입니다.
@@ -80,6 +83,22 @@ Layout* GameManager_Layout::createCharacterSelectionLayout()
 
     character->SetOnLeftPressed([this]() {
         this->_C_manager->SetCurrentDisplay(this->newCharacterMake);
+        });
+
+    loadPlayer->SetOnLeftPressed([this]() {
+        this->loadPlayerData();
+        });
+
+    deleteSaveFile->SetOnLeftPressed([this]() {
+        this->loadPlayerData();
+        if(this->GM_Logic->deletePlayer())
+            this->_su->StringUpdate("Player Save Data Delete!");
+        else
+            this->_su->StringUpdate("Player Save Data Delete fail...!");
+        });
+
+    exitMenu->SetOnLeftPressed([this]() {
+        this->loadPlayerData();
         });
 
     nowLayout->AddButton(character);
@@ -289,7 +308,26 @@ void GameManager_Layout::removePlayerName()
         s_playerName.pop_back();
     }
 }
+
 void GameManager_Layout::makePlayerStart()
 {
     this->GM_Logic->makePlayer(s_playerName);
+    this->mainLounge = new Lounge_Layout(_C_manager, _su, GM_Logic);
+    this->_C_manager->SetCurrentDisplay(this->mainLounge->getLayout());
+}
+
+void GameManager_Layout::loadPlayerData()
+{
+    this->GM_Logic->makePlayer("TEMP_PLAYER");
+    if (GM_Logic->loadPlayer())
+    {
+        this->mainLounge = new Lounge_Layout(_C_manager, _su, GM_Logic);
+        this->_C_manager->SetCurrentDisplay(this->mainLounge->getLayout());
+    }
+
+    else // save 없을 시
+    {
+        this->mainLounge = new Lounge_Layout(_C_manager, _su, GM_Logic);
+        this->_C_manager->SetCurrentDisplay(this->newCharacterMake);
+    }
 }
