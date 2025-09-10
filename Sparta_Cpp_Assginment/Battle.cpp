@@ -6,7 +6,10 @@
 #include "HealthPotion.h"
 #include "Logger.h"
 #include "StringUpdater.h"
+#include "BattleStage_Layout.h"
 #include <limits> 
+
+Button* ExampleButton;
 
 Battle::Battle()
 {
@@ -22,12 +25,17 @@ Battle::Battle()
 // 필요한 함수나 변수가 있다면 해당 Battle 클래스에 추가해서 사용하면 됩니다.
 // 일단 몬스터나 플레이어 동적 할당 해제 코드 여기 작성
 
-void Battle::startBattle(Character* _player)
+void Battle::startBattle(Character* _player, BattleStage_Layout* layout)
 {
 	cout << "Battle Start" << endl;
 	this->_player = _player;
+	this->layout = layout;
 	battleStage->randomMonsterAdded(_player->getLevel());
 	_monster = battleStage->getMonster(monsterIndex);
+
+	Logger::getInstance().myLog("monster Count : " + to_string(battleStage->getMonsterSize()));
+
+	monsterCreateButton();
 }
 
 void Battle::playerAttackBehavior()
@@ -35,6 +43,9 @@ void Battle::playerAttackBehavior()
 	if (_player != nullptr && _monster != nullptr)
 	{
 		_monster->takeDamage(_player->getAttack());
+		StringUpdater string_updater({ 10,2 });
+		string_updater.CleanStrings();
+		string_updater.StringUpdate("Player Attack >> Monster");
 	}
 }
 
@@ -103,6 +114,8 @@ bool Battle::battleturnBehavior(int index, int itemIndex)
 	return true;
 }
 
+
+
 void Battle::monsterturnBehavior()
 {
 	if (_monster != nullptr && _player != nullptr)
@@ -111,21 +124,39 @@ void Battle::monsterturnBehavior()
 		{
 			battleResult(_player); //보상 지급 처리
 			_monster = battleStage->getMonster(++monsterIndex); //다음 몬스터
+			layout->DeleteButton();
 
 			if (_monster == nullptr) // 다음 몬스터가 없으면 승리로 처리하고 break
 			{
 				isWin = true;
 				//라운지로 이동 코드 필요
 				//
+				Logger::getInstance().myLog("monster None");
+			}
+			else
+			{
+				monsterCreateButton();
+				Logger::getInstance().myLog("monster create");
 			}
 		}
 		else
 		{
 			// 몬스터 -> 플레이어 공격
 			_player->takeDamage(_monster->getAttack());
+
+			StringUpdater string_updater({ 20,10 });
+			string_updater.CleanStrings();
+			string_updater.StringUpdate("Monster Attack >> Player");
 		}
 	}
 }
+
+void Battle::monsterCreateButton()
+{
+	layout->CreateButton(_monster->getName(), this);
+}
+
+
 
 void Battle::ShowReward(const string& item, const string& exp, const string& gold)
 {

@@ -200,7 +200,7 @@ void GameManager::savePlayer()
 void GameManager::battle(Character* _player)
 {
 	Battle battle;
-	battle.startBattle(_player);
+	//battle.startBattle(_player);
 
 }
 

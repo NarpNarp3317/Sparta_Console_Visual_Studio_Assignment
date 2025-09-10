@@ -105,9 +105,9 @@ int main()
     //==========<< Game Start ==========//
 
 
-    //BattleStage_Layout B_layout;
+    BattleStage_Layout B_layout;
 
-    C_manager.SetCurrentDisplay(&GameMenu);// start up display here
+    C_manager.SetCurrentDisplay(&B_layout);// start up display here
 
     C_manager.Run_Update();// run the console manager
 
