@@ -14,9 +14,16 @@ class BaseFrame
 {
 public:
 	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_Style, Text_Color text_color, Text_Color bg_color);
-	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_Style, Text_Color text_color, Text_Color bg_color);
-	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, Text_Color text_color, Text_Color bg_color);//offset을 주고 frame을 생성
-	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, Text_Color text_color, Text_Color bg_color);//주어진 타입에 맞춰 프레임 생성
+	// default frame, anchor point based on max screen width
+
+	BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_Style, Text_Color text_color, Text_Color bg_color, COORD custom_area);
+	// custom area for anchor point
+	
+	 
+	//BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_Style, Text_Color text_color, Text_Color bg_color); 
+	// always put offset and frame style --> it seems too much to read
+	//BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, Text_Color text_color, Text_Color bg_color);//offset을 주고 frame을 생성
+	//BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, Text_Color text_color, Text_Color bg_color);//주어진 타입에 맞춰 프레임 생성
 
 protected:
 //private:
@@ -33,6 +40,8 @@ protected:
 	COORD _offset;// by adding the offset, reposition the frame
 	COORD print_start_coord;
 
+	//COORD _limit_area;// frame can now use custom area for the limit.
+
 	static COORD _screen_Limit;// all shared by same class
 
 	FrameStyle _frame_style;// look of frame
@@ -40,13 +49,6 @@ protected:
 	Scene* _texturePtr;// this is for later when the scene gets switched, it would be inefficient to put new value to texture everytime when texture is switched
 	//----> so make a ptr for a real texture and when the switch happens, change the address in ptr and send it to caller.(like iterator)
 	
-	//vector<vector<bool>> _alpha;// 픽셀이 존재하는 곳을 true로 저장//클릭 가능한 곳을 저장?//지금은 프레임이 있는 범위는 전부 되는걸로
-	//  ---> by only reading the _frame, this wont be necessary for now
-	//--------> yes this will be used but not in here, but in scene struct
-	
-	//COORD _pivotPoint;//pivot point(anchor point)가 되는 곳의 좌표
-	//edited ----> coord is already decided by the enum PivotPoiontLocation. additional movement can be adjusted by offset	
-
 
 public:
 	void CalculatePrintStartCoord(PivotPoiontLocation anchor_type);// printring starts from the top left corner, this coord will be calculated based on the anchor type of frame

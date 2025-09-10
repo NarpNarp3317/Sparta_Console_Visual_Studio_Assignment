@@ -17,16 +17,16 @@ int main()
 {
 
 	/// 그 외 조원 시작지점(기존)
-	GameManager startGame;
-	startGame.StartGame();
-    return 0;
+	//GameManager startGame;
+	//startGame.StartGame();
+ //   return 0;
 
     //===== Managers ====//
 
     StringUpdater string_updater({10,2});
     ConsoleManager C_manager;// for the getting max sceen size first so that base frames can know the screen limit
 
-    /**/
+    /*
     
     // generate required displays in here, first and then start the console manager
 
@@ -61,7 +61,7 @@ int main()
     // generate required buttons for game menu
     Button new_game(0, 2, "<<NEW_GAME>>", center_center, {20,5}, {0,4}, single_line, White, Gray);
     new_game.SetOnLeftPressed([&C_manager, &Character_Selection]() { C_manager.SetCurrentDisplay(&Character_Selection); });
-    new_game.SetOnLeftReleased([&string_updater](){});// for release trigger
+    new_game.SetOnRightPressed([&string_updater]() {string_updater.StringUpdate("kajhsdkjashdkjasdhk"); });// for release trigger
 
    // gamestart.SetOnHovering_ended([&string_updater]() {string_updater.StringUpdate("not hovering"); });
 
@@ -84,13 +84,13 @@ int main()
     Button character(0, 2,"New_Player", center_center, {35,40}, {5,0}, double_line, White, Gray);
     character.SetOnLeftPressed([]() {});
 
-    Button list1 (0, 2, left_center, { 20,5 }, { 40,-10 }, double_line, White, Gray);
+    Button list1 (0, 2, "New_Player", left_center, { 20,5 }, { 40,-10 }, double_line, White, Gray);
     list1.SetOnHovering_started([]() {});
     list1.SetOnHovering_ended([]() {});
 
-    Button list2 (0, 2, left_center, { 20,5 }, {40,0 }, double_line, White, Gray);
+    Button list2 (0, 2, "New_Player", left_center, { 20,5 }, {40,0 }, double_line, White, Gray);
 
-    Button list3(0, 2, left_center, { 20,5 }, { 40, 10 }, double_line, White, Gray);
+    Button list3(0, 2, "New_Player", left_center, { 20,5 }, { 40, 10 }, double_line, White, Gray);
 
     Character_Selection.AddButton(&character);
     Character_Selection.AddButton(&list1);
@@ -99,15 +99,15 @@ int main()
 
     //----------------------------------------------------
 
-    /**/
+    */
 
 
     //==========<< Game Start ==========//
 
 
-    //BattleStage_Layout B_layout;
+    BattleStage_Layout B_layout;
 
-    C_manager.SetCurrentDisplay(&GameMenu);// start up display here
+    C_manager.SetCurrentDisplay(&B_layout);// start up display here
 
     C_manager.Run_Update();// run the console manager
 

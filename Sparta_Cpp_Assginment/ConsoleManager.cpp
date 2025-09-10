@@ -189,6 +189,7 @@ void ConsoleManager::Update_ConsoleManager()
 	else
 	{
 		_printer->PrintPartialUpdates(_currentDisplay);// now print only changed parts
+		SetConsoleCursorPosition(_output_H, _windows_Scale);// put the cursor on the right bottom corner to prevent cursor input indicator in the middle of the scene
 	}
 
 

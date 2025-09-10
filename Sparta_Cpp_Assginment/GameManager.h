@@ -37,7 +37,6 @@ private : // 함수
 	void startMenu();
 	void savePlayer();
 	void loadPlayer();
-	void deletePlayer();
 	void makePlayer();
 
 	// 입력 처리 오류 확인

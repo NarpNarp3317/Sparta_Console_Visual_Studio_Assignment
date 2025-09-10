@@ -25,12 +25,10 @@ public:
 	void takeDamage(int damage);
 	void printInventory();
 	bool checkingInventory(int index);
-	bool checkingInventorymap(int key_num);	// 09.09 battle.cpp에서 useitem이 의도한바에 작동하도록 새로 함수를 생성함
 
 	void refreshATK();						// 새로 추가된 함수 09.08 -----
 	Weapon* getEquippedWeapon(); // save/load 활용을 위해 const 제거
 	// --------------------------------------------
-	void refreshInventory();
 
 	//Getter
 	int getHealth() const;

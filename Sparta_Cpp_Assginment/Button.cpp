@@ -3,6 +3,7 @@
 #include "SimpleButton.h"
 
 //===================  Constructor ================//
+/*
 Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// with offset, no label
 	:BaseFrame(priority, anchor_type, width, offset, frame_style, text_color, bg_color),
 
@@ -41,25 +42,6 @@ Button::Button(int buttonID, int priority, PivotPoiontLocation anchor_type, COOR
 	GenerateDefaultButtonSet();
 }
 
-Button::Button(int buttonID, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// with offset and lable
-	:BaseFrame(priority, anchor_type, width, offset, frame_style, text_color, bg_color),
-
-	_isClickable{ true },
-	_buttonID{ buttonID },
-	_onLeftPressed{ nullptr },
-	_onLeftReleased{ nullptr },
-	_onRightPressed{ nullptr },
-	_onRightReleased{ nullptr },
-	_onHovering_Started{ nullptr },
-	_onHovering_Ended{ nullptr },
-	_isOverlapping{ false },
-	_lable{ lable }
-{
-	
-	FillAlpha();
-	GenerateDefaultButtonSet();
-}
-
 Button::Button(int buttonID, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// without offset, with lable
 	:BaseFrame(priority, anchor_type, width, { 0,0 }, frame_style, text_color, bg_color),
 
@@ -74,9 +56,73 @@ Button::Button(int buttonID, int priority, string lable, PivotPoiontLocation anc
 	_isOverlapping{ false },
 	_lable{ lable }
 {
+
+	FillAlpha();
+	GenerateDefaultButtonSet();
+}
+*/
+Button::Button(int button_ID, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)// with offset and lable
+	:BaseFrame(priority, anchor_type, width, offset, frame_style, text_color, bg_color),
+
+	_isClickable{ true },
+	_buttonID{ button_ID },
+	_onLeftPressed{ nullptr },
+	_onLeftReleased{ nullptr },
+	_onRightPressed{ nullptr },
+	_onRightReleased{ nullptr },
+	_onHovering_Started{ nullptr },
+	_onHovering_Ended{ nullptr },
+	_isOverlapping{ false },
+	_lable{ lable }
+{
 	
 	FillAlpha();
 	GenerateDefaultButtonSet();
+}
+
+Button::Button(int button_ID, int priority, string lable, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color, COORD parent_area)
+	:BaseFrame(priority, anchor_type, width, offset, frame_style, text_color, bg_color, parent_area),
+
+	_isClickable{ true },
+	_buttonID{ button_ID },
+	_onLeftPressed{ nullptr },
+	_onLeftReleased{ nullptr },
+	_onRightPressed{ nullptr },
+	_onRightReleased{ nullptr },
+	_onHovering_Started{ nullptr },
+	_onHovering_Ended{ nullptr },
+	_isOverlapping{ false },
+	_lable{ lable }
+{
+}
+Button::Button(int button_ID, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color)
+	:BaseFrame(priority, anchor_type, width, offset, frame_style, text_color, bg_color),
+
+	_isClickable{ true },
+	_buttonID{ button_ID },
+	_onLeftPressed{ nullptr },
+	_onLeftReleased{ nullptr },
+	_onRightPressed{ nullptr },
+	_onRightReleased{ nullptr },
+	_onHovering_Started{ nullptr },
+	_onHovering_Ended{ nullptr },
+	_isOverlapping{ false },
+	_lable{ "default" }
+{
+}
+Button::Button(int button_ID, int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_style, Text_Color text_color, Text_Color bg_color, COORD parent_area)
+	:BaseFrame(priority, anchor_type, width, offset, frame_style, text_color, bg_color, parent_area),
+_isClickable{ true },
+_buttonID{ button_ID },
+_onLeftPressed{ nullptr },
+_onLeftReleased{ nullptr },
+_onRightPressed{ nullptr },
+_onRightReleased{ nullptr },
+_onHovering_Started{ nullptr },
+_onHovering_Ended{ nullptr },
+_isOverlapping{ false },
+_lable{ "default" }
+{
 }
 //-----------------------<<      MOUSE EVENTS       >>-----------------------------//
 
@@ -181,7 +227,7 @@ void Button::OnLeftReleased()
 {
 	if (_onLeftReleased != nullptr)
 	{
-		_onLeftPressed();
+		_onLeftReleased();//edited ---> pressed to released
 	}
 }
 

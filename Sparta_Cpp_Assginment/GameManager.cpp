@@ -36,8 +36,7 @@ void GameManager::startMenu()
 	cout << "==========================" << endl;
 	cout << "1. First Play" << endl;
 	cout << "2. Load Data" << endl;
-	cout << "3. Save Delete" << endl;
-	cout << "4. Exit Game" << endl;
+	cout << "3. Exit Game" << endl;
 	cout << "==========================" << endl;
 	while(true)
 	{
@@ -61,12 +60,6 @@ void GameManager::startMenu()
 			break;
 		}
 		else if (selectNum == 3)
-		{
-			this->deletePlayer();
-			this->makePlayer();
-			break;
-		}
-		else if (selectNum == 4)
 		{
 			exit(0);
 		}
@@ -185,11 +178,6 @@ void GameManager::loadPlayer()
 		delete player1;
 		this->makePlayer();
 	}
-}
-void GameManager::deletePlayer()
-{
-	saveManager->saveDeleter();
-	std::cout << "Playe the New Character!" << std::endl;
 }
 
 void GameManager::savePlayer()

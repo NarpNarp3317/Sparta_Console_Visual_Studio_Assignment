@@ -127,7 +127,7 @@ void Battle::playerUseItemBehavior(Character* _player)
 		cin >> selectNum;
 
 
-		if (_player->checkingInventorymap(selectNum - 1)) //선택한 번호가 가방에 있는지 확인
+		if (_player->checkingInventory(selectNum - 1)) //선택한 번호가 가방에 있는지 확인
 		{
 			_player->useItem(selectNum - 1); //있다면 아이템 사용
 			break;
