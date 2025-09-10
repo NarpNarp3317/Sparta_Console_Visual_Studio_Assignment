@@ -28,13 +28,16 @@ private:
 
 public:
 
+	//Scenes
 	Scene MergeLayers(const vector<Scene*>& scenes);
-	Scene MergeLayout(Layout* display);
-
 	void PrintScene(const Scene& scene);// read the scene and print out on display
-	void PrintLayout(Layout* display);
-	void PrintPartialUpdates(Layout* display);// only print on updated area
 
-	void ResetPrintRecord();// set did printed to false
+	//Laydout
+	Scene MergeLayout(Layout* display);
+	void PrintLayout(Layout* display);
+
+	// Optimized Layout Printer
+	void PrintPartialUpdates(Layout* display);// only print on updated area
+	void ResetPrintRecord();// set did printed to false //--> for do once 
 	bool GetPrintRecord();
 };
