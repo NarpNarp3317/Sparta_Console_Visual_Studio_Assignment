@@ -19,7 +19,7 @@ public:
 	void addItem(Item* item);
 	// »ç¿ë X
 	//bool removeItem(string name);
-	//bool removeItemIdx(int index);
+	bool removeItemIdx(int index);
 	//
 	void levelUp();
 	void displayStatus();
