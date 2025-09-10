@@ -19,7 +19,7 @@
 Shop shop;
 Character player("Test");
 
-Shop_Layout shopLayout;
+// Shop_Layout shopLayout;
 
 
 using namespace std;

@@ -9,7 +9,8 @@ Lounge_Layout::Lounge_Layout(ConsoleManager* _C_manager, StringUpdater* su, Game
     : _C_manager(_C_manager),
     GM_Logic(_GM),
     _su(su),
-    mainLounge_Layout(new Layout())
+    mainLounge_Layout(new Layout()),
+    myShopLayout(new Shop_Layout(_C_manager, mainLounge_Layout, _GM->getPlayer()))
 {
     this->makeLayout();
     Logger::getInstance().myLog("PLAYER NAME : " + GM_Logic->getPlayer()->getName());
@@ -18,8 +19,9 @@ Lounge_Layout::Lounge_Layout(ConsoleManager* _C_manager, StringUpdater* su, Game
 Lounge_Layout::~Lounge_Layout()
 {
     delete mainLounge_Layout;
+    delete myShopLayout;
 
-
+    myShopLayout = nullptr;
     mainLounge_Layout = nullptr;
 }
 
@@ -93,8 +95,7 @@ void Lounge_Layout::onBtnBattle()
 
 void Lounge_Layout::onBtnShop()
 {
-    extern Shop_Layout shopLayout;
-    this->_C_manager->SetCurrentDisplay(&shopLayout);
+    this->_C_manager->SetCurrentDisplay(myShopLayout);
     //// 이곳에서 샵 레이아웃을 불러오면 됩니다
     // 예시
     // this->_C_manager->SetCurrentDisplay(여기에 레이아웃 포인터);
