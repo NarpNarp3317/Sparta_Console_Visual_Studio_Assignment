@@ -3,55 +3,80 @@
 #include "Shop.h"
 #include "Character.h"
 #include "Layout.h"
+#include "Logger.h"   
 
 extern Shop shop;
 extern Character player;
 
 Shop_Layout::Shop_Layout()
-    : Layout() // 부모 생성자 호출
+    : Layout()
 {
     // ====== Health Potion ======
-    Button* buyHpBtn = new Button(0, 1, "Buy HP Potion",
+    Button* buyHpBtn = new Button(0, 1, "BuyHPPotion",
         center_center, { 20,5 }, { -25,-10 }, double_line, White, Gray);
-    buyHpBtn->SetOnLeftPressed([] {
+    buyHpBtn->SetOnLeftPressed([this] {
         shop.BuyItemByIndex(player, 0);
+        Logger::getInstance().myLog("플레이어가 Health Potion 구매, 현재 Gold: " + std::to_string(player.getGold()));
+        SceneMaker::AddTexts(&this->goldScene, { 20,3 }, { 1,1 },
+            { "Gold: " + std::to_string(player.getGold()) },
+            left_center, White, Black);
         });
     AddButton(buyHpBtn);
 
-    Button* sellHpBtn = new Button(0, 1, "Sell HP Potion",
+    Button* sellHpBtn = new Button(0, 1, "SellHPPotion",
         center_center, { 20,5 }, { 25,-10 }, double_line, White, Gray);
-    sellHpBtn->SetOnLeftPressed([] {
+    sellHpBtn->SetOnLeftPressed([this] {
         shop.SellItemByIndex(player, 0);
+        Logger::getInstance().myLog("플레이어가 Health Potion 판매, 현재 Gold: " + std::to_string(player.getGold()));
+        SceneMaker::AddTexts(&this->goldScene, { 20,3 }, { 1,1 },
+            { "Gold: " + std::to_string(player.getGold()) },
+            left_center, White, Black);
         });
     AddButton(sellHpBtn);
 
     // ====== Attack Boost ======
-    Button* buyAtkBtn = new Button(0, 1, "Buy ATK Boost",
+    Button* buyAtkBtn = new Button(0, 1, "BuyATKBoost",
         center_center, { 20,5 }, { -25,0 }, double_line, White, Gray);
-    buyAtkBtn->SetOnLeftPressed([] {
+    buyAtkBtn->SetOnLeftPressed([this] {
         shop.BuyItemByIndex(player, 1);
+        Logger::getInstance().myLog("플레이어가 Attack Boost 구매, 현재 Gold: " + std::to_string(player.getGold()));
+        SceneMaker::AddTexts(&this->goldScene, { 20,3 }, { 1,1 },
+            { "Gold: " + std::to_string(player.getGold()) },
+            left_center, White, Black);
         });
     AddButton(buyAtkBtn);
 
-    Button* sellAtkBtn = new Button(0, 1, "Sell ATK Boost",
+    Button* sellAtkBtn = new Button(0, 1, "SellATKBoost",
         center_center, { 20,5 }, { 25,0 }, double_line, White, Gray);
-    sellAtkBtn->SetOnLeftPressed([] {
+    sellAtkBtn->SetOnLeftPressed([this] {
         shop.SellItemByIndex(player, 1);
+        Logger::getInstance().myLog("플레이어가 Attack Boost 판매, 현재 Gold: " + std::to_string(player.getGold()));
+        SceneMaker::AddTexts(&this->goldScene, { 20,3 }, { 1,1 },
+            { "Gold: " + std::to_string(player.getGold()) },
+            left_center, White, Black);
         });
     AddButton(sellAtkBtn);
 
     // ====== Iron Sword ======
-    Button* buySwordBtn = new Button(0, 1, "Buy Iron Sword",
+    Button* buySwordBtn = new Button(0, 1, "BuyIronSword",
         center_center, { 20,5 }, { -25,10 }, double_line, White, Gray);
-    buySwordBtn->SetOnLeftPressed([] {
+    buySwordBtn->SetOnLeftPressed([this] {
         shop.BuyItemByIndex(player, 2);
+        Logger::getInstance().myLog("플레이어가 Iron Sword 구매, 현재 Gold: " + std::to_string(player.getGold()));
+        SceneMaker::AddTexts(&this->goldScene, { 20,3 }, { 1,1 },
+            { "Gold: " + std::to_string(player.getGold()) },
+            left_center, White, Black);
         });
     AddButton(buySwordBtn);
 
-    Button* sellSwordBtn = new Button(0, 1, "Sell Iron Sword",
+    Button* sellSwordBtn = new Button(0, 1, "SellIronSword",
         center_center, { 20,5 }, { 25,10 }, double_line, White, Gray);
-    sellSwordBtn->SetOnLeftPressed([] {
+    sellSwordBtn->SetOnLeftPressed([this] {
         shop.SellItemByIndex(player, 2);
+        Logger::getInstance().myLog("플레이어가 Iron Sword 판매, 현재 Gold: " + std::to_string(player.getGold()));
+        SceneMaker::AddTexts(&this->goldScene, { 20,3 }, { 1,1 },
+            { "Gold: " + std::to_string(player.getGold()) },
+            left_center, White, Black);
         });
     AddButton(sellSwordBtn);
 
@@ -59,24 +84,15 @@ Shop_Layout::Shop_Layout()
     Button* exitBtn = new Button(0, 1, "Exit Shop",
         center_center, { 20,5 }, { 0,25 }, double_line, White, Gray);
     exitBtn->SetOnLeftPressed([] {
-        // 나가기 시 처리 
+        Logger::getInstance().myLog("플레이어가 상점을 나감");
+        // TODO: 라운지 화면으로 전환
         });
     AddButton(exitBtn);
 
-    //===== Extra ====//
-    Scene newScene;
-    SceneMaker::PrepareCanvas(&newScene, { 20,20 });// Scene maker로 이미지 만들어서 버튼 이미지를 바꿀수 있음. 반드시 크기는 버튼의 크기와 같아야 함
-	//프레임 만들기, 색채우기, 색반전시키기, 글자 여러줄 넣기등 있음
-
-	// 만들어낸 이미지를 버튼에 넣기는 잠시 미루기
-
-
-
-		//----> 팝업창 작업중
-		// 
-		//----> popup 창이 필요하다면 여기에 필요로하는 기능과 글을 적어둘 것
-		// 선택가능한 팝업창 기능 1.글자 표시+끄기 2. 다음으로 넘기기, 2. 대상 값(int)올리기 내리기
-
-
-  
+    // ====== Gold Scene 초기화 ======
+    SceneMaker::PrepareCanvas(&goldScene, { 20,3 });
+    SceneMaker::FillColor(&goldScene, { 20,3 }, White, Black);
+    SceneMaker::AddTexts(&goldScene, { 20,3 }, { 1,1 },
+        { "Gold: " + std::to_string(player.getGold()) },
+        left_center, White, Black);
 }

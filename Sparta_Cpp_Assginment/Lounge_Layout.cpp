@@ -2,6 +2,7 @@
 #include "SceneMaker.h"
 #include <iostream>
 #include "Logger.h"
+#include "Shop_Layout.h"
 
 // 생성자: 필요한 모든 화면(Layout) 객체를 만들고 초기 화면을 설정합니다.
 Lounge_Layout::Lounge_Layout(ConsoleManager* _C_manager, StringUpdater* su, GameManager* _GM)
@@ -92,6 +93,8 @@ void Lounge_Layout::onBtnBattle()
 
 void Lounge_Layout::onBtnShop()
 {
+    extern Shop_Layout shopLayout;
+    this->_C_manager->SetCurrentDisplay(&shopLayout);
     //// 이곳에서 샵 레이아웃을 불러오면 됩니다
     // 예시
     // this->_C_manager->SetCurrentDisplay(여기에 레이아웃 포인터);
