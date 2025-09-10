@@ -8,7 +8,7 @@
 extern Shop shop;
 // extern Character player;
 
-Shop_Layout::Shop_Layout(ConsoleManager* _cm, Layout* _lounge, Character* _Player)
+Shop_Layout::Shop_Layout(ConsoleManager* _cm, Lounge_Layout* _lounge, Character* _Player)
     : Layout(),
     _C_manager(_cm),
     loungeLayout(_lounge),
@@ -89,7 +89,8 @@ Shop_Layout::Shop_Layout(ConsoleManager* _cm, Layout* _lounge, Character* _Playe
     exitBtn->SetOnLeftPressed([this] {
         Logger::getInstance().myLog("플레이어가 상점을 나감");
         // TODO: 라운지 화면으로 전환
-        this->_C_manager->SetCurrentDisplay(this->loungeLayout);
+        this->loungeLayout->updateStatus();
+        this->_C_manager->SetCurrentDisplay(this->loungeLayout->getLayout());
         });
 
     AddButton(exitBtn);

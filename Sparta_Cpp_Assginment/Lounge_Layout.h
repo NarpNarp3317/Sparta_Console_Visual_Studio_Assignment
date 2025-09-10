@@ -3,8 +3,11 @@
 #include "ConsoleManager.h"
 #include "GameManager.h"
 #include "StringUpdater.h"
-#include "Shop_Layout.h"
 #include "Inventory_Layout.h"
+
+class Shop_Layout;
+
+class Weapon;
 
 class Lounge_Layout
 {
@@ -12,6 +15,8 @@ public:
 	Lounge_Layout(ConsoleManager* _C_manager, StringUpdater* su, GameManager* _GM);
 	~Lounge_Layout();
 
+	void makeStatus();
+	void updateStatus();
 	void makeLayout();
 	void setLayout(Layout* _Lay);
 	Layout* getLayout();
@@ -32,5 +37,12 @@ private:
 	void onBtnInventory();
 	void onBtnSave();
 	void onBtnEXIT();
+
+	Button* lbl_name = nullptr;
+	Button* lbl_Lv = nullptr;
+	Button* lbl_hp = nullptr;
+	Button* lbl_atk = nullptr;
+	Button* lbl_exp = nullptr;
+	Button* lbl_gold = nullptr;
 };
 

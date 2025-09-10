@@ -6,8 +6,8 @@
 #include "Logger.h"
 #include "ConsoleManager.h"
 #include "StringUpdater.h"
-
-BattleStage_Layout::BattleStage_Layout(Character* _chara, Layout* _LoungeLayout, ConsoleManager* _mainCM, StringUpdater* _su):
+#include "Lounge_Layout.h"
+BattleStage_Layout::BattleStage_Layout(Character* _chara, Lounge_Layout* _LoungeLayout, ConsoleManager* _mainCM, StringUpdater* _su):
 	mainCM(_mainCM),
 	mainLoungeLayout(_LoungeLayout),
 	mainPlayer(_chara),
@@ -75,10 +75,10 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 		Button* RecallButton = new Button(0, 1, "Recall", center_center, { 17, 5 }, { 17, 15 }, double_line, White, Black);
 		RecallButton->SetOnLeftPressed([this, RecallButton]
 		{
+				/// 25.09.10. mpyi _ 라운지로 복귀
 			if (battle->battleturnBehavior(2) == false)
 			{
-				/// 25.09.10. mpyi _ 라운지로 복귀
-				LOG("GO LOUNGE");
+				LOG("ERROR_LOUNGE_FAIL");
 				RecallButton->OnInvalidInput();
 			}
 			/*this->mainCM->SetCurrentDisplay(mainLoungeLayout);*/

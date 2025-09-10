@@ -9,11 +9,12 @@
 #include "BattleStage_Layout.h"
 #include "Button.h"
 #include "ConsoleManager.h"
+#include "Lounge_Layout.h"
 
 #include <limits> 
 StringUpdater string_updater({ 20,10 });
 
-Battle::Battle(Layout* _LoungeLayout, ConsoleManager* _MyCM, BattleStage_Layout* _MyBattleStage):
+Battle::Battle(Lounge_Layout* _LoungeLayout, ConsoleManager* _MyCM, BattleStage_Layout* _MyBattleStage):
 	LoungeLayout(_LoungeLayout),
 	MyCM(_MyCM),
 	MyBattleStage(_MyBattleStage)
@@ -62,7 +63,8 @@ void Battle::playerRecallBehavior()
 	///cout << "Leave Dungeon, Return to Lounge." << endl;
 
 	/// 라운지로 이동시키는 코드 필요
-	this->MyCM->SetCurrentDisplay(LoungeLayout);
+	LoungeLayout->updateStatus();
+	this->MyCM->SetCurrentDisplay(LoungeLayout->getLayout());
 	MyBattleStage->~BattleStage_Layout();
 
 	/// 

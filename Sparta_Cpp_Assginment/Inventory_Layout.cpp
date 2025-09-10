@@ -4,9 +4,9 @@
 #include "Logger.h"
 #include "Weapon.h"
 #include "StringUpdater.h"
+#include "Lounge_Layout.h"
 
-
-Inventory_Layout::Inventory_Layout(Character* _chara, Layout* _LoungeLayout, ConsoleManager* _mainCM, StringUpdater* _su):
+Inventory_Layout::Inventory_Layout(Character* _chara, Lounge_Layout* _LoungeLayout, ConsoleManager* _mainCM, StringUpdater* _su):
 mainCM(_mainCM),
 mainLoungeLayout(_LoungeLayout),
 mainPlayer(_chara),
@@ -64,12 +64,11 @@ void Inventory_Layout::InventoryDisplay() {
 	}
 	itemButtons.clear();
 
-	int i = 0;
+	int index = 0;
 	map<string, int> Inventorymap = mainPlayer->getItemCountMap();
 	int garo = 0;
 	int sero = 0;
 	for (auto item : Inventorymap) {
-		int index = i;
 		if (index % 4 == 0)
 		{
 			sero += 5;
@@ -110,6 +109,7 @@ void Inventory_Layout::InventoryDisplay() {
 		//	});
 
 		itemButtons[index]->SetOnLeftPressed([this, index]() {
+			LOG("nowUse" + to_string(index));
 			this->mainPlayer->useItem(index);
 			map<string, int> current_Inventorymap = this->mainPlayer->getItemCountMap();
 
@@ -143,8 +143,8 @@ void Inventory_Layout::InventoryDisplay() {
 			}
 		});
 
-		AddButton(itemButtons[i]);
-		i += 1;
+		AddButton(itemButtons[index]);
+		index++;
 		garo++;
 
 	}
@@ -162,7 +162,9 @@ void Inventory_Layout::InventoryDisplay() {
 		Black
 	);
 	ReturnBtn->SetOnLeftPressed([this]() {
-		this->mainCM->SetCurrentDisplay(mainLoungeLayout);
+		LOG("Inventory->Lounge");
+		mainLoungeLayout->updateStatus();
+		this->mainCM->SetCurrentDisplay(mainLoungeLayout->getLayout());
 	});
 	AddButton(ReturnBtn);
 };

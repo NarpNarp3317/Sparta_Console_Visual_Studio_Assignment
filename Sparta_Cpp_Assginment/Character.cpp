@@ -70,28 +70,47 @@ void Character::useItem(int key_num)		// 인벤토리맵 스타일에서 아이템을 사용하는
 {
 	auto item_map = itemCountMap.begin();
 	advance(item_map, key_num);	// index 이동
-	string itemname = inventory[key_num]->getName();
 
-	if (itemCountMap[itemname] > 0)
+	// vector와 map간 index가 다르다.
+	// key_num으로 들어온건 map의 index여야한다.
+	// map의 index의 아이템이 무엇인지 알기 위해
+	// for문으로 targetItem에 map에 key_num의 아이템을 받아온다.
+
+	int idx = 0;
+	string targetItem = "";
+	for (auto i : itemCountMap)
 	{
-		//for (int index = 0; index < inventory.size(); index++)
-		//	if (inventory[index]->getName() == itemname) 
-		//	{
-		//		cout << inventory[index]->getName() << endl;
-		//		inventory[index]->use(this);
-		//		if (inventory[index]->isConsumable()) 
-		//		{
-		//			itemCountMap[itemname] -= 1;
-		//			//removeItemIdx(index);
-		//		}
-		//		return;
-		//	}
-		 
-		 //ui 변경으로 cout 제거
-		 //cout << "Error. Item not found." << endl;
+		if (idx == key_num)
+		{
+			targetItem = i.first;
+			break;
+		}
+		idx++;
+	}
+	// 타겟이 없으면 리턴
+	if (targetItem == "") 
+	{
+		LOG("NO ITEM!!!");
+		return;
+	}
+	// 디버그용
+	LOG("TARG : " + targetItem);
 
-		inventory[key_num]->use(this);
-		itemCountMap[itemname]--;
+	// 타겟 아이템 숫자가 0이상이면
+	if (itemCountMap[targetItem] > 0)
+	{
+		LOG("USE : " + targetItem);
+		LOG("Real Target : " + inventory[idx]->getName());
+		for (auto it : inventory)
+		{
+			if (it->getName() == targetItem)
+			{
+				it->use(this);
+				itemCountMap[targetItem]--;
+				break;
+			}
+		}
+		// inventory[idx]->use(this);
 	}
 	else
 	{

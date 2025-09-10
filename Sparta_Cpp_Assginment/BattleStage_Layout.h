@@ -5,11 +5,12 @@ class Battle;
 class Character;
 class ConsoleManager;
 class StringUpdater;
+class Lounge_Layout;
 
 class BattleStage_Layout:public Layout
 { 
 public:
-	BattleStage_Layout(Character* _chara, Layout* _LoungeLayout, ConsoleManager* _mainCM, StringUpdater* _su);
+	BattleStage_Layout(Character* _chara, Lounge_Layout* _LoungeLayout, ConsoleManager* _mainCM, StringUpdater* _su);
 	~BattleStage_Layout();
 	void CreateButton(const string& name);
 	void DeleteButton();
@@ -21,5 +22,5 @@ public:
 	StringUpdater* SU;
 	ConsoleManager* mainCM;
 	Character* mainPlayer;
-	Layout* mainLoungeLayout;
+	Lounge_Layout* mainLoungeLayout;
 };
