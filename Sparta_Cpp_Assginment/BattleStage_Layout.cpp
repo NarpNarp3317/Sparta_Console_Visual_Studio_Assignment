@@ -3,7 +3,8 @@
 #include "Battle.h"
 #include "BattleStage.h"
 #include "Character.h"
-
+#include "Logger.h"
+#include "ConsoleManager.h"
 
 BattleStage_Layout::BattleStage_Layout()
 {
@@ -11,17 +12,20 @@ BattleStage_Layout::BattleStage_Layout()
 	battle = nullptr;
 }
 
-void BattleStage_Layout::CreateButton(const string& name, Battle* battle)
+void BattleStage_Layout::CreateButton(const string& name)
 {
-	monsterButton = new Button(0, 1, name , center_center, { 20, 11 }, { 0,0 }, double_line, White, Black);
-	monsterButton->SetOnLeftPressed([battle] {battle->battleturnBehavior(0); });
+	monsterButton = new Button(10, 1, name , center_center, { 20, 11 }, { 0,0 }, double_line, White, Black);
+	monsterButton->SetOnLeftPressed([this] 
+	{
+		battle->battleturnBehavior(0);
+	});
+
 	AddButton(monsterButton);
 }
 
 void BattleStage_Layout::DeleteButton()
 {
-	delete monsterButton;
-	monsterButton = nullptr;
+	RemoveButton(monsterButton);
 }
 
 void BattleStage_Layout::BattleStartSetup(Character* player)
@@ -29,7 +33,7 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 	battle = new Battle();
 	battle->startBattle(player, this);
 
-	Button* UseItemButton1 = new Button(0, 1, "<<HealItem>>", center_center, { 20, 11 }, { -25, 15 }, double_line, White, Black);
+	Button* UseItemButton1 = new Button(0, 1, "HealItem", center_center, { 17, 5 }, { -17, 15 }, double_line, White, Black);
 	UseItemButton1->SetOnLeftPressed([this, UseItemButton1]
 		{
 			if (battle->battleturnBehavior(1, 0) == false)
@@ -38,7 +42,7 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 			}
 		});// function 추가
 
-		Button* UseItemButton2 = new Button(0, 1, "<<AttackBoost>>", center_center, { 20, 11 }, { 0, 15 }, double_line, White, Black);
+		Button* UseItemButton2 = new Button(0, 1, "AttackBoost", center_center, { 17, 5 }, { 0, 15 }, double_line, White, Black);
 		UseItemButton2->SetOnLeftPressed([this, UseItemButton2]
 		{
 			if (battle->battleturnBehavior(1, 0) == false)
@@ -47,7 +51,7 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 			}
 		});// function 추가
 
-		Button* RecallButton = new Button(0, 1, "<<Recall>>", center_center, { 20, 11 }, { 25, 15 }, double_line, White, Black);
+		Button* RecallButton = new Button(0, 1, "Recall", center_center, { 17, 5 }, { 17, 15 }, double_line, White, Black);
 		RecallButton->SetOnLeftPressed([this, RecallButton]
 		{
 			if (battle->battleturnBehavior(2) == false)
@@ -56,11 +60,10 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 			}
 		});
 
+		player->getStatus();
 		AddButton(UseItemButton1);// 다 만든후 layer에 보관
 		AddButton(UseItemButton2);// 다 만든후 layer에 보관
 		AddButton(RecallButton);
-
-
 		//===== Extra ====//
 
 		Scene newScene;

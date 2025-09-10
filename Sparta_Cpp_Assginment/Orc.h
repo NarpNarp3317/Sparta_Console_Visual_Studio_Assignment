@@ -7,5 +7,6 @@ public:
 	Orc();
 	Orc(int maxHealth, int attack);
 	~Orc();
+	void displayStatus() override;
 };
 

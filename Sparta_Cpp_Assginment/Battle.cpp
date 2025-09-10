@@ -18,6 +18,7 @@ Battle::Battle()
 	_player = nullptr;
 	battleStage = new BattleStage();
 	monsterIndex = 0;
+	string_updater = new StringUpdater({ 10,2 });
 }
 
 // 25.09.04. 이무표
@@ -43,9 +44,9 @@ void Battle::playerAttackBehavior()
 	if (_player != nullptr && _monster != nullptr)
 	{
 		_monster->takeDamage(_player->getAttack());
-		StringUpdater string_updater({ 10,2 });
-		string_updater.CleanStrings();
-		string_updater.StringUpdate("Player Attack >> Monster");
+		//
+		string_updater->CleanStrings();
+		string_updater->StringUpdate("Player Attack >> Monster");
 	}
 }
 
@@ -109,6 +110,7 @@ bool Battle::battleturnBehavior(int index, int itemIndex)
 		break;
 	}
 
+	_monster->displayStatus();
 	monsterturnBehavior();
 
 	return true;
@@ -130,13 +132,11 @@ void Battle::monsterturnBehavior()
 			{
 				isWin = true;
 				//라운지로 이동 코드 필요
-				//
-				Logger::getInstance().myLog("monster None");
 			}
 			else
 			{
+				_monster->displayStatus();
 				monsterCreateButton();
-				Logger::getInstance().myLog("monster create");
 			}
 		}
 		else
@@ -149,31 +149,40 @@ void Battle::monsterturnBehavior()
 			string_updater.StringUpdate("Monster Attack >> Player");
 		}
 	}
+
+	if (_player->getHealth() <= 0)
+	{
+		// 라운지로 이동 코드 필요
+	}
+
 }
 
 void Battle::monsterCreateButton()
 {
-	layout->CreateButton(_monster->getName(), this);
+	layout->CreateButton(_monster->getName());
 }
 
 
 
 void Battle::ShowReward(const string& item, const string& exp, const string& gold)
 {
-	StringUpdater string_updater({ 10,2 });
-	string_updater.CleanStrings();
+	string_updater->CleanStrings();
 	string text = "Reward : ";
 	text += item.empty() ? "" : item + ", ";
 	text += "EXP : +" + exp + " ";
 	text += "Gold : +" + gold;
-	string_updater.StringUpdate(text);
+	string_updater->StringUpdate(text);
+
+	_player->getStatus();
 }
 
 Battle::~Battle()
 {
 	battleStage->removeMonsterList();
 	delete battleStage;
+	delete string_updater;
 	battleStage = nullptr;
+	string_updater = nullptr;
 }
 
 

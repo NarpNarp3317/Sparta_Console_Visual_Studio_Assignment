@@ -1,6 +1,8 @@
 #pragma once
 #include "Character.h"
 
+class StringUpdater;
+
 class Monster
 {
 public:
@@ -11,6 +13,7 @@ public:
 
 	virtual int randomItem();
 	virtual int randomValue(const int& minValue, const int& maxValue);
+	virtual void displayStatus();
 
 	//Getter
 	virtual string getName();
@@ -26,5 +29,6 @@ protected:
 	int attack;
 	int rw_exp;
 	int rw_gold;
+	StringUpdater* stringUpdater;
 };
 

@@ -1,4 +1,6 @@
 #include "Orc.h"
+#include "StringUpdater.h"
+
 Orc::Orc()
 {
 	this->name = "Orc";
@@ -21,4 +23,12 @@ Orc::Orc(int maxHealth, int attack) : Monster(maxHealth, attack)
 Orc::~Orc()
 {
 
+}
+
+void Orc::displayStatus()
+{
+	stringUpdater->CleanStrings();
+	string status = "Name : " + name + " ";
+	status += "ATK : " + to_string(attack);
+	stringUpdater->StringUpdate(status);
 }
