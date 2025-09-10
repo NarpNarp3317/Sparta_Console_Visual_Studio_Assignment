@@ -36,7 +36,8 @@ void GameManager::startMenu()
 	cout << "==========================" << endl;
 	cout << "1. First Play" << endl;
 	cout << "2. Load Data" << endl;
-	cout << "3. Exit Game" << endl;
+	cout << "3. Save Delete" << endl;
+	cout << "4. Exit Game" << endl;
 	cout << "==========================" << endl;
 	while(true)
 	{
@@ -51,7 +52,7 @@ void GameManager::startMenu()
 
 		if (selectNum == 1)
 		{
-			this->makePlayer();
+			this->makePlayer("TEMP");
 			break;
 		}
 		else if (selectNum == 2)
@@ -60,6 +61,12 @@ void GameManager::startMenu()
 			break;
 		}
 		else if (selectNum == 3)
+		{
+			this->deletePlayer();
+			this->makePlayer("TEMP");
+			break;
+		}
+		else if (selectNum == 4)
 		{
 			exit(0);
 		}
@@ -141,15 +148,18 @@ void GameManager::visitLounge(Character* _player)
 
 // 25.09.05. 이무표
 // 게임을 진행할 플레이어를 생성한다.
-void GameManager::makePlayer()
+void GameManager::makePlayer(string _name)
 {
-	cout << "Welcome to the Dungeon" << endl;
-	cout << "Please tell me your name" << endl;
-	cout << "Name : ";
-	string playerName = "";
-	cin >> playerName;
+	//cout << "Welcome to the Dungeon" << endl;
+	//cout << "Please tell me your name" << endl;
+	//cout << "Name : ";
+	//string playerName = "";
+	//cin >> playerName;
 
-	player1 = new Character(playerName);
+	// player1 = new Character(playerName);
+
+	/// UI 시스템에 맞춰 위는 전부 주석처리
+	player1 = new Character(_name);
 }
 
 // 입력 단계에서 숫자가 아닌게 들어왔을 때 확인 후 다시 입력하게하기 위해 추가된 함수
@@ -168,16 +178,24 @@ bool GameManager::inputCheck()
 
 // 25.09.05. 이무표
 // 플레이어 로드
-void GameManager::loadPlayer()
+bool GameManager::loadPlayer()
 {
-	player1 = new Character();
-	if (!saveManager->LoadGame(this->player1))
-	{
-		// 로드 실패시 신규 생성으로 진입
-		player1 = nullptr;
-		delete player1;
-		this->makePlayer();
-	}
+	//player1 = new Character();
+	//if (!saveManager->LoadGame(this->player1))
+	//{
+	//	// 로드 실패시 신규 생성으로 진입
+	//	player1 = nullptr;
+	//	delete player1;
+	//	this->makePlayer("TEMP");
+	//}
+
+	/// UI화에 맞춰 UI 클래스에서 로드 실패 후 진행 담당
+	return saveManager->LoadGame(this->player1);
+}
+bool GameManager::deletePlayer()
+{
+	return saveManager->saveDeleter();
+	// std::cout << "Playe the New Character!" << std::endl;
 }
 
 void GameManager::savePlayer()
@@ -188,7 +206,7 @@ void GameManager::savePlayer()
 void GameManager::battle(Character* _player)
 {
 	Battle battle;
-	battle.startBattle(_player);
+	//battle.startBattle(_player);
 
 }
 

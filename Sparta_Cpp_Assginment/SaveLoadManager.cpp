@@ -4,18 +4,19 @@
 #include "Item.h"
 #include "AttackBoost.h"
 #include "HealthPotion.h"
+#include "Logger.h"
 
 bool SaveLoadManager::SaveGame(Character* _player)
 {
 	if (_player == nullptr)
 	{
-		std::cerr << "Error: Player is null, cannot save game." << std::endl;
+		// std::cerr << "Error: Player is null, cannot save game." << std::endl;
 		return false;
 	}
 	std::ofstream saveFile(SAVE_FILENAME);
 	if (!saveFile.is_open())
 	{
-		std::cerr << "Error: Could not open save file." << std::endl;
+		// std::cerr << "Error: Could not open save file." << std::endl;
 		return false;
 	}
 	/// CHARACTER DATA ///
@@ -27,14 +28,19 @@ bool SaveLoadManager::SaveGame(Character* _player)
 	saveFile << _player->getLevel() << endl;
 	saveFile << _player->getExperience() << endl;
 	saveFile << _player->getGold() << endl;
+	
+	/// 장비중인 무기 있을 시 저장
 	/// equimentWeapon Divider///
-	saveFile << WEAPON_DIVIDER << endl;
-	saveFile << _player->getEquippedWeapon()->getName() << endl;
-	saveFile << _player->getEquippedWeapon()->getPrice() << endl;
-	saveFile << _player->getEquippedWeapon()->getDamage() << endl;
-	saveFile << (_player->getEquippedWeapon()->isUsable() ? "1" : "0") << endl;
-	saveFile << (_player->getEquippedWeapon()->isConsumable() ? "1" : "0") << endl;
-	saveFile << _player->getEquippedWeapon()->getDescription() << endl;
+	if (_player->getEquippedWeapon())
+	{
+		saveFile << WEAPON_DIVIDER << endl;
+		saveFile << _player->getEquippedWeapon()->getName() << endl;
+		saveFile << _player->getEquippedWeapon()->getPrice() << endl;
+		saveFile << _player->getEquippedWeapon()->getDamage() << endl;
+		saveFile << (_player->getEquippedWeapon()->isUsable() ? "1" : "0") << endl;
+		saveFile << (_player->getEquippedWeapon()->isConsumable() ? "1" : "0") << endl;
+		saveFile << _player->getEquippedWeapon()->getDescription() << endl;
+	}
 	saveFile << INVENTORY_DIVIDER << endl;
 	/// inventory Divider///
 	for (int i = 0; i < _player->getInventorySize(); i++)
@@ -50,17 +56,18 @@ bool SaveLoadManager::SaveGame(Character* _player)
 
 		/// 신규 아이템 종류 추가시 이곳에 저장될 수 있도록 추가해야 함
 		if (item->getTypeName() == ITEM_HPPOTION) {
-			HealthPotion* potion = static_cast<HealthPotion*>(item);
-			saveFile << potion->getAmount() << std::endl;
+			HealthPotion* HPpotion = static_cast<HealthPotion*>(item);
+			saveFile << HPpotion->getAmount() << std::endl;
 		}
 		else if (item->getTypeName() == ITEM_ATKBOOST) {
-			AttackBoost* potion = static_cast<AttackBoost*>(item);
-			saveFile << potion->getAmount() << std::endl;
+			AttackBoost* ATKpotion = static_cast<AttackBoost*>(item);
+			saveFile << ATKpotion->getAmount() << std::endl;
 		}
 		else if (item->getTypeName() == ITEM_WEAPON) {
-			Weapon* potion = static_cast<Weapon*>(item);
-			saveFile << potion->getDamage() << std::endl;
+			Weapon* weapon = static_cast<Weapon*>(item);
+			saveFile << weapon->getDamage() << std::endl;
 		}
+		saveFile << ITEM_DIVIDER << endl;
 	}
 
 
@@ -76,7 +83,7 @@ bool SaveLoadManager::SaveGame(Character* _player)
 	//}
 
 	saveFile.close();
-	std::cout << "Game saved successfully." << std::endl;
+	// std::cout << "Game saved successfully." << std::endl;
 
 
 	return true;
@@ -87,23 +94,26 @@ bool SaveLoadManager::LoadGame(Character* _player)
 	std::ifstream loadFile(SAVE_FILENAME);
 	if (!loadFile.is_open())
 			{
-		std::cerr << "Error: Could not open load file." << std::endl;
+		LOG("LOAD FAIL Could not open load file.");
 		return false;
 	}
 	else
 	{
+		LOG("Load Start");
 		vector<string> Playerdata;
 		vector<string> PlayerWeapon;
 		vector<string> PlayerInventory;
 		std::string line;
 		bool weaponTrigger = false;
 		bool InventoryTrigger = false;
-		
+		bool equipmentTrigger = false;
+		bool inventoryLoadTrigger = false;
 		while (std::getline(loadFile, line)) { // 파일의 내용을 한 줄씩 읽습니다.
-			cout << line << endl;
+			// std::cout << line << endl; // 디버깅용 한줄한줄 출력
 			if (line == WEAPON_DIVIDER)
 			{
 				weaponTrigger = true;
+				equipmentTrigger = true;
 				continue;
 			}
 
@@ -111,6 +121,7 @@ bool SaveLoadManager::LoadGame(Character* _player)
 			{
 				weaponTrigger = false;
 				InventoryTrigger = true;
+				inventoryLoadTrigger = true;
 				continue;
 			}
 
@@ -121,6 +132,7 @@ bool SaveLoadManager::LoadGame(Character* _player)
 			if(InventoryTrigger)
 				PlayerInventory.push_back(line);
 		}
+
 		loadFile.close();
 		_player->setName(Playerdata[0]);
 		_player->setHealth(stoi(Playerdata[1]));
@@ -130,34 +142,112 @@ bool SaveLoadManager::LoadGame(Character* _player)
 		_player->setLevel(stoi(Playerdata[5]));
 		_player->setExperience(stoi(Playerdata[6]));
 		_player->setGold(stoi(Playerdata[7]));
+
 		// 끼고 있던 무기 장착
-		Weapon *weapon = new Weapon(
-			PlayerWeapon[0],
-			stoi(PlayerWeapon[1]),
-			stoi(PlayerWeapon[2]),
-			(PlayerWeapon[3] == "1"),
-			(PlayerWeapon[4] == "1"),
-			PlayerWeapon[5]
-		);
-		_player->setEquippedWeapon(weapon);
-
-		cout << "========PlayerData========" << endl;
-		for(int i = 0; i < Playerdata.size(); i++)
+		if (equipmentTrigger)
 		{
-			cout << Playerdata[i] << endl;
+			Weapon* weapon = new Weapon(
+				PlayerWeapon[0],
+				stoi(PlayerWeapon[1]),
+				stoi(PlayerWeapon[2]),
+				(PlayerWeapon[3] == "1"),
+				(PlayerWeapon[4] == "1"),
+				PlayerWeapon[5]
+			);
+			_player->setEquippedWeapon(weapon);
 		}
 
-		cout << "========WeaponData========" << endl;
-		for(int i = 0 ; i < PlayerWeapon.size(); i++)
+		if (inventoryLoadTrigger)
 		{
-			cout << PlayerWeapon[i] << endl;
+			/// 아이템 디바이더가 나올때 까지 아이템을 만들기
+			std::vector<std::vector<std::string>> nowLoadedItem;
+			std::vector<std::string> tempVec;
+
+			for (const std::string& item : PlayerInventory) {
+				if (item == ITEM_DIVIDER) {
+					nowLoadedItem.push_back(tempVec);
+					tempVec.clear();
+					continue;
+				}
+				tempVec.push_back(item);
+			}
+
+			if (!tempVec.empty()) {
+				nowLoadedItem.push_back(tempVec);
+			}
+
+			// 아이템 디바이더로 나눠둔 아이템을 실제로 생성해서 add 시키기
+			for(int i = 0; i < nowLoadedItem.size(); i++)
+			{
+				if(nowLoadedItem[i][0] == ITEM_HPPOTION)
+				{
+					HealthPotion* HPpotion = new HealthPotion(
+						nowLoadedItem[i][1],
+						stoi(nowLoadedItem[i][2]),
+						stoi(nowLoadedItem[i][6]),
+						(nowLoadedItem[i][3] == "1"),
+						(nowLoadedItem[i][4] == "1"),
+						nowLoadedItem[i][5]
+					);
+					_player->addItem(HPpotion);
+				}
+				else if(nowLoadedItem[i][0] == ITEM_ATKBOOST)
+				{
+					AttackBoost* ATKpotion = new AttackBoost(
+						nowLoadedItem[i][1],
+						stoi(nowLoadedItem[i][2]),
+						stoi(nowLoadedItem[i][6]),
+						(nowLoadedItem[i][3] == "1"),
+						(nowLoadedItem[i][4] == "1"),
+						nowLoadedItem[i][5]
+					);
+					_player->addItem(ATKpotion);
+				}
+				else if(nowLoadedItem[i][0] == ITEM_WEAPON)
+				{
+					Weapon* weapon = new Weapon(
+						nowLoadedItem[i][1],
+						stoi(nowLoadedItem[i][2]),
+						stoi(nowLoadedItem[i][6]),
+						(nowLoadedItem[i][3] == "1"),
+						(nowLoadedItem[i][4] == "1"),
+						nowLoadedItem[i][5]
+					);
+					_player->addItem(weapon);
+				}
+			}
 		}
-		cout << "========Inventory========" << endl;
-		for(int i = 0; i < PlayerInventory.size(); i++)
-		{
-			cout << PlayerInventory[i] << endl;
-		}
+
+		//cout << "========PlayerData========" << endl;
+		//for(int i = 0; i < Playerdata.size(); i++)
+		//{
+		//	cout << Playerdata[i] << endl;
+		//}
+
+		//cout << "========WeaponData========" << endl;
+		//for(int i = 0 ; i < PlayerWeapon.size(); i++)
+		//{
+		//	cout << PlayerWeapon[i] << endl;
+		//}
+		//cout << "========Inventory========" << endl;
+		//for(int i = 0; i < PlayerInventory.size(); i++)
+		//{
+		//	cout << PlayerInventory[i] << endl;
+		//}
 	}
 	return true;
 }
 
+bool SaveLoadManager::saveDeleter()
+{
+	if (remove(SAVE_FILENAME) != 0)
+	{
+		std::cerr << "Error deleting file." << std::endl;
+		return false;
+	}
+	else
+	{
+		std::cout << "Save File successfully deleted." << std::endl;
+		return true;
+	}
+}

@@ -8,8 +8,6 @@
 
 BattleStage::BattleStage()
 {
-	rewardExp = 0;
-	rewardGold = 0;
 }
 
 Monster* BattleStage::getMonster(int index)
@@ -31,20 +29,6 @@ void BattleStage::removeMonsterList()
 	}
 }
 
- 
-
-int BattleStage::getRewardGold() const
-{
-	return rewardGold;
-}
-
-int BattleStage::getRewardExp() const
-{
-	return rewardExp;
-}
-
-
-
 void BattleStage::randomMonsterAdded(const int& playerLevel)
 {
 	if (playerLevel >= 10)
@@ -63,6 +47,11 @@ void BattleStage::randomMonsterAdded(const int& playerLevel)
 	{
 		monsterList.push_back(randomMonster(playerLevel));
 	}
+}
+
+int BattleStage::getMonsterSize()
+{
+	return monsterList.size();
 }
 
 

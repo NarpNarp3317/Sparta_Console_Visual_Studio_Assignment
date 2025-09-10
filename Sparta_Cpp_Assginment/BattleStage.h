@@ -14,11 +14,7 @@ public:
 	Monster* getMonster(int index);
 	void removeMonsterList();
 	void randomMonsterAdded(const int& playerLevel);
-	int randomItem();
-
-	//getter
-	int getRewardGold() const;
-	int getRewardExp() const;
+	int getMonsterSize();
 
 
 private:
@@ -27,8 +23,5 @@ private:
 
 private:
 	vector<Monster*> monsterList;
-
-	int rewardGold;
-	int rewardExp;
 };
 

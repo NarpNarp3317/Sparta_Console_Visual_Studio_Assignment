@@ -9,6 +9,7 @@ class Layout :public BaseFrame
 {
 public:
     Layout();
+    ~Layout();
 
 private:
     //vector<Scene*> _Scenes;// container for textures
@@ -20,7 +21,7 @@ public:
 
     vector<Button*> GetInteractables();
 
-  /*  void AddScene(Scene* scene);
+    /*  void AddScene(Scene* scene);
 
-    vector<Scene*>GetScenes();*/
+      vector<Scene*>GetScenes();*/
 };

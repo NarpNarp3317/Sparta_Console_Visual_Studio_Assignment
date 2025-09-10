@@ -6,25 +6,31 @@ using namespace std;
 class Character;
 class Monster;
 class BattleStage;
+class BattleStage_Layout;
 
 class Battle
 {
 public:
 	Battle();
-	void printMonsterDie(const string& name);
-	void startBattle(Character* _player);
-	void printSelectList();
-	void playerAttackBehavior(Character* _player);
-	void playerUseItemBehavior(Character* _player);
-	void playerRecallBehavior();
-	void printAttackBehaviorResult(const string& name, const int& damage, const int& curHp);
-	int selecting(const Character& _player);
-	void battleResult(Character* _player, BattleStage& battleStage);
-	void resultPrint();
-	bool inputCheck();
+	void startBattle(Character* _player, BattleStage_Layout* layout);
+	bool battleturnBehavior(int index, int itemIndex = 0);
+
 	~Battle();
+
+private:
+	void playerAttackBehavior();
+	void playerRecallBehavior();
+	void playerUseItemBehavior(int useItemIndex);
+	void battleResult(Character* _player);
+	void monsterturnBehavior();
+	void monsterCreateButton();
+	void ShowReward(const string& item, const string& exp, const string& gold);
 private:
 	bool isWin;
+	int monsterIndex;
 	Monster* _monster;
+	Character* _player;
+	BattleStage* battleStage;
+	BattleStage_Layout* layout;
 };
 
