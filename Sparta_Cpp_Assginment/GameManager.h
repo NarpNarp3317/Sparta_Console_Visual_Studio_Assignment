@@ -39,6 +39,8 @@ public : // 함수
 	bool loadPlayer();
 	bool deletePlayer();
 	void makePlayer(string _name);
+	void loadPlayer();
+	void makePlayer();
 
 	// 입력 처리 오류 확인
 	// 2025.09.08 현정석 추가

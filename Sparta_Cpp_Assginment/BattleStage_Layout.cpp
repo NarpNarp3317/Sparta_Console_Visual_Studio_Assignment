@@ -89,4 +89,4 @@ BattleStage_Layout::BattleStage_Layout()
 
 
 
-};
+}

@@ -184,6 +184,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameManager_Layout.cpp">
+    <ClCompile Include="ExitButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -321,11 +322,22 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameManager_Layout.h">
+    <ClInclude Include="Enum_PopoutType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ExitButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Str_PopoutLayers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="AttackBoost.cpp.rej" />
     <None Include="savedata.save" />
+    <None Include="savedata - 복사본.save" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="log.txt" />
   </ItemGroup>
 </Project>

@@ -6,7 +6,6 @@
 #define SAVE_FILENAME "savedata.save"
 #define WEAPON_DIVIDER "@@@"
 #define INVENTORY_DIVIDER "###"
-#define ITEM_DIVIDER "$$$"
 
 // 전방 선언
 class Weapon;
@@ -22,7 +21,6 @@ class SaveLoadManager
 public:
     bool SaveGame(Character* _player);
     bool LoadGame(Character* _player);
-    bool saveDeleter();
 
     void saveToNote(const std::string& filename, const std::string& content) {
         // ofstream은 파일에 쓰기를 위한 클래스
@@ -58,8 +56,11 @@ public:
     }
 
 private:
-    // const string WEAPON_DIVIDER = "@@@";
-    // const string INVENTORY_DIVIDER = "###";
-	// const string SAVE_FILE = "savefile.txt";
+    //const string WEAPON_DIVIDER = "@@@";
+    //const string INVENTORY_DIVIDER = "###";
+	const string SAVE_FILE = "savefile.txt";
+
+	void loadAttackBoost();
+	void loadHealthPotion();
 };
 

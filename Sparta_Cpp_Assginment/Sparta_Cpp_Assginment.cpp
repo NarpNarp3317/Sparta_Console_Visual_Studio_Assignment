@@ -27,17 +27,89 @@ int main()
     // ConsoleManager C_manager;// for the getting max sceen size first so that base frames can know the screen limit
     ConsoleManager* C_manager = new ConsoleManager();
 
-    /**/
- 
-    //----------------------------------------------------
 
     /**/
+    /*
+    
+    // generate required displays in here, first and then start the console manager
+
+    Layout GameMenu;// start
+    Layout LoadGame;// loading new games
+    Layout Character_Selection;
+    Layout Lounge_Stage;
+    Layout Store;
+    Layout Battle_Stage;
+
+    map<string, Layout*> layout_List;
+    Layout* _precious_Layout;
+
+    //======== Required Scenes =======// original scene here, delt with pointer
+
+    //=== Layout type ===//
+    Scene intermission;// during layout change
+    Scene loading;
+    Scene victory;
+    Scene lost;
+
+    //=== Props ===//
+    Scene potion_bottle;
+    Scene weapon;// there could be a type but for now, just one
+
+    //=== extra ====//
+    Scene x_button;
+    Scene skip_button;
+
+
+
+    // generate required buttons for game menu
+    Button new_game(0, 2, "<<NEW_GAME>>", center_center, {20,5}, {0,4}, single_line, White, Gray);
+    new_game.SetOnLeftPressed([&C_manager, &Character_Selection]() { C_manager.SetCurrentDisplay(&Character_Selection); });
+    new_game.SetOnRightPressed([&string_updater]() {string_updater.StringUpdate("kajhsdkjashdkjasdhk"); });// for release trigger
+
+   // gamestart.SetOnHovering_ended([&string_updater]() {string_updater.StringUpdate("not hovering"); });
+
+    Button load_game(0, 2, "<<LOAD_GAME>>", center_center, { 20,5 }, { 0,9 }, double_line,  White, Gray);
+   // load.SetOnLeftClick([]() {printf("Load Clicked"); });// add funtio
+
+    Button next(0, 2, "<<CREDITS>>", center_center, { 20,5 }, { 0,14 }, double_line, White, Gray);
+    next.SetOnLeftPressed([&string_updater]() {});
+
+	Button gameExit(0, 2, "<<EXIT_GAME>>", center_center, { 20,5 }, { 0,19 }, double_line, White, Gray);
+    gameExit.SetOnLeftPressed([&C_manager]() {C_manager.gameExit(); });
+
+    GameMenu.AddButton(&new_game);
+    GameMenu.AddButton(&load_game);
+    GameMenu.AddButton(&next);
+    GameMenu.AddButton(&gameExit);
+
+    //--------------------------------------------------------
+ 
+    Button character(0, 2,"New_Player", center_center, {35,40}, {5,0}, double_line, White, Gray);
+    character.SetOnLeftPressed([]() {});
+
+    Button list1 (0, 2, "New_Player", left_center, { 20,5 }, { 40,-10 }, double_line, White, Gray);
+    list1.SetOnHovering_started([]() {});
+    list1.SetOnHovering_ended([]() {});
+
+    Button list2 (0, 2, "New_Player", left_center, { 20,5 }, {40,0 }, double_line, White, Gray);
+
+    Button list3(0, 2, "New_Player", left_center, { 20,5 }, { 40, 10 }, double_line, White, Gray);
+
+    Character_Selection.AddButton(&character);
+    Character_Selection.AddButton(&list1);
+    Character_Selection.AddButton(&list2);
+    Character_Selection.AddButton(&list3);
+
+>>>>>>> Semin_branch
+    //----------------------------------------------------
+
+    */
 
 
     //==========<< Game Start ==========//
 
 
-    //BattleStage_Layout B_layout;
+    BattleStage_Layout B_layout;
 
     GameManager_Layout* layout_GM = new GameManager_Layout(C_manager);
 

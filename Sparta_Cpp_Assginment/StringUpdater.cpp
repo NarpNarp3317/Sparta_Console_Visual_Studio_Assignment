@@ -40,6 +40,8 @@ void StringUpdater::SetTextColor(short int new_color)
 
 void StringUpdater::CleanStrings()
 {
+	SetConsoleCursorPosition(_output_H, _cursorPosition);//place the cursor on its location first
+
 	for (int length : _str_lengths)//이전 입력된 string의 열만큼 반복
 	{
 		for (int i = 0; i <= length; i++)
@@ -78,7 +80,7 @@ void StringUpdater::StringUpdate(const string& _typed_string)
 		*///--> cannot type or put 
 
 		printf("%c", _typed_string[i]);
-		_str_lengths.push_back(i);// store the length of actual string	
+		_str_lengths.push_back(_typed_string.length());// store the length of actual string	
 	}
 
 	SetConsoleTextAttribute(_output_H, 7);//default로 되돌리기

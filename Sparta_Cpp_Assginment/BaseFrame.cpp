@@ -21,6 +21,22 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	SceneMaker::PrepareCanvas(&_texture, _width_XY);
 	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
 }
+BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, COORD offset, FrameStyle frame_Style, Text_Color text_color, Text_Color bg_color, COORD custom_area)
+	:
+	_layerPriority{ priority },
+	_width_XY{ width },
+	_anchor_type{ anchor_type },
+	_offset{ offset },
+	_text_color{ SceneMaker::FindColorCode(text_color,bg_color) },
+	print_start_coord{ 0,0 },
+	_frame_style{ frame_Style },
+	_texture{},// put the assigned texture at the begining
+	_texturePtr{ &_texture }
+{
+	SceneMaker::PrepareCanvas(&_texture, _width_XY);
+	CalculatePrintStartCoord_In_Range(_anchor_type, custom_area);// calculate the print start first
+}
+/*
 BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width, FrameStyle frame_Style, Text_Color text_color, Text_Color bg_color)
 	:
 	_layerPriority{ priority },
@@ -69,6 +85,7 @@ BaseFrame::BaseFrame(int priority, PivotPoiontLocation anchor_type, COORD width,
 	SceneMaker::PrepareCanvas(&_texture, _width_XY);
 	CalculatePrintStartCoord(_anchor_type);// calculate the print start first
 }
+*/
 
 void BaseFrame::CalculatePrintStartCoord(PivotPoiontLocation anchor_type)
 {
@@ -208,11 +225,11 @@ void BaseFrame::CalculatePrintStartCoord_In_Range(PivotPoiontLocation anchor_typ
 	if (print_start_coord.Y < 0) print_start_coord.Y = 0;
 
 	// Clamp max (so frame fits on screen)
-	if (print_start_coord.X + _width_XY.X > _screen_Limit.X)
-		print_start_coord.X = _screen_Limit.X - _width_XY.X;
+	if (print_start_coord.X + _width_XY.X > area.X)// edited from screen limit to area
+		print_start_coord.X = area.X - _width_XY.X;
 
-	if (print_start_coord.Y + _width_XY.Y > _screen_Limit.Y)
-		print_start_coord.Y = _screen_Limit.Y - _width_XY.Y;
+	if (print_start_coord.Y + _width_XY.Y > area.Y)
+		print_start_coord.Y = area.Y - _width_XY.Y;
 }
 
 COORD BaseFrame::GetPrintStartCoord()
