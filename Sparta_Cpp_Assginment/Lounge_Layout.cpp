@@ -123,7 +123,7 @@ void Lounge_Layout::onBtnInventory()
     // 예시
     // this->_C_manager->SetCurrentDisplay(여기에 레이아웃 포인터);
    this->_C_manager->SetCurrentDisplay(inventory_Layout);
-
+   inventory_Layout->ButtonRefresh();
 }
 
 void Lounge_Layout::onBtnSave()

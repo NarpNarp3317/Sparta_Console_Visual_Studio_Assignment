@@ -93,7 +93,10 @@ void Character::useItem(int key_num)		// 인벤토리맵 스타일에서 아이템을 사용하는
 
 void Character::addItem(Item* item)	// 아이템을 인벤토리에 추가하는 함수
 {
-	
+	if (itemCountMap[item->getName()] > 8) {
+		std::cout << "You have exceeded the maximum number of items.\n";
+		return;
+	}
 	// 새로운 아이템 등록
 	if (itemCountMap.find(item->getName()) != itemCountMap.end())
 	{

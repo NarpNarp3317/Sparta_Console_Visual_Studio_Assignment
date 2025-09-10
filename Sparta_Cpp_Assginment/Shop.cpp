@@ -77,19 +77,35 @@ void Shop::SellItem(Character& player) {
 
 void Shop::BuyItemByIndex(Character& player, int index) {
     if (index < 0 || index >= (int)items.size()) return;
+    map<string, int> player_invmap = player.getItemCountMap();
 
     Item* selected = items[index];
-    if (player.SpendGold(selected->getPrice())) {
+   
+    if (player.getGold() > selected->getPrice()) {
         if (selected->getName().find("Health") != std::string::npos) {
+           if (player_invmap[ITEM_HPPOTION] > 8) {
+              std::cout << "You have exceeded the maximum number of items.\n";
+              return;
+           }
             player.addItem(new HealthPotion(ITEM_HPPOTION, 10, 50));
+            player.SpendGold(selected->getPrice());
         }
         else if (selected->getName().find("Attack") != std::string::npos) {
+           if (player_invmap[ITEM_ATKBOOST] > 8) {
+              std::cout << "You have exceeded the maximum number of items.\n";
+              return;
+           }
             player.addItem(new AttackBoost(ITEM_ATKBOOST, 15, 10));
+            player.SpendGold(selected->getPrice());
         }
         else if (selected->getName().find("Sword") != std::string::npos) {
+           if (player_invmap["Iron Sword"] > 8) {
+              std::cout << "You have exceeded the maximum number of items.\n";
+              return;
+           }
             player.addItem(new Weapon("Iron Sword", 30, 15, true, true, "A balanced weapon."));
+            player.SpendGold(selected->getPrice());
         }
-
         std::cout << selected->getName() << " has been purchased!\n";
         std::cout << "Current Gold: " << player.getGold() << "\n";
     }

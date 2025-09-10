@@ -34,6 +34,26 @@ void Inventory_Layout::printLog(map<string, int> Inventorymap, Character* chara)
 	Logger::getInstance().myLog(logstr);
 }
 
+void Inventory_Layout::ButtonRefresh() {
+	map<string, int> current_Inventorymap = this->mainPlayer->getItemCountMap();
+	for (int k = 0; k < this->itemButtons.size(); k++)
+	{
+		string newLableName = "";
+		string currentItemName = this->itemNames[k]; // Get the correct item name for this button
+		int pos = currentItemName.find(" ");
+		int currentCount = current_Inventorymap[currentItemName];
+
+		newLableName = currentItemName;
+		if (pos != string::npos) {
+			newLableName.replace(pos, 1, "_");
+		}
+		newLableName += "(" + to_string(currentCount) + ")";
+
+		this->itemButtons[k]->SetLable(newLableName);
+		this->itemButtons[k]->UpdateButton();
+	}
+}
+
 void Inventory_Layout::InventoryDisplay() {
 	//===== Example ======//
 	//mainPlayer->addItem(new Weapon("Iron sword", 50, 20, true, true, "strong weapon"));
@@ -123,11 +143,10 @@ void Inventory_Layout::InventoryDisplay() {
 			}
 		});
 
-
-
 		AddButton(itemButtons[i]);
 		i += 1;
 		garo++;
+
 	}
 
 	// 되돌아가는 버튼

@@ -9,6 +9,7 @@ class Inventory_Layout:public Layout
 { 
 public:
 	Inventory_Layout(Character* _chara, Layout* _LoungeLayout, ConsoleManager* _mainCM, StringUpdater* _su);
+	void ButtonRefresh();
 	void InventoryDisplay();
 	void printLog(map<string, int> Inventorymap, Character* chara);
 
