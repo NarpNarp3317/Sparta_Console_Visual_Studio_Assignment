@@ -33,7 +33,7 @@ int main()
     StringUpdater string_updater({10,2});
     ConsoleManager C_manager;// for the getting max sceen size first so that base frames can know the screen limit
 
-    /*
+    /**/
     
     // generate required displays in here, first and then start the console manager
 
@@ -106,15 +106,15 @@ int main()
 
     //----------------------------------------------------
 
-    */
+    /**/
 
 
     //==========<< Game Start ==========//
 
 
-    BattleStage_Layout B_layout;
+    //BattleStage_Layout B_layout;
 
-    C_manager.SetCurrentDisplay(& B_layout);// start up display here
+    C_manager.SetCurrentDisplay(&GameMenu);// start up display here
 
     C_manager.Run_Update();// run the console manager
 

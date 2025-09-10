@@ -146,6 +146,8 @@ void Printer::PrintPartialUpdates(Layout* layout)// compare the difference and p
 
 	Scene merged = MergeLayout(layout);
 
+
+	//====== Partioal Print ======//
     COORD print_start{0,0};
 
     for (int y = 0; y < merged._T_Pixel_frame.size(); ++y)
@@ -155,7 +157,7 @@ void Printer::PrintPartialUpdates(Layout* layout)// compare the difference and p
             const T_Pixel& current_T_Pixel = merged._T_Pixel_frame[y][x];
             const T_Pixel& previous_T_Pixel  = _previous_Scene._T_Pixel_frame[y][x];
 
-            if (current_T_Pixel.Pixel != previous_T_Pixel.Pixel || current_T_Pixel.color != previous_T_Pixel.color)
+            if (current_T_Pixel.Pixel != previous_T_Pixel.Pixel || current_T_Pixel.color != previous_T_Pixel.color)// check if both are different
             {
                 print_start.X = static_cast<short>(x);
                 print_start.Y = static_cast<short>(y);
