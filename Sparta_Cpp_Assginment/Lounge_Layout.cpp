@@ -12,7 +12,9 @@ Lounge_Layout::Lounge_Layout(ConsoleManager* _C_manager, StringUpdater* su, Game
     GM_Logic(_GM),
     _su(su),
     mainLounge_Layout(new Layout()),
-    myShopLayout(new Shop_Layout(_C_manager, mainLounge_Layout, _GM->getPlayer()))
+    myShopLayout(new Shop_Layout(_C_manager, mainLounge_Layout, _GM->getPlayer())),
+    inventory_Layout(new Inventory_Layout(_GM->getPlayer(), mainLounge_Layout, _C_manager, su))
+
 {
     this->makeLayout();
     Logger::getInstance().myLog("PLAYER NAME : " + GM_Logic->getPlayer()->getName());
@@ -118,9 +120,8 @@ void Lounge_Layout::onBtnInventory()
     //// 이곳에서 인벤토리 레이아웃을 불러오면 됩니다
     // 예시
     // this->_C_manager->SetCurrentDisplay(여기에 레이아웃 포인터);
-   Inventory_Layout* inventory_Layout = new Inventory_Layout();
    this->_C_manager->SetCurrentDisplay(inventory_Layout);
-   inventory_Layout->InventoryDisplay(GM_Logic->getPlayer());
+   inventory_Layout->InventoryDisplay();
 }
 
 void Lounge_Layout::onBtnSave()

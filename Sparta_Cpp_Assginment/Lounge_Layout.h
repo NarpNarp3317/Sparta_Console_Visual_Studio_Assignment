@@ -4,6 +4,7 @@
 #include "GameManager.h"
 #include "StringUpdater.h"
 #include "Shop_Layout.h"
+#include "Inventory_Layout.h"
 
 class Lounge_Layout
 {
@@ -22,6 +23,7 @@ private:
 	GameManager* GM_Logic;
 
 	Shop_Layout* myShopLayout;
+	Inventory_Layout* inventory_Layout;
 
 	void onBtnBattle();
 	void onBtnShop();
