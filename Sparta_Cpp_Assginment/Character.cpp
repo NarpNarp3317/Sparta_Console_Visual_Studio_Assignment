@@ -19,7 +19,7 @@ Character::Character()
 	gold = 0;
 	health = maxHealth;
 	equippedWeapon = nullptr;
-	inventory.push_back(new Item("Junk", 0, true, false, "is Junk"));	// 실험적으로 기본 아이템을 추가했습니다 [조기혁]
+	//inventory.push_back(new Item("Junk", 0, true, false, "is Junk"));	// 실험적으로 기본 아이템을 추가했습니다 [조기혁]
 }
 
 Character::Character(string name)
@@ -74,9 +74,10 @@ void Character::useItem(int key_num)		// 인벤토리맵 스타일에서 아이템을 사용하는
 		for (int index = 0; index < inventory.size(); index++)
 			if (inventory[index]->getName() == itemname) {
 				inventory[index]->use(this);
-				if (inventory[index]->isConsumable()) {
+				if (inventory[index]->isConsumable()) 
+				{
 					itemCountMap[itemname] -= 1;
-					removeItemIdx(index);
+					//removeItemIdx(index);
 				}
 				return;
 			}
@@ -252,7 +253,7 @@ bool Character::checkingInventorymap(int key_num)		// 09.09 새로 추가됨
 	{
 		if (item.first == itemname)
 		{
-			return item.second < 0 ? true : false;
+			return item.second > 0 ? true : false;
 		}
 	}
 	return false;
@@ -333,6 +334,12 @@ int Character::getLevel() const
 int Character::getMaxHealth() const
 {
 	return maxHealth;
+}
+
+int Character::getItemCount(int index)
+{
+	Logger::getInstance().myLog(to_string(itemCountMap[inventory[index]->getName()]));
+	return itemCountMap[inventory[index]->getName()];
 }
 
 void Character::setName(string _name)
@@ -438,9 +445,9 @@ void Character::setInventory()
 	inventory.push_back(new HealthPotion(ITEM_HPPOTION, 15, 15, true, true));
 	inventory.push_back(new AttackBoost(ITEM_ATKBOOST, 15, 15, true, true));
 
-	//itemCountMap.insert(make_pair(inventory[0]->getName(), 0));
-	//itemCountMap.insert(make_pair(inventory[1]->getName(), 0));
-	refreshInventory();
+	itemCountMap.insert(make_pair(inventory[0]->getName(), 1));
+	itemCountMap.insert(make_pair(inventory[1]->getName(), 1));
+	//refreshInventory();
 }
 
 Character::~Character()

@@ -33,21 +33,37 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 	battle = new Battle();
 	battle->startBattle(player, this);
 
-	Button* UseItemButton1 = new Button(0, 1, "HealItem", center_center, { 17, 5 }, { -17, 15 }, double_line, White, Black);
-	UseItemButton1->SetOnLeftPressed([this, UseItemButton1]
+	string itemcount0 = "HealItem(" + to_string(player->getItemCount(0)) + ")";
+	string itemcount1 = "AttackBoost(" + to_string(player->getItemCount(1)) + ")";
+
+	Button* UseItemButton1 = new Button(0, 1, itemcount0, center_center, { 17, 5 }, { -17, 15 }, double_line, White, Black);
+	UseItemButton1->SetOnLeftPressed([this, UseItemButton1, player]
 		{
 			if (battle->battleturnBehavior(1, 0) == false)
 			{
 				UseItemButton1->OnInvalidInput();
 			}
+			else
+			{
+				string newitemcount0 = "HealItem(" + to_string(player->getItemCount(0)) + ")";
+				UseItemButton1->SetLable(newitemcount0);
+				UseItemButton1->UpdateButton();
+			}
+
 		});// function 추가
 
-		Button* UseItemButton2 = new Button(0, 1, "AttackBoost", center_center, { 17, 5 }, { 0, 15 }, double_line, White, Black);
-		UseItemButton2->SetOnLeftPressed([this, UseItemButton2]
+		Button* UseItemButton2 = new Button(0, 1, itemcount1, center_center, { 17, 5 }, { 0, 15 }, double_line, White, Black);
+		UseItemButton2->SetOnLeftPressed([this, UseItemButton2, player]
 		{
 			if (battle->battleturnBehavior(1, 0) == false)
 			{
 				UseItemButton2->OnInvalidInput();
+			}
+			else
+			{
+				string newitemcount1 = "AttackBoost(" + to_string(player->getItemCount(1)) + ")";
+				UseItemButton2->SetLable(newitemcount1);
+				UseItemButton2->UpdateButton();
 			}
 		});// function 추가
 
