@@ -7,7 +7,5 @@ public:
 	Goblin();
 	Goblin(int maxHealth, int attack);
 	~Goblin();
-
-	void displayStatus() override;
 };
 

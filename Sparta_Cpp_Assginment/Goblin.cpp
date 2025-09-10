@@ -27,11 +27,3 @@ Goblin::~Goblin()
 {
 
 }
-
-void Goblin::displayStatus()
-{
-	stringUpdater->CleanStrings();
-	string status = "Name : " + name + " ";
-	status += "ATK : " + to_string(attack);
-	stringUpdater->StringUpdate(status);
-}

@@ -7,6 +7,7 @@
 #include "Logger.h"
 #include "StringUpdater.h"
 #include "BattleStage_Layout.h"
+#include "Button.h"
 #include <limits> 
 
 Button* ExampleButton;
@@ -44,9 +45,7 @@ void Battle::playerAttackBehavior()
 	if (_player != nullptr && _monster != nullptr)
 	{
 		_monster->takeDamage(_player->getAttack());
-		//
-		string_updater->CleanStrings();
-		string_updater->StringUpdate("Player Attack >> Monster");
+		monsterStatRefresh();
 	}
 }
 
@@ -110,7 +109,6 @@ bool Battle::battleturnBehavior(int index, int itemIndex)
 		break;
 	}
 
-	_monster->displayStatus();
 	monsterturnBehavior();
 
 	return true;
@@ -135,8 +133,8 @@ void Battle::monsterturnBehavior()
 			}
 			else
 			{
-				_monster->displayStatus();
 				monsterCreateButton();
+				monsterStatRefresh();
 			}
 		}
 		else
@@ -160,9 +158,19 @@ void Battle::monsterturnBehavior()
 void Battle::monsterCreateButton()
 {
 	layout->CreateButton(_monster->getName());
+
+	string stats = "HP=" + to_string(_monster->getHealth()) + "ATK=" + to_string(_monster->getAttack());
+	monsterStatBtn = new Button(10, 1, stats, center_center, { 17, 5 }, { 0, -10 }, double_line, White, Black);
+
+	layout->AddButton(monsterStatBtn);
 }
 
-
+void Battle::monsterStatRefresh()
+{
+	string stats = "HP=" + to_string(_monster->getHealth()) + "ATK=" + to_string(_monster->getAttack());
+	monsterStatBtn->SetLable(stats);
+	monsterStatBtn->UpdateButton();
+}
 
 void Battle::ShowReward(const string& item, const string& exp, const string& gold)
 {

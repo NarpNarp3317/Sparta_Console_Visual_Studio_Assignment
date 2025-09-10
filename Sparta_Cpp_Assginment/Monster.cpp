@@ -1,5 +1,5 @@
 #include "Monster.h"
-#include "StringUpdater.h"
+#include "Button.h"
 #include <random>
 
 //이 생성자 임시로 사용
@@ -8,7 +8,6 @@ Monster::Monster()
     this->maxHealth = 100;
     this->attack = 10;
     health = maxHealth;
-    StringUpdater* stringUpdater = new StringUpdater({ 20, 10 });
 }
 
 Monster::Monster(int maxHealth, int attack)
@@ -76,13 +75,8 @@ int Monster::randomValue(const int& minValue, const int& maxValue)
     return dis(gen);
 }
 
-void Monster::displayStatus()
-{
-  
-}
 
 Monster::~Monster()
 {
-    delete stringUpdater;
-    stringUpdater = nullptr;
+
 }
