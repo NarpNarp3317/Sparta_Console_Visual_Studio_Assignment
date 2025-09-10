@@ -102,6 +102,8 @@ bool Battle::battleturnBehavior(int index, int itemIndex)
 	case 0:
 		playerAttackBehavior();
 		monsterturnBehavior();
+		return true;
+
 	case 1:
 		if (_player->checkingInventorymap(itemIndex) == false) // 디버깅시 지켜볼 것
 		{
