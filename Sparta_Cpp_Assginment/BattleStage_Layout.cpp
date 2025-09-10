@@ -5,8 +5,13 @@
 #include "Character.h"
 #include "Logger.h"
 #include "ConsoleManager.h"
+#include "StringUpdater.h"
 
-BattleStage_Layout::BattleStage_Layout()
+BattleStage_Layout::BattleStage_Layout(Character* _chara, Layout* _LoungeLayout, ConsoleManager* _mainCM, StringUpdater* _su):
+	mainCM(_mainCM),
+	mainLoungeLayout(_LoungeLayout),
+	mainPlayer(_chara),
+	SU(_su)
 {
 	monsterButton = nullptr;
 	battle = nullptr;
@@ -33,7 +38,7 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 	battle = new Battle();
 	battle->startBattle(player, this);
 
-	Button* UseItemButton1 = new Button(0, 1, "HealItem", center_center, { 17, 5 }, { -17, 15 }, double_line, White, Black);
+	Button* UseItemButton1 = new Button(0, 1, "Heal_Item", center_center, { 17, 5 }, { -17, 15 }, double_line, White, Black);
 	UseItemButton1->SetOnLeftPressed([this, UseItemButton1]
 		{
 			if (battle->battleturnBehavior(1, 0) == false)
@@ -42,10 +47,10 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 			}
 		});// function 추가
 
-		Button* UseItemButton2 = new Button(0, 1, "AttackBoost", center_center, { 17, 5 }, { 0, 15 }, double_line, White, Black);
+		Button* UseItemButton2 = new Button(0, 1, "Attack_Boost", center_center, { 17, 5 }, { 0, 15 }, double_line, White, Black);
 		UseItemButton2->SetOnLeftPressed([this, UseItemButton2]
 		{
-			if (battle->battleturnBehavior(1, 0) == false)
+			if (battle->battleturnBehavior(1, 1) == false)
 			{
 				UseItemButton2->OnInvalidInput();
 			}
@@ -54,10 +59,16 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 		Button* RecallButton = new Button(0, 1, "Recall", center_center, { 17, 5 }, { 17, 15 }, double_line, White, Black);
 		RecallButton->SetOnLeftPressed([this, RecallButton]
 		{
-			if (battle->battleturnBehavior(2) == false)
-			{
-				RecallButton->OnInvalidInput();
-			}
+			//if (battle->battleturnBehavior(2) == false)
+			//{
+			//	// RecallButton->OnInvalidInput();
+			
+
+			//}
+			/// 25.09.10. mpyi _ 라운지로 복귀
+			LOG("GO LOUNGE");
+			this->mainCM->SetCurrentDisplay(mainLoungeLayout);
+			// this->~BattleStage_Layout();
 		});
 
 		player->getStatus();
