@@ -59,6 +59,7 @@ void StringUpdater::StringUpdate(const string& _typed_string)
 
 	if(!_isLineChanged)CleanStrings();// 이전 string지우고 출력
 
+	SetConsoleCursorPosition(_output_H, _cursorPosition);
 	SetConsoleTextAttribute(_output_H, _text_color);//출력 색상 설정
 	//int=line_length;
 	for (int i = 0; i < _typed_string.length();i++)//string에서 '\n' 발견 시에 줄 바꾸기// edited--> no string  has endl and continue writing

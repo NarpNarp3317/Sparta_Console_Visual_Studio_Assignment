@@ -13,7 +13,10 @@ using namespace std;
 class Popup :public BaseFrame
 {
 public:
-	Popup(PopupType type, PivotPoiontLocation anchor_type, COORD offset, Text_Color texts_color, Text_Color text, Text_Color bg);
+	Popup(PopupType type, PivotPoiontLocation anchor_type, COORD offset, Text_Color texts_color, Text_Color text, Text_Color bg);// basic
+
+	Popup(PopupType type, vector<string> infoText, PivotPoiontLocation anchor_type, COORD offset, Text_Color texts_color, Text_Color text, Text_Color bg);// popup with string update
+
 
 private:
 	/*
@@ -30,6 +33,10 @@ private:
 	function<void()> _onEnter;// layer update
 	function<void()> _onExit;// leaving the popout
 	*/
+
+	// string on a popout
+	vector<string> _infoTexts;
+
 
 	//=== Popout Window ===//
 	PopupType _pop_type;
@@ -75,6 +82,13 @@ public:
 
 	void UpdateLayer();//update current popout
 	void LeavePopout();//close
+
+	// Default
+
+	void GenerateDefaultScene();
+
+	void GenerateInfoScene();
+	void GenerateWarningScene();
 
 	void SetDefaultButtons();
 	void AttachDefaultButtons();

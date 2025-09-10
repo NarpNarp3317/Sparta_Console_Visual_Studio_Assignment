@@ -7,7 +7,8 @@
 #include "StringUpdater.h"
 #include <map>
 #include <vector>
-#include "SceneSaveAndLoader.h";
+
+#include "SceneSaveAndLoader.h";// Scene save/loader
 
 //------<<<< 여기에 자신의 layer헤더 넣기
 #include "BattleStage_Layout.h"
@@ -30,14 +31,14 @@ int main()
     ConsoleManager* C_manager = new ConsoleManager();
     GameManager_Layout* layout_GM = new GameManager_Layout(C_manager);
     
-    // SCENE_TEST(); <<<<<<<<<<< 임시 테스트 라인입니다.
-    //{
-    //    SceneSaveAndLoader ssal;
-    //    ssal.saveScene(layout_GM->GetTexturePtr());
+     //SCENE_TEST(); <<<<<<<<<<< 임시 테스트 라인입니다.
+    {
+        SceneSaveAndLoader ssal;// scene save and loader
+       // ssal.saveScene(layout_GM->GetTexturePtr(),"temp_saver");
 
-    //    Scene tempScene = ssal.loadScene(SCENE_SAVE_FILENAME);
-    //    ssal.saveScene(&tempScene, "scenesave.save_1");
-    //}
+        Scene tempScene = ssal.loadScene("temp_saver");
+        ssal.saveScene(&tempScene, "scenesave.save_1");
+    }
 
     C_manager->Run_Update();// run the console manager
 

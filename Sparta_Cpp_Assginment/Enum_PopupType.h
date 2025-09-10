@@ -7,4 +7,4 @@ enum PopupType// for making popout layer
 	Confirmation,// yes or no
 	ValueChange,// adjust the target value
 	Custom
-};
+}; 

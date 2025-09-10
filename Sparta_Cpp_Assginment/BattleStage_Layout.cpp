@@ -20,6 +20,8 @@ void BattleStage_Layout::CreateButton(const string& name, Battle* battle)
 
 void BattleStage_Layout::DeleteButton()
 {
+	RemoveButton(monsterButton);// remove from the list of interactables first
+
 	delete monsterButton;
 	monsterButton = nullptr;
 }

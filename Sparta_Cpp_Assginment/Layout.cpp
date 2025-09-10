@@ -22,6 +22,16 @@ void Layout::AddButton(Button* new_button)
 	_buttons.push_back(new_button);
 }
 
+void Layout::RemoveButton(Button* new_button)
+{
+	vector<Button*>::iterator it = find(_buttons.begin(), _buttons.end(), new_button);
+
+	if (it != _buttons.end())
+	{
+		_buttons.erase(it);
+	}
+}
+
 vector<Button*> Layout::GetInteractables()
 {
 	return _buttons;

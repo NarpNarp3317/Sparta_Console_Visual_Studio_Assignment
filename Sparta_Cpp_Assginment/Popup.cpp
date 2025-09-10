@@ -1,8 +1,10 @@
 #include "Popup.h"
 #include "SceneMaker.h"
 
-Popup::Popup(PopupType type, PivotPoiontLocation anchor_type, COORD offset, Text_Color texts_color, Text_Color text, Text_Color bg)
+Popup::Popup(PopupType type, PivotPoiontLocation anchor_type, COORD offset, Text_Color texts_color, Text_Color text, Text_Color bg)// this is for the custom
     : BaseFrame(1, center_center, AdjustPopoutWidth(), offset, double_line, text, bg),
+
+    _infoTexts{""},
     _pop_type{ type },
     _target_value{ nullptr },
     _value_storage{ -1 },
@@ -12,6 +14,25 @@ Popup::Popup(PopupType type, PivotPoiontLocation anchor_type, COORD offset, Text
     AddPopoutLayer(type, _texture);
     UpdateLayer();
 }
+
+
+// with text input in here
+Popup::Popup(PopupType type, vector<string> infoText, PivotPoiontLocation anchor_type, COORD offset, Text_Color texts_color, Text_Color text, Text_Color bg)
+    : BaseFrame(1, center_center, AdjustPopoutWidth(), offset, double_line, text, bg),
+
+    _infoTexts{ "" },
+    _pop_type{ type },
+    _target_value{ nullptr },
+    _value_storage{ -1 },
+    _current_PopupLayer_index{ 0 }
+{
+    // Set up the first/default layer
+    GenerateDefaultScene();
+    AddPopoutLayer(type, _texture);
+    UpdateLayer();
+}
+
+
 
 void Popup::AddPopoutLayer(PopupType type, Scene layer_texture)
 {
@@ -76,6 +97,58 @@ void Popup::LeavePopout()
     _PopupLayers.clear();
     _active_buttons.clear();
     _current_PopupLayer_index = 0;
+}
+
+void Popup::GenerateDefaultScene()
+{
+    switch (_pop_type)
+    {
+    case Information:
+        GenerateInfoScene();
+        break;
+    case Error:
+        GenerateWarningScene();
+        break;
+    case Confirmation:
+        break;
+    case ValueChange:
+        break;
+    case Custom:
+        break;
+    default:
+        break;
+    }
+}
+
+void Popup::GenerateInfoScene()
+{
+    COORD popupSize = { 40, 8 }; // Example size
+    Scene infoScene;
+
+    // Scene 
+    SceneMaker::PrepareCanvas(&infoScene, popupSize);
+    SceneMaker::AddFrame(&infoScene, popupSize, double_line, White, Black);
+    SceneMaker::AddTexts(&infoScene, popupSize, { 0,0 }, _infoTexts, center_center, White, Black);
+
+    // Attach the scene to current popup layer
+    AddPopoutLayer(Information, infoScene);
+}
+
+void Popup::GenerateWarningScene()
+{
+    COORD popupSize = { 40, 8 }; // Example size
+    Scene warningScene;
+
+    SceneMaker::PrepareCanvas(&warningScene, popupSize);
+    SceneMaker::AddFrame(&warningScene, popupSize, double_line, Red, Black); // Red frame for warning
+
+    // Warning text
+    vector<string> warningText = { "Warning!"};
+
+    SceneMaker::AddTexts(&warningScene, popupSize, { 0,0 }, warningText, center_center, White, Red);
+
+    // Attach the scene to current popup layer
+    AddPopoutLayer(Error, warningScene);
 }
 
 void Popup::SetDefaultButtons()
