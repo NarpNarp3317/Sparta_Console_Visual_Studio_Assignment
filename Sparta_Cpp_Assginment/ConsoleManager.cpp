@@ -85,6 +85,9 @@ void ConsoleManager::SetupMouseInput()
 
 			for (Button* button : _currentDisplay->GetInteractables())// check every interactables in current display(for now, its a buttons)
 			{
+				if (button == nullptr) continue;
+				if (button->GetButtonID() < 0) continue;//  temp psudo  solution
+
 				if (button->IsDetected(mouse_coord))// if button is in range and overlap with alpha
 				{
 					button->OnHovering_started();
