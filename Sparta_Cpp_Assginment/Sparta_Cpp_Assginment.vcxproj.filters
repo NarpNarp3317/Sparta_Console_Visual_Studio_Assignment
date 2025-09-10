@@ -1,40 +1,87 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="AttackBoost.cpp" />
-    <ClCompile Include="BaseFrame.cpp" />
-    <ClCompile Include="Battle.cpp" />
-    <ClCompile Include="BattleStage.cpp" />
-    <ClCompile Include="BattleStage_Layout.cpp" />
-    <ClCompile Include="BossMonster.cpp" />
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="Character.cpp" />
-    <ClCompile Include="ClockTower.cpp" />
-    <ClCompile Include="ConsoleManager.cpp" />
-    <ClCompile Include="Display.cpp" />
-    <ClCompile Include="Exit_Button.cpp" />
-    <ClCompile Include="interaction_Component.cpp" />
-    <ClCompile Include="Layout.cpp" />
-    <ClCompile Include="MouseInputManager.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Popout.cpp" />
-    <ClCompile Include="Printer.cpp" />
-    <ClCompile Include="SaveLoadManager.cpp" />
-    <ClCompile Include="SceneMaker.cpp" />
-    <ClCompile Include="SimpleButton.cpp" />
-    <ClCompile Include="StringUpdater.cpp" />
-    <ClCompile Include="UI_Manager.cpp" />
-    <ClCompile Include="Weapon.cpp" />
-    <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="Goblin.cpp" />
-    <ClCompile Include="HealthPotion.cpp" />
-    <ClCompile Include="Item.cpp" />
-    <ClCompile Include="Monster.cpp" />
-    <ClCompile Include="Orc.cpp" />
-    <ClCompile Include="Shop.cpp" />
-    <ClCompile Include="Sparta_Cpp_Assginment.cpp" />
-    <ClCompile Include="Troll.cpp" />
-    <ClCompile Include="Shop_Layout.cpp" />
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Monster">
+      <UniqueIdentifier>{e8cc57d3-ae16-4b5a-b1aa-286d9cec3ec5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Character">
+      <UniqueIdentifier>{daeedc03-822c-4eba-bcc4-62c18160c1f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Item">
+      <UniqueIdentifier>{e7563994-58a3-431b-9dd2-4a7d3bb379a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Monster">
+      <UniqueIdentifier>{5a3e8860-2aac-4809-873b-14edd828a826}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Character">
+      <UniqueIdentifier>{592d34af-0c7e-47a7-bc10-b1ffad479911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Item">
+      <UniqueIdentifier>{53bd33aa-d067-4675-b244-184c19548ec0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Player">
+      <UniqueIdentifier>{e8002119-611c-42a1-8161-3140f1f91dc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Player">
+      <UniqueIdentifier>{eb3607c6-be4e-4c25-9783-746b759108ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager">
+      <UniqueIdentifier>{a37d3a21-0b5f-4c16-9c35-343693ad19df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\frame">
+      <UniqueIdentifier>{72ddbcea-470a-4a27-8d0c-903ce1552c58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\interactables">
+      <UniqueIdentifier>{83df4c60-5199-483f-8834-69ec2201ed5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\mouse">
+      <UniqueIdentifier>{a48343ff-ef06-43f9-aa98-837fea4cb4ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\printer">
+      <UniqueIdentifier>{66b556b3-69ac-42e3-93e2-ad81136df1f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\Scene">
+      <UniqueIdentifier>{68eee677-b8a2-4a44-91cb-6e6912bf507b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\Layout">
+      <UniqueIdentifier>{878e6cd6-cf37-45c4-8af0-97f2897b45b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\Text">
+      <UniqueIdentifier>{e87f9283-0e71-41e4-9dad-3b796d3e6d7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\UI_Manager">
+      <UniqueIdentifier>{af73566f-0d22-4858-85ee-5b937f84ebc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\Popout">
+      <UniqueIdentifier>{83d7ed0a-70f6-491e-b56d-167e8e3067d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\Dlisplay">
+      <UniqueIdentifier>{72a737ee-a107-46a8-9751-dd9d201b486d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\button">
+      <UniqueIdentifier>{1a0e2dde-362f-45d7-b964-96f3da855582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\TimeManager">
+      <UniqueIdentifier>{c0df47e1-9ba2-41de-9f0a-530922beb6b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\button\CommonButtons">
+      <UniqueIdentifier>{9506bb43-53bb-4e91-b227-d2a5ef9cac81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console_manager\Scene\Images">
+      <UniqueIdentifier>{11270de8-6f65-4ca4-a502-7163ffce69ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sparta_Cpp_Assginment.cpp">
@@ -137,6 +184,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameManager_Layout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Lounge_Layout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ExitButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneSaveAndLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shop_Layout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -276,10 +335,29 @@
     <ClInclude Include="GameManager_Layout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
->>>>>>> Dev
+    <ClInclude Include="Lounge_Layout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_PopoutType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ExitButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Str_PopoutLayers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneSaveAndLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shop_Layout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="AttackBoost.cpp.rej" />
-    <None Include="savedata.save" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="log.txt" />
   </ItemGroup>
 </Project>
