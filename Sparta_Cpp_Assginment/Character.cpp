@@ -287,7 +287,6 @@ bool Character::checkingInventorymap(int key_num)		// 09.09 »õ·Î Ãß°¡µÊ
 	//		return item.second > 0 ? true : false;
 	//	}
 	//}
-
 	if (itemCountMap[inventory[key_num]->getName()] > 0)
 	{
 		return true;

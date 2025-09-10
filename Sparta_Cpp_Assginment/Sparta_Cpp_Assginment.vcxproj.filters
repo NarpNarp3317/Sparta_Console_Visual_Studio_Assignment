@@ -363,7 +363,4 @@
   <ItemGroup>
     <None Include="AttackBoost.cpp.rej" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="log.txt" />
-  </ItemGroup>
 </Project>

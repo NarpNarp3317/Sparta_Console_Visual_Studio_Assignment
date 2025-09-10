@@ -53,6 +53,7 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 				string newitemcount0 = "HealItem(" + to_string(player->getItemCount(0)) + ")";
 				UseItemButton1->SetLable(newitemcount0);
 				UseItemButton1->UpdateButton();
+				LOG("UPDATE_BTN_1");
 			}
 		});// function 추가
 
@@ -69,6 +70,7 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 				string newitemcount1 = "AttackBoost(" + to_string(player->getItemCount(1)) + ")";
 				UseItemButton2->SetLable(newitemcount1);
 				UseItemButton2->UpdateButton();
+				LOG("UPDATE_BTN_2");
 			}
 		});// function 추가
 

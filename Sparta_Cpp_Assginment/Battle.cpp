@@ -102,24 +102,58 @@ bool Battle::battleturnBehavior(int index, int itemIndex)
 	switch (index)
 	{
 	case 0:
+	{
 		playerAttackBehavior();
 		monsterturnBehavior();
-		return true;
-
+		break;
+	}
 	case 1:
-		if (_player->checkingInventorymap(itemIndex) == false) // 디버깅시 지켜볼 것
+	{
+		int idx = 0;
+		int havingPoint = 0;
+		for (auto it : _player->getItemCountMap())
 		{
-			return false;
+			if (itemIndex == 0)
+			{
+				if (it.first == ITEM_HPPOTION)
+				{
+					LOG("now have HP potion : "+to_string(it.second));
+					havingPoint = it.second;
+					break;
+				}
+			}
+			else if (itemIndex == 1)
+			{
+				if (it.first == ITEM_ATKBOOST)
+				{
+					LOG("now have ATK Boost : " + to_string(it.second));
+					havingPoint = it.second;
+					break;
+				}
+			}
+			idx++;
 		}
-		playerUseItemBehavior(itemIndex);
+		if (havingPoint <= 0) return false;
+		// 수량체크 위에서 함
+		//if (_player->checkingInventorymap(idx) == false) // 디버깅시 지켜볼 것
+		//{
+		//	LOG("No item now...");
+		//	return false;
+		//}
+		
+		playerUseItemBehavior(idx);
 		monsterturnBehavior();
-		return true;
+		break;
+	}
 	case 2:
+	{
 		playerRecallBehavior();
-		return true;
+		break;
+	}
 	default:
 		return false;
 	}
+
 	return true;
 }
 
