@@ -111,7 +111,7 @@ bool Battle::battleturnBehavior(int index, int itemIndex)
 			return false;
 		}
 		playerUseItemBehavior(itemIndex);
-		break;
+		return true;
 	case 2:
 		playerRecallBehavior();
 		return true;
