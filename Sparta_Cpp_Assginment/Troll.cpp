@@ -23,11 +23,3 @@ Troll::Troll(int maxHealth, int attack) : Monster(maxHealth, attack)
 Troll::~Troll()
 {
 }
-
-void Troll::displayStatus()
-{
-	stringUpdater->CleanStrings();
-	string status = "Name : " + name + " ";
-	status += "ATK : " + to_string(attack);
-	stringUpdater->StringUpdate(status);
-}

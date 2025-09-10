@@ -8,6 +8,7 @@ class Monster;
 class BattleStage;
 class BattleStage_Layout;
 class StringUpdater;
+class Button;
 
 class Battle
 {
@@ -25,6 +26,7 @@ private:
 	void battleResult(Character* _player);
 	void monsterturnBehavior();
 	void monsterCreateButton();
+	void monsterStatRefresh();
 	void ShowReward(const string& item, const string& exp, const string& gold);
 private:
 	bool isWin;
@@ -34,5 +36,6 @@ private:
 	BattleStage* battleStage;
 	BattleStage_Layout* layout;
 	StringUpdater* string_updater;
+	Button* monsterStatBtn;
 };
 
