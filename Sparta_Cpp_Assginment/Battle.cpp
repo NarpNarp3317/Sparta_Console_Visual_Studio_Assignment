@@ -138,7 +138,10 @@ void Battle::monsterturnBehavior()
 			{
 				isWin = true;
 				//라운지로 이동 코드 필요
-				playerRecallBehavior();
+				StringUpdater string_updater({ 20,10 });
+				string_updater.CleanStrings();
+				string_updater.StringUpdate("Win!! Press the recall button to leave");
+				//playerRecallBehavior();
 				return;
 			}
 			else
