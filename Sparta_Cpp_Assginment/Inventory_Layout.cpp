@@ -3,8 +3,9 @@
 #include "Character.h"
 #include "Logger.h"
 #include "Weapon.h"
+#include "StringUpdater.h"
 
-void printLog(map<string, int> Inventorymap, Character* chara) {	// 로그 확인
+void Inventory_Layout::printLog(map<string, int> Inventorymap, Character* chara) {	// 로그 확인
 	map<string, int> curr_Inventorymap = chara->getItemCountMap();
 	string logstr;
 	if (!Inventorymap.empty())
@@ -13,6 +14,7 @@ void printLog(map<string, int> Inventorymap, Character* chara) {	// 로그 확�
 	else
 		logstr = "None";
 	Logger::getInstance().myLog(logstr);
+	_su->StringUpdate(logstr);
 
 	logstr = "Inventory: ";
 	vector<Item*> curr_Inventory = chara->getInventory();
@@ -23,8 +25,11 @@ void printLog(map<string, int> Inventorymap, Character* chara) {	// 로그 확�
 
 Inventory_Layout::Inventory_Layout()
 {
+	_su = new StringUpdater({ 10, 2 });
+};
+
+void Inventory_Layout::InventoryDisplay(Character* chara) {
 	//===== Example ======//
-	Character *chara = new Character("hello");
 	chara->addItem(new Weapon("Iron sword", 50, 20, true, true, "strong weapon"));
 	chara->addItem(new Weapon("Wooden Bow", 50, 20, true, true, "strong weapon"));
 	map<string, int> Inventorymap = chara->getItemCountMap();
@@ -37,7 +42,7 @@ Inventory_Layout::Inventory_Layout()
 		if (pos != string::npos)
 			temp_name.replace(pos, 1, "_");
 		itemButtons.push_back(new Button(0, 1, temp_name, center_center, { 20,5 }, { (short)i*22, 0}, double_line, White, Black));
-		itemButtons[i]->SetOnLeftPressed([chara, index,  Inventorymap]() { chara->useItem(index); printLog(Inventorymap, chara); });// function 추가
+		itemButtons[i]->SetOnLeftPressed([this, chara, index,  Inventorymap]() { chara->useItem(index); this->printLog(Inventorymap, chara); });// function 추가
 		AddButton(itemButtons[i]);// 다 만든후 layer에 보관
 		i += 1;
 	}

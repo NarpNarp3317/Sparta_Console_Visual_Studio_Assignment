@@ -1,5 +1,6 @@
 #include "Lounge_Layout.h"
 #include "BattleStage_Layout.h"
+#include "Inventory_Layout.h"
 #include "SceneMaker.h"
 #include <iostream>
 #include "Logger.h"
@@ -113,6 +114,9 @@ void Lounge_Layout::onBtnInventory()
     //// 이곳에서 인벤토리 레이아웃을 불러오면 됩니다
     // 예시
     // this->_C_manager->SetCurrentDisplay(여기에 레이아웃 포인터);
+   Inventory_Layout* inventory_Layout = new Inventory_Layout();
+   this->_C_manager->SetCurrentDisplay(inventory_Layout);
+   inventory_Layout->InventoryDisplay(GM_Logic->getPlayer());
 }
 
 void Lounge_Layout::onBtnSave()
