@@ -52,7 +52,7 @@ void GameManager::startMenu()
 
 		if (selectNum == 1)
 		{
-			this->makePlayer();
+			this->makePlayer("TEMP");
 			break;
 		}
 		else if (selectNum == 2)
@@ -63,7 +63,7 @@ void GameManager::startMenu()
 		else if (selectNum == 3)
 		{
 			this->deletePlayer();
-			this->makePlayer();
+			this->makePlayer("TEMP");
 			break;
 		}
 		else if (selectNum == 4)
@@ -148,15 +148,18 @@ void GameManager::visitLounge(Character* _player)
 
 // 25.09.05. 이무표
 // 게임을 진행할 플레이어를 생성한다.
-void GameManager::makePlayer()
+void GameManager::makePlayer(string _name)
 {
-	cout << "Welcome to the Dungeon" << endl;
-	cout << "Please tell me your name" << endl;
-	cout << "Name : ";
-	string playerName = "";
-	cin >> playerName;
+	//cout << "Welcome to the Dungeon" << endl;
+	//cout << "Please tell me your name" << endl;
+	//cout << "Name : ";
+	//string playerName = "";
+	//cin >> playerName;
 
-	player1 = new Character(playerName);
+	// player1 = new Character(playerName);
+
+	/// UI 시스템에 맞춰 위는 전부 주석처리
+	player1 = new Character(_name);
 }
 
 // 입력 단계에서 숫자가 아닌게 들어왔을 때 확인 후 다시 입력하게하기 위해 추가된 함수
@@ -183,7 +186,7 @@ void GameManager::loadPlayer()
 		// 로드 실패시 신규 생성으로 진입
 		player1 = nullptr;
 		delete player1;
-		this->makePlayer();
+		this->makePlayer("TEMP");
 	}
 }
 void GameManager::deletePlayer()

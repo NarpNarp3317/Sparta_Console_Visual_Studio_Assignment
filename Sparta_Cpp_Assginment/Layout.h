@@ -9,6 +9,7 @@ class Layout :public BaseFrame
 {
 public:
     Layout();
+    ~Layout();
 
 private:
     //vector<Scene*> _Scenes;// container for textures

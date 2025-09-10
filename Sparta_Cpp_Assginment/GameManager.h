@@ -29,7 +29,7 @@ public:
 	~GameManager();
 	void StartGame();
 
-private : // 함수
+public : // 함수
 	void battle(Character* _player);
 	void vistShop(Character* _player);
 	void visitLounge(Character* _player);
@@ -38,7 +38,7 @@ private : // 함수
 	void savePlayer();
 	void loadPlayer();
 	void deletePlayer();
-	void makePlayer();
+	void makePlayer(string _name);
 
 	// 입력 처리 오류 확인
 	// 2025.09.08 현정석 추가

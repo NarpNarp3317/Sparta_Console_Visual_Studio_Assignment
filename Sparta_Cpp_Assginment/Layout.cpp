@@ -7,6 +7,16 @@ Layout::Layout() :BaseFrame(1, top_left, GetScreenLimits(), {0,0},White,Black)//
 
 }
 
+Layout::~Layout()
+{
+	// 25.09.10. 이무표
+	// button이 포인터로 되어 있어 메모리 해제 추가
+	for (Button* btn : _buttons) {
+		delete btn;
+	}
+	_buttons.clear();
+}
+
 void Layout::AddButton(Button* new_button)
 {
 	_buttons.push_back(new_button);
