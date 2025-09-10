@@ -153,7 +153,7 @@
     <ClCompile Include="StringUpdater.cpp">
       <Filter>console_manager\Text</Filter>
     </ClCompile>
-    <ClCompile Include="Popupt.cpp">
+    <ClCompile Include="Popout.cpp">
       <Filter>console_manager\Popout</Filter>
     </ClCompile>
     <ClCompile Include="SceneMaker.cpp">
@@ -190,12 +190,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ExitButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneSaveAndLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Shop_Layout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -293,7 +287,7 @@
     <ClInclude Include="UI_Manager.h">
       <Filter>console_manager\UI_Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Popup.h">
+    <ClInclude Include="Popout.h">
       <Filter>console_manager\Popout</Filter>
     </ClInclude>
     <ClInclude Include="SceneMaker.h">
@@ -332,19 +326,8 @@
     <ClInclude Include="Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="ExitButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Str_PopupLayers.h">
-      <Filter>console_manager\Popout</Filter>
-    </ClInclude>
-    <ClInclude Include="Enum_PopupType.h">
-      <Filter>console_manager\Popout</Filter>
-=======
     <ClInclude Include="GameManager_Layout.h">
       <Filter>Header Files</Filter>
->>>>>>> Dev
     </ClInclude>
     <ClInclude Include="Lounge_Layout.h">
       <Filter>Header Files</Filter>
@@ -358,17 +341,8 @@
     <ClInclude Include="Str_PopoutLayers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SceneSaveAndLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Shop_Layout.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="AttackBoost.cpp.rej" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="log.txt" />
   </ItemGroup>
 </Project>
