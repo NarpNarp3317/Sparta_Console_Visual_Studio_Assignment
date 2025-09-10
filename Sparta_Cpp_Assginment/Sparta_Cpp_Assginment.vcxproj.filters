@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+<<<<<<< HEAD
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
@@ -365,5 +366,99 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="log.txt" />
+=======
+    <ClCompile Include="AttackBoost.cpp" />
+    <ClCompile Include="BaseFrame.cpp" />
+    <ClCompile Include="Battle.cpp" />
+    <ClCompile Include="BattleStage.cpp" />
+    <ClCompile Include="BattleStage_Layout.cpp" />
+    <ClCompile Include="BossMonster.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="ClockTower.cpp" />
+    <ClCompile Include="ConsoleManager.cpp" />
+    <ClCompile Include="Display.cpp" />
+    <ClCompile Include="ExitButton.cpp" />
+    <ClCompile Include="Exit_Button.cpp" />
+    <ClCompile Include="GameManager_Layout.cpp" />
+    <ClCompile Include="interaction_Component.cpp" />
+    <ClCompile Include="Layout.cpp" />
+    <ClCompile Include="Lounge_Layout.cpp" />
+    <ClCompile Include="MouseInputManager.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Popout.cpp" />
+    <ClCompile Include="Printer.cpp" />
+    <ClCompile Include="SaveLoadManager.cpp" />
+    <ClCompile Include="SceneMaker.cpp" />
+    <ClCompile Include="SimpleButton.cpp" />
+    <ClCompile Include="StringUpdater.cpp" />
+    <ClCompile Include="UI_Manager.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Goblin.cpp" />
+    <ClCompile Include="HealthPotion.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Orc.cpp" />
+    <ClCompile Include="Shop.cpp" />
+    <ClCompile Include="Sparta_Cpp_Assginment.cpp" />
+    <ClCompile Include="Troll.cpp" />
+    <ClCompile Include="Shop_Layout.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AttackBoost.h" />
+    <ClInclude Include="BaseFrame.h" />
+    <ClInclude Include="Battle.h" />
+    <ClInclude Include="BattleStage.h" />
+    <ClInclude Include="BattleStage_Layout.h" />
+    <ClInclude Include="BossMonster.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="ClockTower.h" />
+    <ClInclude Include="ConsoleManager.h" />
+    <ClInclude Include="Display.h" />
+    <ClInclude Include="Enum_Layout.h" />
+    <ClInclude Include="Enum_Live_Interactable_state.h" />
+    <ClInclude Include="Enum_PopoutType.h" />
+    <ClInclude Include="Enum_Text_Color.h" />
+    <ClInclude Include="Enum_ConsoleMode.h" />
+    <ClInclude Include="Enum_FrameType.h" />
+    <ClInclude Include="Enum_MouseInput.h" />
+    <ClInclude Include="ExitButton.h" />
+    <ClInclude Include="Exit_Button.h" />
+    <ClInclude Include="GameManager_Layout.h" />
+    <ClInclude Include="interaction_Component.h" />
+    <ClInclude Include="Layout.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="Lounge_Layout.h" />
+    <ClInclude Include="MouseInputManager.h" />
+    <ClInclude Include="PivotPoint.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Popout.h" />
+    <ClInclude Include="Printer.h" />
+    <ClInclude Include="SaveLoadManager.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneEditor.h" />
+    <ClInclude Include="SceneMaker.h" />
+    <ClInclude Include="SimpleButton.h" />
+    <ClInclude Include="StringUpdater.h" />
+    <ClInclude Include="Str_PopoutLayers.h" />
+    <ClInclude Include="TextPixel.h" />
+    <ClInclude Include="Text_Align.h" />
+    <ClInclude Include="UI_Manager.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Goblin.h" />
+    <ClInclude Include="HealthPotion.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Orc.h" />
+    <ClInclude Include="Shop.h" />
+    <ClInclude Include="Troll.h" />
+    <ClInclude Include="Shop_Layout.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AttackBoost.cpp.rej" />
+>>>>>>> Dev_LJH
   </ItemGroup>
 </Project>

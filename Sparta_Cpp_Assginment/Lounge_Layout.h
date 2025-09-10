@@ -3,7 +3,7 @@
 #include "ConsoleManager.h"
 #include "GameManager.h"
 #include "StringUpdater.h"
-
+#include "Shop_Layout.h"
 
 class Lounge_Layout
 {
@@ -21,6 +21,7 @@ private:
 	StringUpdater* _su;
 	GameManager* GM_Logic;
 
+	Shop_Layout* myShopLayout;
 
 	void onBtnBattle();
 	void onBtnShop();
