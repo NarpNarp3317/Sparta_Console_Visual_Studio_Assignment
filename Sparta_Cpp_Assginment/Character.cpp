@@ -4,6 +4,7 @@
 #include "AttackBoost.h"
 #include "Weapon.h"
 #include "Monster.h"
+#include "Logger.h"
 
 //이 생성자 임시로 사용
 Character::Character()
@@ -78,10 +79,15 @@ void Character::useItem(int key_num)		// 인벤토리맵 스타일에서 아이템을 사용하는
 				}
 				return;
 			}
-		cout << "Error. Item not found." << endl;
+		// ui 변경으로 cout 제거
+		// cout << "Error. Item not found." << endl;
 	}
 	else
-		cout << "No items left." << endl;
+	{
+		LOG("NO ITEM ERROR");
+		// UI에도 메시지 띄울 수 있도록 수정할 예정
+	}
+		// cout << "No items left." << endl;
 }
 
 void Character::addItem(Item* item)	// 아이템을 인벤토리에 추가하는 함수

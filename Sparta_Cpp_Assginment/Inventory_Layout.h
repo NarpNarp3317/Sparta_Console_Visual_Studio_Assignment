@@ -3,6 +3,7 @@
 #include "Character.h"
 #include "StringUpdater.h"
 #include "ConsoleManager.h"
+#include "Button.h"
 
 class Inventory_Layout:public Layout
 { 
@@ -12,8 +13,12 @@ public:
 	void printLog(map<string, int> Inventorymap, Character* chara);
 
 private:
-	StringUpdater *_su;
+	StringUpdater* SU;
 	ConsoleManager* mainCM;
 	Character* mainPlayer;
 	Layout* mainLoungeLayout;
+	vector<Button*> itemButtons;
+	std::vector<std::string> itemNames;
+
+
 };

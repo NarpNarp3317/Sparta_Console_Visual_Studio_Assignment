@@ -199,6 +199,10 @@ void Button::SetLable(string new_lable)
 	_lable = new_lable;
 }
 
+void Button::UpdateButton()
+{
+	GenerateDefaultButtonSet();
+}
 
 
 //============= Mouse Trigger Events ============//
