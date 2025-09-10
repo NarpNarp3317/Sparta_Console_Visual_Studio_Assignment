@@ -3,7 +3,6 @@
 #include <iostream>
 #include "Logger.h"
 
-// 생성자: 필요한 모든 화면(Layout) 객체를 만들고 초기 화면을 설정합니다.
 GameManager_Layout::GameManager_Layout(ConsoleManager* _C_manager)
     : _C_manager(_C_manager),
     mainMenu_Layout(nullptr),
@@ -14,18 +13,16 @@ GameManager_Layout::GameManager_Layout(ConsoleManager* _C_manager)
     _su(new StringUpdater({ 10, 2 }))
 
 {
-    // CharacterSelect_Layout 화면을 미리 생성해둡니다.
-    this->CharacterSelect_Layout = createCharacterSelectionLayout();
-
-    // 메인 메뉴 화면(Layout)을 생성합니다.
+    // 나중에 쓸 레이아웃 미리 생성
+    this->CharacterSelect_Layout = gameStartLayout();
     this->mainMenu_Layout = new Layout();
 
-    // 메인 메뉴에 들어갈 버튼들을 만듭니다.
+    // 메인 메뉴 버튼 생성
     Button* new_game = new Button(0, 2, "<<NEW_GAME>>", center_center, { 20, 5 }, { 0, 4 }, single_line, White, Gray);
     Button* next = new Button(0, 2, "<<CREDITS>>", center_center, { 20, 5 }, { 0, 9 }, double_line, White, Gray);
     Button* gameExit = new Button(0, 2, "<<EXIT_GAME>>", center_center, { 20, 5 }, { 0, 14 }, double_line, White, Gray);
 
-    // 람다 함수를 통해 버튼 클릭 시 화면을 전환하는 로직을 추가합니다.
+    // 메인 메뉴 이벤트 연결
     new_game->SetOnLeftPressed([this]() {
         this->_C_manager->SetCurrentDisplay(this->CharacterSelect_Layout);
         });
@@ -34,16 +31,15 @@ GameManager_Layout::GameManager_Layout(ConsoleManager* _C_manager)
         this->_C_manager->gameExit();
         });
 
-    // 버튼들을 메인 메뉴 화면에 추가합니다.
+    // 메인 메뉴 등록
     mainMenu_Layout->AddButton(new_game);
     mainMenu_Layout->AddButton(next);
     mainMenu_Layout->AddButton(gameExit);
 
-    // 프로그램의 시작 화면을 메인 메뉴로 설정합니다.
+    // 메인 메뉴 Show
     _C_manager->SetCurrentDisplay(mainMenu_Layout);
 
-    // **주의:** 이 클래스(GamaManager_Layout)는 이제 더 이상 ConsoleManager가 직접 관리하는 레이아웃이 아닙니다.
-    // 레이아웃을 생성하고 관리하는 역할만 담당합니다.
+    LOG("Load Main Function Complete! PROGRAM START");    
 };
 
 // 소멸자: 힙에 할당한 화면(Layout) 객체들을 모두 해제합니다.
@@ -68,10 +64,12 @@ GameManager_Layout::~GameManager_Layout()
     GM_Logic = nullptr;
     _su = nullptr;
     mainLounge = nullptr;
+
+    LOG("Delete Main Function Complete! bye bye");
 }
 
-// 캐릭터 선택 화면을 생성하는 함수입니다.
-Layout* GameManager_Layout::createCharacterSelectionLayout()
+// 게임 시작 함수
+Layout* GameManager_Layout::gameStartLayout()
 {
     Layout* nowLayout = new Layout();
 

@@ -13,7 +13,7 @@ public:
 	void setConsoleManager(ConsoleManager* manager) { _C_manager = manager; }
 	void getconsoleManager(ConsoleManager** manager) { *manager = _C_manager; }
 
-	Layout* createCharacterSelectionLayout();
+	Layout* gameStartLayout();
 	Layout* createNewCharacterMakeLayout();
 
 private:

@@ -11,7 +11,7 @@ Lounge_Layout::Lounge_Layout(ConsoleManager* _C_manager, StringUpdater* su, Game
     mainLounge_Layout(new Layout())
 {
     this->makeLayout();
-    Logger::getInstance().myLog(GM_Logic->getPlayer()->getName());
+    Logger::getInstance().myLog("PLAYER NAME : " + GM_Logic->getPlayer()->getName());
 }
 
 Lounge_Layout::~Lounge_Layout()
@@ -35,16 +35,22 @@ void Lounge_Layout::makeLayout()
 {
     // 메인 메뉴에 들어갈 버튼들을 만듭니다.
     Button* btn_goBattle = new Button(0, 2, "<<BATTLE>>", center_center, { 20, 5 }, { 0, 4 }, single_line, White, Gray);
-    Button* btn_goShop = new Button(0, 2, "<<Visit Shop>>", center_center, { 20, 5 }, { 0, 9 }, double_line, White, Gray);
+    Button* btn_goShop = new Button(0, 2, "<<Visit_Shop>>", center_center, { 20, 5 }, { 0, 9 }, double_line, White, Gray);
     Button* btn_showPlayerStatus = new Button(0, 2, "<<Status>>", center_center, { 20, 5 }, { 0, 14 }, double_line, White, Gray);
     Button* btn_showInventory = new Button(0, 2, "<<Inventory>>", center_center, { 20, 5 }, { 0, 19 }, double_line, White, Gray);
     Button* btn_save = new Button(0, 2, "<<SAVE>>", center_center, { 20, 5 }, { 0, 24 }, double_line, White, Gray);
     Button* btn_exit = new Button(0, 2, "<<EXIT_GAME>>", center_center, { 20, 5 }, { 0, 29 }, double_line, White, Gray);
 
+
     // 람다 함수를 통해 버튼 클릭 시 화면을 전환하는 로직을 추가합니다.
     btn_goBattle->SetOnLeftPressed([this]() {
         this->_su->StringUpdate("This is Main Lounge");
         });
+
+    btn_save->SetOnLeftPressed([this]() {
+        this->onBtnSave();
+        });
+
     btn_exit->SetOnLeftPressed([this]() {
         this->_C_manager->gameExit();
         });
