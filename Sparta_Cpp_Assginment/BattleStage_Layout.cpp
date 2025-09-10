@@ -104,6 +104,7 @@ BattleStage_Layout::~BattleStage_Layout()
 	{
 		DeleteButton();
 	}
+
 	delete battle;
 	battle = nullptr;
 }

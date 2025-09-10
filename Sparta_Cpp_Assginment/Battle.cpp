@@ -104,23 +104,21 @@ bool Battle::battleturnBehavior(int index, int itemIndex)
 	{
 	case 0:
 		playerAttackBehavior();
-		break;
+		monsterturnBehavior();
 	case 1:
 		if (_player->checkingInventorymap(itemIndex) == false) // 디버깅시 지켜볼 것
 		{
 			return false;
 		}
 		playerUseItemBehavior(itemIndex);
+		monsterturnBehavior();
 		return true;
 	case 2:
 		playerRecallBehavior();
 		return true;
 	default:
-		break;
+		return false;
 	}
-
-	monsterturnBehavior();
-
 	return true;
 }
 
@@ -141,6 +139,7 @@ void Battle::monsterturnBehavior()
 				isWin = true;
 				//라운지로 이동 코드 필요
 				playerRecallBehavior();
+				return;
 			}
 			else
 			{
