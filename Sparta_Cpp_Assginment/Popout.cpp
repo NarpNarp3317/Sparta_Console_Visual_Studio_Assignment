@@ -88,7 +88,7 @@ void Popout::SetDefaultButtons()
 	case Confirmation:
 
 		Yes_Button = new Button(1, 1, "Yes", bottom_center, { 5,3 }, { -5,0 }, single_line, White, Black, _default_widh_XY);
-		No_Button = new Button(1,1,"No", bottom_center, { 5,3 }, { 5,0 }, single_line, White, Black, _default_widh_XY);
+		No_Button = new Button(1, 1, "No", bottom_center, { 5,3 }, { 5,0 }, single_line, White, Black, _default_widh_XY);
 		_active_buttons = { Yes_Button, No_Button };
 		break;
 
@@ -111,6 +111,7 @@ void Popout::SetDefaultButtons()
 
 	default:
 		//error!!!! invalid enum
+		break;
 	}
 }
 
