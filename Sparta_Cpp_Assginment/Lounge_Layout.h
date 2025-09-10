@@ -19,6 +19,8 @@ public:
 	void updateStatus();
 	void makeLayout();
 	void setLayout(Layout* _Lay);
+	void createSysMsg(string _msg);
+	void deleteSysMsg();
 	Layout* getLayout();
 
 private:
@@ -44,5 +46,7 @@ private:
 	Button* lbl_atk = nullptr;
 	Button* lbl_exp = nullptr;
 	Button* lbl_gold = nullptr;
+
+	Button* lbl_sysMsg = nullptr;
 };
 

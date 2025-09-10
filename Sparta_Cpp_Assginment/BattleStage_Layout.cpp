@@ -28,6 +28,20 @@ void BattleStage_Layout::CreateButton(const string& name)
 	AddButton(monsterButton);
 }
 
+// 전투 중 드랍템으로 획득했을 때 갱신하기 위해 추가
+void BattleStage_Layout::updatePotionBtn(Character* player)
+{
+	string newitemcount0 = "Health_Potion(" + to_string(player->getItemCount(0)) + ")";
+	UseItemButton1->SetLable(newitemcount0);
+	UseItemButton1->UpdateButton();
+
+	string newitemcount1 = "Attack_Boost(" + to_string(player->getItemCount(1)) + ")";
+	UseItemButton2->SetLable(newitemcount1);
+	UseItemButton2->UpdateButton();
+
+	LOG("Update_btn");
+}
+
 void BattleStage_Layout::DeleteButton()
 {
 	RemoveButton(monsterButton);
@@ -37,12 +51,11 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 {
 	battle = new Battle(mainLoungeLayout, mainCM, this);
 	battle->startBattle(player, this);
+	string itemcount0 = "Health_Potion(" + to_string(player->getItemCount(0)) + ")";
+	string itemcount1 = "Attack_Boost(" + to_string(player->getItemCount(1)) + ")";
 
-	string itemcount0 = "HealItem(" + to_string(player->getItemCount(0)) + ")";
-	string itemcount1 = "AttackBoost(" + to_string(player->getItemCount(1)) + ")";
-
-	Button* UseItemButton1 = new Button(0, 1, itemcount0, center_center, { 17, 5 }, { -17, 15 }, double_line, White, Black);
-	UseItemButton1->SetOnLeftPressed([this, UseItemButton1, player]
+	UseItemButton1 = new Button(0, 1, itemcount0, center_center, { 25, 5 }, { -25, 15 }, double_line, White, Black);
+	UseItemButton1->SetOnLeftPressed([this, player]
 		{
 			if (battle->battleturnBehavior(1, 0) == false)
 			{
@@ -50,16 +63,17 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 			}
 			else
 			{
-				string newitemcount0 = "HealItem(" + to_string(player->getItemCount(0)) + ")";
+				string newitemcount0 = "Health_Potion(" + to_string(player->getItemCount(0)) + ")";
 				UseItemButton1->SetLable(newitemcount0);
 				UseItemButton1->UpdateButton();
+				battle->playerStatRefresh();
 				LOG("UPDATE_BTN_1");
 			}
 		});// function 추가
 
 
-		Button* UseItemButton2 = new Button(0, 1, itemcount1, center_center, { 17, 5 }, { 0, 15 }, double_line, White, Black);
-		UseItemButton2->SetOnLeftPressed([this, UseItemButton2, player]
+		UseItemButton2 = new Button(0, 1, itemcount1, center_center, { 25, 5 }, { 0, 15 }, double_line, White, Black);
+		UseItemButton2->SetOnLeftPressed([this, player]
 		{
 			if (battle->battleturnBehavior(1, 1) == false)
 			{
@@ -67,14 +81,15 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 			}
 			else
 			{
-				string newitemcount1 = "AttackBoost(" + to_string(player->getItemCount(1)) + ")";
+				string newitemcount1 = "Attack_Boost(" + to_string(player->getItemCount(1)) + ")";
 				UseItemButton2->SetLable(newitemcount1);
 				UseItemButton2->UpdateButton();
+				battle->playerStatRefresh();
 				LOG("UPDATE_BTN_2");
 			}
 		});// function 추가
 
-		Button* RecallButton = new Button(0, 1, "Recall", center_center, { 17, 5 }, { 17, 15 }, double_line, White, Black);
+		Button* RecallButton = new Button(0, 1, "Recall", center_center, { 17, 5 }, { 25, 15 }, double_line, White, Black);
 		RecallButton->SetOnLeftPressed([this, RecallButton]
 		{
 				/// 25.09.10. mpyi _ 라운지로 복귀

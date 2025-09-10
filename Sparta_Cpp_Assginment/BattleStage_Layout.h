@@ -13,6 +13,7 @@ public:
 	BattleStage_Layout(Character* _chara, Lounge_Layout* _LoungeLayout, ConsoleManager* _mainCM, StringUpdater* _su);
 	~BattleStage_Layout();
 	void CreateButton(const string& name);
+	void updatePotionBtn(Character* player);
 	void DeleteButton();
 	void BattleStartSetup(Character* player);
 	
@@ -23,4 +24,8 @@ public:
 	ConsoleManager* mainCM;
 	Character* mainPlayer;
 	Lounge_Layout* mainLoungeLayout;
+
+
+	Button* UseItemButton1;
+	Button* UseItemButton2;
 };

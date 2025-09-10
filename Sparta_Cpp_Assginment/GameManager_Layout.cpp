@@ -16,6 +16,7 @@ GameManager_Layout::GameManager_Layout(ConsoleManager* _C_manager)
     // 나중에 쓸 레이아웃 미리 생성
     this->CharacterSelect_Layout = gameStartLayout();
     this->mainMenu_Layout = new Layout();
+    this->Credit_Layout = creditLayout();
 
     // 메인 메뉴 버튼 생성
     Button* new_game = new Button(0, 2, "<<START_GAME>>", center_center, { 20, 5 }, { 0, 4 }, single_line, White, Gray);
@@ -26,6 +27,11 @@ GameManager_Layout::GameManager_Layout(ConsoleManager* _C_manager)
     new_game->SetOnLeftPressed([this]() {
         this->_C_manager->SetCurrentDisplay(this->CharacterSelect_Layout);
         });
+
+    next->SetOnLeftPressed([this]() {
+        this->_C_manager->SetCurrentDisplay(this->Credit_Layout);
+        });
+
 
     gameExit->SetOnLeftPressed([this]() {
         this->_C_manager->gameExit();
@@ -56,6 +62,7 @@ GameManager_Layout::~GameManager_Layout()
     delete GM_Logic;
     delete _su;
     delete mainLounge;
+    delete Credit_Layout;
 
     // 삭제 후 포인터를 nullptr로 초기화합니다.
     mainMenu_Layout = nullptr;
@@ -64,6 +71,7 @@ GameManager_Layout::~GameManager_Layout()
     GM_Logic = nullptr;
     _su = nullptr;
     mainLounge = nullptr;
+    Credit_Layout = nullptr;
 
     LOG("Delete Main Function Complete! bye bye");
 }
@@ -327,4 +335,73 @@ void GameManager_Layout::loadPlayerData()
         this->mainLounge = new Lounge_Layout(_C_manager, _su, GM_Logic);
         this->_C_manager->SetCurrentDisplay(this->newCharacterMake);
     }
+}
+
+Layout* GameManager_Layout::creditLayout()
+{
+    Layout* rtrLayout = new Layout();
+    Button* btnRtn = new Button(0, 2, "<<BACK>>", center_center, { 20, 5 }, { 0, 70 }, single_line, White, Gray);
+
+    short nameWidth = 20;
+    short jobWidth = 50;
+    short commenWidth = 100;
+
+    Button* lbl_name = new Button(0, 2, "<<NAME>>", left_center, { 20, 5 }, { nameWidth, -50 }, single_line, White, Gray);
+    Button* lbl_job = new Button(0, 2, "<<JOB>>", left_center, { 50, 5 }, { jobWidth, -50 }, double_line, White, Gray);
+    Button* lbl_comment = new Button(0, 2, "<<COMMENT>>", left_center, { 50, 5 }, { commenWidth, -50 }, double_line, White, Gray);
+
+    btnRtn->SetOnLeftPressed([this]() {
+        this->_C_manager->SetCurrentDisplay(this->mainMenu_Layout);
+        });
+
+    /// 이름 가나다순 정렬입니다...
+    // 이름은 스펠링을 정확히 몰라 한글로 적어놨습니다. 실제론 깨지니 영어로 편집 부탁드립니다.
+    // 세민
+    Button* lbl_name1 = new Button(0, 2, "<<박세민(Leader)>>", left_center, { 20, 5 }, { nameWidth, -30 }, single_line, White, Gray);
+    Button* lbl_job1 = new Button(0, 2, "<<JOB>>", left_center, { 50, 5 }, { jobWidth, -30 }, double_line, White, Gray);
+    Button* lbl_comment1 = new Button(0, 2, "<<Comment>>", left_center, { 50, 5 }, { commenWidth, -30 }, double_line, White, Gray);
+    // 무표
+    Button* lbl_name2 = new Button(0, 2, "<<Yi_Moo_Pyo>>", left_center, { 20, 5 }, { nameWidth, -20 }, single_line, White, Gray);
+    Button* lbl_job2 = new Button(0, 2, "<<CharacteMake_Save_Load>>", left_center, { 50, 5 }, { jobWidth, -20 }, double_line, White, Gray);
+    Button* lbl_comment2 = new Button(0, 2, "<<Happy_Happy_Happy>>", left_center, { 50, 5 }, { commenWidth, -20 }, double_line, White, Gray);
+    // 종혁
+    Button* lbl_name3 = new Button(0, 2, "<<이종혁>>", left_center, { 20, 5 }, { nameWidth, -10 }, single_line, White, Gray);
+    Button* lbl_job3 = new Button(0, 2, "<<JOB>>", left_center, { 50, 5 }, { jobWidth, -10 }, double_line, White, Gray);
+    Button* lbl_comment3 = new Button(0, 2, "<<Comment>>", left_center, { 50, 5 }, { commenWidth, -10 }, double_line, White, Gray);
+    // 기혁
+    Button* lbl_name4 = new Button(0, 2, "<<조기혁>>", left_center, { 20, 5 }, { nameWidth, 0 }, single_line, White, Gray);
+    Button* lbl_job4 = new Button(0, 2, "<<JOB>>", left_center, { 50, 5 }, { jobWidth, 0 }, double_line, White, Gray);
+    Button* lbl_comment4 = new Button(0, 2, "<<Comment>>", left_center, { 50, 5 }, { commenWidth, 0 }, double_line, White, Gray);
+    // 정석
+    Button* lbl_name5 = new Button(0, 2, "<<현정석>>", left_center, { 20, 5 }, { nameWidth, 10 }, single_line, White, Gray);
+    Button* lbl_job5 = new Button(0, 2, "<<JOB>>", left_center, { 50, 5 }, { jobWidth, 10 }, double_line, White, Gray);
+    Button* lbl_comment5 = new Button(0, 2, "<<Comment>>", left_center, { 50, 5 }, { commenWidth, 10 }, double_line, White, Gray);
+
+
+    rtrLayout->AddButton(btnRtn);
+    rtrLayout->AddButton(lbl_name);
+    rtrLayout->AddButton(lbl_comment);
+    rtrLayout->AddButton(lbl_job);
+
+    rtrLayout->AddButton(lbl_name1);
+    rtrLayout->AddButton(lbl_job1);
+    rtrLayout->AddButton(lbl_comment1);
+
+    rtrLayout->AddButton(lbl_name2);
+    rtrLayout->AddButton(lbl_job2);
+    rtrLayout->AddButton(lbl_comment2);
+
+    rtrLayout->AddButton(lbl_name3);
+    rtrLayout->AddButton(lbl_job3);
+    rtrLayout->AddButton(lbl_comment3);
+
+    rtrLayout->AddButton(lbl_name4);
+    rtrLayout->AddButton(lbl_job4);
+    rtrLayout->AddButton(lbl_comment4);
+
+    rtrLayout->AddButton(lbl_name5);
+    rtrLayout->AddButton(lbl_job5);
+    rtrLayout->AddButton(lbl_comment5);
+
+    return rtrLayout;
 }

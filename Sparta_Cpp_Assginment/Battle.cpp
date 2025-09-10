@@ -10,6 +10,7 @@
 #include "Button.h"
 #include "ConsoleManager.h"
 #include "Lounge_Layout.h"
+#include "Weapon.h"
 
 #include <limits> 
 StringUpdater string_updater({ 20,10 });
@@ -42,6 +43,7 @@ void Battle::startBattle(Character* _player, BattleStage_Layout* layout)
 	Logger::getInstance().myLog("monster Count : " + to_string(battleStage->getMonsterSize()));
 
 	monsterCreateButton();
+	playerCreateButton();
 }
 
 void Battle::playerAttackBehavior()
@@ -50,6 +52,7 @@ void Battle::playerAttackBehavior()
 	{
 		_monster->takeDamage(_player->getAttack());
 		monsterStatRefresh();
+		playerStatRefresh();
 	}
 }
 
@@ -92,6 +95,9 @@ void Battle::battleResult(Character* _player){
 			break;
 		}
 	}
+
+	/// 전투중 드랍으로 포션 획득시 UI 반영
+	layout->updatePotionBtn(_player);
 	_player->reward(_monster->getRewardExp(), _monster->getRewardGold());
 
 	ShowReward(getItemName, to_string(_monster->getRewardExp()), to_string(_monster->getRewardGold()));
@@ -168,19 +174,30 @@ void Battle::monsterturnBehavior()
 			battleResult(_player); //보상 지급 처리
 			_monster = battleStage->getMonster(++monsterIndex); //다음 몬스터
 			layout->DeleteButton();
-
 			if (_monster == nullptr) // 다음 몬스터가 없으면 승리로 처리하고 break
 			{
+				LOG("sssdd");
 				isWin = true;
-				//라운지로 이동 코드 필요
-				string_updater.StringUpdate("Win!! Press the recall button to leave");
-				//playerRecallBehavior();
+				// 라운지로 바로 이동함으로 스트링 업데이트 안함
+				// string_updater.StringUpdate("Win!! Press the recall button to leave");
+
+				if (battleStage->getBossCount() == 2)
+				{
+					LoungeLayout->createSysMsg("You_Clear_Game!!!!");
+				}
+				else
+				{
+					LoungeLayout->createSysMsg("Win_the_Battle!!!");
+				}
+				
+				playerRecallBehavior();
 				return;
 			}
 			else
 			{
 				monsterCreateButton();
 				monsterStatRefresh();
+				playerStatRefresh();
 			}
 		}
 		else
@@ -190,12 +207,83 @@ void Battle::monsterturnBehavior()
 			_player->getStatus();
 		}
 	}
-
-	if (_player->getHealth() <= 0)
+	if (_player != nullptr)
 	{
-		// 라운지로 이동 코드 필요
-		string_updater.StringUpdate("DEFEAT.. Press the recall button to leave");
+		if (_player->getHealth() <= 0)
+		{
+			// string_updater.StringUpdate("DEFEAT.. Press the recall button to leave");
+			// 라운지로 바로 이동함으로 스트링 업데이트 안함
+			// string_updater.StringUpdate("Win!! Press the recall button to leave");
+			LoungeLayout->createSysMsg("DEFEAT..");
+			playerRecallBehavior();
+		}
 	}
+}
+
+void Battle::playerCreateButton()
+{
+	// 스트링먼저
+	string str_Lv = "LV_:_" + to_string(_player->getLevel());
+	string strHP = "HP_:_" + to_string(_player->getHealth()) + "/" + to_string(_player->getMaxHealth());
+	string strATK = "ATK_:_";
+	if (_player->getEquippedWeapon() != nullptr)
+	{
+		strATK += to_string(_player->getBaseAttack()) + "(" + to_string(_player->getEquippedWeapon()->getDamage()) + ")";
+	}
+	else
+	{
+		strATK += to_string(_player->getBaseAttack());
+	}
+	string str_exp = "EXP_:_" + to_string(_player->getExperience());
+	string str_gold = "GOLD_:_" + to_string(_player->getGold());
+
+	// 버튼 초기화
+
+	string monsterTag = "PLAYER_INFO";
+	playerTagBtn = new Button(10, 1, monsterTag, center_center, { 50, 3 }, { 0, -37 }, double_line, White, Black);
+	lbl_name = new Button(0, 2, _player->getName(), center_center, { 50, 3 }, { 0, -35 }, double_line, White, Gray);
+	lbl_Lv = new Button(0, 2, str_Lv, center_center, { 50, 3 }, { 0, -32 }, double_line, White, Gray);
+	lbl_hp = new Button(0, 2, strHP, center_center, { 50, 3 }, { 0, -29 }, double_line, White, Gray);
+	lbl_atk = new Button(0, 2, strATK, center_center, { 50, 3 }, { 0, -26 }, double_line, White, Gray);
+	lbl_exp = new Button(0, 2, str_exp, center_center, { 50, 3 }, { 0, -23 }, double_line, White, Gray);
+	lbl_gold = new Button(0, 2, str_gold, center_center, { 50, 3 }, { 0, -21 }, double_line, White, Gray);
+
+	// 스탯 표기 먼저
+	layout->AddButton(playerTagBtn);
+	layout->AddButton(lbl_name);
+	layout->AddButton(lbl_Lv);
+	layout->AddButton(lbl_hp);
+	layout->AddButton(lbl_atk);
+	layout->AddButton(lbl_exp);
+	layout->AddButton(lbl_gold);
+}
+void Battle::playerStatRefresh()
+{
+	string str_Lv = "LV_:_" + to_string(_player->getLevel());
+	string strHP = "HP_:_" + to_string(_player->getHealth()) + "/" + to_string(_player->getMaxHealth());
+	string strATK = "ATK_:_";
+	if (_player->getEquippedWeapon() != nullptr)
+	{
+		strATK += to_string(_player->getBaseAttack()) + "(" + to_string(_player->getEquippedWeapon()->getDamage()) + ")";
+	}
+	else
+	{
+		strATK += to_string(_player->getBaseAttack());
+	}
+	string str_exp = "EXP_:_" + to_string(_player->getExperience());
+	string str_gold = "GOLD_:_" + to_string(_player->getGold());
+
+	lbl_Lv->SetLable(str_Lv);
+	lbl_hp->SetLable(strHP);
+	lbl_atk->SetLable(strATK);
+	lbl_exp->SetLable(str_exp);
+	lbl_gold->SetLable(str_gold);
+
+	lbl_Lv->UpdateButton();
+	lbl_hp->UpdateButton();
+	lbl_atk->UpdateButton();
+	lbl_exp->UpdateButton();
+	lbl_gold->UpdateButton();
 
 }
 
@@ -203,9 +291,13 @@ void Battle::monsterCreateButton()
 {
 	layout->CreateButton(_monster->getName());
 
-	string stats = "HP=" + to_string(_monster->getHealth()) + "_ATK=" + to_string(_monster->getAttack());
-	monsterStatBtn = new Button(10, 1, stats, center_center, { 17, 5 }, { 0, -10 }, double_line, White, Black);
+	string monsterTag = "Monster_INFO";
+	monsterTagBtn = new Button(10, 1, monsterTag, center_center, { 30, 3 }, { 0, -13 }, double_line, White, Black);
 
+	string stats = "HP=" + to_string(_monster->getHealth()) + "_ATK=" + to_string(_monster->getAttack());
+	monsterStatBtn = new Button(10, 1, stats, center_center, { 30, 5 }, { 0, -10 }, double_line, White, Black);
+
+	layout->AddButton(monsterTagBtn);
 	layout->AddButton(monsterStatBtn);
 }
 
@@ -218,14 +310,26 @@ void Battle::monsterStatRefresh()
 
 void Battle::ShowReward(const string& item, const string& exp, const string& gold)
 {
-	string_updater.NextLine();
+	// string_updater.NextLine();
 	string text = "Reward : ";
 	text += item.empty() ? "" : item + ", ";
 	text += "EXP : +" + exp + " ";
 	text += "Gold : +" + gold;
-	string_updater.StringUpdate(text);
+	// string_updater.StringUpdate(text);
 
-	_player->getStatus();
+	if (lbl_reward != nullptr)
+	{
+		layout->RemoveButton(lbl_reward);
+		delete lbl_reward;
+		lbl_reward = nullptr;		
+	}
+
+	if(lbl_reward == nullptr)
+	lbl_reward = new Button(10, 1, text, center_center, { 90, 3 }, { 0, -40 }, double_line, White, Black);
+	layout->AddButton(lbl_reward);
+	lbl_reward->UpdateButton();
+
+	// _player->getStatus();
 }
 
 Battle::~Battle()

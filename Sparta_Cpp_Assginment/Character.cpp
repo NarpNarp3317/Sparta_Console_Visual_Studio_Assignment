@@ -28,11 +28,11 @@ Character::Character(string name)
 {
 	this->name = name;
 	maxHealth = 100;
-	baseAttack = 1;
+	baseAttack = 10;
 	attack = baseAttack;
 	level = 1;
 	experience = 0;
-	gold = 10000;
+	gold = 0;
 	health = maxHealth;
 	equippedWeapon = nullptr;
 
@@ -385,7 +385,7 @@ void Character::setName(string _name)
 
 void Character::setHealth(int _health)
 {
-	this->health += health;
+	this->health += _health;
 
 	if (this->health > maxHealth)
 	{

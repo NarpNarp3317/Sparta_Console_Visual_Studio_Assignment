@@ -15,13 +15,14 @@ public:
 	void removeMonsterList();
 	void randomMonsterAdded(const int& playerLevel);
 	int getMonsterSize();
-
+	int getBossCount() { return this->bossMonsterCount; }
 
 private:
 	Monster* randomMonster(const int& playerLevel);
 	int randomValue(const int& minValue, const int& maxValue);
 
 private:
+	int bossMonsterCount = 0;
 	vector<Monster*> monsterList;
 };
 

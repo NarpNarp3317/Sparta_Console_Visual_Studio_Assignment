@@ -31,15 +31,17 @@ void BattleStage::removeMonsterList()
 
 void BattleStage::randomMonsterAdded(const int& playerLevel)
 {
-	if (playerLevel >= 10)
+	if (playerLevel % 10 == 0)
 	{
 		monsterList.push_back(new BossMonster(randomValue(playerLevel * 30, playerLevel * 40), randomValue(playerLevel * 7.5f, playerLevel * 15)));
+		bossMonsterCount++;
 		return;
 	}
 	//랜덤 1~3
+	// 밸런스 조정 및 디버깅 등을 위해 1~5로 변경
 	random_device rd;
 	mt19937 gen(rd());
-	uniform_int_distribution<int> dis(1, 3);
+	uniform_int_distribution<int> dis(1, 5);
 
 	int randomVal = dis(gen);
 

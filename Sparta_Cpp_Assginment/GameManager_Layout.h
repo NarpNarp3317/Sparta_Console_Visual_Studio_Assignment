@@ -15,11 +15,13 @@ public:
 
 	Layout* gameStartLayout();
 	Layout* createNewCharacterMakeLayout();
+	Layout* creditLayout();
 
 private:
 	ConsoleManager* _C_manager;
 	Layout* mainMenu_Layout;
 	Layout* CharacterSelect_Layout;
+	Layout* Credit_Layout;
 	Layout* newCharacterMake;
 	Lounge_Layout* mainLounge;
 	StringUpdater* _su;

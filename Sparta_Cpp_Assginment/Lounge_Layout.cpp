@@ -35,6 +35,17 @@ Lounge_Layout::~Lounge_Layout()
     // 버튼은 Layout 부모 클래스 소멸자에서 소멸시켜서 굳이 소멸시키지 않는다
 }
 
+void Lounge_Layout::createSysMsg(string _msg)
+{
+    lbl_sysMsg = new Button(0, 2, _msg, center_center, { 80, 5 }, { 0, -35 }, no_line, White, Gray);
+    mainLounge_Layout->AddButton(lbl_sysMsg);
+}
+
+void Lounge_Layout::deleteSysMsg()
+{
+    mainLounge_Layout->RemoveButton(lbl_sysMsg);
+}
+
 void Lounge_Layout::setLayout(Layout* _Lay)
 {
     this->mainLounge_Layout = _Lay;
@@ -81,6 +92,13 @@ void Lounge_Layout::makeStatus()
 }
 void Lounge_Layout::updateStatus()
 {
+    // 업데이트 된다 = 라운지에 돌아왔다 = 플레이어 체력 회복
+    GM_Logic->getPlayer()->setHealth(GM_Logic->getPlayer()->getMaxHealth());
+
+    LOG("MAX : ");
+    LOG(to_string(GM_Logic->getPlayer()->getMaxHealth()));
+    LOG("NOW : ");
+    LOG(to_string(GM_Logic->getPlayer()->getHealth()));
     string str_Lv = "LV_:_" + to_string(GM_Logic->getPlayer()->getLevel());
     string strHP = "HP_:_" + to_string(GM_Logic->getPlayer()->getHealth()) + "/" + to_string(GM_Logic->getPlayer()->getMaxHealth());
     string strATK = "ATK_:_";
@@ -115,26 +133,24 @@ void Lounge_Layout::makeLayout()
 {
     Button* btn_goBattle = new Button(0, 2, "<<BATTLE>>", center_center, { 20, 5 }, { 0, 4 }, single_line, White, Gray);
     Button* btn_goShop = new Button(0, 2, "<<Visit_Shop>>", center_center, { 20, 5 }, { 0, 9 }, double_line, White, Gray);
-    Button* btn_showPlayerStatus = new Button(0, 2, "<<Status>>", center_center, { 20, 5 }, { 0, 14 }, double_line, White, Gray);
-    Button* btn_showInventory = new Button(0, 2, "<<Inventory>>", center_center, { 20, 5 }, { 0, 19 }, double_line, White, Gray);
-    Button* btn_save = new Button(0, 2, "<<SAVE>>", center_center, { 20, 5 }, { 0, 24 }, double_line, White, Gray);
-    Button* btn_exit = new Button(0, 2, "<<EXIT_GAME>>", center_center, { 20, 5 }, { 0, 29 }, double_line, White, Gray);
+    Button* btn_showInventory = new Button(0, 2, "<<Inventory>>", center_center, { 20, 5 }, { 0, 14 }, double_line, White, Gray);
+    Button* btn_save = new Button(0, 2, "<<SAVE>>", center_center, { 20, 5 }, { 0, 19 }, double_line, White, Gray);
+    Button* btn_exit = new Button(0, 2, "<<EXIT_GAME>>", center_center, { 20, 5 }, { 0, 24 }, double_line, White, Gray);
 
     // 람다 함수를 통해 버튼 클릭 시 화면을 전환하는 로직을 추가합니다.
     btn_goBattle->SetOnLeftPressed([this]() {
         this->onBtnBattle();
+        deleteSysMsg();
         });
 
     btn_goShop->SetOnLeftPressed([this]() {
         this->onBtnShop();
-        });
-
-    btn_showPlayerStatus->SetOnLeftPressed([this]() {
-        this->onBtnPlayerStatus();
+        deleteSysMsg();
         });
 
     btn_showInventory->SetOnLeftPressed([this]() {
         this->onBtnInventory();
+        deleteSysMsg();
         });
 
     btn_save->SetOnLeftPressed([this]() {
@@ -142,13 +158,13 @@ void Lounge_Layout::makeLayout()
         });
 
     btn_exit->SetOnLeftPressed([this]() {
+        deleteSysMsg();
         this->_C_manager->gameExit();
         });
 
     // 버튼
     mainLounge_Layout->AddButton(btn_goBattle);
     mainLounge_Layout->AddButton(btn_goShop);
-    mainLounge_Layout->AddButton(btn_showPlayerStatus);
     mainLounge_Layout->AddButton(btn_showInventory);
     mainLounge_Layout->AddButton(btn_save);
     mainLounge_Layout->AddButton(btn_exit);
