@@ -24,9 +24,9 @@ int main()
 {
 
 	/// 그 외 조원 시작지점(기존)
-	//GameManager startGame;
-	//startGame.StartGame();
- //   return 0;
+	GameManager startGame;
+	startGame.StartGame();
+    return 0;
 
     //===== Managers ====//
 

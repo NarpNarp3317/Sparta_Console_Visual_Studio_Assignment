@@ -183,12 +183,6 @@
     <ClCompile Include="SaveLoadManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="Shop_Layout.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-=======
->>>>>>> Dev
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -320,11 +314,7 @@
     <ClInclude Include="SaveLoadManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="Shop_Layout.h">
-=======
     <ClInclude Include="Logger.h">
->>>>>>> Dev
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
