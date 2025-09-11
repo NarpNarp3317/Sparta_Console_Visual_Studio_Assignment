@@ -17,4 +17,7 @@ private:
     Character* nowPlayer;
     Scene goldScene;   // °ñµå Ç¥½Ã¿ë Scene
     Lounge_Layout* loungeLayout;
+
+    Button* goldBtn = nullptr;
+    void updateGoldBtn();
 };
