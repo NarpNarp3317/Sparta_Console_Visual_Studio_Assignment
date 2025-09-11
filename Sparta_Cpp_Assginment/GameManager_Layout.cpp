@@ -357,9 +357,9 @@ Layout* GameManager_Layout::creditLayout()
     /// 이름 가나다순 정렬입니다...
     // 이름은 스펠링을 정확히 몰라 한글로 적어놨습니다. 실제론 깨지니 영어로 편집 부탁드립니다.
     // 세민
-    Button* lbl_name1 = new Button(0, 2, "<<박세민(Leader)>>", left_center, { 20, 5 }, { nameWidth, -30 }, single_line, White, Gray);
-    Button* lbl_job1 = new Button(0, 2, "<<JOB>>", left_center, { 50, 5 }, { jobWidth, -30 }, double_line, White, Gray);
-    Button* lbl_comment1 = new Button(0, 2, "<<Comment>>", left_center, { 50, 5 }, { commenWidth, -30 }, double_line, White, Gray);
+    Button* lbl_name1 = new Button(0, 2, "<<SeminPark>>", left_center, { 20, 5 }, { nameWidth, -30 }, single_line, White, Gray);
+    Button* lbl_job1 = new Button(0, 2, "<<Console_Input/Output,_T_Pixel_Texture>>", left_center, { 50, 5 }, { jobWidth, -30 }, double_line, White, Gray);
+    Button* lbl_comment1 = new Button(0, 2, "<<wiehfdakljs>>", left_center, { 50, 5 }, { commenWidth, -30 }, double_line, White, Gray);
     // 무표
     Button* lbl_name2 = new Button(0, 2, "<<Yi_Moo_Pyo>>", left_center, { 20, 5 }, { nameWidth, -20 }, single_line, White, Gray);
     Button* lbl_job2 = new Button(0, 2, "<<CharacteMake_Save_Load>>", left_center, { 50, 5 }, { jobWidth, -20 }, double_line, White, Gray);
