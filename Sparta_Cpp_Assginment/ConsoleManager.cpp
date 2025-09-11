@@ -3,7 +3,7 @@
 #include <iostream>// for cout << "\033[2J\033[1;1H";// clear screen
 #include <string>
 
-// #define REFILL_COLOR
+#define REFILL_COLOR
 
 ConsoleManager::ConsoleManager()
 	:_input_H(GetStdHandle(STD_INPUT_HANDLE))
