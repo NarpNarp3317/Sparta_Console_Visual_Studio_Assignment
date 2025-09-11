@@ -369,9 +369,9 @@ Layout* GameManager_Layout::creditLayout()
     Button* lbl_job3 = new Button(0, 2, "<<Shop>>", left_center, { 50, 5 }, { jobWidth, -10 }, double_line, White, Gray);
     Button* lbl_comment3 = new Button(0, 2, "<<Being_carried_away_by_the_team_bb>>", left_center, { 50, 5 }, { commenWidth, -10 }, double_line, White, Gray);
     // 기혁
-    Button* lbl_name4 = new Button(0, 2, "<<조기혁>>", left_center, { 20, 5 }, { nameWidth, 0 }, single_line, White, Gray);
-    Button* lbl_job4 = new Button(0, 2, "<<JOB>>", left_center, { 50, 5 }, { jobWidth, 0 }, double_line, White, Gray);
-    Button* lbl_comment4 = new Button(0, 2, "<<Comment>>", left_center, { 50, 5 }, { commenWidth, 0 }, double_line, White, Gray);
+    Button* lbl_name4 = new Button(0, 2, "<<JokiHyeok>>", left_center, { 20, 5 }, { nameWidth, 0 }, single_line, White, Gray);
+    Button* lbl_job4 = new Button(0, 2, "<<Item/Weapon>>", left_center, { 50, 5 }, { jobWidth, 0 }, double_line, White, Gray);
+    Button* lbl_comment4 = new Button(0, 2, "<<hello>>", left_center, { 50, 5 }, { commenWidth, 0 }, double_line, White, Gray);
     // 정석
     Button* lbl_name5 = new Button(0, 2, "<<Hyun_JS>>", left_center, { 20, 5 }, { nameWidth, 10 }, single_line, White, Gray);
     Button* lbl_job5 = new Button(0, 2, "<<Character_Monster_Battle>>", left_center, { 50, 5 }, { jobWidth, 10 }, double_line, White, Gray);
