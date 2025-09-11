@@ -365,9 +365,9 @@ Layout* GameManager_Layout::creditLayout()
     Button* lbl_job2 = new Button(0, 2, "<<CharacteMake_Save_Load>>", left_center, { 50, 5 }, { jobWidth, -20 }, double_line, White, Gray);
     Button* lbl_comment2 = new Button(0, 2, "<<Happy_Happy_Happy>>", left_center, { 50, 5 }, { commenWidth, -20 }, double_line, White, Gray);
     // 종혁
-    Button* lbl_name3 = new Button(0, 2, "<<이종혁>>", left_center, { 20, 5 }, { nameWidth, -10 }, single_line, White, Gray);
-    Button* lbl_job3 = new Button(0, 2, "<<JOB>>", left_center, { 50, 5 }, { jobWidth, -10 }, double_line, White, Gray);
-    Button* lbl_comment3 = new Button(0, 2, "<<Comment>>", left_center, { 50, 5 }, { commenWidth, -10 }, double_line, White, Gray);
+    Button* lbl_name3 = new Button(0, 2, "<<Lee_Jong_Hyuk>>", left_center, { 20, 5 }, { nameWidth, -10 }, single_line, White, Gray);
+    Button* lbl_job3 = new Button(0, 2, "<<Shop>>", left_center, { 50, 5 }, { jobWidth, -10 }, double_line, White, Gray);
+    Button* lbl_comment3 = new Button(0, 2, "<<Being_carried_away_by_the_team_bb>>", left_center, { 50, 5 }, { commenWidth, -10 }, double_line, White, Gray);
     // 기혁
     Button* lbl_name4 = new Button(0, 2, "<<조기혁>>", left_center, { 20, 5 }, { nameWidth, 0 }, single_line, White, Gray);
     Button* lbl_job4 = new Button(0, 2, "<<JOB>>", left_center, { 50, 5 }, { jobWidth, 0 }, double_line, White, Gray);
