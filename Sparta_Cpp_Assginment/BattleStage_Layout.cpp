@@ -19,7 +19,7 @@ BattleStage_Layout::BattleStage_Layout(Character* _chara, Lounge_Layout* _Lounge
 
 void BattleStage_Layout::CreateButton(const string& name)
 {
-	monsterButton = new Button(10, 1, name , center_center, { 20, 11 }, { 0,0 }, double_line, White, Black);
+	monsterButton = new Button(10, 1, name , center_center, { 20, 11 }, { 0,10 }, double_line, White, Black);
 	monsterButton->SetOnLeftPressed([this] 
 	{
 		battle->battleturnBehavior(0);
@@ -54,7 +54,7 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 	string itemcount0 = "Health_Potion(" + to_string(player->getItemCount(0)) + ")";
 	string itemcount1 = "Attack_Boost(" + to_string(player->getItemCount(1)) + ")";
 
-	UseItemButton1 = new Button(0, 1, itemcount0, center_center, { 25, 5 }, { -25, 15 }, double_line, White, Black);
+	UseItemButton1 = new Button(0, 1, itemcount0, center_center, { 25, 5 }, { -25, 25 }, double_line, White, Black);
 	UseItemButton1->SetOnLeftPressed([this, player]
 		{
 			if (battle->battleturnBehavior(1, 0) == false)
@@ -72,7 +72,7 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 		});// function 추가
 
 
-		UseItemButton2 = new Button(0, 1, itemcount1, center_center, { 25, 5 }, { 0, 15 }, double_line, White, Black);
+		UseItemButton2 = new Button(0, 1, itemcount1, center_center, { 25, 5 }, { 0, 25 }, double_line, White, Black);
 		UseItemButton2->SetOnLeftPressed([this, player]
 		{
 			if (battle->battleturnBehavior(1, 1) == false)
@@ -89,7 +89,7 @@ void BattleStage_Layout::BattleStartSetup(Character* player)
 			}
 		});// function 추가
 
-		Button* RecallButton = new Button(0, 1, "Recall", center_center, { 17, 5 }, { 25, 15 }, double_line, White, Black);
+		Button* RecallButton = new Button(0, 1, "Recall", center_center, { 17, 5 }, { 25, 25 }, double_line, White, Black);
 		RecallButton->SetOnLeftPressed([this, RecallButton]
 		{
 				/// 25.09.10. mpyi _ 라운지로 복귀

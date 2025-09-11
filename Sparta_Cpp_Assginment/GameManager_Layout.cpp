@@ -81,10 +81,10 @@ Layout* GameManager_Layout::gameStartLayout()
 {
     Layout* nowLayout = new Layout();
 
-    Button* character = new Button(0, 2, "New_Player", center_center, { 35,10 }, { 5, -20 }, double_line, White, Gray);
+    Button* character = new Button(0, 2, "New_Player", center_center, { 35,10 }, { 5, -15 }, double_line, White, Gray);
     Button* loadPlayer = new Button(0, 2, "Load", center_center, { 35,10 }, { 5, -5 }, double_line, White, Gray);
-    Button* deleteSaveFile = new Button(0, 2, "Save_File_Delete", center_center, { 35,10 }, { 5, 10 }, double_line, White, Gray);
-    Button* exitMenu = new Button(0, 2, "EXIT", center_center, { 35,10 }, { 5, 25 }, double_line, White, Gray);
+    Button* deleteSaveFile = new Button(0, 2, "Save_File_Delete", center_center, { 35,10 }, { 5, 5 }, double_line, White, Gray);
+    Button* exitMenu = new Button(0, 2, "EXIT", center_center, { 35,10 }, { 5, 15 }, double_line, White, Gray);
     newCharacterMake = createNewCharacterMakeLayout();
 
     character->SetOnLeftPressed([this]() {

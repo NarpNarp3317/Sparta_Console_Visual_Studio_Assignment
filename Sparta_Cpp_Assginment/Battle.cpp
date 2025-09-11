@@ -240,13 +240,13 @@ void Battle::playerCreateButton()
 	// 버튼 초기화
 
 	string monsterTag = "PLAYER_INFO";
-	playerTagBtn = new Button(10, 1, monsterTag, center_center, { 50, 3 }, { 0, -37 }, double_line, White, Black);
-	lbl_name = new Button(0, 2, _player->getName(), center_center, { 50, 3 }, { 0, -35 }, double_line, White, Gray);
-	lbl_Lv = new Button(0, 2, str_Lv, center_center, { 50, 3 }, { 0, -32 }, double_line, White, Gray);
-	lbl_hp = new Button(0, 2, strHP, center_center, { 50, 3 }, { 0, -29 }, double_line, White, Gray);
-	lbl_atk = new Button(0, 2, strATK, center_center, { 50, 3 }, { 0, -26 }, double_line, White, Gray);
-	lbl_exp = new Button(0, 2, str_exp, center_center, { 50, 3 }, { 0, -23 }, double_line, White, Gray);
-	lbl_gold = new Button(0, 2, str_gold, center_center, { 50, 3 }, { 0, -21 }, double_line, White, Gray);
+	playerTagBtn = new Button(10, 1, monsterTag, center_center, { 50, 3 }, { 0, -22 }, double_line, White, Black);
+	lbl_name = new Button(0, 2, _player->getName(), center_center, { 50, 3 }, { 0, -20 }, double_line, White, Gray);
+	lbl_Lv = new Button(0, 2, str_Lv, center_center, { 50, 3 }, { 0, -18 }, double_line, White, Gray);
+	lbl_hp = new Button(0, 2, strHP, center_center, { 50, 3 }, { 0, -16 }, double_line, White, Gray);
+	lbl_atk = new Button(0, 2, strATK, center_center, { 50, 3 }, { 0, -14 }, double_line, White, Gray);
+	lbl_exp = new Button(0, 2, str_exp, center_center, { 50, 3 }, { 0, -12 }, double_line, White, Gray);
+	lbl_gold = new Button(0, 2, str_gold, center_center, { 50, 3 }, { 0, -10 }, double_line, White, Gray);
 
 	// 스탯 표기 먼저
 	layout->AddButton(playerTagBtn);
@@ -292,10 +292,10 @@ void Battle::monsterCreateButton()
 	layout->CreateButton(_monster->getName());
 
 	string monsterTag = "Monster_INFO";
-	monsterTagBtn = new Button(10, 1, monsterTag, center_center, { 30, 3 }, { 0, -13 }, double_line, White, Black);
+	monsterTagBtn = new Button(10, 1, monsterTag, center_center, { 30, 3 }, { 0, 03 }, double_line, White, Black);
 
 	string stats = "HP=" + to_string(_monster->getHealth()) + "_ATK=" + to_string(_monster->getAttack());
-	monsterStatBtn = new Button(10, 1, stats, center_center, { 30, 5 }, { 0, -10 }, double_line, White, Black);
+	monsterStatBtn = new Button(10, 1, stats, center_center, { 30, 5 }, { 0, 0 }, double_line, White, Black);
 
 	layout->AddButton(monsterTagBtn);
 	layout->AddButton(monsterStatBtn);
@@ -325,7 +325,7 @@ void Battle::ShowReward(const string& item, const string& exp, const string& gol
 	}
 
 	if(lbl_reward == nullptr)
-	lbl_reward = new Button(10, 1, text, center_center, { 90, 3 }, { 0, -40 }, double_line, White, Black);
+	lbl_reward = new Button(10, 1, text, center_center, { 90, 3 }, { 0, -5 }, double_line, White, Black);
 	layout->AddButton(lbl_reward);
 	lbl_reward->UpdateButton();
 

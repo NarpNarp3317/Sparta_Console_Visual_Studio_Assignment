@@ -37,7 +37,7 @@ Lounge_Layout::~Lounge_Layout()
 
 void Lounge_Layout::createSysMsg(string _msg)
 {
-    lbl_sysMsg = new Button(0, 2, _msg, center_center, { 80, 5 }, { 0, -35 }, no_line, White, Gray);
+    lbl_sysMsg = new Button(0, 2, _msg, center_center, { 80, 5 }, { 0, -20 }, no_line, White, Gray);
     mainLounge_Layout->AddButton(lbl_sysMsg);
 }
 
@@ -75,12 +75,12 @@ void Lounge_Layout::makeStatus()
     string str_gold = "GOLD_:_" + to_string(GM_Logic->getPlayer()->getGold());
 
     // 버튼 초기화
-    lbl_name = new Button(0, 2, GM_Logic->getPlayer()->getName(), center_center, { 50, 5 }, { 0, -30 }, double_line, White, Gray);
-    lbl_Lv = new Button(0, 2, str_Lv, center_center, { 50, 5 }, { 0, -25 }, double_line, White, Gray);
-    lbl_hp = new Button(0, 2, strHP, center_center, { 50, 5 }, { 0, -20 }, double_line, White, Gray);
-    lbl_atk = new Button(0, 2, strATK, center_center, { 50, 5 }, { 0, -15 }, double_line, White, Gray);
-    lbl_exp = new Button(0, 2, str_exp, center_center, { 50, 5 }, { 0, -10 }, double_line, White, Gray);
-    lbl_gold = new Button(0, 2, str_gold, center_center, { 50, 5 }, { 0, -5 }, double_line, White, Gray);
+    lbl_name = new Button(0, 2, GM_Logic->getPlayer()->getName(), center_center, { 50, 3 }, { 0, -15 }, double_line, White, Gray);
+    lbl_Lv = new Button(0, 2, str_Lv, center_center, { 50, 3 }, { 0, -13 }, double_line, White, Gray);
+    lbl_hp = new Button(0, 2, strHP, center_center, { 50, 3 }, { 0, -11 }, double_line, White, Gray);
+    lbl_atk = new Button(0, 2, strATK, center_center, { 50, 3 }, { 0, -9 }, double_line, White, Gray);
+    lbl_exp = new Button(0, 2, str_exp, center_center, { 50, 3 }, { 0, -7 }, double_line, White, Gray);
+    lbl_gold = new Button(0, 2, str_gold, center_center, { 50, 3 }, { 0, -5 }, double_line, White, Gray);
 
     // 스탯 표기 먼저
     mainLounge_Layout->AddButton(lbl_name);
