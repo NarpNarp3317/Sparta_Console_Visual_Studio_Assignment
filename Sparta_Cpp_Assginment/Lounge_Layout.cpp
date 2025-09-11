@@ -15,13 +15,13 @@ Lounge_Layout::Lounge_Layout(ConsoleManager* _C_manager, StringUpdater* su, Game
     _su(su),
     mainLounge_Layout(new Layout()),
     myShopLayout(new Shop_Layout(_C_manager, this, _GM->getPlayer())),
-    inventory_Layout(new Inventory_Layout(_GM->getPlayer(), this, _C_manager, su)),
+    inventory_Layout(nullptr),
     mainBattleStage_layout(nullptr) // 배틀스테이지는 매번 새로 생성
 {
     this->makeLayout();
     this->makeStatus();
     Logger::getInstance().myLog("PLAYER NAME : " + GM_Logic->getPlayer()->getName());
-    inventory_Layout->InventoryDisplay();
+    // inventory_Layout->InventoryDisplay();
 }
 
 Lounge_Layout::~Lounge_Layout()
@@ -211,8 +211,16 @@ void Lounge_Layout::onBtnInventory()
     //// 이곳에서 인벤토리 레이아웃을 불러오면 됩니다
     // 예시
     // this->_C_manager->SetCurrentDisplay(여기에 레이아웃 포인터);
+   // inventory_Layout->ButtonRefresh();
+   if (inventory_Layout != nullptr)
+   {
+        delete inventory_Layout;
+        inventory_Layout = nullptr;
+   }
+   inventory_Layout = new Inventory_Layout(GM_Logic->getPlayer(), this, _C_manager, _su);
+   inventory_Layout->InventoryDisplay();
    this->_C_manager->SetCurrentDisplay(inventory_Layout);
-   inventory_Layout->ButtonRefresh();
+   
 }
 
 void Lounge_Layout::onBtnSave()

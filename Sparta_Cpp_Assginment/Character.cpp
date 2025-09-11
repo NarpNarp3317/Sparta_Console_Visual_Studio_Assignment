@@ -100,11 +100,14 @@ void Character::useItem(int key_num)		// 인벤토리맵 스타일에서 아이템을 사용하는
 	if (itemCountMap[targetItem] > 0)
 	{
 		LOG("USE : " + targetItem);
-		LOG("Real Target : " + inventory[idx]->getName());
+		// LOG("Real Target : " + inventory[idx]->getName());
 		for (auto it : inventory)
 		{
+			LOG(it->getName());
+			LOG(targetItem);
 			if (it->getName() == targetItem)
 			{
+				LOG("THIS");
 				it->use(this);
 				itemCountMap[targetItem]--;
 				break;
@@ -137,7 +140,7 @@ void Character::addItem(Item* item)	// 아이템을 인벤토리에 추가하는 함수
 		}
 
 		itemCountMap[item->getName()]++; // 있다면 아이템 수량 추가
-		//inventory.push_back(item);
+		inventory.push_back(item); // 인벤토리에서 아이템 사용할때 써서 복원
 	}
 	else // 이 경우 발생하면 사고??
 	{
