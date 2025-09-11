@@ -192,6 +192,7 @@ void Lounge_Layout::onBtnBattle()
 
 void Lounge_Layout::onBtnShop()
 {
+    myShopLayout->updateGoldBtn();
     this->_C_manager->SetCurrentDisplay(myShopLayout);
     //// 이곳에서 샵 레이아웃을 불러오면 됩니다
     // 예시

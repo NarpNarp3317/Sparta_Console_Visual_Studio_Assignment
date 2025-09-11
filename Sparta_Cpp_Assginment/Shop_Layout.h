@@ -11,6 +11,7 @@ public:
     ~Shop_Layout() = default;
     void setLoungeLayout(Lounge_Layout* _Lay) { this->loungeLayout = _Lay; }
     Layout* getLoungeLayout() { return this->loungeLayout->getLayout(); }
+    void updateGoldBtn();
 
 private:
     ConsoleManager* _C_manager;
@@ -18,6 +19,5 @@ private:
     Scene goldScene;   // °ñµå Ç¥½Ã¿ë Scene
     Lounge_Layout* loungeLayout;
 
-    Button* goldBtn = nullptr;
-    void updateGoldBtn();
+    Button* goldBtn = nullptr;   
 };
