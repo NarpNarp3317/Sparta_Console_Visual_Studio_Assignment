@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Character.h"
 #include "StringUpdater.h"
+#include "Logger.h"
 
 StringUpdater stringUpdater({ 10, 12 });
 
@@ -127,13 +128,19 @@ void Shop::SellItemByIndex(Character& player, int index) {
 
     Item* sellingItem = player.GetItem(index);
     int sellPrice = (sellingItem->getPrice() * 60) / 100;
+    if (player.checkingSellItem(index))
+    {
+        player.SellItem(index);
+        player.AddGold(sellPrice);
+        string str = sellingItem->getName() + " has been sold! + " + to_string(sellPrice) + " Gold";
+        str += "Current Gold: " + player.getGold();
+        stringUpdater.StringUpdate(str);
+    }
+   
+    //player.RemoveItem(index);
+    //player.
 
-    player.AddGold(sellPrice);
-    player.RemoveItem(index);
-
-    string str = sellingItem->getName() + " has been sold! + " + to_string(sellPrice) + " Gold";
-    str += "Current Gold: " + player.getGold();
-    stringUpdater.StringUpdate(str);
+  
 
 
    /* std::cout << sellingItem->getName() << " has been sold! +"

@@ -137,7 +137,7 @@ void Character::addItem(Item* item)	// 아이템을 인벤토리에 추가하는 함수
 		}
 
 		itemCountMap[item->getName()]++; // 있다면 아이템 수량 추가
-		inventory.push_back(item);
+		//inventory.push_back(item);
 	}
 	else // 이 경우 발생하면 사고??
 	{
@@ -374,7 +374,6 @@ int Character::getMaxHealth() const
 
 int Character::getItemCount(int index)
 {
-	Logger::getInstance().myLog(to_string(itemCountMap[inventory[index]->getName()]));
 	return itemCountMap[inventory[index]->getName()];
 }
 
@@ -469,6 +468,67 @@ bool Character::RemoveItem(int index)
 		return true;
 	}
 	return false;
+}
+
+void Character::SellItem(int key_num)
+{
+
+	//int idx = 0;
+	//string targetItem;
+	//for (auto i : itemCountMap)
+	//{
+	//	if (idx == key_num)
+	//	{
+	//		targetItem = i.first;
+	//		break;
+	//	}
+	//	idx++;
+	//}
+
+	//if (targetItem.empty())
+	//{
+	//	LOG("NO ITEM!!!");
+	//	return;
+	//}
+
+	//for (auto it : inventory)
+	//{
+	//	if (it->getName() == targetItem)
+	//	{
+	//		itemCountMap[targetItem]--;
+	//		Logger::getInstance().myLog("이름 : " + targetItem);
+	//		break;
+	//	}
+	//}
+
+	itemCountMap[inventory[key_num]->getName()]--;
+	Logger::getInstance().myLog("이름 : " + inventory[key_num]->getName());
+}
+
+bool Character::checkingSellItem(int key_num)
+{
+	//int idx = 0;
+	//string targetItem;
+	//for (auto i : itemCountMap)
+	//{
+	//	if (idx == key_num)
+	//	{
+	//		targetItem = i.first;
+	//		break;
+	//	}
+	//	idx++;
+	//}
+
+	//if (targetItem.empty())
+	//{
+	//	LOG("NO ITEM!!!");
+	//	return false;
+	//}
+
+	//itemCountMap[inventory[key_num]->getName()]--;
+	//Logger::getInstance().myLog("이름 : " + inventory[key_num]->getName());
+
+	return itemCountMap[inventory[key_num]->getName()] <= 0 ? false : true;
 }
 
 void Character::RemoveItemCountMap(const string& name)

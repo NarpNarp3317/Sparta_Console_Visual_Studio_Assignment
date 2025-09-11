@@ -69,6 +69,8 @@ public:
 	void AddGold(int amount);        // 골드 추가
 	Item* GetItem(int index);        // 인벤토리에서 아이템 가져오기
 	bool RemoveItem(int index);      // 인벤토리에서 아이템 제거
+	void SellItem(int key_num);
+	bool checkingSellItem(int key_num);
 
 private:
 	void RemoveItemCountMap(const string& name);
@@ -86,5 +88,7 @@ protected:
 	Weapon* equippedWeapon;			// 장착 무기
 	vector <Item*> inventory;
 	map<string, int> itemCountMap; //아이템 수량을 위해 추가
+	//unordered_map<string, int> itemCountMap; //아이템 수량을 위해 추가
+
 };
 
