@@ -373,9 +373,9 @@ Layout* GameManager_Layout::creditLayout()
     Button* lbl_job4 = new Button(0, 2, "<<JOB>>", left_center, { 50, 5 }, { jobWidth, 0 }, double_line, White, Gray);
     Button* lbl_comment4 = new Button(0, 2, "<<Comment>>", left_center, { 50, 5 }, { commenWidth, 0 }, double_line, White, Gray);
     // 정석
-    Button* lbl_name5 = new Button(0, 2, "<<현정석>>", left_center, { 20, 5 }, { nameWidth, 10 }, single_line, White, Gray);
-    Button* lbl_job5 = new Button(0, 2, "<<JOB>>", left_center, { 50, 5 }, { jobWidth, 10 }, double_line, White, Gray);
-    Button* lbl_comment5 = new Button(0, 2, "<<Comment>>", left_center, { 50, 5 }, { commenWidth, 10 }, double_line, White, Gray);
+    Button* lbl_name5 = new Button(0, 2, "<<Hyun_JS>>", left_center, { 20, 5 }, { nameWidth, 10 }, single_line, White, Gray);
+    Button* lbl_job5 = new Button(0, 2, "<<Character_Monster_Battle>>", left_center, { 50, 5 }, { jobWidth, 10 }, double_line, White, Gray);
+    Button* lbl_comment5 = new Button(0, 2, "<<Good!Good!>>", left_center, { 50, 5 }, { commenWidth, 10 }, double_line, White, Gray);
 
 
     rtrLayout->AddButton(btnRtn);
